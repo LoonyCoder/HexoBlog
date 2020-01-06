@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Java,Java基础," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="###对象与类 对象的创建比如Student s &#x3D; new Student()实例化一个对象，其实经历了如下几个过程：将Student.class加载到内存中在栈内存中给s开辟内存空间。在堆内存给Student类申请一个内存空间。给成员变量进行默认初始化，0 null false…自定义给成员变量初始化赋值初始化完毕，把堆内存地址赋值给栈内存的s变量 Main方法剖析1public static">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java基础（二）">
+<meta property="og:url" content="http://yoursite.com/2019/12/30/JavaBasic2/index.html">
+<meta property="og:site_name" content="望月">
+<meta property="og:description" content="###对象与类 对象的创建比如Student s &#x3D; new Student()实例化一个对象，其实经历了如下几个过程：将Student.class加载到内存中在栈内存中给s开辟内存空间。在堆内存给Student类申请一个内存空间。给成员变量进行默认初始化，0 null false…自定义给成员变量初始化赋值初始化完毕，把堆内存地址赋值给栈内存的s变量 Main方法剖析1public static">
+<meta property="article:published_time" content="2019-12-29T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-01-06T09:58:32.482Z">
+<meta property="article:author" content="LoonyCoder">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="Java基础">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/12/30/JavaBasic2/"/>
+
+
+
+
+
+  <title>Java基础（二） | 望月</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">望月</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Life is so short , just coding.</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/30/JavaBasic2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LoonyCoder">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/author.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="望月">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Java基础（二）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-30T00:00:00+08:00">
+                2019-12-30
+              </time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3.6k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  14
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>###对象与类</p>
+<h4 id="对象的创建"><a href="#对象的创建" class="headerlink" title="对象的创建"></a>对象的创建</h4><p><em>比如Student s = new Student()实例化一个对象，其实经历了如下几个过程：<br>将Student.class加载到内存中<br>在栈内存中给s开辟内存空间。<br>在堆内存给Student类申请一个内存空间。<br>给成员变量进行默认初始化，0 null false…<br>自定义给成员变量初始化赋值<br>初始化完毕，把堆内存地址赋值给栈内存的s变量</em></p>
+<h4 id="Main方法剖析"><a href="#Main方法剖析" class="headerlink" title="Main方法剖析"></a>Main方法剖析</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public static void main(String[] args) &#123; ... &#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><em>public: 公共的，访问权限最大，因为main方法是被JVM调用的。</em></li>
+<li><em>static：静态的，不需要创建对象，通过类名就能调用，方便JVM调用。</em></li>
+<li><em>void: 无返回值，因为main方法是被JVM调用的，所以给JVM返回数据没有意义。</em></li>
+<li><em>main: 常见的方法入口，很多语言的入口方法都是main方法。</em></li>
+<li><em>String[] args: 字符串数组，是作为命令行参数调用的。</em></li>
+</ul>
+<h5 id="static关键字"><a href="#static关键字" class="headerlink" title="static关键字"></a>static关键字</h5><p><strong>static关键字特点：（可以修饰成员变量，也可修饰成员方法）</strong></p>
+<ul>
+<li>随着类的加载而加载</li>
+<li>优先于对象存在</li>
+<li>被类中的所有对象共享</li>
+<li>可直接通过类名调用</li>
+</ul>
+<p><strong>拓展</strong></p>
+<p><em>静态方法中没有this关键字，因为this代表当前方法对象，但static优于对象存在，所以在对象还未创建完毕static修饰的方法就被调用，此时this代表的对象还未创建。</em></p>
+<h4 id="String"><a href="#String" class="headerlink" title="String"></a>String</h4><p><em>String底层定义为public final class String，说明String是常量，一旦被创建就不能修改。可以查看如Integer LongString这些类的源码：</em></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public final class Integer &#123;&#125;</span><br><span class="line">public final class Long &#123;&#125;</span><br><span class="line">public final class String &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这些<strong>基本类型</strong>，在初始化值、赋值时都是先从<strong>常量池</strong>中取数据，如果常量池中没有该数据，就new对象初始化为新数据。<br>比如常见的一个面试题：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">String s = <span class="string">"ab"</span>;</span><br><span class="line">s = <span class="string">"abc"</span>;</span><br><span class="line">String ss = <span class="string">"ab"</span>;</span><br><span class="line">ss = new String(<span class="string">"ab"</span>);</span><br></pre></td></tr></table></figure>
+
+<p><em>这个s和ss各自创建了几个对象？答案：s创建两个对象；ss创建一个对象。因为s的常量池中有值ab，而重新赋值s = “abc”这个abc在s的常量池中不存在，所以new String()创建了一个新对象。ss同理分析。可以通过如下方式验证：</em></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">String ss = <span class="string">"ab"</span>;</span><br><span class="line">System.out.println(ss.hashCode());</span><br><span class="line">ss = <span class="string">"abc"</span>;</span><br><span class="line">System.out.println(ss.hashCode());</span><br></pre></td></tr></table></figure>
+<p><a href="/images/String1.png">stack</a></p>
+<h5 id="StringBuffer"><a href="#StringBuffer" class="headerlink" title="StringBuffer"></a>StringBuffer</h5><p><em>String是不可变的字符串，StringBuffer是线程安全的可变字符串，用StringBuffer做字符串的拼接可以避免资源的浪费，因为String每次拼接新的字符串都是创建一个新的String对象。</em></p>
+<p><strong>String转换为StringBuffer</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//方式一</span><br><span class="line">String s = <span class="string">"hello"</span>;</span><br><span class="line">StringBuffer sb = new StringBuffer(s);</span><br><span class="line">//方式二</span><br><span class="line">StringBuffer sb = new StringBuffer();</span><br><span class="line">sb.append(s);</span><br></pre></td></tr></table></figure>
+
+<p><strong>StringBuffer转换成String</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//方式一</span><br><span class="line">StringBuffer sb = new StringBuffer(<span class="string">"hello"</span>);</span><br><span class="line">String s = new String(sb);</span><br><span class="line">//方式二</span><br><span class="line">String s = sb.toString();</span><br></pre></td></tr></table></figure>
+
+<h5 id="面试题"><a href="#面试题" class="headerlink" title="面试题"></a>面试题</h5><blockquote>
+<p>String, StringBuffer, StringBuilder 的区别？</p>
+</blockquote>
+<ul>
+<li>String的内容不可变，StringBuffer和StringBuilder的内容都可变。</li>
+<li>StringBuffer是线程同步的，数据安全，效率低；String和StringBuilder是线程不同步的，数据不安全，效率高。</li>
+</ul>
+<blockquote>
+<p>StringBuffer和数组的区别？</p>
+</blockquote>
+<ul>
+<li>二者都是一个容器，装其他数据</li>
+<li>但StringBuffer最终是一个字符串数据；而数组可以存放多种数据，但必须是用一种数据类型。</li>
+</ul>
+<blockquote>
+<p>String和StringBuffer作为参数传递</p>
+</blockquote>
+<ul>
+<li>String可理解为特殊的引用类型，和基本类型一样，参数传递不会改变原数据内容。</li>
+<li>StringBuffer作为引用类型，基本的赋值不会改变原数据内容，但是调用StringBuffer的方法去改变形式参数就会影响原数据内容。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">public class StringBufferDemo &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        String s1 = <span class="string">"hello"</span>;</span><br><span class="line">        String s2 = <span class="string">"world"</span>;</span><br><span class="line">        System.out.println(s1 + <span class="string">"---"</span> + s2);// hello---world</span><br><span class="line">        change(s1, s2);</span><br><span class="line">        System.out.println(s1 + <span class="string">"---"</span> + s2);// hello---world</span><br><span class="line"></span><br><span class="line">        StringBuffer sb1 = new StringBuffer(<span class="string">"hello"</span>);</span><br><span class="line">        StringBuffer sb2 = new StringBuffer(<span class="string">"world"</span>);</span><br><span class="line">        System.out.println(sb1 + <span class="string">"---"</span> + sb2);// hello---world</span><br><span class="line">        change(sb1, sb2);</span><br><span class="line">        System.out.println(sb1 + <span class="string">"---"</span> + sb2);// hello---worldworld</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static void change(StringBuffer sb1, StringBuffer sb2) &#123;</span><br><span class="line">        sb1 = sb2;</span><br><span class="line">        sb2.append(sb1);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static void change(String s1, String s2) &#123;</span><br><span class="line">        s1 = s2;</span><br><span class="line">        s2 = s1 + s2;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="参数传递"><a href="#参数传递" class="headerlink" title="参数传递"></a>参数传递</h4><p>Java中的参数传递：</p>
+<ul>
+<li>基本类型：形式参数的改变对实际参数没有影响。</li>
+<li>引用类型：形式参数的改变直接影响实际参数。</li>
+</ul>
+<p>例如：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">public class Demo01_Object &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        int a = 10;</span><br><span class="line">        int b = 20;</span><br><span class="line">        change(a, b);</span><br><span class="line">        System.out.println(<span class="string">"main: a:"</span> + a + <span class="string">", b:"</span> + b); //10, 20</span><br><span class="line">        int[] arr = &#123;1, 2, 3&#125;;</span><br><span class="line">        change(arr);</span><br><span class="line">        System.out.println(<span class="string">"main: "</span> + arr[0]); //2</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private static void change(int a, int b) &#123;</span><br><span class="line">        a = b;</span><br><span class="line">        b = a + b;</span><br><span class="line">        System.out.println(<span class="string">"change: a:"</span> + a + <span class="string">", b:"</span> + b); //20, 40</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private static void change(int[] arr) &#123;</span><br><span class="line">        arr[0] = arr[1];</span><br><span class="line">        System.out.println(<span class="string">"change"</span> + arr[0]); //2</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>引入概念</strong>：<br><em>在Java中*</em>一个对象变量并没有实际包含一个对象，而仅仅引用一个对象。所有的Java对象都储存在堆内存中<strong>。例如：Date t = new Date()其中的t就是一个对象变量，new Date()是在堆内存中开辟了一个空间，而t指向new Date()的堆内存地址。<br>因此，在上述代码中a b都是基本类型，而int[]是一个引用类型，那</strong>基本类型形式参数改变对实际参数没有影响；对象类型形式参数改变直接影响实际参数。***</p>
+<p><a href="/images/stack.png">stack</a></p>
+<h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5><p><strong>Java程序语言总是采用按值调用</strong>，也就是说，方法得到的是所有参数值的一个拷贝，特别的，方法不能修改传递给他的任何变量的内容。</p>
+<ul>
+<li>一个方法不能修改一个基本数据类型的参数（即数值型和布尔型）。</li>
+<li>一个方法可以改变一个对象的引用状态</li>
+<li>一个方法不能让对象参数引用一个新对象</li>
+</ul>
+<p>比如：下列是无意义的：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">public static void swap(Employee x, Employee y) &#123;</span><br><span class="line">    Employee temp = x;</span><br><span class="line">    x = y;</span><br><span class="line">    y = temp;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><em>当调用swap(e1, e2)时并不会改变e1和e2的对象引用，swap方法的参数x,y被初始化为两个对象引用的拷贝，这个方法交换的是这两个拷贝。</em></p>
+<ul>
+<li><strong>基本类型</strong>（包括Integer String Long）传递的参数是参数<strong>值</strong>的拷贝</li>
+</ul>
+<p><em>特别是对于Integer Long String这些类型数据，在初始化、赋值的时候都是从常量池中取数据，比如IntgerCache LongCache，如果常量池中没有就重新new对象，例如：</em></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">public static void main(String[] args) &#123;</span><br><span class="line">    String s = <span class="string">"123"</span>;</span><br><span class="line">    System.out.println(<span class="string">"main: "</span> + s.hashCode()); //48690</span><br><span class="line">    change(s);</span><br><span class="line">    change2(s);</span><br><span class="line">&#125;</span><br><span class="line">private static void change(String s) &#123;</span><br><span class="line">    s = <span class="string">"123"</span>;</span><br><span class="line">    System.out.println(<span class="string">"change: "</span> + s.hashCode()); //48690</span><br><span class="line">&#125;</span><br><span class="line">private static change2(String s) &#123;</span><br><span class="line">    s = <span class="string">"456"</span>;</span><br><span class="line">    System.out.println(<span class="string">"change2: "</span> + s.hashCode()); //51669</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>引用类型</strong>传递的参数是原对象在<strong>堆内存的地址</strong>的拷贝</li>
+</ul>
+<p>对象类型参数的传递，实际上传递这个对象堆内存地址的拷贝，所以形式参数和原参数操作的都是同一个堆内存地址，即形式参数的改变会直接影响原参数。</p>
+<h4 id="成员变量和局部变量"><a href="#成员变量和局部变量" class="headerlink" title="成员变量和局部变量"></a>成员变量和局部变量</h4><p>成员变量和局部变量的区别：</p>
+<ul>
+<li>在类中的位置不同：<ul>
+<li>成员变量：在类中方法外</li>
+<li>局部变量：在方法定义中或方法声明上</li>
+</ul>
+</li>
+<li>在内存中的位置不同：<ul>
+<li>成员变量：在堆内存</li>
+<li>局部变量：在栈内存</li>
+</ul>
+</li>
+<li>声明周期不同：<ul>
+<li>成员变量：随着对象的创建而存在，随着对象的消失而消失。</li>
+<li>局部变量：随着方法的调用而存在，随着方法调用完毕而消失</li>
+</ul>
+</li>
+<li>初始化值不同：<ul>
+<li>成员变量：有默认初始化值</li>
+<li>局部变量：没有默认初始化值，必须定义、赋值后才能使用</li>
+</ul>
+</li>
+</ul>
+<h4 id="构造方法"><a href="#构造方法" class="headerlink" title="构造方法"></a>构造方法</h4><p>在Java中，当需要调用构造方法时，<strong>若该类没有定义构造方法，系统会自动提供一个无参构造方法；如果该类定义了构造方法（带参构造），系统将不再提供无参构造，必须手动定义</strong>。举例：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">public class Demo2_Construct &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        Demo2Student student = new Demo2Student();</span><br><span class="line">        student.show();</span><br><span class="line">        // Demo2School school = new Demo2School(); //error</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class Demo2Student &#123;</span><br><span class="line">    public void <span class="function"><span class="title">show</span></span>() &#123;</span><br><span class="line">        System.out.println(<span class="string">"this student show"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class Demo2School &#123;</span><br><span class="line">    private int size = 1000;</span><br><span class="line">    public Demo2School(int size) &#123;</span><br><span class="line">        this.size = size;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="final"><a href="#final" class="headerlink" title="final"></a>final</h5><p><em>final可以修改类、方法、变量。</em></p>
+<p><strong>特点</strong>：</p>
+<ul>
+<li>final可以修饰类，该类不能被继承。</li>
+<li>final可以修饰方法，该方法不能被重写。</li>
+<li>final可以修饰变量，该变量不能被重新赋值。</li>
+</ul>
+<p><strong>面试题</strong>：final修饰局部变量的问题</p>
+<ul>
+<li>基本类型：被final修饰的基本类型的值不能被改变</li>
+<li>引用类型：引用类型的地址值不能被改变，但是该对象的堆内存地址是可以改变的。</li>
+</ul>
+<p><strong>初始化时机</strong><br><em>被final修饰的变量必须在构造方法完毕前被初始化，比如</em></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">public class Demo &#123;</span><br><span class="line">    final int WIDTH = 12;</span><br><span class="line">    //final int HEIGHT; //error</span><br><span class="line">    final int AREA;</span><br><span class="line">    &#123;</span><br><span class="line">        AREA = 120;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h4><p>1、Java支持单继承不支持多继承，但Java支持多层继承<br>2、子类只能继承父类非私有成员（成员变量、成员方法）<br>3、子类不能继承父类的构造方法，但可以通过super关键字访问父类的构造方法。</p>
+<h5 id="子类和父类的关系"><a href="#子类和父类的关系" class="headerlink" title="子类和父类的关系"></a>子类和父类的关系</h5><p><strong>*子类中的所有构造方法都默认访问父类的无参构造方法</strong>。因为子类继承父类，并可能使用父类中的数据，所以子类初始化前一定要完成父类的初始化。所以子类每一个构造方法第一行默认都是super()。*</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">public class Demo04_Extends &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        Demo04Son son = new Demo04Son();</span><br><span class="line">        son.show();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class Demo04Son extends Demo04Parent&#123;</span><br><span class="line">    private int num = 10;</span><br><span class="line">    public <span class="function"><span class="title">Demo04Son</span></span>() &#123;</span><br><span class="line">        super();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void <span class="function"><span class="title">show</span></span>() &#123;</span><br><span class="line">        int num = 100;</span><br><span class="line">        System.out.println(num);</span><br><span class="line">        System.out.println(this.num);</span><br><span class="line">        System.out.println(super.num);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class Demo04Parent &#123;</span><br><span class="line">    public int num = 1;</span><br><span class="line"></span><br><span class="line">    public <span class="function"><span class="title">Demo04Parent</span></span>() &#123;</span><br><span class="line">        System.out.println(<span class="string">"这是父类的无参构造函数"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="this-super"><a href="#this-super" class="headerlink" title="this-super"></a>this-super</h5><p><em>this和super关键字的区别和使用场景？</em><br>区别：</p>
+<ul>
+<li>this: 代表当前类的对象引用</li>
+<li>super: 代表父类的空间标识（可以理解为父类的引用，通过他访问父类的成员）<br>场景：</li>
+<li>this.成员变量/方法</li>
+<li>super.成员变量/方法</li>
+<li>this(…) super(…)</li>
+</ul>
+<h5 id="加载顺序"><a href="#加载顺序" class="headerlink" title="加载顺序"></a>加载顺序</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">public class Demo04_Extends2 &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        Demo04Zi zi = new Demo04Zi();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">class Demo04Fu &#123;</span><br><span class="line">    static &#123;</span><br><span class="line">        System.out.println(<span class="string">"Fu 静态代码块"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    &#123;</span><br><span class="line">        System.out.println(<span class="string">"Fu 构造代码块"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    public <span class="function"><span class="title">Demo04Fu</span></span>() &#123;</span><br><span class="line">        System.out.println(<span class="string">"Fu 构造方法"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">class Demo04Zi extends Demo04Fu&#123;</span><br><span class="line">    static &#123;</span><br><span class="line">        System.out.println(<span class="string">"Zi 静态代码块"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    &#123;</span><br><span class="line">        System.out.println(<span class="string">"Zi 构造代码块"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    public <span class="function"><span class="title">Demo04Zi</span></span>() &#123;</span><br><span class="line">        System.out.println(<span class="string">"Zi 构造方法"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>结果：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Fu 静态代码块</span><br><span class="line">Zi 静态代码块</span><br><span class="line">Fu 构造代码块</span><br><span class="line">Fu 构造方法</span><br><span class="line">Zi 构造代码块</span><br><span class="line">Zi 构造方法</span><br></pre></td></tr></table></figure>
+
+<h5 id="动态绑定"><a href="#动态绑定" class="headerlink" title="动态绑定"></a>动态绑定</h5><p><strong>调用对象方法的执行过程：</strong><br><a href="/images/DomaticBind.png">DomaticBind</a><br>1.编译器首先查看对象的声明类型和方法名。如调用change(a)方法，由于存在多个change()方法，JVM会先列举该类以及其超类中访问属性为public且名为change的方法。<br>2.接下来，JVM将查看调用方法时提供的参数类型，并且JVM会预先为每个类创建一个方法表<strong>（method table）</strong>，JVM会直接从这个方法表中寻找名为change的方法中存在一个与提供的参数类型匹配的方法，这个过程称为<strong>重载解析</strong>。<br>3.如果是private、static、final方法或者构造器，那么JVM就能准确的知道调用哪个方法，我们将这种调用方式称为<strong>静态绑定</strong>。与此对应，调用的方法依赖于隐式参数的实际类型，并且在运行时实现<strong>动态绑定</strong>。<br>4.当程序运行，并且采用动态绑定调用方法时，JVM就一定调用于此最适合的一个方法，否则从超类中继续寻找。</p>
+<h5 id="强制类型转换"><a href="#强制类型转换" class="headerlink" title="强制类型转换"></a>强制类型转换</h5><p>将一个类型强制转换为另外一个类型的过程称为类型转换。数值类型直接(int) double这样转换；对象引用的转换也类似，实现将某个类的对象引用转换为另一个类的对象引用。</p>
+<ul>
+<li><strong>向上转型</strong>：将一个子类的引用赋值给一个超类变量。</li>
+<li><strong>向下转型</strong>：将一个超类的引用赋值给一个子类变量，且必须进行类型转换。</li>
+</ul>
+<p><strong>注意</strong></p>
+<ul>
+<li>只能在继承层次内进行类型转换。</li>
+<li>在将超类转换成子类之前，应该使用instanceof进行检查。</li>
+</ul>
+<h5 id="内部类"><a href="#内部类" class="headerlink" title="内部类"></a>内部类</h5><p>一个类存在于另一个类中方法外，这个类就称为内部类；一个类存在于另一个类方法内，这个类称为局部内部类。</p>
+<ul>
+<li>内部类可以直接访问外部类的成员，包括私有</li>
+<li>外部类可以访问内部类的成员，必须创建对象</li>
+<li>直接访问内部类的成员：<em>Outer.Inner in = new Outer().new Inner()</em></li>
+</ul>
+<p><strong>局部内部类</strong><br>局部内部类可以直接访问外部类的成员，在局部位置可以创建内部类对象，通过对象调用内部类成员。</p>
+<blockquote>
+<p>局部内部类访问局部变量注意事项?<br>​<em>局部内部类访问局部变量必须用final修饰。因为<strong>局部内部类的声明周期比局部变量长</strong>，局部变量随着方法的调用而存在，随着调用完毕而消失；但局部内部类不一定消失，他调用一个消失的变量就会报错。</em></p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">public class InnerClass &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        Outer outer = new Outer();</span><br><span class="line">        outer.show();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class Outer &#123;</span><br><span class="line">    public void <span class="function"><span class="title">show</span></span>() &#123;</span><br><span class="line">        int num2 = 10;</span><br><span class="line">        class Inner &#123;</span><br><span class="line">            private void <span class="function"><span class="title">show</span></span>() &#123;</span><br><span class="line">                System.out.println(num2);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        Inner inner = new Inner();</span><br><span class="line">        inner.show();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><em>此时调用不会报错，但并没有加final修饰。这个类编译后会生成InnerClass.class和Outer.class两个文件，我们来看下Outer.class:</em></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">class Outer &#123;</span><br><span class="line">    <span class="function"><span class="title">Outer</span></span>() &#123;&#125;</span><br><span class="line">    public void <span class="function"><span class="title">show</span></span>() &#123;</span><br><span class="line">        final int num2 = 10;</span><br><span class="line">        class Inner &#123;</span><br><span class="line">            <span class="function"><span class="title">Inner</span></span>() &#123;&#125;</span><br><span class="line">            private void <span class="function"><span class="title">show</span></span>() &#123;</span><br><span class="line">                System.out.println(num2);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        Inner inner = new Inner();</span><br><span class="line">        inner.show();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><em>其中的num2被自动加上了final修饰（这是因为JDK1.8的原因），所以如果你再添上num2 = 1000就会报错。</em></p>
+<blockquote>
+<p>解决办法<br><em>上面说过了应该将num2用final修饰。其原因就是Inner类的生命周期要比num2的声明周期长，当show()方法调用完毕后num2就已经消失了，但此时Inner类在堆内存中仍然存在，他调用一个不存在的变量就会报错。而用final修饰，这个变量成为常量，在初始化内部类的时候，final num2就在内部类中生成了一份拷贝，这个拷贝和这个内部类的声明周期相同，所以不会报错。</em></p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+            <a href="/tags/Java%E5%9F%BA%E7%A1%80/" rel="tag"># Java基础</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/12/30/JavaBasic1/" rel="next" title="Java基础（一）">
+                <i class="fa fa-chevron-left"></i> Java基础（一）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/01/03/MybatisDemo/" rel="prev" title="Mybatis入门及搭建">
+                Mybatis入门及搭建 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/author.jpg"
+                alt="LoonyCoder" />
+            
+              <p class="site-author-name" itemprop="name">LoonyCoder</p>
+              <p class="site-description motion-element" itemprop="description">Code bestful and be a best coder.</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#对象的创建"><span class="nav-number">1.</span> <span class="nav-text">对象的创建</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Main方法剖析"><span class="nav-number">2.</span> <span class="nav-text">Main方法剖析</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#static关键字"><span class="nav-number">2.1.</span> <span class="nav-text">static关键字</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#String"><span class="nav-number">3.</span> <span class="nav-text">String</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#StringBuffer"><span class="nav-number">3.1.</span> <span class="nav-text">StringBuffer</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#面试题"><span class="nav-number">3.2.</span> <span class="nav-text">面试题</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参数传递"><span class="nav-number">4.</span> <span class="nav-text">参数传递</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#总结"><span class="nav-number">4.1.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#成员变量和局部变量"><span class="nav-number">5.</span> <span class="nav-text">成员变量和局部变量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#构造方法"><span class="nav-number">6.</span> <span class="nav-text">构造方法</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#final"><span class="nav-number">6.1.</span> <span class="nav-text">final</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#继承"><span class="nav-number">7.</span> <span class="nav-text">继承</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#子类和父类的关系"><span class="nav-number">7.1.</span> <span class="nav-text">子类和父类的关系</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#this-super"><span class="nav-number">7.2.</span> <span class="nav-text">this-super</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#加载顺序"><span class="nav-number">7.3.</span> <span class="nav-text">加载顺序</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#动态绑定"><span class="nav-number">7.4.</span> <span class="nav-text">动态绑定</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#强制类型转换"><span class="nav-number">7.5.</span> <span class="nav-text">强制类型转换</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#内部类"><span class="nav-number">7.6.</span> <span class="nav-text">内部类</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">loonycoder</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">18.6k</span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

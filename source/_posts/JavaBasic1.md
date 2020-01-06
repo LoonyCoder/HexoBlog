@@ -1,5 +1,5 @@
 ---
-title: Java基础知识
+title: Java基础（一）
 categories:
     - Java
 date: 2019-12-30
@@ -238,8 +238,8 @@ private static class IntegerCache {
 
 #### Overriding和Overloaded
 方法的重写Overriding和方法的重载Overloaded都是Java多态性的一种表现。
-***Overriding: 子类中定义了和父类中名称、参数列表相同的方法***
-***Overloaded: 方法名相同，参数列表不同***
+Overriding: 子类中定义了和父类中名称、参数列表相同的方法
+Overloaded: 方法名相同，参数列表不同
 
 ---
 
@@ -349,15 +349,15 @@ Java中的阻塞式方法是指在程序调用该方法时，必须等待输入�
 
 ---
 
-***什么是迭代器***
+**什么是迭代器**
 *Iterator*接口中提供了很多对集合元素迭代的方法。每个集合中都有可以返回迭代器对象的方法*iterator()*。迭代器在迭代的过程中可以删除底层集合的元素。
 
-***Iterator和ListIterator的区别？***
+**Iterator和ListIterator的区别？**
 + *Iterator*可以用来遍历Set和List集合，但是*ListIterator*只能遍历List
 + *Iterator*对集合只能向前遍历（*next()*）；而*ListIterator*可以向前遍历（*next()*），也可以向后遍历（*previous()*）
 + *ListIterator*实现了*Iterator*接口
 
-***RandomAccess接口***
+**RandomAccess接口**
 ```bash
 //ArrayList
 public class ArrayList<E> extends AbstractList<E>
@@ -442,7 +442,7 @@ int iteratorBinarySearch(List<? extends Comparable<? super T>> list, T key)
 如果传入的List实现了*RandomAccess*接口，采用普通for循环遍历
 若传入的List未实现*RandomAccess*接口，采用*iterator*遍历
 
-***链表***
+**链表**
 
 **链表（Linked List）**由一串节点组成，每个节点包含任意的实例数据和一或两个用来指向上一个/下一个节点位置的指针
 >单向链表
@@ -540,7 +540,7 @@ private void grow(int minCapacity) {
 ---
 
 #### HashMap和HashSet区别?
-***HashSet底层采用HashMap实现***
+**HashSet底层采用HashMap实现**
 HashMap|HashSet
 :--|:--
 实现了Map接口|实现了Set接口

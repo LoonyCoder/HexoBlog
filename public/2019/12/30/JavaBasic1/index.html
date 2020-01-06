@@ -81,8 +81,8 @@
 
 <meta name="description" content="记录一些Java基础的知识点，为了自己查阅资料的时候方便一些。  Java基础JDK和JRE的区别？1、jre即Java Runtime Environment，Java运行环境。包括Java虚拟机和Java类库2、jdk是Java开发工具包，例如：tools.jar  &#x3D;&#x3D; 和 equals的区别1、&#x3D;&#x3D;是一个比较运算符，对于基本类型，比较的是具体的数值(int、double..)；对于引用类型">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Java基础知识">
-<meta property="og:url" content="http://yoursite.com/2019/12/30/JavaBasic/index.html">
+<meta property="og:title" content="Java基础（一）">
+<meta property="og:url" content="http://yoursite.com/2019/12/30/JavaBasic1/index.html">
 <meta property="og:site_name" content="望月">
 <meta property="og:description" content="记录一些Java基础的知识点，为了自己查阅资料的时候方便一些。  Java基础JDK和JRE的区别？1、jre即Java Runtime Environment，Java运行环境。包括Java虚拟机和Java类库2、jdk是Java开发工具包，例如：tools.jar  &#x3D;&#x3D; 和 equals的区别1、&#x3D;&#x3D;是一个比较运算符，对于基本类型，比较的是具体的数值(int、double..)；对于引用类型">
 <meta property="og:image" content="http://cdn.tycoding.cn/20180127210359151.png">
@@ -98,7 +98,7 @@
 <meta property="og:image" content="http://cdn.tycoding.cn/Java+%E7%BA%BF%E7%A8%8B%E7%8A%B6%E6%80%81%E5%8F%98%E8%BF%81.png">
 <meta property="og:image" content="http://cdn.tycoding.cn/2019-4%E6%AD%BB%E9%94%811.png">
 <meta property="article:published_time" content="2019-12-29T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-01-04T09:09:02.196Z">
+<meta property="article:modified_time" content="2020-01-06T10:44:07.241Z">
 <meta property="article:author" content="LoonyCoder">
 <meta property="article:tag" content="Java">
 <meta property="article:tag" content="Java基础">
@@ -133,13 +133,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/12/30/JavaBasic/"/>
+  <link rel="canonical" href="http://yoursite.com/2019/12/30/JavaBasic1/"/>
 
 
 
 
 
-  <title>Java基础知识 | 望月</title>
+  <title>Java基础（一） | 望月</title>
   
 
 
@@ -266,7 +266,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/30/JavaBasic/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/30/JavaBasic1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="LoonyCoder">
@@ -283,7 +283,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Java基础知识</h1>
+          <h1 class="post-title" itemprop="name headline">Java基础（一）</h1>
         
 
         <div class="post-meta">
@@ -469,7 +469,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">private static class IntegerCache &#123;</span><br><span class="line">    static final int low = -128;</span><br><span class="line">    static final int high;</span><br><span class="line">    static final Integer cache[];</span><br><span class="line"></span><br><span class="line">    static &#123;</span><br><span class="line">        // high value may be configured by property</span><br><span class="line">        int h = 127;</span><br><span class="line">        String integerCacheHighPropValue =</span><br><span class="line">            sun.misc.VM.getSavedProperty(<span class="string">"java.lang.Integer.IntegerCache.high"</span>);</span><br><span class="line">        <span class="keyword">if</span> (integerCacheHighPropValue != null) &#123;</span><br><span class="line">            try &#123;</span><br><span class="line">                int i = parseInt(integerCacheHighPropValue);</span><br><span class="line">                i = Math.max(i, 127);</span><br><span class="line">                // Maximum array size is Integer.MAX_VALUE</span><br><span class="line">                h = Math.min(i, Integer.MAX_VALUE - (-low) -1);</span><br><span class="line">            &#125; catch( NumberFormatException nfe) &#123;</span><br><span class="line">                // If the property cannot be parsed into an int, ignore it.</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        high = h;</span><br><span class="line"></span><br><span class="line">        cache = new Integer[(high - low) + 1];</span><br><span class="line">        int j = low;</span><br><span class="line">        <span class="keyword">for</span>(int k = 0; k &lt; cache.length; k++)</span><br><span class="line">            cache[k] = new Integer(j++);</span><br><span class="line"></span><br><span class="line">        // range [-128, 127] must be interned (JLS7 5.1.7)</span><br><span class="line">        assert IntegerCache.high &gt;= 127;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private <span class="function"><span class="title">IntegerCache</span></span>() &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>所以，当声明一个新的整型变量时（int、Integer），如果这个变量值的大小在[-128, 127]之间，就直接返回IntegerCache中储存的常量值，否则就直接new一个新的Integer来保存这个常量值。所以上面才会出现false的结果。<br>同理：其他的数据类型例如：long、short等都具有对应的LongCache、ShortCache等类。</p>
 <hr>
-<h4 id="Overriding和Overloaded"><a href="#Overriding和Overloaded" class="headerlink" title="Overriding和Overloaded"></a>Overriding和Overloaded</h4><p>方法的重写Overriding和方法的重载Overloaded都是Java多态性的一种表现。<br><strong><em>Overriding: 子类中定义了和父类中名称、参数列表相同的方法</em></strong><br><strong><em>Overloaded: 方法名相同，参数列表不同</em></strong></p>
+<h4 id="Overriding和Overloaded"><a href="#Overriding和Overloaded" class="headerlink" title="Overriding和Overloaded"></a>Overriding和Overloaded</h4><p>方法的重写Overriding和方法的重载Overloaded都是Java多态性的一种表现。<br>Overriding: 子类中定义了和父类中名称、参数列表相同的方法<br>Overloaded: 方法名相同，参数列表不同</p>
 <hr>
 <h4 id="Java支持多继承吗？"><a href="#Java支持多继承吗？" class="headerlink" title="Java支持多继承吗？"></a>Java支持多继承吗？</h4><p>不支持。Java中每个类都只能继承一个类，可以实现多个接口。但是可以通过多层继承实现。<br>类定义属性和方法，描述某一类事物的抽象。而接口定义了行为，并不限于任何具体意向。<br>从逻辑上说，单继承更加明确指出一个子类就应该是其父类代表的事物中某个更具体的类别。而接口则不同，接口定义了一些公共行为。因此类对接口的implements称为实现而不能称为继承。</p>
 <hr>
@@ -514,14 +514,14 @@
 <hr>
 <h4 id="ArrayList和LinkedList的区别？"><a href="#ArrayList和LinkedList的区别？" class="headerlink" title="ArrayList和LinkedList的区别？"></a>ArrayList和LinkedList的区别？</h4><p>1、<strong>是否保证线程安全</strong>： ArrayList和LinkedList都是不同步的，也就是不保证线程安全<br>2、<strong>底层数据结构</strong>： ArrayList底层使用的是Object数组；LinkedList底层使用的是 双向链表 结构<br>3、<strong>插入和删除是否受元素位置影响？</strong> ArrayList采用数组储存，所以插入和删除元素都受元素位置的影响；LinkedList 采用链表储存，所以插入、删除元素都不受元素位置影响。<br>4、<strong>是否支持快速随机访问？</strong> LinkedList因为使用链表储存，无法通过元素索引快速访问；而ArrayList因为底层采用Object数组储存，可以通过索引快速随机访问。<br>5、<strong>内存空间占用</strong>： ArrayList的空间浪费主要体现在在List列表的结尾都会预留一定的空间容量，而LinkedList的空间花费体现在他的每一个元素都需要消耗比ArrayList更多的空间（因为要储存直接后继和直接前驱以及数据）。</p>
 <hr>
-<p><strong><em>什么是迭代器</em></strong><br><em>Iterator</em>接口中提供了很多对集合元素迭代的方法。每个集合中都有可以返回迭代器对象的方法<em>iterator()</em>。迭代器在迭代的过程中可以删除底层集合的元素。</p>
-<p><strong><em>Iterator和ListIterator的区别？</em></strong></p>
+<p><strong>什么是迭代器</strong><br><em>Iterator</em>接口中提供了很多对集合元素迭代的方法。每个集合中都有可以返回迭代器对象的方法<em>iterator()</em>。迭代器在迭代的过程中可以删除底层集合的元素。</p>
+<p><strong>Iterator和ListIterator的区别？</strong></p>
 <ul>
 <li><em>Iterator</em>可以用来遍历Set和List集合，但是<em>ListIterator</em>只能遍历List</li>
 <li><em>Iterator</em>对集合只能向前遍历（<em>next()</em>）；而<em>ListIterator</em>可以向前遍历（<em>next()</em>），也可以向后遍历（<em>previous()</em>）</li>
 <li><em>ListIterator</em>实现了<em>Iterator</em>接口</li>
 </ul>
-<p><strong><em>RandomAccess接口</em></strong></p>
+<p><strong>RandomAccess接口</strong></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">//ArrayList</span><br><span class="line">public class ArrayList&lt;E&gt; extends AbstractList&lt;E&gt;</span><br><span class="line">        implements List&lt;E&gt;, RandomAccess, Cloneable, java.io.Serializable</span><br><span class="line">&#123;&#125;</span><br><span class="line"></span><br><span class="line">//RandomAccess</span><br><span class="line">public interface RandomAccess &#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//LinkedList</span><br><span class="line">public class LinkedList&lt;E&gt;</span><br><span class="line">    extends AbstractSequentialList&lt;E&gt;</span><br><span class="line">    implements List&lt;E&gt;, Deque&lt;E&gt;, Cloneable, java.io.Serializable</span><br><span class="line">&#123;&#125;</span><br></pre></td></tr></table></figure>
 
 <p>源码中<em>ArrayList</em>类实现了<em>RandomAccess</em>接口，<em>LinkedList</em>类中却没有实现这个接口，但是<em>RandomAccess</em>接口中却什么也没有定义。可以看<em>RandomAccess</em>接口上的注释：</p>
@@ -530,7 +530,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">public static &lt;T&gt;</span><br><span class="line">int binarySearch(List&lt;? extends Comparable&lt;? super T&gt;&gt; list, T key) &#123;</span><br><span class="line">    <span class="keyword">if</span> (list instanceof RandomAccess || list.size()&lt;BINARYSEARCH_THRESHOLD)</span><br><span class="line">        <span class="built_in">return</span> Collections.indexedBinarySearch(list, key);</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="built_in">return</span> Collections.iteratorBinarySearch(list, key);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">private static &lt;T&gt;</span><br><span class="line">int indexedBinarySearch(List&lt;? extends Comparable&lt;? super T&gt;&gt; list, T key) &#123;</span><br><span class="line">    int low = 0;</span><br><span class="line">    int high = list.size()-1;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (low &lt;= high) &#123;</span><br><span class="line">        int mid = (low + high) &gt;&gt;&gt; 1;</span><br><span class="line">        Comparable&lt;? super T&gt; midVal = list.get(mid);</span><br><span class="line">        int cmp = midVal.compareTo(key);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (cmp &lt; 0)</span><br><span class="line">            low = mid + 1;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (cmp &gt; 0)</span><br><span class="line">            high = mid - 1;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            <span class="built_in">return</span> mid; // key found</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">return</span> -(low + 1);  // key not found</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">private static &lt;T&gt;</span><br><span class="line">int iteratorBinarySearch(List&lt;? extends Comparable&lt;? super T&gt;&gt; list, T key)</span><br><span class="line">&#123;</span><br><span class="line">    int low = 0;</span><br><span class="line">    int high = list.size()-1;</span><br><span class="line">    ListIterator&lt;? extends Comparable&lt;? super T&gt;&gt; i = list.listIterator();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (low &lt;= high) &#123;</span><br><span class="line">        int mid = (low + high) &gt;&gt;&gt; 1;</span><br><span class="line">        Comparable&lt;? super T&gt; midVal = get(i, mid);</span><br><span class="line">        int cmp = midVal.compareTo(key);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (cmp &lt; 0)</span><br><span class="line">            low = mid + 1;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (cmp &gt; 0)</span><br><span class="line">            high = mid - 1;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            <span class="built_in">return</span> mid; // key found</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">return</span> -(low + 1);  // key not found</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p><em>binarySearch()</em>方法是从List中查找指定元素，其中首先判断传入的List时候实现了<em>RandomAccess</em>接口，如果实现了就调用<em>indexedBinarySearch()</em>方法，否则就调用<em>iteratorBinarySearch()</em>方法。再看这两个方法的源码：<br>如果传入的List实现了<em>RandomAccess</em>接口，采用普通for循环遍历<br>若传入的List未实现<em>RandomAccess</em>接口，采用<em>iterator</em>遍历</p>
-<p><strong><em>链表</em></strong></p>
+<p><strong>链表</strong></p>
 <p><strong>链表（Linked List）</strong>由一串节点组成，每个节点包含任意的实例数据和一或两个用来指向上一个/下一个节点位置的指针</p>
 <blockquote>
 <p>单向链表<br>单向链表包含每个节点Node包含两个部分：第一部分data储存当前节点数据、第二部分next存储下一节点的地址。</p>
@@ -566,7 +566,7 @@
 <hr>
 <h4 id="HashMap和HashTable的区别？"><a href="#HashMap和HashTable的区别？" class="headerlink" title="HashMap和HashTable的区别？"></a>HashMap和HashTable的区别？</h4><p><em>1、HashMap和HashTable都实现了Map接口，主要区别在线程安全性、同步、速度<br>2、线程是否安全： HashMap非同步线程不安全，HashTable同步线程安全。HashTable内部的方法都经过synchronized修饰。<br>3、效率: HashMap线程不安全效率高，HashTable线程安全效率低。<br>3、对null key和null value的支持： HashMap中，null可以作为key，这样的key只有一个，但可以有多个key对应的值为null；在HashTable中的key不能为null<br>5、底层数据结构： JDK1.8后的HashMap在解决哈希冲突时有了较大的变化，当链表长度大于阀值时（默认是8），将链表转换为红黑树，以减少搜索时间。HashTable没有这样的机制。</em></p>
 <hr>
-<h4 id="HashMap和HashSet区别"><a href="#HashMap和HashSet区别" class="headerlink" title="HashMap和HashSet区别?"></a>HashMap和HashSet区别?</h4><p><strong><em>HashSet底层采用HashMap实现</em></strong><br>HashMap|HashSet<br>:–|:–<br>实现了Map接口|实现了Set接口<br>储存键值堆|仅储存对象<br>调用put()向Map中添加元素|调用add()向Set中添加元素<br>HashMap使用Key计算HashCode|HashSet使用成员对象来计算hashCode值，对于两个对象来说，hashCode可能相同，所以用equals判断对象的相等性</p>
+<h4 id="HashMap和HashSet区别"><a href="#HashMap和HashSet区别" class="headerlink" title="HashMap和HashSet区别?"></a>HashMap和HashSet区别?</h4><p><strong>HashSet底层采用HashMap实现</strong><br>HashMap|HashSet<br>:–|:–<br>实现了Map接口|实现了Set接口<br>储存键值堆|仅储存对象<br>调用put()向Map中添加元素|调用add()向Set中添加元素<br>HashMap使用Key计算HashCode|HashSet使用成员对象来计算hashCode值，对于两个对象来说，hashCode可能相同，所以用equals判断对象的相等性</p>
 <hr>
 <h4 id="HashSet如何检查重复？"><a href="#HashSet如何检查重复？" class="headerlink" title="HashSet如何检查重复？"></a>HashSet如何检查重复？</h4><p><em>在前面讲hashCode和equals时就提到了，HashSet集合同样适用。向HashSet中存入一个元素，HashSet首先会根据对象的hashCode值判断当期集合中此hashCode对应的位置有没有值，如果没有就直接添加，如果有就再调用equals方法比较两个对象是否相同，相同就不再储存（保证了Set集合不重复的特性），否则就散列到其他位置储存。</em></p>
 <hr>
@@ -755,8 +755,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2020/01/03/MybatisDemo/" rel="prev" title="Mybatis入门及搭建">
-                Mybatis入门及搭建 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/12/30/JavaBasic2/" rel="prev" title="Java基础（二）">
+                Java基础（二） <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -838,7 +838,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -927,7 +927,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">15k</span>
+    <span title="Site words total count">18.6k</span>
   
 </div>
 

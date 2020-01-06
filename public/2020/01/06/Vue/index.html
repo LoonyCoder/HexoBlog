@@ -92,7 +92,7 @@
 <meta property="og:image" content="http://yoursite.com/images/vue5.png">
 <meta property="og:image" content="http://yoursite.com/images/vue6.png">
 <meta property="article:published_time" content="2020-01-05T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-01-06T09:25:11.286Z">
+<meta property="article:modified_time" content="2020-01-06T10:45:43.248Z">
 <meta property="article:author" content="LoonyCoder">
 <meta property="article:tag" content="前端框架">
 <meta name="twitter:card" content="summary">
@@ -412,10 +412,10 @@
 <p>解决插值表达式闪烁问题，除了v-cloak指令，Vue还提供了v-text指令。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;p v-text=<span class="string">"msg"</span>&gt;&lt;/p&gt;</span><br></pre></td></tr></table></figure>
 
-<p><strong>v-cloak与v-text的区别</strong><br><strong><em>v-text默认会覆盖掉元素中原有的内容<br>v-cloak不会覆盖掉原有的内容</em></strong><br><img src="/images/vue2.png" alt="vue2"></p>
-<h4 id="v-bind"><a href="#v-bind" class="headerlink" title="v-bind"></a>v-bind</h4><p><strong><em>在上面，我们了解了v-text输出Vue元素，但是如果我们需要显示的数据是一段HTML代码，v-text和都将无能为力，<br>为此，Vue提供了专门渲染HTML数据的指令：v-html</em></strong></p>
+<p><strong>v-cloak与v-text的区别</strong><br><em>v-text</em>默认会覆盖掉元素中原有的内容<br><em>v-cloak</em>不会覆盖掉原有的内容<br><img src="/images/vue2.png" alt="vue2"></p>
+<h4 id="v-bind"><a href="#v-bind" class="headerlink" title="v-bind"></a>v-bind</h4><p><strong>在上面，我们了解了v-text输出Vue元素，但是如果我们需要显示的数据是一段HTML代码，v-text和都将无能为力，<br>为此，Vue提供了专门渲染HTML数据的指令：v-html</strong></p>
 <p><img src="/images/vue3.png" alt="vue3"></p>
-<p><strong><em>上面我们学习的指令都是Vue内置的指令，那么在Vue内置的指令中显示Vue绑定的变量，这当然没毛病；但是如果直接在HTML属性中使用Vue绑定的指令（不是用）这样可以吗？</em></strong></p>
+<p><em>上面我们学习的指令都是Vue内置的指令，那么在Vue内置的指令中显示Vue绑定的变量，这当然没毛病；但是如果直接在HTML属性中使用Vue绑定的指令（不是用）这样可以吗？</em></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input <span class="built_in">type</span>=<span class="string">"button"</span> value=<span class="string">"msg"</span>/&gt;</span><br></pre></td></tr></table></figure>
 
 <p>回答当然是不行的，因为在HTML属性中直接使用Vue绑定的变量，HTML并不能将其识别为其引用的是Vue中的元素，而是作为一个字符串输出。<br>为了解决上述问题，Vue提供了<em>v-bind</em>:指令来绑定一些HTML属性：</p>
@@ -480,13 +480,13 @@
 
 <h4 id="v-for"><a href="#v-for" class="headerlink" title="v-for"></a>v-for</h4><p><em>Vue提供了遍历集合、数组的指令：v-for；用法: v-for=”别名 in 集合名”</em></p>
 <h4 id="迭代数组"><a href="#迭代数组" class="headerlink" title="迭代数组"></a>迭代数组</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;p v-for=<span class="string">"item, i in list"</span>&gt;索引：&#123;&#123;i&#125;&#125; --- 值：&#123;&#123;item&#125;&#125;&lt;/p&gt;</span><br><span class="line"></span><br><span class="line">data: &#123;</span><br><span class="line">    list: [1,2,3,4]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong><em>其中的i是迭代得到的别名，可写可不写，但是必须是在迭代元素别名的后面定义</em></strong></p>
+<p><strong>其中的i是迭代得到的别名，可写可不写，但是必须是在迭代元素别名的后面定义</strong></p>
 <h4 id="迭代对象数组"><a href="#迭代对象数组" class="headerlink" title="迭代对象数组"></a>迭代对象数组</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;p v-for=<span class="string">"item in list2"</span>&gt;id: &#123;&#123;item.id&#125;&#125; --- name: &#123;&#123;item.name&#125;&#125;&lt;/p&gt;</span><br><span class="line"></span><br><span class="line">data: &#123;</span><br><span class="line">    list2: [</span><br><span class="line">            &#123; id:1, name: <span class="string">'嘻嘻'</span> &#125;,</span><br><span class="line">            &#123; id:2, name: <span class="string">'哈哈'</span> &#125;</span><br><span class="line">        ],</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p><strong><em>迭代对象数组，通过 的方式，这个属性名就是对象数组中定义的元素属性名</em></strong></p>
+<p><strong>迭代对象数组，通过 的方式，这个属性名就是对象数组中定义的元素属性名</strong></p>
 <h4 id="迭代对象"><a href="#迭代对象" class="headerlink" title="迭代对象"></a>迭代对象</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;p v-for=<span class="string">"(val, key) in user"</span>&gt;键: &#123;&#123;key&#125;&#125; --- 值: &#123;&#123;val&#125;&#125;&lt;/p&gt;</span><br><span class="line"></span><br><span class="line">data: &#123;</span><br><span class="line">    user: &#123;</span><br><span class="line">            id: 1,</span><br><span class="line">            name: <span class="string">'LoonyCoder'</span></span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p><strong><em>迭代对象，迭代得到的是对象的value值和key值，注意得到的第一个是value值，第二个是key值，与我们定义的对象属性顺序是刚好相反的。</em></strong></p>
+<p><strong>迭代对象，迭代得到的是对象的value值和key值，注意得到的第一个是value值，第二个是key值，与我们定义的对象属性顺序是刚好相反的。</strong></p>
 <p>实例：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- Vue实例的控制区域 --&gt;</span><br><span class="line">&lt;div id=<span class="string">"app"</span>&gt;</span><br><span class="line">    &lt;p v-for=<span class="string">"item, i in list"</span>&gt;索引：&#123;&#123;i&#125;&#125; --- 值：&#123;&#123;item&#125;&#125;&lt;/p&gt;</span><br><span class="line">    &lt;p v-for=<span class="string">"item in list2"</span>&gt;id: &#123;&#123;item.id&#125;&#125; --- name: &#123;&#123;item.name&#125;&#125;&lt;/p&gt;</span><br><span class="line">    &lt;p v-for=<span class="string">"(val, key) in user"</span>&gt;键: &#123;&#123;key&#125;&#125; --- 值: &#123;&#123;val&#125;&#125;&lt;/p&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;!-- js部分 --&gt;</span><br><span class="line">&lt;script src=<span class="string">"../lib/vue.js"</span>&gt;&lt;/script&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">    // 创建Vue实例，这个new出来的对象就是MVVM中的vm调度者</span><br><span class="line">    var vm = new Vue(&#123;</span><br><span class="line">        el: <span class="string">'#app'</span>, // element的简写，表示我们当前new的这个Vue实例的区域</span><br><span class="line">        data: &#123; // data中存放的是el中需要的数据</span><br><span class="line">            list: [1,2,3,4], </span><br><span class="line">            list2: [</span><br><span class="line">                &#123; id:1, name: <span class="string">'嘻嘻'</span> &#125;,</span><br><span class="line">                &#123; id:2, name: <span class="string">'哈哈'</span> &#125;</span><br><span class="line">            ],</span><br><span class="line">            user: &#123;</span><br><span class="line">                id: 1,</span><br><span class="line">                name: <span class="string">'LoonyCoder'</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        methods: &#123;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
 
@@ -622,7 +622,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -711,7 +711,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">15k</span>
+    <span title="Site words total count">18.6k</span>
   
 </div>
 
