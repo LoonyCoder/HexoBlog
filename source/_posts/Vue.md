@@ -296,17 +296,28 @@ Vue提供了事件绑定机制的指令：v-on:；用其我们可以用来绑定
 </script>
 ```
 
+---
+
 ### Vue中的样式
+
 
 #### 外联样式
 - 数组
-*<h2 :class="['italic','color']">LoonyCoder</h2>
-其中的italic、color是自定义的类名，需在外部定义CSS样式*
+```bash
+<h2 :class="['italic','color']">LoonyCoder</h2>
+```
+*其中的italic、color是自定义的类名，需在外部定义CSS样式*
+
 - 数组中嵌套对象
-*<h2 :class="['italic',{'color': flag}]">LoonyCoder</h2>
-其中的flag是Vue绑定的变量，在data进行声明*
+```bash
+<h2 :class="['italic',{'color': flag}]">LoonyCoder</h2>
+```
+*其中的flag是Vue绑定的变量，在data进行声明*
+
 - 直接使用对象
-*<h2 :class="{italic:true, color:flag}">LoonyCoder</h2>*
+```bash
+<h2 :class="{italic:true, color:flag}">LoonyCoder</h2>
+```
 
 实例：
 ```bash
@@ -473,10 +484,10 @@ data: {
 
 #### v-show和v-if
 
-Vue提供了两个指令来实现元素显示状态的切换：*v-if / v-show*
+Vue提供了两个指令来实现元素显示状态的切换：*v-if v-show*
 **区别**
-- *v-if的特点：每次都会重新删除和创建元素，具有较高的切换性能消耗（因为每次执行都要进行删除和创建元素）。*
-- *v-show的特点：每次不会重建进行DOM的删除和创建操作，只是切换了元素的display:none样式，具有较高的初识渲染消耗（即每次都只是将元素隐藏了，并没有真正的删除掉）。*
+- v-if的特点：每次都会重新删除和创建元素，具有较高的切换性能消耗（因为每次执行都要进行删除和创建元素）。
+- v-show的特点：每次不会重建进行DOM的删除和创建操作，只是切换了元素的display:none样式，具有较高的初识渲染消耗（即每次都只是将元素隐藏了，并没有真正的删除掉）。
 
 实例：
 ```bash
@@ -505,4 +516,3 @@ Vue提供了两个指令来实现元素显示状态的切换：*v-if / v-show*
 
 效果如下：
 ![vue6](/images/vue6.png)
-
