@@ -161,7 +161,7 @@ public interface IUserDao {
 
 ### 五、创建mybatis的主配置文件
 
-该配置文件需要放在/*resources*目录下，配置文件的名称在具有规范性的前提下是随意起的，我这里采用了默认的规范(我发现很多人都这么起)
+该配置文件需要放在/resources目录下，配置文件的名称在具有规范性的前提下是随意起的，我这里采用了默认的规范(我发现很多人都这么起)
 
 SqlMapConfig.xml
 ```bash
@@ -205,7 +205,7 @@ SqlMapConfig.xml
 
 前面虽然配置了mybatis主配置文件，但是我们在实际操作中如果存在多个对象的dao接口，主配置文件需要怎么准确找到该接口呢？
 我们就需要为每个dao配置一个独立的配置文件
-我习惯上把文件命名成 ***xxxMapper.xml***，这里命名成xxxDao.xml是为了方便理解。
+我习惯上把文件命名成 **xxxMapper.xml**，这里命名成xxxDao.xml是为了方便理解。
 文件存放目录为/resources目录下，与实体对象dao接口的包同级。
 ![xml文件配置](/images/mapperxml.png)
 

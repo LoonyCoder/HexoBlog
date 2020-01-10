@@ -19,7 +19,7 @@ tags:
 
 Shiro提供一个对象org.apache.shiro.session.mgt.eis.SessionDAO，通过此对象可以获取到Shiro的Session中有效的Session对象，通过此对象，我们可以获取到用户登录的数据，比如：用户名、密码、ID、SessionID、登录时间、最后访问时间、IP地址等等。
 
-![目录](/images/shiro1.png)
+![目录](/images/shiro2.png)
 
 下面我们实现两个功能：
 - 获取在线会话列表

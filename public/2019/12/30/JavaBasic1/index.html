@@ -98,7 +98,7 @@
 <meta property="og:image" content="http://cdn.tycoding.cn/Java+%E7%BA%BF%E7%A8%8B%E7%8A%B6%E6%80%81%E5%8F%98%E8%BF%81.png">
 <meta property="og:image" content="http://cdn.tycoding.cn/2019-4%E6%AD%BB%E9%94%811.png">
 <meta property="article:published_time" content="2019-12-29T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-01-06T10:44:07.241Z">
+<meta property="article:modified_time" content="2020-01-10T09:09:57.953Z">
 <meta property="article:author" content="LoonyCoder">
 <meta property="article:tag" content="Java">
 <meta property="article:tag" content="Java基础">
@@ -413,7 +413,7 @@
 <p><strong>String和StringBuffer和StringBuilder的区别</strong><br>1、String是不可变字符串，StringBuffer和StringBuilder是可变字符串。如果经常改变字符串的原始数据，最好使用StringBuffer代替。<br>2、String默认重写了equals方法和hashCode()方法；而StringBuffer没有重写equals方法，使用new StringBuffer(“”)会直接在堆内存中开辟空间储存对象。因此将StringBuffer对象储存仅Java集合中可能会出现问题。<br>3、StringBuffer是线程安全的，效率低；StringBuilder是线程不安全的，效率高。</p>
 <hr>
 <h4 id="static关键字？是否可覆盖？"><a href="#static关键字？是否可覆盖？" class="headerlink" title="static关键字？是否可覆盖？"></a>static关键字？是否可覆盖？</h4><p>static关键字表明一个成员变量或者是成员方法可以在没有所属的类实例变量的情况下被访问。被static标记的方法不能被覆盖，因为方法的覆盖是基于运行时动态绑定的，而static方法在编译时就已经和该类绑定了，也就是static标记的变量、方法都是随着类的加载而加载的，所以可以通过不创建对象实例就能访问该变量、方法；而不创建对象实例就访问非static变量、方法是不行的，因为此变量、方法还没有被创建。</p>
-<p><em>static标记的方法只能访问static变量或方法</em><br><em>非static标记的方法可以访问static或非static标记的变量或方法</em></p>
+<p>static标记的方法只能访问static变量或方法<br>非static标记的方法可以访问static或非static标记的变量或方法</p>
 <hr>
 <h4 id="自动拆、装箱"><a href="#自动拆、装箱" class="headerlink" title="自动拆、装箱"></a>自动拆、装箱</h4><p>因为Java自身面向对象OOP的特性，而一切基本数据类型都不具有面向对象的特性，所以Java为基本的数据类型提供了对应的引用类型。<br>具体表现在程序在编译期间自动将基本数据类型转换为引用类型(装箱)、将引用数据类型转换为基本数据类型(拆箱)</p>
 <table>
@@ -462,7 +462,7 @@
 <p>结果：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="literal">true</span></span><br><span class="line"><span class="literal">false</span></span><br></pre></td></tr></table></figure>
 
-<p><em>Java中实现基本数据类型和引用类型之间的拆装箱一般都是用过valueOf()方法实现的。例如我们看下Integer类的valueOf()方法源码：</em></p>
+<p>Java中实现基本数据类型和引用类型之间的拆装箱一般都是用过valueOf()方法实现的。例如我们看下Integer类的valueOf()方法源码：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">public static Integer valueOf(int i) &#123;</span><br><span class="line">    <span class="keyword">if</span> (i &gt;= IntegerCache.low &amp;&amp; i &lt;= IntegerCache.high)</span><br><span class="line">        <span class="built_in">return</span> IntegerCache.cache[i + (-IntegerCache.low)];</span><br><span class="line">    <span class="built_in">return</span> new Integer(i);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>可以看到：当声明一个新的整数型变量，编译时通过Integer类的valueOf()进行拆装箱计算，这个方法会首先比较这个整数值是否在IntegerCache的范围内，如果在就返回IntegerCache类中的数值；如果不在就直接new Integer。那么我们看下IntegerCache类源码：</p>
@@ -489,10 +489,10 @@
 <p>方法传递时传递的参数其实仅值原参数的一个拷贝，对于基本类型传递的就是具体的值的拷贝，对于引用类型传递的是对象地址。<br>所以上面的例子中，基本数据类型a,b经过swap方法并没有改变原始值，而引用类型arr数组经过swap方法就改变了原始值（因为直接对对象堆内存地址数据操作）。</p>
 <hr>
 <h4 id="IO流"><a href="#IO流" class="headerlink" title="IO流"></a>IO流</h4><p><img src="http://cdn.tycoding.cn/20180127210359151.png" alt="IO流"></p>
-<p><strong>1、Java中有几种类型的流？</strong><br>字符流和字节流。字节流继承<em>InputStream</em>和<em>OutputStream</em>；字符流继承自<em>InputStreamReader</em>和<em>OutputStreamWriter</em>。</p>
-<p><strong>2、谈谈Java IO中的方法阻塞</strong><br>Java中的阻塞式方法是指在程序调用该方法时，必须等待输入数据可用或检测到输入结果时结束或抛出异常，否则程序会一直停留在该语句上，不会执行下面的语句。比如<em>read()</em>和<em>readLine()</em>方法。</p>
-<p><strong>3、字符流和字节流的区别？</strong><br>数据的输入和输出在计算机中最终都是通过字节的形式传递的，对应通过<em>InputStream</em>和<em>OutputStream</em>实现，他们都是针对字节操作的。<br>而有时候通常需要读取一些完全是字符的文本数据，通常使用基于字节流的包装类字符流完成操作，他们通过<em>InputStreamReader</em>和<em>OutputStreamWriter</em>实现。<br>字符流是字节流的包装，即使有时候读取的是字符流，但也可能需要转换为字节写入。</p>
-<p><strong>4、NIO</strong><br>传统的IO是阻塞式的，会一直监听一个<em>ServerSocket</em>，在调用<em>read()</em>等方法时，会一直等到数据到来或缓冲区已满时才返回；调用<em>accept()</em>时也会一直阻塞到有客户端连接时才继续执行；每个客户端连接成功后，服务端都会踢动一个县城去处理该客户端的请求；在多线程处理多个连接时，每个线程都拥有自己的栈空间并且占用了一些CPU时间，每个线程遇到外部未准备好时，都会发生阻塞。阻塞的结果就是会打来大量的进程上下文切换。<br>而对于NIO，它是非阻塞式，核心类：</p>
+<p><strong>1、Java中有几种类型的流？</strong><br>字符流和字节流。字节流继承InputStream和OutputStream；字符流继承自InputStreamReader和OutputStreamWriter。</p>
+<p><strong>2、谈谈Java IO中的方法阻塞</strong><br>Java中的阻塞式方法是指在程序调用该方法时，必须等待输入数据可用或检测到输入结果时结束或抛出异常，否则程序会一直停留在该语句上，不会执行下面的语句。比如read()和readLine()方法。</p>
+<p><strong>3、字符流和字节流的区别？</strong><br>数据的输入和输出在计算机中最终都是通过字节的形式传递的，对应通过InputStream和OutputStream实现，他们都是针对字节操作的。<br>而有时候通常需要读取一些完全是字符的文本数据，通常使用基于字节流的包装类字符流完成操作，他们通过InputStreamReader和OutputStreamWriter实现。<br>字符流是字节流的包装，即使有时候读取的是字符流，但也可能需要转换为字节写入。</p>
+<p><strong>4、NIO</strong><br>传统的IO是阻塞式的，会一直监听一个ServerSocket，在调用read()等方法时，会一直等到数据到来或缓冲区已满时才返回；调用accept()时也会一直阻塞到有客户端连接时才继续执行；每个客户端连接成功后，服务端都会踢动一个县城去处理该客户端的请求；在多线程处理多个连接时，每个线程都拥有自己的栈空间并且占用了一些CPU时间，每个线程遇到外部未准备好时，都会发生阻塞。阻塞的结果就是会打来大量的进程上下文切换。<br>而对于NIO，它是非阻塞式，核心类：</p>
 <ul>
 <li>Buffer： 为所有的原始类型提供Buffer缓冲支持</li>
 <li>Charset： 字符集编码解码解决方案</li>
@@ -506,9 +506,9 @@
 </ul>
 <hr>
 <h4 id="Array和ArrayList有什么区别？"><a href="#Array和ArrayList有什么区别？" class="headerlink" title="Array和ArrayList有什么区别？"></a>Array和ArrayList有什么区别？</h4><ul>
-<li><em>Array</em>可以包含基本类型和对象类型；<em>ArrayList</em>只能包含对象类型</li>
-<li><em>Array</em>大小是固定的；<em>ArrayList</em>大小是动态变化的</li>
-<li><em>ArrayList</em>提供了诸如<em>addAll()</em>、<em>removeAll()</em>、<em>iterator()</em>方法等</li>
+<li>Array可以包含基本类型和对象类型；ArrayList只能包含对象类型</li>
+<li>Array大小是固定的；ArrayList大小是动态变化的</li>
+<li>ArrayList提供了诸如addAll()、removeAll()、iterator()方法等</li>
 <li>对于基本数据类型，集合使用自动装箱来减少代码量；但当处理固定大小的基本类型数据时，这种方式相对较慢。</li>
 </ul>
 <hr>
@@ -517,19 +517,19 @@
 <p><strong>什么是迭代器</strong><br><em>Iterator</em>接口中提供了很多对集合元素迭代的方法。每个集合中都有可以返回迭代器对象的方法<em>iterator()</em>。迭代器在迭代的过程中可以删除底层集合的元素。</p>
 <p><strong>Iterator和ListIterator的区别？</strong></p>
 <ul>
-<li><em>Iterator</em>可以用来遍历Set和List集合，但是<em>ListIterator</em>只能遍历List</li>
-<li><em>Iterator</em>对集合只能向前遍历（<em>next()</em>）；而<em>ListIterator</em>可以向前遍历（<em>next()</em>），也可以向后遍历（<em>previous()</em>）</li>
-<li><em>ListIterator</em>实现了<em>Iterator</em>接口</li>
+<li>Iterator可以用来遍历Set和List集合，但是ListIterator只能遍历List</li>
+<li>Iterator对集合只能向前遍历（next()）；而*ListIterator可以向前遍历（next()），也可以向后遍历（previous()）</li>
+<li>ListIterator实现了Iterator接口</li>
 </ul>
 <p><strong>RandomAccess接口</strong></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">//ArrayList</span><br><span class="line">public class ArrayList&lt;E&gt; extends AbstractList&lt;E&gt;</span><br><span class="line">        implements List&lt;E&gt;, RandomAccess, Cloneable, java.io.Serializable</span><br><span class="line">&#123;&#125;</span><br><span class="line"></span><br><span class="line">//RandomAccess</span><br><span class="line">public interface RandomAccess &#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//LinkedList</span><br><span class="line">public class LinkedList&lt;E&gt;</span><br><span class="line">    extends AbstractSequentialList&lt;E&gt;</span><br><span class="line">    implements List&lt;E&gt;, Deque&lt;E&gt;, Cloneable, java.io.Serializable</span><br><span class="line">&#123;&#125;</span><br></pre></td></tr></table></figure>
 
-<p>源码中<em>ArrayList</em>类实现了<em>RandomAccess</em>接口，<em>LinkedList</em>类中却没有实现这个接口，但是<em>RandomAccess</em>接口中却什么也没有定义。可以看<em>RandomAccess</em>接口上的注释：</p>
+<p>源码中ArrayList类实现了RandomAccess接口，LinkedList类中却没有实现这个接口，但是RandomAccess接口中却什么也没有定义。可以看RandomAccess接口上的注释：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Marker interface used by &lt;tt&gt;List&lt;/tt&gt; implementations to indicate that</span><br><span class="line"> * they support fast (generally constant time) random access.  The primary</span><br><span class="line"> * purpose of this interface is to allow generic algorithms to alter their</span><br><span class="line"> * behavior to provide good performance when applied to either random or</span><br><span class="line"> * sequential access lists.</span><br><span class="line"> */</span><br></pre></td></tr></table></figure>
-<p>大概就是说这个接口仅是一个标识Marker，实现了这个接口的List将支持快速随机访问（random access）。接下来，我们查看<em>Collections</em>类中的<em>binarySearch</em>方法：</p>
+<p>大概就是说这个接口仅是一个标识Marker，实现了这个接口的List将支持快速随机访问（random access）。接下来，我们查看Collections类中的binarySearch方法：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">public static &lt;T&gt;</span><br><span class="line">int binarySearch(List&lt;? extends Comparable&lt;? super T&gt;&gt; list, T key) &#123;</span><br><span class="line">    <span class="keyword">if</span> (list instanceof RandomAccess || list.size()&lt;BINARYSEARCH_THRESHOLD)</span><br><span class="line">        <span class="built_in">return</span> Collections.indexedBinarySearch(list, key);</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="built_in">return</span> Collections.iteratorBinarySearch(list, key);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">private static &lt;T&gt;</span><br><span class="line">int indexedBinarySearch(List&lt;? extends Comparable&lt;? super T&gt;&gt; list, T key) &#123;</span><br><span class="line">    int low = 0;</span><br><span class="line">    int high = list.size()-1;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (low &lt;= high) &#123;</span><br><span class="line">        int mid = (low + high) &gt;&gt;&gt; 1;</span><br><span class="line">        Comparable&lt;? super T&gt; midVal = list.get(mid);</span><br><span class="line">        int cmp = midVal.compareTo(key);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (cmp &lt; 0)</span><br><span class="line">            low = mid + 1;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (cmp &gt; 0)</span><br><span class="line">            high = mid - 1;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            <span class="built_in">return</span> mid; // key found</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">return</span> -(low + 1);  // key not found</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">private static &lt;T&gt;</span><br><span class="line">int iteratorBinarySearch(List&lt;? extends Comparable&lt;? super T&gt;&gt; list, T key)</span><br><span class="line">&#123;</span><br><span class="line">    int low = 0;</span><br><span class="line">    int high = list.size()-1;</span><br><span class="line">    ListIterator&lt;? extends Comparable&lt;? super T&gt;&gt; i = list.listIterator();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (low &lt;= high) &#123;</span><br><span class="line">        int mid = (low + high) &gt;&gt;&gt; 1;</span><br><span class="line">        Comparable&lt;? super T&gt; midVal = get(i, mid);</span><br><span class="line">        int cmp = midVal.compareTo(key);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (cmp &lt; 0)</span><br><span class="line">            low = mid + 1;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (cmp &gt; 0)</span><br><span class="line">            high = mid - 1;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            <span class="built_in">return</span> mid; // key found</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">return</span> -(low + 1);  // key not found</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p><em>binarySearch()</em>方法是从List中查找指定元素，其中首先判断传入的List时候实现了<em>RandomAccess</em>接口，如果实现了就调用<em>indexedBinarySearch()</em>方法，否则就调用<em>iteratorBinarySearch()</em>方法。再看这两个方法的源码：<br>如果传入的List实现了<em>RandomAccess</em>接口，采用普通for循环遍历<br>若传入的List未实现<em>RandomAccess</em>接口，采用<em>iterator</em>遍历</p>
+<p>binarySearch()方法是从List中查找指定元素，其中首先判断传入的List时候实现了RandomAccess接口，如果实现了就调用indexedBinarySearch()方法，否则就调用iteratorBinarySearch()方法。再看这两个方法的源码：<br>如果传入的List实现了RandomAccess接口，采用普通for循环遍历<br>若传入的List未实现RandomAccess接口，采用iterator遍历</p>
 <p><strong>链表</strong></p>
 <p><strong>链表（Linked List）</strong>由一串节点组成，每个节点包含任意的实例数据和一或两个用来指向上一个/下一个节点位置的指针</p>
 <blockquote>
@@ -556,21 +556,21 @@
 <li><strong>LinkedList</strong>: 底层数据结构是链表，查询慢，增删快。线程不安全，效率高</li>
 </ul>
 <hr>
-<h4 id="谈谈ArrayList的扩容机制"><a href="#谈谈ArrayList的扩容机制" class="headerlink" title="谈谈ArrayList的扩容机制"></a>谈谈ArrayList的扩容机制</h4><p>Java中基本数组都是定长的，一旦被实例化后就不能改变其长度，意味着创建数组时必须确定数组的容量大小。而很多情况下，数组的长度不是确定的，需要动态增减，<em>ArrayList</em>的出现就解决了这一问题。<br><em>ArrayList</em>的扩容机制表现在<em>add()</em>方法上，先看<em>add()</em>方法的源码：</p>
+<h4 id="谈谈ArrayList的扩容机制"><a href="#谈谈ArrayList的扩容机制" class="headerlink" title="谈谈ArrayList的扩容机制"></a>谈谈ArrayList的扩容机制</h4><p>Java中基本数组都是定长的，一旦被实例化后就不能改变其长度，意味着创建数组时必须确定数组的容量大小。而很多情况下，数组的长度不是确定的，需要动态增减，ArrayList的出现就解决了这一问题。<br>ArrayList的扩容机制表现在add()方法上，先看add()方法的源码：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">public boolean add(E e) &#123;</span><br><span class="line">    ensureCapacityInternal(size + 1);  // Increments modCount!!</span><br><span class="line">    elementData[size++] = e;</span><br><span class="line">    <span class="built_in">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">private void ensureCapacityInternal(int minCapacity) &#123;</span><br><span class="line">    ensureExplicitCapacity(calculateCapacity(elementData, minCapacity));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//获取最小容量</span><br><span class="line">private static int calculateCapacity(Object[] elementData, int minCapacity) &#123;</span><br><span class="line">    <span class="keyword">if</span> (elementData == DEFAULTCAPACITY_EMPTY_ELEMENTDATA) &#123;</span><br><span class="line">        <span class="built_in">return</span> Math.max(DEFAULT_CAPACITY, minCapacity);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">return</span> minCapacity;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//判断是否需要扩容</span><br><span class="line">private void ensureExplicitCapacity(int minCapacity) &#123;</span><br><span class="line">    modCount++;</span><br><span class="line"></span><br><span class="line">    // overflow-conscious code</span><br><span class="line">    <span class="keyword">if</span> (minCapacity - elementData.length &gt; 0)</span><br><span class="line">        grow(minCapacity);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>当向<em>ArrayList</em>对象中添加新元素时，首先会调用<em>ensureCapacityInternal(size)</em>方法，<em>size</em>为最小扩容量；<em>ensureCapacityInternal()</em>方法会首先调用<em>calculateCapacity</em>来确定需要的最小容量；最后调用<em>ensureExplicitCapacity()</em>方法判断时候需要扩容。最后判断所需最小容量如果大于当前数组的空间大小，则需要扩容，调用<em>grow()</em>方法扩容：</p>
+<p>当向ArrayList对象中添加新元素时，首先会调用ensureCapacityInternal(size)方法，size为最小扩容量；ensureCapacityInternal()方法会首先调用calculateCapacity来确定需要的最小容量；最后调用ensureExplicitCapacity()方法判断时候需要扩容。最后判断所需最小容量如果大于当前数组的空间大小，则需要扩容，调用grow()方法扩容：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">private void grow(int minCapacity) &#123;</span><br><span class="line">    // 获取ArrayList中elementDaata数组的长度</span><br><span class="line">    int oldCapacity = elementData.length;</span><br><span class="line">    // 扩容至原来的1.5倍</span><br><span class="line">    int newCapacity = oldCapacity + (oldCapacity &gt;&gt; 1);</span><br><span class="line">    // 判断新的数组容量够不够</span><br><span class="line">    // 够了就直接使用这个长度创建新数组</span><br><span class="line">    <span class="keyword">if</span> (newCapacity - minCapacity &lt; 0)</span><br><span class="line">        // 不够就将数组的长度设置为需要的长度</span><br><span class="line">        newCapacity = minCapacity;</span><br><span class="line">    // 检查此时的最大值是否溢出</span><br><span class="line">    <span class="keyword">if</span> (newCapacity - MAX_ARRAY_SIZE &gt; 0)</span><br><span class="line">        newCapacity = hugeCapacity(minCapacity);</span><br><span class="line">    // 调用Arrays.copyOf()将elementData数组数据拷贝到新数组</span><br><span class="line">    // 并将elementData指向新数组newCapacity的内存地址</span><br><span class="line">    elementData = Arrays.copyOf(elementData, newCapacity);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p><strong>总结</strong>： <em>ArrayList</em>扩容的本质就是计算所需扩容size得到新的数组，将原数组中的数据复制到新数组中，最后将原数组指向新数组在堆内存的引用地址即可。</p>
+<p><strong>总结</strong>： ArrayList扩容的本质就是计算所需扩容size得到新的数组，将原数组中的数据复制到新数组中，最后将原数组指向新数组在堆内存的引用地址即可。</p>
 <hr>
-<h4 id="HashMap和HashTable的区别？"><a href="#HashMap和HashTable的区别？" class="headerlink" title="HashMap和HashTable的区别？"></a>HashMap和HashTable的区别？</h4><p><em>1、HashMap和HashTable都实现了Map接口，主要区别在线程安全性、同步、速度<br>2、线程是否安全： HashMap非同步线程不安全，HashTable同步线程安全。HashTable内部的方法都经过synchronized修饰。<br>3、效率: HashMap线程不安全效率高，HashTable线程安全效率低。<br>3、对null key和null value的支持： HashMap中，null可以作为key，这样的key只有一个，但可以有多个key对应的值为null；在HashTable中的key不能为null<br>5、底层数据结构： JDK1.8后的HashMap在解决哈希冲突时有了较大的变化，当链表长度大于阀值时（默认是8），将链表转换为红黑树，以减少搜索时间。HashTable没有这样的机制。</em></p>
+<h4 id="HashMap和HashTable的区别？"><a href="#HashMap和HashTable的区别？" class="headerlink" title="HashMap和HashTable的区别？"></a>HashMap和HashTable的区别？</h4><p>1、HashMap和HashTable都实现了Map接口，主要区别在线程安全性、同步、速度<br>2、线程是否安全： HashMap非同步线程不安全，HashTable同步线程安全。HashTable内部的方法都经过synchronized修饰。<br>3、效率: HashMap线程不安全效率高，HashTable线程安全效率低。<br>3、对null key和null value的支持： HashMap中，null可以作为key，这样的key只有一个，但可以有多个key对应的值为null；在HashTable中的key不能为null<br>5、底层数据结构： JDK1.8后的HashMap在解决哈希冲突时有了较大的变化，当链表长度大于阀值时（默认是8），将链表转换为红黑树，以减少搜索时间。HashTable没有这样的机制。</p>
 <hr>
 <h4 id="HashMap和HashSet区别"><a href="#HashMap和HashSet区别" class="headerlink" title="HashMap和HashSet区别?"></a>HashMap和HashSet区别?</h4><p><strong>HashSet底层采用HashMap实现</strong><br>HashMap|HashSet<br>:–|:–<br>实现了Map接口|实现了Set接口<br>储存键值堆|仅储存对象<br>调用put()向Map中添加元素|调用add()向Set中添加元素<br>HashMap使用Key计算HashCode|HashSet使用成员对象来计算hashCode值，对于两个对象来说，hashCode可能相同，所以用equals判断对象的相等性</p>
 <hr>
-<h4 id="HashSet如何检查重复？"><a href="#HashSet如何检查重复？" class="headerlink" title="HashSet如何检查重复？"></a>HashSet如何检查重复？</h4><p><em>在前面讲hashCode和equals时就提到了，HashSet集合同样适用。向HashSet中存入一个元素，HashSet首先会根据对象的hashCode值判断当期集合中此hashCode对应的位置有没有值，如果没有就直接添加，如果有就再调用equals方法比较两个对象是否相同，相同就不再储存（保证了Set集合不重复的特性），否则就散列到其他位置储存。</em></p>
+<h4 id="HashSet如何检查重复？"><a href="#HashSet如何检查重复？" class="headerlink" title="HashSet如何检查重复？"></a>HashSet如何检查重复？</h4><p>在前面讲hashCode和equals时就提到了，HashSet集合同样适用。向HashSet中存入一个元素，HashSet首先会根据对象的hashCode值判断当期集合中此hashCode对应的位置有没有值，如果没有就直接添加，如果有就再调用equals方法比较两个对象是否相同，相同就不再储存（保证了Set集合不重复的特性），否则就散列到其他位置储存。</p>
 <hr>
-<h4 id="HashMap底层实现？"><a href="#HashMap底层实现？" class="headerlink" title="HashMap底层实现？"></a>HashMap底层实现？</h4><p><em>Map在Java中的实现由很多，HashMap便是其中之一，随着JDK版本的更新，HashMap的实现也在不断更新：</em></p>
+<h4 id="HashMap底层实现？"><a href="#HashMap底层实现？" class="headerlink" title="HashMap底层实现？"></a>HashMap底层实现？</h4><p>Map在Java中的实现由很多，HashMap便是其中之一，随着JDK版本的更新，HashMap的实现也在不断更新：</p>
 <ul>
 <li>&lt;=JDK1.7: Table数组 + Entry链表</li>
 <li><blockquote>
@@ -578,36 +578,36 @@
 </blockquote>
 </li>
 </ul>
-<h4 id="Hash"><a href="#Hash" class="headerlink" title="Hash"></a>Hash</h4><p><strong>Hash（哈希、散列）</strong>，就是把任意长度的输入通过散列算法变换成固定长度的输出，该输出就是散列值。<br>Hash函数的一种实现：<br>直接取余法： f(x) = x mod max<br>位运算法： f(x) = x &amp; max<br><em>HashMap采用 位运算法，相比直接取余，位运算直接对内存中的二进制数据操作，不需要再转阿欢为十进制，因此处理速度很快：</em></p>
+<h4 id="Hash"><a href="#Hash" class="headerlink" title="Hash"></a>Hash</h4><p><strong>Hash（哈希、散列）</strong>，就是把任意长度的输入通过散列算法变换成固定长度的输出，该输出就是散列值。<br>Hash函数的一种实现：<br>直接取余法： f(x) = x mod max<br>位运算法： f(x) = x &amp; max<br>HashMap采用 位运算法，相比直接取余，位运算直接对内存中的二进制数据操作，不需要再转阿欢为十进制，因此处理速度很快：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">7 &amp; 33 = 1</span><br><span class="line">    </span><br><span class="line">    000111</span><br><span class="line">  &amp; 100001</span><br><span class="line">  --------</span><br><span class="line">    000001 = 1</span><br></pre></td></tr></table></figure>
 
 <hr>
-<h4 id="Hash冲突"><a href="#Hash冲突" class="headerlink" title="Hash冲突"></a>Hash冲突</h4><p><em>假设将100个数据通过Hash散列后存储到10个不同的容器中，必定会出现多个元素分布到同一个容器中。具体到HashMap集合中，若将多个K-V数据存入put，HashMap根据元素key计算到对应的hashCode值，如果计算得到多个不同的key对应的hashCode值相同（即要储存到同一位置），此时这种现象就称为 Hash冲突。<br>HashMap默认采用了 链地址法 解决Hash冲突问题，即通过类似单链表的方式将 冲突的元素 串起来，搜索时遍历这个链表即可。注意： 如果冲突的Hash越来越多，这个链就会越来越长。</em></p>
+<h4 id="Hash冲突"><a href="#Hash冲突" class="headerlink" title="Hash冲突"></a>Hash冲突</h4><p>假设将100个数据通过Hash散列后存储到10个不同的容器中，必定会出现多个元素分布到同一个容器中。具体到HashMap集合中，若将多个K-V数据存入put，HashMap根据元素key计算到对应的hashCode值，如果计算得到多个不同的key对应的hashCode值相同（即要储存到同一位置），此时这种现象就称为 Hash冲突。<br>HashMap默认采用了 链地址法 解决Hash冲突问题，即通过类似单链表的方式将 冲突的元素 串起来，搜索时遍历这个链表即可。注意： 如果冲突的Hash越来越多，这个链就会越来越长。</p>
 <hr>
-<h4 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h4><p><img src="http://cdn.tycoding.cn/8db4a3bdfb238da1a1c4431d2b6e075c_hd.png" alt="hash冲突与实现原理"><br>这里我们需要了解两个名词：<br><em>Table: 哈希桶数组（哈希表），存放Node元素，底层是一个Node[] table<br>Node: 节点元素，Node是HashMap的一个内部类，实现了Map.Entry接口，本质是一个映射（K-V）<br>HashMap内部的一些关键属性需要了解：<br>DEFAULT_INITIAL_CAPACITY: Tabale数组的初始化长度，默认是1 &lt;&lt; 4，2^4 = 16<br>MAXIMUM_CAPACITY: Table数组最高长度，默认为1 &lt;&lt; 30，2^30 = 1073741824<br>DEFAULT_LOAD_FACTOR: 负载因子，当总元素数 &gt; 数组长度 * 负载因子时，Table数组将扩容，默认是0.75<br>TREEIFY_THRESHOLD: 树化阀值，当单个Table内Node数量超过该值，则将链表转换为红黑树，默认是8<br>UNTREEIFY_THRESHOLD: 链化阀值，当扩容期间单个Table的Entry数量小于该值，则将红黑数转换为链表，默认为6<br>MIN_TREEIFY_CAPACITY: 最小树化阀值，当Table中所有元素超过该值，才会进行树化<br>size: 当前HashMap实际存在的键值对数量<br>threshold: HashMap所能容纳的最大数据量的Node（键值对）个数。Node[] table初始化长度length是16，loadFactor负载因子默认是0.75，threshold = length * loadFactor<br>loadFactor: 负载因子，默认是0.17<br>modCount: 记录HashMap内部结构发生变化的次数<br>HashMap内部存在一个NodeTable数组，这个数组的初始化长度是DEFAULT_INITIAL_CAPACITY，他是一个单向链表：</em></p>
+<h4 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h4><p><img src="http://cdn.tycoding.cn/8db4a3bdfb238da1a1c4431d2b6e075c_hd.png" alt="hash冲突与实现原理"><br>这里我们需要了解两个名词：<br>Table: 哈希桶数组（哈希表），存放Node元素，底层是一个Node[] table<br>Node: 节点元素，Node是HashMap的一个内部类，实现了Map.Entry接口，本质是一个映射（K-V）<br>HashMap内部的一些关键属性需要了解：<br>DEFAULT_INITIAL_CAPACITY: Tabale数组的初始化长度，默认是1 &lt;&lt; 4，2^4 = 16<br>MAXIMUM_CAPACITY: Table数组最高长度，默认为1 &lt;&lt; 30，2^30 = 1073741824<br>DEFAULT_LOAD_FACTOR: 负载因子，当总元素数 &gt; 数组长度 * 负载因子时，Table数组将扩容，默认是0.75<br>TREEIFY_THRESHOLD: 树化阀值，当单个Table内Node数量超过该值，则将链表转换为红黑树，默认是8<br>UNTREEIFY_THRESHOLD: 链化阀值，当扩容期间单个Table的Entry数量小于该值，则将红黑数转换为链表，默认为6<br>MIN_TREEIFY_CAPACITY: 最小树化阀值，当Table中所有元素超过该值，才会进行树化<br>size: 当前HashMap实际存在的键值对数量<br>threshold: HashMap所能容纳的最大数据量的Node（键值对）个数。Node[] table初始化长度length是16，loadFactor负载因子默认是0.75，threshold = length * loadFactor<br>loadFactor: 负载因子，默认是0.17<br>modCount: 记录HashMap内部结构发生变化的次数<br>HashMap内部存在一个NodeTable数组，这个数组的初始化长度是DEFAULT_INITIAL_CAPACITY，他是一个单向链表：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">static class Node&lt;K,V&gt; implements Map.Entry&lt;K,V&gt; &#123;</span><br><span class="line">    final int <span class="built_in">hash</span>; //key的Hash值</span><br><span class="line">    final K key; //key</span><br><span class="line">    V value; //value</span><br><span class="line">    Node&lt;K,V&gt; next; //下一个节点</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p><em>参考单链表的结构，Table中每个Node节点包含两个部分，Node元素作为节点的header，next指向下一个节点。*</em>这种链式结构的存在正是为了解决Hash冲突***</p>
+<p>参考单链表的结构，Table中每个Node节点包含两个部分，Node元素作为节点的header，next指向下一个节点。<strong>这种链式结构的存在正是为了解决Hash冲突</strong></p>
 <p>栗子：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">map.put(<span class="string">"loonycoder"</span>, <span class="string">"18"</span>);</span><br></pre></td></tr></table></figure>
 <p>HashMap将根据”loonycoder”这个Key得到其hashCode值，然后经过Hash算法定位到其在HashMap储存的位置，如果两个不同的key定位到了同一个位置，此时就发生了Hash冲突。<br>在JDK1.7之前，解决Hash冲突的方式是将冲突的Node节点放在一个链表中。在JDK1.8中，当Table中链长超过TREEIFY_THRESHOLD阀值后，会将链表转换为红黑树的实现TreeNode:</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">static final class TreeNode&lt;K,V&gt; extends LinkedHashMap.Entry&lt;K,V&gt; &#123;</span><br><span class="line">    TreeNode&lt;K,V&gt; parent;  // red-black tree links</span><br><span class="line">    TreeNode&lt;K,V&gt; left;</span><br><span class="line">    TreeNode&lt;K,V&gt; right;</span><br><span class="line">    TreeNode&lt;K,V&gt; prev;    // needed to unlink next upon deletion</span><br><span class="line">    boolean red;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><em>当发生<strong>Hash冲突</strong>时，根据HashMap默认采用的 <strong>链地址法</strong>，即将冲突的Hash串成一个链式结构储存到HashMap对应的位置。但是 随着Hash冲突越来越多，这个<strong>链将越来越长</strong>，这就将导致遍历碰撞key时的消耗不断增加，也就直接导致了性能的不足。在JDK1.8后，HashMap对单个Table中的Node超出某个阀值后，将开始树化操作（链表转换为红黑树），这对搜索的性能将会有很大的提升。</em><br><img src="http://cdn.tycoding.cn/JDK1.8%E4%B9%8B%E5%90%8E%E7%9A%84HashMap%E5%BA%95%E5%B1%82%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84.jpg" alt="地址链法"></p>
+<p>当发生<strong>Hash冲突</strong>时，根据HashMap默认采用的 <strong>链地址法</strong>，即将冲突的Hash串成一个链式结构储存到HashMap对应的位置。但是 随着Hash冲突越来越多，这个<strong>链将越来越长</strong>，这就将导致遍历碰撞key时的消耗不断增加，也就直接导致了性能的不足。在JDK1.8后，HashMap对单个Table中的Node超出某个阀值后，将开始树化操作（链表转换为红黑树），这对搜索的性能将会有很大的提升。<br><img src="http://cdn.tycoding.cn/JDK1.8%E4%B9%8B%E5%90%8E%E7%9A%84HashMap%E5%BA%95%E5%B1%82%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84.jpg" alt="地址链法"></p>
 <p><strong>总结</strong><br>到此，我们总结一下HashMap的实现原理：</p>
 <ul>
-<li><em>HashMap</em>根据<em>key</em>的<em>hashCode</em>值存储元素。<em>put</em>新元素会遍历链表，根据新元素的key计算<em>hashCode</em>得到散列位置，如果该位置有值再调用<em>equals</em>判断<em>value</em>是否相同，相同就散列到其他位置储存。</li>
-<li><em>HashMap</em>在<em>put</em>新元素时如果遇到<em>key</em>对应的<em>hashCode</em>相同，可能会产生<em>Hash</em>冲突问题。<em>HashMap</em>的做法是采用链式结构（链表）储存存在<em>Hash</em>冲突的元素，查询时再遍历这个链接结构元素集合即可。</li>
-<li>如果发生<em>Hash</em>冲突的元素很多，这个 <strong>链</strong> 将很长，影响到遍历<em>key</em>消耗性能的增加，于是判断当<em>Table</em>中<em>Node</em>节点大于默认值8时，将链表转换为红黑树（<em>TreeNode</em>）存储元素。</li>
+<li>HashMap根据key的hashCode值存储元素。put新元素会遍历链表，根据新元素的key计算hashCode得到散列位置，如果该位置有值再调用equals判断value是否相同，相同就散列到其他位置储存。</li>
+<li>HashMap在put新元素时如果遇到key对应的hashCode相同，可能会产生Hash冲突问题。HashMap的做法是采用链式结构（链表）储存存在Hash冲突的元素，查询时再遍历这个链接结构元素集合即可。</li>
+<li>如果发生Hash冲突的元素很多，这个 <strong>链</strong> 将很长，影响到遍历key消耗性能的增加，于是判断当Table中Node节点大于默认值8时，将链表转换为红黑树（TreeNode）存储元素。</li>
 </ul>
 <hr>
 <h4 id="Collection和Collections的区别？"><a href="#Collection和Collections的区别？" class="headerlink" title="Collection和Collections的区别？"></a>Collection和Collections的区别？</h4><ul>
-<li><em>Collection是集合类的上级接口，继承他的接口主要有Set和List</em></li>
-<li><em>Collections仅是针对集合类封装的一个工具类，在java.util包下</em></li>
+<li>Collection是集合类的上级接口，继承他的接口主要有Set和List</li>
+<li>Collections仅是针对集合类封装的一个工具类，在java.util包下</li>
 </ul>
 <hr>
 <h4 id="Comparable和Comparator的区别？"><a href="#Comparable和Comparator的区别？" class="headerlink" title="Comparable和Comparator的区别？"></a>Comparable和Comparator的区别？</h4><ul>
-<li><em>Comparable接口来自java.lang包，提供compareTo(Object obj) 方法排序</em></li>
-<li><em>Comparator接口来自java.util包，提供compare(Object obj1, Object obj2)方法排序</em><br>当需要对一个集合采用一种方式排序，使用<em>Comparable</em>接口；如果需要对一个集合采用两种排序方式就使用<em>Comparator</em>接口。</li>
+<li>Comparable接口来自java.lang包，提供compareTo(Object obj) 方法排序</li>
+<li>Comparator接口来自java.util包，提供compare(Object obj1, Object obj2)方法排序<br>当需要对一个集合采用一种方式排序，使用Comparable接口；如果需要对一个集合采用两种排序方式就使用Comparator接口。</li>
 </ul>
 <h4 id="Java集合框架总结"><a href="#Java集合框架总结" class="headerlink" title="Java集合框架总结"></a>Java集合框架总结</h4><h5 id="Collection"><a href="#Collection" class="headerlink" title="Collection"></a>Collection</h5><p><img src="http://cdn.tycoding.cn/QQ20190623-181246.png" alt="Collection"></p>
 <p><strong>List</strong></p>
@@ -623,9 +623,8 @@
 <hr>
 <h3 id="Java并发"><a href="#Java并发" class="headerlink" title="Java并发"></a>Java并发</h3><h4 id="线程和进程的区别？"><a href="#线程和进程的区别？" class="headerlink" title="线程和进程的区别？"></a>线程和进程的区别？</h4><ul>
 <li>进程是程序的一次执行过程，是系统运行程序的基本单位</li>
-<li>线程与进程类似，但线程是一个比进程更小的执行单位。一个进程执行过程中可以产生多个线程，</li>
+<li>线程与进程类似，但线程是一个比进程更小的执行单位。一个进程执行过程中可以产生多个线程，<br>在Java中，启用一个main方法就是启动了一个JVM进程，而main函数所在的线程就是这个进程中的一个线程，也称为主线程。</li>
 </ul>
-<p><em>在Java中，启用一个main方法就是启动了一个JVM进程，而main函数所在的线程就是这个进程中的一个线程，也称为主线程。</em></p>
 <hr>
 <h4 id="从JVM角度分析进程和线程的关系？"><a href="#从JVM角度分析进程和线程的关系？" class="headerlink" title="从JVM角度分析进程和线程的关系？"></a>从JVM角度分析进程和线程的关系？</h4><p>根据JVM的内存划分，对于线程而言：多个线程共享进程的堆、方法区资源，但每个线程又有自己的程序计数器、虚拟机栈、本地方法栈。</p>
 <p>也就是说，在一个JVM进程中，可以存在多个线程，每个线程都共享了这个JVM进程的方法区、堆；并且每个线程又都具有自己的虚拟机栈、本地方法栈、程序计数器等。</p>
@@ -655,7 +654,7 @@
 </thead>
 <tbody><tr>
 <td align="left">new</td>
-<td align="left">初始状态，线程被创建，但还没有调用<em>start()</em>方法</td>
+<td align="left">初始状态，线程被创建，但还没有调用start()方法</td>
 </tr>
 <tr>
 <td align="left">runnable</td>
@@ -670,7 +669,7 @@
 <td align="left">等待状态，线程需要等待当前线程或其他线程执行完成</td>
 </tr>
 <tr>
-<td align="left">time_waiting**</td>
+<td align="left">time_waiting</td>
 <td align="left">超时等待状态，他可以实现在指定时间后自动返回</td>
 </tr>
 <tr>
@@ -678,7 +677,7 @@
 <td align="left">终止状态，表示当前线程已经执行完毕</td>
 </tr>
 </tbody></table>
-<p>对应，程序会因为不同代码的执行产生不同的状态，如下图：<br><img src="http://cdn.tycoding.cn/Java+%E7%BA%BF%E7%A8%8B%E7%8A%B6%E6%80%81%E5%8F%98%E8%BF%81.png" alt="线程图"><br><em>如上，线程创建后将进入NEW（初始）状态，调用start()开始运行，当线程执行wait()方法后，线程将进入WAITING（等待）状态，可以通过wait(long)或join(long)等方法终止等待状态；当线程调用同步方法时，在没有获取到锁的情况下，线程将会进入到BLOCKED（阻塞）状态。</em></p>
+<p>对应，程序会因为不同代码的执行产生不同的状态，如下图：<br><img src="http://cdn.tycoding.cn/Java+%E7%BA%BF%E7%A8%8B%E7%8A%B6%E6%80%81%E5%8F%98%E8%BF%81.png" alt="线程图"><br>如上，线程创建后将进入NEW（初始）状态，调用start()开始运行，当线程执行wait()方法后，线程将进入WAITING（等待）状态，可以通过wait(long)或join(long)等方法终止等待状态；当线程调用同步方法时，在没有获取到锁的情况下，线程将会进入到BLOCKED（阻塞）状态。</p>
 <hr>
 <h4 id="什么是上下文切换？"><a href="#什么是上下文切换？" class="headerlink" title="什么是上下文切换？"></a>什么是上下文切换？</h4><p>简单来说，并发编程中实际线程的数量都可能大于CPU核心的个数，而COU一个核心在任意时刻只能被一个线程使用，CPU为了保证并发的线程都有被执行，采用<strong>随机分配时间片并轮转</strong>的方式；而一个线程的时间片用户将保存并进入就绪状态直到下次分配时间片再执行，这个 <strong>任务从保存到再加载的过程就是一次上下文切换</strong>。</p>
 <hr>
@@ -687,7 +686,7 @@
 
 <p>Output：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Thread[线程 1,5,main]get resource1</span><br><span class="line">Thread[线程 2,5,main]get resource2</span><br><span class="line">Thread[线程 1,5,main]waiting get resource2</span><br><span class="line">Thread[线程 2,5,main]waiting get resource1</span><br></pre></td></tr></table></figure>
-<p><em>线程1以resource1作为同步监视器，即可以轻松获取resource1同时也锁定了resource1，此时调用sleep让线程1等待1秒钟；此时线程2开始执行，他以resource2作为同步监视器同时也锁定了resource2，此时调用sleep让线程2等待1秒钟；而此时线程1等待1秒已经结束了，当他想要获取resource2时发现resource2已经被线程2锁定了，同理线程2结束等待后想要获取resource1时发现resource1已经被线程1锁定了。那么两者都无法同时获取对方的线程，便进入死锁状态。</em><br>因此产生死锁需要具备以下四个条件：</p>
+<p>线程1以resource1作为同步监视器，即可以轻松获取resource1同时也锁定了resource1，此时调用sleep让线程1等待1秒钟；此时线程2开始执行，他以resource2作为同步监视器同时也锁定了resource2，此时调用sleep让线程2等待1秒钟；而此时线程1等待1秒已经结束了，当他想要获取resource2时发现resource2已经被线程2锁定了，同理线程2结束等待后想要获取resource1时发现resource1已经被线程1锁定了。那么两者都无法同时获取对方的线程，便进入死锁状态。<br>因此产生死锁需要具备以下四个条件：</p>
 <p>1、互斥条件：该资源任意一个时刻只能由一个线程占用<br>2、请求和保持条件：一个线程因请求资源而阻塞时，对已获取的资源保持不放<br>3、不剥夺条件：线程已获取的资源在未使用完之前不能被其他线程强行剥夺，只有自己使用完毕后才使用资源<br>4、循环等待条件：若干进程之前形成一种头尾相接的循环等待资源关系。</p>
 <p>避免死锁就要破坏这四个条件中任意一个：<br>1、破坏互斥条件：这个条件我们无法破坏，因为我们用锁的目的就是想让他们互斥<br>2、破坏请求与保持条件：一次性申请所有资源<br>3、破坏循环等待条件：按照一定顺序申请资源，避免资源的循环使用</p>
 <p>解决方案: 修改线程2</p>
@@ -697,16 +696,16 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Thread[线程 1,5,main]get resource1</span><br><span class="line">Thread[线程 1,5,main]waiting get resource2</span><br><span class="line">Thread[线程 1,5,main]get resource2</span><br><span class="line">Thread[线程 2,5,main]get resource1</span><br><span class="line">Thread[线程 2,5,main]waiting get resource2</span><br><span class="line">Thread[线程 2,5,main]get resource2</span><br><span class="line"></span><br><span class="line">Process finished with <span class="built_in">exit</span> code 0</span><br></pre></td></tr></table></figure>
 
 <hr>
-<h4 id="说说sleep-方法和wait-方法的区别？"><a href="#说说sleep-方法和wait-方法的区别？" class="headerlink" title="说说sleep()方法和wait()方法的区别？"></a>说说sleep()方法和wait()方法的区别？</h4><p><em>两者最主要的区别在于：*</em>sleep 方法没有释放锁，而 wait 方法释放了锁***</p>
+<h4 id="说说sleep-方法和wait-方法的区别？"><a href="#说说sleep-方法和wait-方法的区别？" class="headerlink" title="说说sleep()方法和wait()方法的区别？"></a>说说sleep()方法和wait()方法的区别？</h4><p>两者最主要的区别在于：<strong>sleep 方法没有释放锁，而 wait 方法释放了锁</strong></p>
 <ul>
 <li>两者都可以暂停线程的执行</li>
 <li>wait()通常用于线程间交互/通信，sleep()通常用户暂停执行</li>
 <li>wait()方法被调用后，线程不会自动苏醒，需要别的线程调用同一对象上的notify()或者notifyAll()方法。sleep()方法执行完成后，线程会自动苏醒。</li>
 </ul>
 <hr>
-<h4 id="调用start-方法会执行run-方法，为什么不能直接调用run-方法？"><a href="#调用start-方法会执行run-方法，为什么不能直接调用run-方法？" class="headerlink" title="调用start()方法会执行run()方法，为什么不能直接调用run()方法？"></a>调用start()方法会执行run()方法，为什么不能直接调用run()方法？</h4><p><em>new一个Thread，线程进入了新建状态；调用start()方法，会启用一个线程并使线程进入就绪状态，当分配到时间片后就可以开始执行。start()会执行线程的相应准备工作，然后自动执行run()方法的内容，这才是真正的多线程工作。而直接执行run()方法，会吧run()方法当做一个main线程下的一个普通方法去执行，并不会在某个线程中执行他。<br>*</em>总结：调用start方法可以启动线程并使线程进入就绪状态，而run()方法只是Thread的一个普通方法调用，还是在main主线程里执行，并不会在一个新线程中执行***</p>
+<h4 id="调用start-方法会执行run-方法，为什么不能直接调用run-方法？"><a href="#调用start-方法会执行run-方法，为什么不能直接调用run-方法？" class="headerlink" title="调用start()方法会执行run()方法，为什么不能直接调用run()方法？"></a>调用start()方法会执行run()方法，为什么不能直接调用run()方法？</h4><p>new一个Thread，线程进入了新建状态；调用start()方法，会启用一个线程并使线程进入就绪状态，当分配到时间片后就可以开始执行。start()会执行线程的相应准备工作，然后自动执行run()方法的内容，这才是真正的多线程工作。而直接执行run()方法，会吧run()方法当做一个main线程下的一个普通方法去执行，并不会在某个线程中执行他。<br><strong>总结：调用start方法可以启动线程并使线程进入就绪状态，而run()方法只是Thread的一个普通方法调用，还是在main主线程里执行，并不会在一个新线程中执行</strong></p>
 <hr>
-<h4 id="synchronized关键字"><a href="#synchronized关键字" class="headerlink" title="synchronized关键字"></a>synchronized关键字</h4><p><em>synchronized</em>关键字解决多个线程之间访问资源的同步性，<em>synchronized</em>关键字可以保证它修饰的方法或代码块在任意时刻只能有一个线程执行。<br><em>synchronized</em>关键字最主要的三种使用方式：</p>
+<h4 id="synchronized关键字"><a href="#synchronized关键字" class="headerlink" title="synchronized关键字"></a>synchronized关键字</h4><p>synchronized关键字解决多个线程之间访问资源的同步性，synchronized关键字可以保证它修饰的方法或代码块在任意时刻只能有一个线程执行。<br>synchronized关键字最主要的三种使用方式：</p>
 <ul>
 <li><p><strong>修饰实例方法</strong>： 给当前对象加锁，进入同步代码块前要获取当前对象实例的锁</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 此处的`synchronized`就相当于`synchronized(this)`，锁定的是当前对象</span><br><span class="line">public synchronized void <span class="function"><span class="title">add</span></span>() &#123;&#125;</span><br></pre></td></tr></table></figure></li>

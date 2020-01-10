@@ -13,13 +13,13 @@ tags:
 
 #### 对象的创建
 
-*比如Student s = new Student()实例化一个对象，其实经历了如下几个过程：
+比如Student s = new Student()实例化一个对象，其实经历了如下几个过程：
 将Student.class加载到内存中
 在栈内存中给s开辟内存空间。
 在堆内存给Student类申请一个内存空间。
 给成员变量进行默认初始化，0 null false…
 自定义给成员变量初始化赋值
-初始化完毕，把堆内存地址赋值给栈内存的s变量*
+初始化完毕，把堆内存地址赋值给栈内存的s变量
 
 #### Main方法剖析
 
@@ -27,11 +27,11 @@ tags:
 public static void main(String[] args) { ... }
 ```
 
-- *public: 公共的，访问权限最大，因为main方法是被JVM调用的。*
-- *static：静态的，不需要创建对象，通过类名就能调用，方便JVM调用。*
-- *void: 无返回值，因为main方法是被JVM调用的，所以给JVM返回数据没有意义。*
-- *main: 常见的方法入口，很多语言的入口方法都是main方法。*
-- *String[] args: 字符串数组，是作为命令行参数调用的。*
+- public: 公共的，访问权限最大，因为main方法是被JVM调用的。
+- static：静态的，不需要创建对象，通过类名就能调用，方便JVM调用。
+- void: 无返回值，因为main方法是被JVM调用的，所以给JVM返回数据没有意义。
+- main: 常见的方法入口，很多语言的入口方法都是main方法。
+- String[] args: 字符串数组，是作为命令行参数调用的。
 
 ##### static关键字
 
@@ -44,11 +44,11 @@ public static void main(String[] args) { ... }
 
 **拓展**
 
-*静态方法中没有this关键字，因为this代表当前方法对象，但static优于对象存在，所以在对象还未创建完毕static修饰的方法就被调用，此时this代表的对象还未创建。*
+静态方法中没有this关键字，因为this代表当前方法对象，但static优于对象存在，所以在对象还未创建完毕static修饰的方法就被调用，此时this代表的对象还未创建。
 
 #### String
 
-*String底层定义为public final class String，说明String是常量，一旦被创建就不能修改。可以查看如Integer LongString这些类的源码：*
+String底层定义为public final class String，说明String是常量，一旦被创建就不能修改。可以查看如Integer LongString这些类的源码：
 ```bash
 public final class Integer {}
 public final class Long {}
@@ -65,7 +65,7 @@ String ss = "ab";
 ss = new String("ab");
 ```
 
-*这个s和ss各自创建了几个对象？答案：s创建两个对象；ss创建一个对象。因为s的常量池中有值ab，而重新赋值s = "abc"这个abc在s的常量池中不存在，所以new String()创建了一个新对象。ss同理分析。可以通过如下方式验证：*
+这个s和ss各自创建了几个对象？答案：s创建两个对象；ss创建一个对象。因为s的常量池中有值ab，而重新赋值s = "abc"这个abc在s的常量池中不存在，所以new String()创建了一个新对象。ss同理分析。可以通过如下方式验证：
 ```bash
 String ss = "ab";
 System.out.println(ss.hashCode());
@@ -75,7 +75,7 @@ System.out.println(ss.hashCode());
 [stack](/images/String1.png)
 
 ##### StringBuffer
-*String是不可变的字符串，StringBuffer是线程安全的可变字符串，用StringBuffer做字符串的拼接可以避免资源的浪费，因为String每次拼接新的字符串都是创建一个新的String对象。*
+String是不可变的字符串，StringBuffer是线程安全的可变字符串，用StringBuffer做字符串的拼接可以避免资源的浪费，因为String每次拼接新的字符串都是创建一个新的String对象。
 
 **String转换为StringBuffer**
 ```bash
@@ -172,8 +172,8 @@ public class Demo01_Object {
 ```
 
 **引入概念**：
-*在Java中**一个对象变量并没有实际包含一个对象，而仅仅引用一个对象。所有的Java对象都储存在堆内存中**。例如：Date t = new Date()其中的t就是一个对象变量，new Date()是在堆内存中开辟了一个空间，而t指向new Date()的堆内存地址。
-因此，在上述代码中a b都是基本类型，而int[]是一个引用类型，那**基本类型形式参数改变对实际参数没有影响；对象类型形式参数改变直接影响实际参数。***
+在Java中**一个对象变量并没有实际包含一个对象，而仅仅引用一个对象。所有的Java对象都储存在堆内存中**。例如：Date t = new Date()其中的t就是一个对象变量，new Date()是在堆内存中开辟了一个空间，而t指向new Date()的堆内存地址。
+因此，在上述代码中a b都是基本类型，而int[]是一个引用类型，那**基本类型形式参数改变对实际参数没有影响；对象类型形式参数改变直接影响实际参数。**
 
 [stack](/images/stack.png)
 
@@ -192,11 +192,11 @@ public static void swap(Employee x, Employee y) {
 }
 ```
 
-*当调用swap(e1, e2)时并不会改变e1和e2的对象引用，swap方法的参数x,y被初始化为两个对象引用的拷贝，这个方法交换的是这两个拷贝。*
+当调用swap(e1, e2)时并不会改变e1和e2的对象引用，swap方法的参数x,y被初始化为两个对象引用的拷贝，这个方法交换的是这两个拷贝。
 
 - **基本类型**（包括Integer String Long）传递的参数是参数**值**的拷贝
 
-*特别是对于Integer Long String这些类型数据，在初始化、赋值的时候都是从常量池中取数据，比如IntgerCache LongCache，如果常量池中没有就重新new对象，例如：*
+特别是对于Integer Long String这些类型数据，在初始化、赋值的时候都是从常量池中取数据，比如IntgerCache LongCache，如果常量池中没有就重新new对象，例如：
 ```bash
 public static void main(String[] args) {
     String s = "123";
@@ -259,7 +259,7 @@ class Demo2School {
 ```
 
 ##### final
-*final可以修改类、方法、变量。*
+final可以修改类、方法、变量。
 
 **特点**：
 - final可以修饰类，该类不能被继承。
@@ -271,7 +271,7 @@ class Demo2School {
 - 引用类型：引用类型的地址值不能被改变，但是该对象的堆内存地址是可以改变的。
 
 **初始化时机**
-*被final修饰的变量必须在构造方法完毕前被初始化，比如*
+被final修饰的变量必须在构造方法完毕前被初始化，比如
 ```bash
 public class Demo {
     final int WIDTH = 12;
@@ -289,7 +289,7 @@ public class Demo {
 3、子类不能继承父类的构造方法，但可以通过super关键字访问父类的构造方法。
 
 ##### 子类和父类的关系
-***子类中的所有构造方法都默认访问父类的无参构造方法**。因为子类继承父类，并可能使用父类中的数据，所以子类初始化前一定要完成父类的初始化。所以子类每一个构造方法第一行默认都是super()。*
+**子类中的所有构造方法都默认访问父类的无参构造方法**。因为子类继承父类，并可能使用父类中的数据，所以子类初始化前一定要完成父类的初始化。所以子类每一个构造方法第一行默认都是super()。
 ```bash
 public class Demo04_Extends {
     public static void main(String[] args) {
@@ -322,7 +322,7 @@ class Demo04Parent {
 ```
 
 ##### this-super
-*this和super关键字的区别和使用场景？*
+this和super关键字的区别和使用场景？
 区别：
 - this: 代表当前类的对象引用
 - super: 代表父类的空间标识（可以理解为父类的引用，通过他访问父类的成员）
@@ -395,13 +395,13 @@ Zi 构造方法
 一个类存在于另一个类中方法外，这个类就称为内部类；一个类存在于另一个类方法内，这个类称为局部内部类。
 - 内部类可以直接访问外部类的成员，包括私有
 - 外部类可以访问内部类的成员，必须创建对象
-- 直接访问内部类的成员：*Outer.Inner in = new Outer().new Inner()*
+- 直接访问内部类的成员：Outer.Inner in = new Outer().new Inner()
 
 **局部内部类**
 局部内部类可以直接访问外部类的成员，在局部位置可以创建内部类对象，通过对象调用内部类成员。
 
 > 局部内部类访问局部变量注意事项?
-​*局部内部类访问局部变量必须用final修饰。因为**局部内部类的声明周期比局部变量长**，局部变量随着方法的调用而存在，随着调用完毕而消失；但局部内部类不一定消失，他调用一个消失的变量就会报错。*
+​局部内部类访问局部变量必须用final修饰。因为**局部内部类的声明周期比局部变量长**，局部变量随着方法的调用而存在，随着调用完毕而消失；但局部内部类不一定消失，他调用一个消失的变量就会报错。
 
 ```bash
 public class InnerClass {
@@ -424,7 +424,7 @@ class Outer {
     }
 }
 ```
-*此时调用不会报错，但并没有加final修饰。这个类编译后会生成InnerClass.class和Outer.class两个文件，我们来看下Outer.class:*
+此时调用不会报错，但并没有加final修饰。这个类编译后会生成InnerClass.class和Outer.class两个文件，我们来看下Outer.class:
 ```bash
 class Outer {
     Outer() {}
@@ -441,7 +441,7 @@ class Outer {
     }
 }
 ```
-*其中的num2被自动加上了final修饰（这是因为JDK1.8的原因），所以如果你再添上num2 = 1000就会报错。*
+其中的num2被自动加上了final修饰（这是因为JDK1.8的原因），所以如果你再添上num2 = 1000就会报错。
 
 > 解决办法
-*上面说过了应该将num2用final修饰。其原因就是Inner类的生命周期要比num2的声明周期长，当show()方法调用完毕后num2就已经消失了，但此时Inner类在堆内存中仍然存在，他调用一个不存在的变量就会报错。而用final修饰，这个变量成为常量，在初始化内部类的时候，final num2就在内部类中生成了一份拷贝，这个拷贝和这个内部类的声明周期相同，所以不会报错。*
+上面说过了应该将num2用final修饰。其原因就是Inner类的生命周期要比num2的声明周期长，当show()方法调用完毕后num2就已经消失了，但此时Inner类在堆内存中仍然存在，他调用一个不存在的变量就会报错。而用final修饰，这个变量成为常量，在初始化内部类的时候，final num2就在内部类中生成了一份拷贝，这个拷贝和这个内部类的声明周期相同，所以不会报错。
