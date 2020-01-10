@@ -15,11 +15,11 @@ tags:
 - [Spring Boot Shiro在线会话管理](https://mrbird.cc/Spring-Boot-Shiro%20session.html)
 
 实现效果预览：
-[实现效果预览](/images/shiro1.png)
+![实现效果预览](/images/shiro1.png)
 
 Shiro提供一个对象org.apache.shiro.session.mgt.eis.SessionDAO，通过此对象可以获取到Shiro的Session中有效的Session对象，通过此对象，我们可以获取到用户登录的数据，比如：用户名、密码、ID、SessionID、登录时间、最后访问时间、IP地址等等。
 
-[目录](/images/shiro1.png)
+![目录](/images/shiro1.png)
 
 下面我们实现两个功能：
 - 获取在线会话列表
@@ -142,14 +142,14 @@ public List<OnlineUser> list() {
 }
 ```
 
-*getActiveSessions()*将获取到所有有效的*Session*集合，通过*DefaultSubjectContext.PRINCIPALS_SESSION_KEY*可以判断当前系统*Subject*中的*session key*和*sessions*列表中的*session*是否匹配，不匹配则*session*无效。
-*session.getHost()*顾名思义就是获取Host主机地址即IP地址。
-*AddressUtil.getAddress(session.getHost())*是通过IP地址查询其详细的地理位置，使用了*ip2region*开源库。
+getActiveSessions()将获取到所有有效的Session集合，通过DefaultSubjectContext.PRINCIPALS_SESSION_KEY可以判断当前系统Subject中的session key和sessions列表中的session是否匹配，不匹配则session无效。
+session.getHost()顾名思义就是获取Host主机地址即IP地址。
+AddressUtil.getAddress(session.getHost())是通过IP地址查询其详细的地理位置，使用了ip2region开源库。
 
 ##### 根据IP查询地址位置
 
 开源地址：https://github.com/lionsoul2014/ip2region
-引入*ip2region*的依赖：
+引入ip2region的依赖：
 ```bash
 <dependency>
     <groupId>org.lionsoul</groupId>
@@ -158,7 +158,7 @@ public List<OnlineUser> list() {
 </dependency>
 ```
 拷贝ip2region.db文件（开源仓库中找）到项目的resources/config/下
-参考官方实例代码写工具类*AddressUtil.java*
+参考官方实例代码写工具类AddressUtil.java
 官方实例：https://github.com/lionsoul2014/ip2region/blob/master/binding/java/src/main/java/org/lionsoul/ip2region/test/TestSearcher.java
 
 ```bash
@@ -212,7 +212,7 @@ public class AddressUtil {
 ```
 
 ##### 结
-当前端请求*/online/list*接口时，将*List<OnlineUser>*结合数据返回给前端渲染即可。
+当前端请求/online/list接口时，将List<OnlineUser>结合数据返回给前端渲染即可。
 
 #### 实现强制下线功能
 
