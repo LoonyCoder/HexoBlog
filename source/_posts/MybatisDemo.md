@@ -2,11 +2,12 @@
 title: Mybatis入门及搭建
 categories:
     - Java
-    - 数据库
+    
 date: 2020-01-03
 tags:
 	- Java
 	- Java框架
+    - 数据库
 
 ---
 
