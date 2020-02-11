@@ -16,7 +16,9 @@ tags:
 
 ---
 
-### 一、准备工作
+### Mybatis的配置方式开发
+
+#### 一、准备工作
 
 因为Mybatis是持久层框架，所以在此之前我们要做一些准备工作，首先我们要在Mysql中建好表并插入数据。
 建表及导入sql
@@ -39,7 +41,7 @@ insert  into `user`(`id`,`username`,`birthday`,`sex`,`address`) values (1,'张�
 如图：
 ![建表](/images/table.png)
 
-### 二、新建项目
+#### 二、新建项目
 
 我们这里要新建一个maven项目。
 ![创建Maven项目](/images/1.png)
@@ -90,7 +92,7 @@ insert  into `user`(`id`,`username`,`birthday`,`sex`,`address`) values (1,'张�
 
 ---
 
-### 三、创建表对象的映射实体类
+#### 三、创建表对象的映射实体类
 
 因为mybatis是一个ORM（Object Relational Mapping）框架，所以我们要准备一个和表字段一一对应的实体类。
 
@@ -157,7 +159,7 @@ public class User implements Serializable {
 
 --- 
 
-### 四、新建dao接口
+#### 四、新建dao接口
 
 这里直接上代码，我在此新建了一个查询所有的方法，此处记住方法名和返回值类型，后续会用到。
 
@@ -176,7 +178,7 @@ public interface IUserDao {
 
 ---
 
-### 五、创建mybatis的主配置文件
+#### 五、创建mybatis的主配置文件
 
 该配置文件需要放在/resources目录下，配置文件的名称在具有规范性的前提下是随意起的，我这里采用了默认的规范(我发现很多人都这么起)
 
@@ -218,7 +220,7 @@ SqlMapConfig.xml
 
 ---
 
-### 六、配置mapper文件
+#### 六、配置mapper文件
 
 前面虽然配置了mybatis主配置文件，但是我们在实际操作中如果存在多个对象的dao接口，主配置文件需要怎么准确找到该接口呢？
 我们就需要为每个dao配置一个独立的配置文件
@@ -245,7 +247,7 @@ SqlMapConfig.xml
 
 ---
 
-### 七、引入log4j
+#### 七、引入log4j
 
 这个是可选操作，为了后期记录日志，我们可以采用log4j去实现。此处只是了解。
 将log4j.properties文件放在/resources目录下即可。
@@ -273,7 +275,7 @@ log.appender.LOGFILE.layout.ConversionPattern=%d{ISO8601} %-6r [%15.15t] %-5p %3
 
 ---
 
-### 八、测试案例
+#### 八、测试案例
 
 如此，我们的mybatis就搭建完成了，我们接下来测试一下。
 在/test/java目录下新建一个test类
@@ -325,4 +327,56 @@ public class MybatisTest {
 
 
 ---
+
+### Mybaits的注解方式开发
+
+Mybatis也为我们提供了基于注解的开发方式
+基于注解开发意味着脱离xml配置，所以我们在上述项目中可以直接移除com/loonycoder/dao/IUserDao.xml文件
+同时需要修改SqlMapConfig.xml中的映射配置文件部分
+```bash
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<!--mybatis的主配置文件-->
+<configuration>
+    <!--配置环境-->
+    <environments default="mysql">
+        <environment id="mysql">
+            <!--配置事务-->
+            <transactionManager type="JDBC"></transactionManager>
+            <!--配置数据源（连接池）-->
+            <dataSource type="POOLED">
+                <property name="driver" value="com.mysql.jdbc.Driver" />
+                <property name="url" value="jdbc:mysql://localhost:3306/mybatis" />
+                <property name="username" value="root" />
+                <property name="password" value="root" />
+            </dataSource>
+        </environment>
+    </environments>
+
+    <!--配置映射文件（mapper类的映射文件）-->
+    <mappers>
+        <!--此处做了修改，之前的属性是resource，现在改为class，并且指定到dao接口的全限定类名-->
+        <mapper class="com.loonycoder.dao.IUserDao" />
+    </mappers>
+</configuration>
+```
+
+同时需要在dao接口的方法上添加注解@Select
+```bash
+package com.loonycoder.dao;
+
+import com.loonycoder.domain.User;
+
+import java.util.List;
+
+public interface IUserDao {
+    @Select("select * from user")
+    List<User> findAll();
+}
+```
+
+运行结果：
+![运行结果](/images/testResult.png)
 
