@@ -1,9 +1,9 @@
 ---
-title: Mybatis入门及搭建
+title: Mybatis入门（一）
 categories:
-    - Java
+    - Mybatis
     
-date: 2020-01-03
+date: 2018-10-14
 tags:
 	- Java
 	- Java框架
@@ -11,14 +11,30 @@ tags:
 
 ---
 
-很早之前看过Mybatis视频，但是无奈工作中没有用到，当自己练习搭建的时候发现问题很多，所以这次准备重新研究一下，一点点搭建Mybatis框架。
+上大学的时候自学过一段时间mybatis框架，感觉很好用。
+但是在工作中并没有用到，于是翻出之前的视频重新复习了一下。
 
 ---
 
 ### 一、准备工作
 
 因为Mybatis是持久层框架，所以在此之前我们要做一些准备工作，首先我们要在Mysql中建好表并插入数据。
-此处的sql我就不提供了，我都是用navicat手动插入的。
+建表及导入sql
+```bash
+CREATE TABLE `user` (
+  `id` int(11) NOT NULL auto_increment,
+  `username` varchar(32) NOT NULL COMMENT '用户名称',
+  `birthday` datetime default NULL COMMENT '生日',
+  `sex` char(1) default NULL COMMENT '性别',
+  `address` varchar(256) default NULL COMMENT '地址',
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+insert  into `user`(`id`,`username`,`birthday`,`sex`,`address`) values (1,'张三','2018-02-27 17:47:08','男','北京'),(2,'李四','2018-03-02 15:09:37','女','深圳'),(3,'王五','2018-03-04 11:34:34','女','成都'),(4,'赵六','2018-03-04 12:04:06','男','上海'),(5,'loonycoder','2018-03-07 17:37:26','男','西安'),(6,'望月','2018-03-08 11:44:00','女','杭州');
+
+```
 
 如图：
 ![建表](/images/table.png)
@@ -304,6 +320,9 @@ public class MybatisTest {
 }
 ```
 
+运行结果：
+![运行结果](/images/testResult.png)
+
+
 ---
 
-我们的第一个Mybatis入门案例就创建完了，但是这种方式还是十分复杂的，因为有太多的配置文件，后续我们会用更简便的注解的方式去实现它。
