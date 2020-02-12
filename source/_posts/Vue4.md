@@ -5,570 +5,270 @@ categories:
 date: 2019-03-04
 tags:
 	- 前端框架
-	
+
 ---
 
-#### Vue创建组件
+### Vue路由
 
-##### 什么是组件
-什么是组件？组件的出现，就是为了拆分Vue实例的代码量的，能够让我们以不同的组件，来划分不同的功能模块，将来我们需要什么样地方功能，就可以去调用对应的组件即可。
-组件化和模块化的区别：
-- 模块化：是从代码逻辑的角度进行划分的，方便代码分层开发，保证每个功能模块的只能单一；
-- 组件化：是从UI界面的角度进行划分的；前端的组件化，方便了UI组件的重用；
+#### 什么是Vue路由？
 
-##### 定义Vue组件
+- **后端路由：**即请求的URL地址都对应后端的接口，请求URL响应对应的服务器的资源。
+- **前端路由：**对于单页面程序来说，主要通过URL中的hash(#号)来实现不同页面之间的切换，同时，hash有一个特点：HTTP请求中不会包含hash相关的内容；所以单页面程序中的页面跳转主要通过hash实现。
 
-<i class="fas fa-award"></i>方式一
-1、使用Vue.extend来创建全局的Vue组件
-2、通过template属性来指定组件要展示的HTML结构
-3、通过Vue.component()定义全局组件
-4、在HTML指定位置通过Tag标签的形式应用你的组件，组件的名称即是tag标签的名称
+#### 入门
+
+##### 导入类库
+首先需要导入vue-router组件类库：
 ```bash
-<div id="app">
-	<!-- 组件的名称即为对应tag标签的名称 -->
-	<mycom1></mycom1>
-</div>
-
-<script>
-	// 创建组件
-	var com1 = Vue.extend({
-		template: '<h3>这是使用Vue.extend 创建的组件</h3>'
-	});
-
-	// 使用Vue.component('组件的名称', 创建出来的组件模板对象)，定义全局组件
-	Vue.component('mycom1', com1);
-</script>
+<script type="text/javascript" src="../lib/vue-router.js"></script>
 ```
-**注意：**
-- 用Vue.component()定义组件名称的时候有两种命名方式：1、驼峰命名：Xxx；2、xxx。注意，使用驼峰命名时，tag标签不能使用驼峰名称，应将相应的大写字母替换为-加小写字母，例如：Vue.component('myCom', com1)，那么tag标签应为： &lt;my-com&gt; &lt;/my-com&gt;
-
-<i class="fas fa-award"></i>方式二
-```bash
-<!-- 组件的名称即为对应tag标签的名称 -->
-<mycom1></mycom1>
-
-<script>
-
-	// 使用Vue.component('组件的名称', 创建出来的组件模板对象)，定义全局组件
-	Vue.component('mycom1', Vue.extend({
-		template: '<h3>这是使用Vue.extend 创建的组件</h3>'
-	}));
-</script>
-```
-
-方式二就像是方式一的简化版，但是注意：
-在template中定义的内容只能存在一个根节点元素，即上面例子中template中不能出现和 &lt;h3&gt;平级的标签。
-比如下面这种写法就是**错误的**
-```bash
-Vue.component('mycom1', Vue.extend({
-	template: '<h3>这是使用Vue.extend 创建的组件</h3><span></span>'
-}));
-```
-解决办法就是，外层嵌套一个根标签就行了：
-```bash
-Vue.component('mycom1', Vue.extend({
-	template: '<div><h3>这是使用Vue.extend 创建的组件</h3><span></span></div>'
-}));
-```
-<i class="fas fa-award"></i>方式三
-1、JavaScript中仍使用Vue.component来定义全局组件，和方式二相似，但是里面不再是template: 'HTML结构'了，而是引用一个外部标签的id值，即template:'id'。
-2、在被Vue实例控制的app外面，定义&lt;template id="id"&gt;你的HTML结构&lt;/template&gt;
-这种方式的好处就是是就组件代码都是定义在HTML结构中的，有智能代码提示；而JavaScript中定义组件仅是写一个引用。
-实例：
-```bash
-<div id="app">
-	<!-- 页面引用 -->
-</div>
-
-
-<template id="tmp">
-	<!-- 比如仅存在一个根节点元素 -->
-	<div>
-		<h1></h1>>
-		<h2></h2>
-	</div>
-</template>
-
-//JavaScript部分
-Vue.component('mycom', {
-	template: '#tmp'
-});
-```
-
-<i class="fas fa-award"></i>定义私有组件
-除了上面讲到的定义全局组件，我们也可以定义私有组件，使用components: {}函数。
-如：
-```bash
-<div id="app">
-    <tem></tem>
-</div>
-<template id="tmp">
-    <h3>这是私有组件</h3>
-</template>
-<script type="text/javascript" src="../lib/vue.js"></script>
-<script type="text/javascript">
-new Vue({
-    el: '#app',
-    data: {},
-    methods: {},
-    components: {
-        tem: {
-            template: '#tmp'
-        }
-    }
-
-});
-</script>
-```
-
-##### 组件元素
-<i class="fas fa-award"></i>组件的data
-在组件中，同样可以有自己的data数据，但是用法和Vue实例中的data用法有所不同：
-1、组件中的data必须是一个方法，即
-```bash
-data: function(){ }
-```
-2、组件中的data方法必须返回一个Object对象
-```bash
-data: function(){
-	return object
-}
-```
-
-实例：
-```bash
-<div id="app">
-    <mycom1></mycom1>
-</div>
-<script type="text/javascript" src="../lib/vue.js"></script>
-<script type="text/javascript">
-Vue.component('mycom1', Vue.extend({
-	data: function(){
-		return {
-			msg: '这是组件的data'
-		}
-	},
-	template: '<h3>这是使用Vue.extend 创建的组件-- {{msg}}</h3>'
-}));
-
-new Vue({
-    el: '#app',
-    data: {},
-    methods: {},
-    components: {
-    }
-});
-</script>
-```
-
-<i class="fas fa-award"></i>组件的切换
-在遇到登录注册表单时，通常我们需要对两个按钮进行切换实现显示不同的表单，那么Vue中的组件切换正符合了这个功能要求。
-
-<i class="fas fa-rainbow"></i>方式一
-
-可以使用Vue提供的v-if和v-else来实现两个组件间的切换，但是，仅支持切换两个组件
-
-实例：
-```bash
-<div id="app">
-    <a href="#" @click.prevent="flag=true">登录</a>
-    <a href="#" @click.prevent="flag=false">注册</a>
-
-    <login v-if="flag"></login>
-    <register v-else="flag"></register>
-</div>
-<template id="login">
-    <h3>这是登录表单</h3>
-</template>
-<template id="register">
-	<h3>这是注册表单</h3>
-</template>
-<script type="text/javascript" src="../lib/vue.js"></script>
-<script type="text/javascript">
-// 创建登录组件
-Vue.component('login', {
-	template: '#login'
-});
-
-// 创建注册组件
-Vue.component('register', {
-	template: '#register'
-})
-
-new Vue({
-    el: '#app',
-    data: {
-    	flag: true
-    },
-    methods: {}
-
-});
-</script>
-```
-定义flag参数，当flag=true就显示组件，当flar=false就隐藏组件
-
-<i class="fas fa-rainbow"></i>方式二
-
-Vue提供了component来展示对应名称的组件。其中component是一个占位符，:is属性，可以用来指定要展示的组件名称
-
-实例：
-```bash
-<div id="app">
-    <a href="#" @click.prevent="comName='login'">登录</a>
-    <a href="#" @click.prevent="comName='register'">注册</a>
-
-    <component :is="comName"></component>
-</div>
-<template id="login">
-    <h3>这是登录表单</h3>
-</template>
-<template id="register">
-	<h3>这是注册表单</h3>
-</template>
-<script type="text/javascript" src="../lib/vue.js"></script>
-<script type="text/javascript">
-// 创建登录组件
-Vue.component('login', {
-	template: '#login'
-});
-
-// 创建注册组件
-Vue.component('register', {
-	template: '#register'
-})
-
-new Vue({
-    el: '#app',
-    data: {
-    	comName: 'login'
-    },
-    methods: {}
-});
-</script>
-```
-即使用Vue提供的component，它能够实现自动对组件进行展示和隐藏，通过:is='组件名称'。
-
-##### 父子组件间传值
-<i class="fas fa-award"></i>父组件给子组件传值
-
-父组件给子组件传值，即实现在子组件中调用父组件中的methods或是获取父组件中的data.
-
-**传参数**
-
-```bash
-<body>
-	<!-- 父组件实例 -->
-    <div id="app">
-		
-        <!-- 子组件实例 -->
-        <com1></com1>
-    </div>
-
-    <script type="text/javascript" src="../lib/vue.js"></script>
-    <script type="text/javascript">
-
-    new Vue({
-        el: '#app',
-        data: {
-        	msg: '这是父组件data值'
-        },
-        methods: {
-        	show(){
-        		console.log("这是父组件的show方法");
-        	}
-        },
-
-        // 子组件
-        components: {
-        	com1: {
-        		template: '<h2>这是子组件</h2>'
-        	}
-        }
-    });
-    </script>
-</body>
-```
-如上，当我们直接在子组件中引用父组件data中定义的msg数据，将上面的修改为：
-```bash
-com1: {
-	template: '<h2>这是子组件--{{msg}}</h2>'
-}
-```
-那么就会报错。所以就证实了默认在子组件中不能访问父组件中的data或methods。
-为了解决子组件获取父组件数据，Vue提供了以下方式获取：
-- 1、父组件在引用子组件的时候，通过属性绑定的方式v-bind:，把需要传递给子组件的数据以属性绑定的形式传递到子组件内部，供子组件使用。
-- 2、在子组件中，通过props: []获取到父组件传递过来的数据；这样就完成了父组件向子组件传值
-
+当导入类库后，window全局对象中就存在了一个路由的构造函数： VueRouter；就像导入Vue类库后存在一个Vue的构造函数一样，我们能够通过new VueRouter的方式实例化路由对象。
+如果你使用了new VueRouter({});构造函数来实例化了一个路由对象，你会发现浏览器路径中会出现#/路径，这个路径就是前面讲到的URL中的hash，他并不会向后端发送任何请求，而仅仅是作页面跳转，如果你#/后拼接了一个不存在的路径，自然也不会进行跳转，页面也不会发送任何请求。
 **实例：**
+![vue](/images/vue15.png)
+
+##### 基本使用
+上面我们讲到了使用new VueRouter({})的方式实例化一个路由对象，其中包含几个参数：
 ```bash
-<body>
-	<!-- 父组件实例 -->
-    <div id="app">
-		
-        <!-- 子组件实例 -->
-        <com1 :fatoson="msg"></com1>
-    </div>
+<!-- HTML -->
+<div id="app">
+    
+    <!-- 给路由对象创建一个容器，包裹在父组件`app`内
+        相当于一个占位符，路由规则匹配到的组件内容就会展示到`<router-view></router-view>`中
+    -->
+    <router-view></router-view>
+</div>
 
-    <script type="text/javascript" src="../lib/vue.js"></script>
-    <script type="text/javascript">
+<!-- ===============分割线===================== -->
 
-    new Vue({
-        el: '#app',
-        data: {
-        	msg: '这是父组件data值'
-        },
-        methods: {},
+<!-- JavaScript -->
+//创建login组件
+var login = {
+    template: 'login组件'
+}
 
-        // 子组件
-        components: {
-        	com1: {
-        		template: '<h2>这是子组件--{{fatoson}}</h2>',
-        		props: ['fatoson']
-        	}
-        }
-    });
-    </script>
-</body>
-```
+//创建register组件
+var register = {
+    template: 'register组件'
+}
 
-如上，我们在子组件实例中使用了v-bind绑定了一个参数fatoson，其值是：msg即在父组件data中定义的值；那么就相当于父组件的一个data数据被Vue绑定到了子组件实例中，且父组件data值的别名是fatoson，那么在子组件中通过props: []属性就能获取到这个别名，然后就实现了父组件向子组件传值。需要注意以下：
-- 1、我们可以将为子组件绑定的参数名称是父组件值的别名。即此时msg相当于fatoson。
-- 2、注意命名中若是驼峰命名，在HTML中必须用-替换。
-- 3、注意props是Vue为父组将向子组件传值提供的一个参数，且他是唯一的数组类型的。
-- 4、注意子组件通过props获取到的父组件的值是只读的，即不能修改。
+// Router实例
+var 路由对象名称 = new VueRouter({
+    routes: [
+        { path: '/监听URL路径', component: login(组件名称) },
+        { path: '/监听URL路径', component: register(组件名称) }
+    ]
+});
 
-**传方法**
-上面讲了父组件给子组件传递普通的参数，下面我们将了解到父组件怎样给子组件传递方法。
-```bash
-<body>
-	<!-- 父组件实例 -->
-    <div id="app">
-		
-        <!-- 子组件实例 -->
-        <com1 @open="show"></com1>
-    </div>
-    <template id="tmp">
-    	<div>
-    		<h2>这是子组件</h2>
-    		<input type="button" @click="myclick" value="子组件按钮，点击触发父组件方法"/>
-    	</div>
-    </template>
+// Vue实例
+var vm = new Vue({
+    el: 'app',
+    data: {},
+    methods: {},
+    router: 路由对象名称   
+});
 
-    <script type="text/javascript" src="../lib/vue.js"></script>
-    <script type="text/javascript">
-
-    new Vue({
-        el: '#app',
-        data: {
-        	msg: '这是父组件data值'
-        },
-        methods: {
-        	show(){
-        		console.log("这是父组件的show方法");
-        	}
-        },
-
-        // 子组件
-        components: {
-        	com1: {
-        		template: '#tmp',
-        		props: ['fatoson'],
-        		methods: {
-        			myclick(){
-       		 			this.$emit('open');
-        			}
-        		}
-        	}
-        }
-    });
-    </script>
-</body>
 ```
 
 **解释：**
-- 1、这里子组件的template数据引用外部的<template></template>中的HTML代码。
-- 2、与传值思路相同，传递方法也需要在子组件实例中使用v-on即@来绑定方法，方法别名@open，方法的值是show是在父组件中定义的方法名。
-- 3、与传值思路相同，传值使用了props来接受传递的参数，那么传方法提供了$emit()元素
+- 1、routes 表示这个路由对象中的 路由匹配规则，可以存在多个规则（注意：这里是routes而不是routers）
+- 2、属性一：path 表示监听哪个路由连接地址，即你想跳转都哪个路径上，应在这里注册实现跳转到对应的组件上
+- 3、属性二：component 表示如果路由匹配了前面的path，则展示component属性对应的那个组件
+- 4、component的属性值必须是一个组件的模板对象，不能是组件的引用名称
+- 5、经过1-4的步骤基本完成了路由对象的创建，下面要将这个路由对象注入到Vue实例中，使用router: 组件对象名称实现
+- 6、创建对应需要监听的组件，如上我们创建了login和register组件，与之前讲的不同是这里是一个var 组件名称其值是一个组件对象，和之前的Vue.component方式相似，但是这里仅仅是一个组件对象，并没有注册到Vue实例中，因为没有组件名称，所以不能在HTML中使用&lt;login&gt;&lt;/login&gt; ，注意这里的login是组件对象的名称。
 
-**综合**
-上面讲的父组件向子组件传递方法，那么既然是方法就肯定能传递方法参数。我们只需要在父组件方法中指定值名称即可
+**步骤：**
+- 1、创建router实例new VueRouter，完成相关属性的定义；
+- 2、将这个路由对象注册到Vue实例中，使用router: 路由对象名称的方式；
+- 3、创建第一步中定义的组件名称对应的组件，直接在&lt;script&gt;中定义var组件对象名称即可，在template中定义具体的HTML视图，或是通过template: '#id'引用外部视图也行。
+- 4、在Vue实例控制域app中，创建&lt;router-view&gt;&lt;/router-view&gt;，相当于router容器，你想在页面上展示几个组件就应该在页面中创建几个容器。
+
+如上，我们可以写具体的跳转链接了：
 ```bash
-@子组件接收的方法别名="父组件中的方法(父组件中的参数值或data)"
+<div id="app>
+    <a href="#/login">登录</a>
+    <a href="#/register">注册</a>
+</div>
 ```
-```bash
-<body>
-	<!-- 父组件实例 -->
-    <div id="app">
-		
-        <!-- 子组件实例 -->
-        <com1 @open="show(fatosonval)"></com1>
-    </div>
-    <template id="tmp">
-    	<div>
-    		<h2>这是子组件</h2>
-    		<input type="button" @click="myclick" value="子组件按钮，点击触发父组件方法"/>
-    	</div>
-    </template>
 
+如上，当我们点击登录或注册，Vue-router就会监听都对应的URL地址，然后在path规则中刚好匹配到规则login，那么就会跳转到对应的组件component: login的login组件中。
+可能你会疑惑了，为什么这里的href需要写为#/login而不是/login或login，你尝试一下就知道了，因为vue-router监听URL地址是基于hash的，不加#/就会找不到路径。
+如果你觉得每次都加#/麻烦的话，Vue-router页提供了一个Tag:&lt;router-link to="URL地址"&gt;&lt;/router-link&gt;，其在浏览器中会被解析为&lt;a&gt;标签。
+
+**实例**
+```bash
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+    <div id="app">
+        <h1>父组件</h1>
+
+        <a href="#/login">登录</a>
+        <router-link to="register">注册</router-link>
+
+        <router-view></router-view>
+    </div>
     <script type="text/javascript" src="../lib/vue.js"></script>
+    <script type="text/javascript" src="../lib/vue-router.js"></script>
     <script type="text/javascript">
 
-    new Vue({
-        el: '#app',
-        data: {
-        	fatosonval: {
-        		id: '1',
-        		name: 'Loonycoder'
-        	}
-        },
-        methods: {
-        	show(data){
-        		console.log(data);
-        	}
-        },
-
-        // 子组件
-        components: {
-        	com1: {
-        		template: '#tmp',
-        		methods: {
-        			myclick(){
-       		 			this.$emit('open');
-        			}
-        		}
-        	}
+        var login = {
+            template: '<h2>登录组件</h2>'
         }
-    });
+
+        var register = {
+            template: '<h2>注册组件</h2>'
+        }
+
+        var routerObj = new VueRouter({
+            routes: [
+                { path: '/login', component: login },
+                { path: '/register', component: register }
+            ]
+        });
+
+        var vm = new Vue({
+            el: '#app',
+            data: {},
+            methods: {},
+            router: routerObj
+        });
     </script>
 </body>
+</html>
 ```
 
-<i class="fas fa-award"></i>子组件给父组件传值
-即实现在父组件中调用子组件中的方法
+但是上面的实例中，我们发现默认进入的根路径中仅有一个父组件名称，一般我们的登录页面应该直接显示登录框，所以vue-router提供了重定向的动能{path: '', redirect: ''}，即在router: []中监听根路径，如果监听都访问的是根路径就重定向到登录URL就好了。
+
 ```bash
-<body>
-	<!-- 父组件实例 -->
-    <div id="app">
-		
-        <!-- 子组件实例 -->
-        <com1 @open="show"></com1>
-    </div>
-    <template id="tmp">
-    	<div>
-    		<h2>这是子组件</h2>
-    		<input type="button" @click="myclick" value="子组件按钮，点击触发父组件方法"/>
-    	</div>
-    </template>
-
-    <script type="text/javascript" src="../lib/vue.js"></script>
-    <script type="text/javascript">
-
-    new Vue({
-        el: '#app',
-        data: {
-        	fatosonval: null
-        },
-        methods: {
-        	show(data){
-        		console.log(data);
-        	}
-        },
-
-        // 子组件
-        components: {
-        	com1: {
-        		template: '#tmp',
-        		data(){
-        			return {
-        				sonval: { name: 'Loonycoder', age: 24 }
-        			}
-        		},
-        		methods: {
-        			myclick(){
-       		 			this.$emit('open', this.sonval);
-        			}
-        		}
-        	}
-        }
-    });
-    </script>
-</body>
+var routerObj = new VueRouter({
+    routes: [
+        { path: '/', redirect: '/login' },
+        { path: '/login', component: login },
+        { path: '/register', component: register }
+    ]
+});
 ```
-之前我们实现父组件向子组件传值的时候，需要在@open()中指定父组件中的data，而子组件给父组件传值的时候就不需要再指定了，而是直接在调用子组件中的open（这是父组件方法的别名），将子组件的值写进$emit('方法别名', data参数)中即可。
 
-##### Vue获取DOM元素和组件
-首先我们需要明白的就是Vue并不提倡我们操作DOM元素，Vue的宗旨就是让我们只关心业务逻辑。
-那么通常我们需要获取一个如<h2></h2>中的值，采用原生JS通常需要先为tag标签定义一个id属性，然后通过JS代码document.getElementById('id').innterText来获取到<h2>中的文本数据，而Vue也实现了操作原生DOM的功能：
-- 在需要获取的HTML标签中指定`ref`属性，其值可自定义。
-- 在Vue实例中，使用`this.$refs.指定的值`来获取DOM对象，进行操作。
-```bash
-<h2 ref="h2">这是h2的文本数据</h2>>
-
-console.log(this.$refs.h2.innerText);
-```
-**通过$refs还能轻易获取子组件中的data和methods数据**
-首先需要为子组件引用实例定义ref="com1"属性，然后在Vue实例中通过this.$refs.com1即可获取子组件中的所有对象，即还能获取到子组件中的data和methods
+#### 路由参数传递
+在进行页面跳转，即路由的时候，我们可能需要在发送URL时传递一些参数，常见的就如<http://www.loonycoder.com/api?id=1&name='loonycoder'>这种格式。
+那么在URL中传递的参数，vue-router提供了一种获取方式：this.$route。
+那么什么时候能获取到传递的参数呢？ 回顾前面讲到的Vue声明周期函数，那么在自定义组件中自然也存在生命周期函数，所以最早操作组件data和methods中数据的阶段就是created这个声明周期函数的阶段。
 实例：
-```bash
-<body>
-    <!-- 父组件实例 -->
-    <div id="app">
-        <!-- 子组件实例 -->
-        <com1 ref="com1"></com1>
-        <input type="button" @click="show" value="获取元素">
+![vue](/images/vue16.png)
+![vue](/images/vue17.png)
 
-        <h2 ref="h2">这是父组件</h2>
+上面打印的值中，我们能看到，我们再VueRouter中创建的path匹配规则，实际在HTML中会被渲染为相关的正则表达式，来实现路径的匹配。
+其次，我们还能发现，在URL中拼接的参数id在this.$route对象的query属性中，我们通过this.$route.query.id即可获得传递的id值：2。
+
+#### 路由嵌套
+路由嵌套，顾名思义即在父级路由内部存在子路由。例如：
+> 根路径：<http://www.loonycoder.com>
+> 父级路由地址：<http://www.loonycoder.com/api>
+> 子级路由地址：<http://www.loonycoder.com/api/login>
+
+**实例：**
+```bash
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+    <div id="app">
+        <router-link to="/account">Account</router-link>
+
+        <router-view></router-view>
     </div>
+
     <template id="tmp">
         <div>
-            <h2>这是子组件</h2>
+            <h1>这是Account组件</h1>
+
+            <router-link to="/account/login">登录</router-link>
+            <router-link to="/account/register">注册</router-link>
+
+            <router-view></router-view>
         </div>
     </template>
     <script type="text/javascript" src="../lib/vue.js"></script>
+    <script type="text/javascript" src="../lib/vue-router.js"></script>
     <script type="text/javascript">
-    new Vue({
-        el: '#app',
-        methods: {
-            show(){
-                // console.log(this.$refs.h2.innerText);
-                // console.log(this.$refs.com1); //获取子组件中的所有实例对象
-                // console.log(this.$refs.com1.sonval); //获取子组件中定义的data值
-                console.log(this.$refs.com1.sonshow()); //调用子组件中定义的方法
 
-            }
-        },
-
-        // 子组件
-        components: {
-            com1: {
-                template: '#tmp',
-                data() {
-                    return {
-                        sonval: { name: 'Loonycoder', age: 24 }
-                    }
-                },
-                methods: {
-                    sonshow() {
-                        console.log('子组件的方法');
-                    }
-                }
-            }
+        var account = {
+            template: '#tmp'
         }
-    });
+
+        var login = {
+            template: '<h2>登录组件</h2>',
+        }
+
+        var register = {
+            template: '<h2>注册组件</h2>'
+        }
+
+        var routerObj = new VueRouter({
+            routes: [
+                { 
+                    path: '/account', 
+                    component: account,
+                    children: [
+                        { path: 'login', component: login },
+                        { path: 'register', component: register }
+                    ]
+                },
+            ]
+        });
+
+        var vm = new Vue({
+            el: '#app',
+            data: {},
+            methods: {},
+            router: routerObj
+        });
     </script>
 </body>
+</html>
 ```
 
+如上，我们使用了routes: []中的另外一个属性：children，顾名思义就是表示这个父规则/account下存在一些子规则，且在URL中应该体现出来：
+![vue](/images/vue18.png)
 
+**注意：**
+在children中定义的子组件的path规则不能加/，即如上的，直接写path: login即可，这样请求account/login地址时，vue-router会找/account规则下的login规则，且不加/vue-router才会自动将login视为account下的子路径，并自动拼接account/，否则不会自动拼接，那么也无法完成路由的嵌套。
 
+#### 命名视图
+我们常见的后台开发页面，经常遇到上、左、中的布局方式；那么以前我们可能使用iframe实现页面间的跳转，但是现在我们学习的路由要比其更加的方便好用。
+**命名视图**的思想就是为每一个页面展示的视图都起一个名字，目的是为了为每个&lt;router-view&gt;&lt;/router-view&gt;容器刚好匹配一个指定的视图。使用方式：
+```bash
+<router-view></router-view>
+<router-view name="left"></router-view>
+<router-view name="main"></router-view>
 
+routes: [
+    { 
+        path: '/', components: {
+            'default': header
+            'left': left
+            'main': main
+        }
+    }
+]
+```
 
-
-
-<head> 
-    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/all.js"></script> 
-    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/v4-shims.js"></script> 
-</head> 
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css">
-
-
+**解释：**
+其中的path是根路径/，而使用components代替之前的component，目的就是可匹配其下的多个规则；default表示默认的视图组件是header这个组件，即会匹配到第一个&lt;router-view&gt;视图容器中；下面的两个组件会根据name名称需要对应的组件。
+实现上、左、中的布局：
+**思路：**
+1、我们需要创建三个组件，名称分别为：header、left、main；并且在app中创建三个&lt;router-view&gt;&lt;/router-view&gt;路由容器。
+2、采用**命名视图**的方式为每个视图都起一个名字：&lt;router-view name="left"&gt;&lt;/router-view&gt; …
+3、注册路由实例。
+实例：
+![vue](/images/vue19.png)
+![vue](/images/vue20.png)
