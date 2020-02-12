@@ -386,7 +386,7 @@ com1: {
 ```
 
 **解释：**
-- 1、这里子组件的template数据引用外部的<template></template>中的HTML代码。
+- 1、这里子组件的template数据引用外部的&lt;template&gt;&lt;/template&gt;中的HTML代码。
 - 2、与传值思路相同，传递方法也需要在子组件实例中使用v-on即@来绑定方法，方法别名@open，方法的值是show是在父组件中定义的方法名。
 - 3、与传值思路相同，传值使用了props来接受传递的参数，那么传方法提供了$emit()元素
 
@@ -498,7 +498,7 @@ com1: {
 
 ##### Vue获取DOM元素和组件
 首先我们需要明白的就是Vue并不提倡我们操作DOM元素，Vue的宗旨就是让我们只关心业务逻辑。
-那么通常我们需要获取一个如<h2></h2>中的值，采用原生JS通常需要先为tag标签定义一个id属性，然后通过JS代码document.getElementById('id').innterText来获取到<h2>中的文本数据，而Vue也实现了操作原生DOM的功能：
+那么通常我们需要获取一个如&lt;h2&gt;&lt;/h2&gt;中的值，采用原生JS通常需要先为tag标签定义一个id属性，然后通过JS代码document.getElementById('id').innterText来获取到&lt;h2&gt;中的文本数据，而Vue也实现了操作原生DOM的功能：
 - 在需要获取的HTML标签中指定`ref`属性，其值可自定义。
 - 在Vue实例中，使用`this.$refs.指定的值`来获取DOM对象，进行操作。
 ```bash
