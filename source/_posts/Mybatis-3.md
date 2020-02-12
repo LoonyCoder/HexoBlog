@@ -16,7 +16,10 @@ tags:
 用户和账户
 一个用户可以有多个账户
 一个账户只能属于一个用户（多个账户也可以属于同一个用户）
-**此处查询账户归属的用户信息**
+
+需要实现：
+查询账户时，可以查询到归属的用户信息。
+
 
 #### 准备工作
 
@@ -239,10 +242,12 @@ public interface IAccountMapper {
 ##### 执行结果
 ![result](/images/mybatis1.png)
 
+---
 
 ### 场景(多对一)
 
-**此处查询用户下所有的账户信息**
+需要实现：
+- 查询用户时，可以同时查询出用户下的所有账户信息
 
 ##### 修改实体类
 我们修改User实体类，让主表包含从表的集合引用
@@ -409,3 +414,382 @@ User接口类我们不做修改，直接用原来的查询所有用户的方法�
 ##### 执行结果
 ![result](/images/mybatis2.png)
 
+---
+
+### 场景(多对多)
+用户和角色
+一个用户有多个角色
+一个角色有多个用户
+需要实现：
+- 当我们查询用户时，可以同时得到用户的角色信息
+- 当我们查询角色时，可以同时得到角色所属的用户信息
+
+##### 新建角色表和中间表
+建表语句：
+```bash
+DROP TABLE IF EXISTS `role`;
+
+CREATE TABLE `role` (
+  `ID` int(11) NOT NULL COMMENT '编号',
+  `ROLE_NAME` varchar(30) default NULL COMMENT '角色名称',
+  `ROLE_DESC` varchar(60) default NULL COMMENT '角色描述',
+  PRIMARY KEY  (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+insert  into `role`(`ID`,`ROLE_NAME`,`ROLE_DESC`) values (1,'董事长','管理整个公司'),(2,'总裁','管理整个公司'),(3,'部门经理','管理某个部门');
+
+
+
+
+
+DROP TABLE IF EXISTS `user_role`;
+
+CREATE TABLE `user_role` (
+  `UID` int(11) NOT NULL COMMENT '用户编号',
+  `RID` int(11) NOT NULL COMMENT '角色编号',
+  PRIMARY KEY  (`UID`,`RID`),
+  KEY `FK_Reference_10` (`RID`),
+  CONSTRAINT `FK_Reference_10` FOREIGN KEY (`RID`) REFERENCES `role` (`ID`),
+  CONSTRAINT `FK_Reference_9` FOREIGN KEY (`UID`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+insert  into `user_role`(`UID`,`RID`) values (1,1),(3,1),(3,2);
+
+```
+
+##### 新建角色实体类
+此处注意也要让用户和角色体现出多对多关系：需要各自包含对方的一个集合引用。
+
+新建角色实体类：
+```bash
+package com.loonycoder.domain;
+
+import java.io.Serializable;
+
+public class Role implements Serializable {
+    private Integer roleId;
+    private String roleName;
+    private String roleDesc;
+
+    public Integer getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(Integer roleId) {
+        this.roleId = roleId;
+    }
+
+    public String getRoleName() {
+        return roleName;
+    }
+
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
+    }
+
+    public String getRoleDesc() {
+        return roleDesc;
+    }
+
+    public void setRoleDesc(String roleDesc) {
+        this.roleDesc = roleDesc;
+    }
+
+    @Override
+    public String toString() {
+        return "Role{" +
+                "roleId=" + roleId +
+                ", roleName='" + roleName + '\'' +
+                ", roleDesc='" + roleDesc + '\'' +
+                '}';
+    }
+}
+
+```
+
+##### 新建实体类接口
+新建RoleMapper接口类：
+```bash
+package com.loonycoder.dao;
+
+import com.loonycoder.domain.Role;
+
+import java.util.List;
+
+public interface IRoleMapper {
+
+
+    /**
+     * 查询所有角色信息
+     * @return
+     */
+    public List<Role> selectAll();
+}
+
+```
+
+##### 新建角色实体配置文件
+一、新建IRoleMapper.xml
+```bash
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.loonycoder.dao.IRoleMapper">
+    <!--定义role表的resultMap-->
+    <resultMap id="roleMap" type="role">
+        <id property="roleId" column="rid"></id>
+        <result property="roleName" column="role_name"></result>
+        <result property="roleDesc" column="role_desc"></result>
+        <collection property="users" ofType="user">
+            <id property="id" column="id"></id>
+            <result property="userName" column="username"></result>
+            <result property="address" column="address"></result>
+            <result property="sex" column="sex"></result>
+            <result property="birthday" column="birthday"></result>
+        </collection>
+    </resultMap>
+
+    <!--查询所有角色信息-->
+    <!--使用两次左外连接查询-->
+    <select id="selectAll" resultMap="roleMap">
+        select u.*,r.id as rid,r.role_name,r.role_desc from role r
+        left outer join user_role ur on r.id = ur.rid
+        left outer join user u on u.id = ur.uid
+    </select>
+</mapper>
+
+```
+
+二、在SqlMapConfig.xml中添加映射配置
+```bash
+<!--配置映射文件（mapper类的映射文件）-->
+    <mappers>
+        <mapper resource="com/loonycoder/dao/IUserMapper.xml" />
+        <mapper resource="com/loonycoder/dao/IAccountMapper.xml" />
+        <mapper resource="com/loonycoder/dao/IRoleMapper.xml" />
+        <!--<mapper class="com.loonycoder.dao.IUserMapper" />-->
+    </mappers>
+```
+
+##### 新建测试类执行
+
+```bash
+    @Test
+    public void selectRoleAll(){
+        List<Role> roles = roleMapper.selectAll();
+        for (Role role:roles) {
+            System.out.println("每个角色的用户信息：");
+            System.out.println(role);
+            System.out.println(role.getUsers());
+        }
+    }
+```
+
+##### 执行结果
+![result](/images/mybatis3.png)
+
+---
+
+##### 根据用户查询角色
+
+同理，我们修改用户实体类，添加多对多的关系映射：一个用户具备多个角色
+```bash
+package com.loonycoder.domain;
+
+import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
+
+public class User implements Serializable {
+    private Integer id;
+    private String userName;
+    private Date birthday;
+    private String sex;
+    private String address;
+
+
+//    多对多关系映射：一个用户具备多个角色
+    private List<Role> roles;
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
+
+    private List<Account> accounts;
+
+    public List<Account> getAccounts() {
+        return accounts;
+    }
+
+    public void setAccounts(List<Account> accounts) {
+        this.accounts = accounts;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", userName='" + userName + '\'' +
+                ", birthday=" + birthday +
+                ", sex='" + sex + '\'' +
+                ", address='" + address + '\'' +
+                '}';
+    }
+}
+
+```
+
+其次，修改用户实体映射配置文件。
+```bash
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace里面要配置mapper接口的全限定类名-->
+<mapper namespace="com.loonycoder.dao.IUserMapper">
+    <!--配置列名和实体类属性对应关系 type属性不区分大小写-->
+    <resultMap id="userMap" type="com.loonycoder.domain.User">
+        <!--id标签配置主键，property标签配置实体类属性，column标签配置表的列名-->
+        <id property="id" column="id"></id>
+        <result property="userName" column="username"></result>
+        <result property="birthday" column="birthday"></result>
+        <result property="address" column="address"></result>
+        <result property="sex" column="sex"></result>
+    </resultMap>
+    <!--定义User的resultMap-->
+    <resultMap id="userAccountMap" type="user">
+        <id property="id" column="id"></id>
+        <result property="userName" column="username"></result>
+        <result property="sex" column="sex"></result>
+        <result property="address" column="address"></result>
+        <result property="birthday" column="birthday"></result>
+        <!--配置user对象中accounts集合的映射-->
+        <!--ofType指的是集合的泛型-->
+        <collection property="accounts" ofType="account">
+            <id property="id" column="aid"></id>
+            <result property="uid" column="uid"></result>
+            <result property="money" column="money"></result>
+        </collection>
+    </resultMap>
+    
+    <!--配置user的userRoleMap-->
+    <resultMap id="userRoleMap" type="user">
+        <id property="id" column="id"></id>
+        <result property="userName" column="username"></result>
+        <result property="sex" column="sex"></result>
+        <result property="address" column="address"></result>
+        <result property="birthday" column="birthday"></result>
+        <collection property="roles" ofType="role">
+            <id property="roleId" column="rid"></id>
+            <result property="roleName" column="role_name"></result>
+            <result property="roleDesc" column="role_desc"></result>
+        </collection>
+    </resultMap>
+    <!--id要保持和方法名一致-->
+    <!--resultType指定返回值类型，如果是List类型 配置List的泛型即可-->
+    <!--此处使用左外连接查询-->
+    <select id="selectAll" resultMap="userAccountMap">
+        select * from user u left outer join account a on u.id = a.uid;
+    </select>
+
+    <select id="selectUserRoleAll" resultMap="userRoleMap">
+        select u.*,r.id as rid,r.role_name,r.role_desc from user u
+        left outer join user_role ur on u.id = ur.uid
+        left outer join role r on r.id = ur.rid
+    </select>
+
+    <insert id="saveUser" parameterType="com.loonycoder.domain.User">
+        insert into user (username,sex,birthday,address) values (#{userName},#{sex},#{birthday},#{address});
+    </insert>
+
+    <delete id="deleteUser" parameterType="java.lang.Integer">
+        delete from user where id = #{uid};
+    </delete>
+
+    <update id="updateUser" parameterType="com.loonycoder.domain.User">
+        update user set username = #{userName},sex = #{sex},birthday = #{birthday},address = #{address} where id = #{id};
+    </update>
+    
+    <select id="selectUserByCondition" resultMap="userMap" parameterType="user">
+          select * from user
+          <where>
+            <if test="sex != null and sex != '' ">
+                and sex = #{sex}
+            </if>
+          </where>
+
+    </select>
+</mapper>
+```
+
+在UserMapper接口中添加查询方法：
+```bash
+/**
+     * 查询用户及用户下所有的角色信息
+     * @return
+     */
+    public List<User> selectUserRoleAll();
+```
+
+新建测试方法：
+```bash
+    @Test
+    public void selectUserRoleAll(){
+        List<User> users = userDao.selectUserRoleAll();
+        for (User user:users) {
+            System.out.println("每个用户的角色信息：");
+            System.out.println(user);
+            System.out.println(user.getRoles());
+        }
+    }
+```
+
+执行结果：
+![result](/images/mybatis4.png)
