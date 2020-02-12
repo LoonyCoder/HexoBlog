@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Java,Java框架 - 数据库," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="准备工作基于我们之前创建的Mybatis项目即可，我在此采用的依旧是基于xml的开发方式。  Mybatis的查询操作在mapper接口中新增查询方法12345678910111213141516package com.loonycoder.dao;import com.loonycoder.domain.User;import java.util.List;public interface IU">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mybatis的增删改查操作">
+<meta property="og:url" content="http://yoursite.com/2020/01/06/Mybatis-2/index.html">
+<meta property="og:site_name" content="望月">
+<meta property="og:description" content="准备工作基于我们之前创建的Mybatis项目即可，我在此采用的依旧是基于xml的开发方式。  Mybatis的查询操作在mapper接口中新增查询方法12345678910111213141516package com.loonycoder.dao;import com.loonycoder.domain.User;import java.util.List;public interface IU">
+<meta property="og:image" content="http://yoursite.com/images/execResult1.png">
+<meta property="og:image" content="http://yoursite.com/images/execResult2.png">
+<meta property="og:image" content="http://yoursite.com/images/execBefore.png">
+<meta property="og:image" content="http://yoursite.com/images/execAfter.png">
+<meta property="og:image" content="http://yoursite.com/images/execAfter.png">
+<meta property="og:image" content="http://yoursite.com/images/execAfter1.png">
+<meta property="article:published_time" content="2020-01-05T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-02-12T12:24:12.135Z">
+<meta property="article:author" content="LoonyCoder">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="Java框架 - 数据库">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/images/execResult1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/01/06/Mybatis-2/"/>
+
+
+
+
+
+  <title>Mybatis的增删改查操作 | 望月</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">望月</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Life is so short , just coding.</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/06/Mybatis-2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LoonyCoder">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/author.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="望月">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Mybatis的增删改查操作</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-01-06T00:00:00+08:00">
+                2020-01-06
+              </time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Mybatis/" itemprop="url" rel="index">
+                    <span itemprop="name">Mybatis</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  919
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  4
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h3><p>基于我们之前创建的Mybatis项目即可，我在此采用的依旧是基于xml的开发方式。</p>
+<hr>
+<h3 id="Mybatis的查询操作"><a href="#Mybatis的查询操作" class="headerlink" title="Mybatis的查询操作"></a>Mybatis的查询操作</h3><h4 id="在mapper接口中新增查询方法"><a href="#在mapper接口中新增查询方法" class="headerlink" title="在mapper接口中新增查询方法"></a>在mapper接口中新增查询方法</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">package com.loonycoder.dao;</span><br><span class="line"></span><br><span class="line">import com.loonycoder.domain.User;</span><br><span class="line"></span><br><span class="line">import java.util.List;</span><br><span class="line"></span><br><span class="line">public interface IUserMapper &#123;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 查询用户</span><br><span class="line">     * @<span class="built_in">return</span></span><br><span class="line">     */</span><br><span class="line">    public List&lt;User&gt; selectAll();</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="在IUserMapper-xml中添加查询sql语句"><a href="#在IUserMapper-xml中添加查询sql语句" class="headerlink" title="在IUserMapper.xml中添加查询sql语句"></a>在IUserMapper.xml中添加查询sql语句</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=<span class="string">"1.0"</span> encoding=<span class="string">"UTF-8"</span>?&gt;</span><br><span class="line">&lt;!DOCTYPE mapper</span><br><span class="line">        PUBLIC <span class="string">"-//mybatis.org//DTD Mapper 3.0//EN"</span></span><br><span class="line">        <span class="string">"http://mybatis.org/dtd/mybatis-3-mapper.dtd"</span>&gt;</span><br><span class="line">&lt;!--namespace里面要配置mapper接口的全限定类名--&gt;</span><br><span class="line">&lt;mapper namespace=<span class="string">"com.loonycoder.dao.IUserMapper"</span>&gt;</span><br><span class="line">    &lt;!--id要保持和方法名一致--&gt;</span><br><span class="line">    &lt;!--resultType指定返回值类型，如果是List类型 配置List的泛型即可--&gt;</span><br><span class="line">    &lt;select id=<span class="string">"selectAll"</span> resultType=<span class="string">"com.loonycoder.domain.User"</span>&gt;</span><br><span class="line">        select * from user;</span><br><span class="line">    &lt;/select&gt;</span><br><span class="line">&lt;/mapper&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="新建测试类执行"><a href="#新建测试类执行" class="headerlink" title="新建测试类执行"></a>新建测试类执行</h4><p>由于读取配置文件、创建SqlSessionFactory工厂等步骤复用性较高，我们在这里进行了抽取。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line">package com.loonycoder;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">import com.loonycoder.dao.IUserMapper;</span><br><span class="line">import com.loonycoder.domain.User;</span><br><span class="line">import org.apache.ibatis.io.Resources;</span><br><span class="line">import org.apache.ibatis.session.SqlSession;</span><br><span class="line">import org.apache.ibatis.session.SqlSessionFactory;</span><br><span class="line">import org.apache.ibatis.session.SqlSessionFactoryBuilder;</span><br><span class="line">import org.junit.After;</span><br><span class="line">import org.junit.Before;</span><br><span class="line">import org.junit.Test;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">import java.io.InputStream;</span><br><span class="line">import java.util.Date;</span><br><span class="line">import java.util.List;</span><br><span class="line"></span><br><span class="line">public class MybatisTest &#123;</span><br><span class="line"></span><br><span class="line">    private InputStream inputStream;</span><br><span class="line">    private SqlSessionFactory sqlSessionFactory;</span><br><span class="line">    private SqlSession session;</span><br><span class="line">    private IUserMapper userDao;</span><br><span class="line"></span><br><span class="line">    //before注解代表在测试方法执行前执行</span><br><span class="line">    @Before</span><br><span class="line">    public void init() throws Exception&#123;</span><br><span class="line">        //1.读取配置文件</span><br><span class="line">        inputStream = Resources.getResourceAsStream(<span class="string">"SqlMapConfig.xml"</span>);</span><br><span class="line">        //2.创建SqlSessionFactory工厂</span><br><span class="line">        SqlSessionFactoryBuilder sqlSessionFactoryBuilder = new SqlSessionFactoryBuilder();</span><br><span class="line">        sqlSessionFactory = sqlSessionFactoryBuilder.build(inputStream);</span><br><span class="line">        //3.使用工厂创建SqlSession对象</span><br><span class="line">        session = sqlSessionFactory.openSession();</span><br><span class="line">        //4.使用SqlSession创建dao接口的代理对象</span><br><span class="line">        userDao = session.getMapper(IUserMapper.class);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    //after注解代表在测试方法执行后执行</span><br><span class="line">    @After</span><br><span class="line">    public void destroy() throws Exception&#123;</span><br><span class="line">        //6.释放资源</span><br><span class="line">        session.close();</span><br><span class="line">        inputStream.close();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    @Test</span><br><span class="line">    public void selectTest() throws Exception&#123;</span><br><span class="line"></span><br><span class="line">        //5.使用代理对象执行方法</span><br><span class="line">        List&lt;User&gt; users= userDao.selectAll();</span><br><span class="line">        <span class="keyword">for</span> (User user: users) &#123;</span><br><span class="line">            System.out.println(user);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="执行结果"><a href="#执行结果" class="headerlink" title="执行结果"></a>执行结果</h4><p><img src="/images/execResult1.png" alt="执行结果"></p>
+<hr>
+<h3 id="Mybatis的保存操作"><a href="#Mybatis的保存操作" class="headerlink" title="Mybatis的保存操作"></a>Mybatis的保存操作</h3><h4 id="在mapper接口中新增保存方法"><a href="#在mapper接口中新增保存方法" class="headerlink" title="在mapper接口中新增保存方法"></a>在mapper接口中新增保存方法</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 保存用户</span><br><span class="line"> * @param user</span><br><span class="line"> */</span><br><span class="line">public void saveUser(User user);</span><br></pre></td></tr></table></figure>
+
+<h4 id="在IUserMapper-xml中添加保存sql语句"><a href="#在IUserMapper-xml中添加保存sql语句" class="headerlink" title="在IUserMapper.xml中添加保存sql语句"></a>在IUserMapper.xml中添加保存sql语句</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;insert id=<span class="string">"saveUser"</span> parameterType=<span class="string">"com.loonycoder.domain.User"</span>&gt;</span><br><span class="line">        insert into user (username,sex,birthday,address) values (<span class="comment">#&#123;userName&#125;,#&#123;sex&#125;,#&#123;birthday&#125;,#&#123;address&#125;);</span></span><br><span class="line">    &lt;/insert&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意：<br>#{}为mybatis的固定用法，用于取值。如果User实体类中的属性是自动生成的get/set，则直接写属性名称即可。<br>其次，参数一定要一一对应上</strong></p>
+<h4 id="新建测试类执行-1"><a href="#新建测试类执行-1" class="headerlink" title="新建测试类执行"></a>新建测试类执行</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">public void <span class="function"><span class="title">insertTest</span></span>()&#123;</span><br><span class="line">    User user = new User();</span><br><span class="line">    user.setUserName(<span class="string">"Lisa"</span>);</span><br><span class="line">    user.setBirthday(new Date());</span><br><span class="line">    user.setAddress(<span class="string">"广东"</span>);</span><br><span class="line">    user.setSex(<span class="string">"女"</span>);</span><br><span class="line">    userDao.saveUser(user);</span><br><span class="line">    session.commit();//记得手动提交事务</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意：一定要手动提交事务，否则虽然不会报错，但是不会入表！！！</strong></p>
+<h4 id="执行结果-1"><a href="#执行结果-1" class="headerlink" title="执行结果"></a>执行结果</h4><p><img src="/images/execResult2.png" alt="执行结果"></p>
+<hr>
+<h3 id="Mybatis的删除操作"><a href="#Mybatis的删除操作" class="headerlink" title="Mybatis的删除操作"></a>Mybatis的删除操作</h3><h4 id="在mapper接口中新增删除方法"><a href="#在mapper接口中新增删除方法" class="headerlink" title="在mapper接口中新增删除方法"></a>在mapper接口中新增删除方法</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line">    * 删除用户</span><br><span class="line">    * @param userId</span><br><span class="line">    */</span><br><span class="line">   public void deleteUser(Integer userId);</span><br></pre></td></tr></table></figure>
+
+<h4 id="在IUserMapper-xml中添加删除sql语句"><a href="#在IUserMapper-xml中添加删除sql语句" class="headerlink" title="在IUserMapper.xml中添加删除sql语句"></a>在IUserMapper.xml中添加删除sql语句</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;delete id=<span class="string">"deleteUser"</span> parameterType=<span class="string">"java.lang.Integer"</span>&gt;</span><br><span class="line">        delete from user <span class="built_in">where</span> id = <span class="comment">#&#123;uid&#125;;</span></span><br><span class="line">    &lt;/delete&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意：因为该方法只有一个参数，所以我们在sql中标注的uid部分其实是可以随便写的，因为mybatis只会找到这一个参数</strong></p>
+<h4 id="新建测试类执行-2"><a href="#新建测试类执行-2" class="headerlink" title="新建测试类执行"></a>新建测试类执行</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">   public void <span class="function"><span class="title">deleteTest</span></span>()&#123;</span><br><span class="line">       userDao.deleteUser(53);</span><br><span class="line">       session.commit();//记得手动提交事务</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="执行结果-2"><a href="#执行结果-2" class="headerlink" title="执行结果"></a>执行结果</h4><p>删除前：<br><img src="/images/execBefore.png" alt="执行结果"><br>删除后：<br><img src="/images/execAfter.png" alt="执行结果"></p>
+<hr>
+<h3 id="Mybatis的修改操作"><a href="#Mybatis的修改操作" class="headerlink" title="Mybatis的修改操作"></a>Mybatis的修改操作</h3><h4 id="在mapper接口中新增修改方法"><a href="#在mapper接口中新增修改方法" class="headerlink" title="在mapper接口中新增修改方法"></a>在mapper接口中新增修改方法</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 修改用户</span><br><span class="line"> * @param user</span><br><span class="line"> */</span><br><span class="line">public void updateUser(User user);</span><br></pre></td></tr></table></figure>
+
+<h4 id="在IUserMapper-xml中添加修改sql语句"><a href="#在IUserMapper-xml中添加修改sql语句" class="headerlink" title="在IUserMapper.xml中添加修改sql语句"></a>在IUserMapper.xml中添加修改sql语句</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;update id=<span class="string">"updateUser"</span> parameterType=<span class="string">"com.loonycoder.domain.User"</span>&gt;</span><br><span class="line">    update user <span class="built_in">set</span> username = <span class="comment">#&#123;username&#125;,sex = #&#123;sex&#125;,birthday = #&#123;birthday&#125;,address = #&#123;address&#125; where id = #&#123;id&#125;;</span></span><br><span class="line">&lt;/update&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="新建测试类执行-3"><a href="#新建测试类执行-3" class="headerlink" title="新建测试类执行"></a>新建测试类执行</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">public void <span class="function"><span class="title">updateTest</span></span>()&#123;</span><br><span class="line">    User user = new User();</span><br><span class="line">    user.setId(41);</span><br><span class="line">    user.setUserName(<span class="string">"张三丰"</span>);</span><br><span class="line">    session.commit();//记得手动提交事务</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="执行结果-3"><a href="#执行结果-3" class="headerlink" title="执行结果"></a>执行结果</h4><p>修改前：<br><img src="/images/execAfter.png" alt="执行结果"><br>修改后：<br><img src="/images/execAfter1.png" alt="执行结果"></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+            <a href="/tags/Java%E6%A1%86%E6%9E%B6-%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag"># Java框架 - 数据库</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/01/03/Mybatis-1/" rel="next" title="Mybatis入门及搭建">
+                <i class="fa fa-chevron-left"></i> Mybatis入门及搭建
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/author.jpg"
+                alt="LoonyCoder" />
+            
+              <p class="site-author-name" itemprop="name">LoonyCoder</p>
+              <p class="site-description motion-element" itemprop="description">Code bestful and be a best coder.</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#准备工作"><span class="nav-number">1.</span> <span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Mybatis的查询操作"><span class="nav-number">2.</span> <span class="nav-text">Mybatis的查询操作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#在mapper接口中新增查询方法"><span class="nav-number">2.1.</span> <span class="nav-text">在mapper接口中新增查询方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#在IUserMapper-xml中添加查询sql语句"><span class="nav-number">2.2.</span> <span class="nav-text">在IUserMapper.xml中添加查询sql语句</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#新建测试类执行"><span class="nav-number">2.3.</span> <span class="nav-text">新建测试类执行</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#执行结果"><span class="nav-number">2.4.</span> <span class="nav-text">执行结果</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Mybatis的保存操作"><span class="nav-number">3.</span> <span class="nav-text">Mybatis的保存操作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#在mapper接口中新增保存方法"><span class="nav-number">3.1.</span> <span class="nav-text">在mapper接口中新增保存方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#在IUserMapper-xml中添加保存sql语句"><span class="nav-number">3.2.</span> <span class="nav-text">在IUserMapper.xml中添加保存sql语句</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#新建测试类执行-1"><span class="nav-number">3.3.</span> <span class="nav-text">新建测试类执行</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#执行结果-1"><span class="nav-number">3.4.</span> <span class="nav-text">执行结果</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Mybatis的删除操作"><span class="nav-number">4.</span> <span class="nav-text">Mybatis的删除操作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#在mapper接口中新增删除方法"><span class="nav-number">4.1.</span> <span class="nav-text">在mapper接口中新增删除方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#在IUserMapper-xml中添加删除sql语句"><span class="nav-number">4.2.</span> <span class="nav-text">在IUserMapper.xml中添加删除sql语句</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#新建测试类执行-2"><span class="nav-number">4.3.</span> <span class="nav-text">新建测试类执行</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#执行结果-2"><span class="nav-number">4.4.</span> <span class="nav-text">执行结果</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Mybatis的修改操作"><span class="nav-number">5.</span> <span class="nav-text">Mybatis的修改操作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#在mapper接口中新增修改方法"><span class="nav-number">5.1.</span> <span class="nav-text">在mapper接口中新增修改方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#在IUserMapper-xml中添加修改sql语句"><span class="nav-number">5.2.</span> <span class="nav-text">在IUserMapper.xml中添加修改sql语句</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#新建测试类执行-3"><span class="nav-number">5.3.</span> <span class="nav-text">新建测试类执行</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#执行结果-3"><span class="nav-number">5.4.</span> <span class="nav-text">执行结果</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">loonycoder</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">32.4k</span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

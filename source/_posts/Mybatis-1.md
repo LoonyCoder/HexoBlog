@@ -1,9 +1,9 @@
 ---
-title: Mybatis入门（一）
+title: Mybatis入门及搭建
 categories:
     - Mybatis
     
-date: 2019-01-21
+date: 2020-01-03
 tags:
 	- Java
 	- Java框架
@@ -379,4 +379,6 @@ public interface IUserDao {
 
 运行结果：
 ![运行结果](/images/testResult.png)
+
+
 
