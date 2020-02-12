@@ -1,8 +1,8 @@
 ---
-title: Vue组件
+title: Vue路由
 categories:
     - Web前端
-date: 2019-03-02
+date: 2019-03-04
 tags:
 	- 前端框架
 	
@@ -18,7 +18,7 @@ tags:
 
 ##### 定义Vue组件
 
-**方式一**
+<i class="fas fa-award"></i>方式一
 1、使用Vue.extend来创建全局的Vue组件
 2、通过template属性来指定组件要展示的HTML结构
 3、通过Vue.component()定义全局组件
@@ -42,7 +42,7 @@ tags:
 **注意：**
 - 用Vue.component()定义组件名称的时候有两种命名方式：1、驼峰命名：Xxx；2、xxx。注意，使用驼峰命名时，tag标签不能使用驼峰名称，应将相应的大写字母替换为-加小写字母，例如：Vue.component('myCom', com1)，那么tag标签应为： &lt;my-com&gt; &lt;/my-com&gt;
 
-**方式二**
+<i class="fas fa-award"></i>方式二
 ```bash
 <!-- 组件的名称即为对应tag标签的名称 -->
 <mycom1></mycom1>
@@ -70,7 +70,7 @@ Vue.component('mycom1', Vue.extend({
 	template: '<div><h3>这是使用Vue.extend 创建的组件</h3><span></span></div>'
 }));
 ```
-**方式三**
+<i class="fas fa-award"></i>方式三
 1、JavaScript中仍使用Vue.component来定义全局组件，和方式二相似，但是里面不再是template: 'HTML结构'了，而是引用一个外部标签的id值，即template:'id'。
 2、在被Vue实例控制的app外面，定义&lt;template id="id"&gt;你的HTML结构&lt;/template&gt;
 这种方式的好处就是是就组件代码都是定义在HTML结构中的，有智能代码提示；而JavaScript中定义组件仅是写一个引用。
@@ -95,7 +95,7 @@ Vue.component('mycom', {
 });
 ```
 
-**定义私**有组件
+<i class="fas fa-award"></i>定义私有组件
 除了上面讲到的定义全局组件，我们也可以定义私有组件，使用components: {}函数。
 如：
 ```bash
@@ -122,7 +122,7 @@ new Vue({
 ```
 
 ##### 组件元素
-**组件的**data
+<i class="fas fa-award"></i>组件的data
 在组件中，同样可以有自己的data数据，但是用法和Vue实例中的data用法有所不同：
 1、组件中的data必须是一个方法，即
 ```bash
@@ -161,10 +161,10 @@ new Vue({
 </script>
 ```
 
-**组件的**切换
+<i class="fas fa-award"></i>组件的切换
 在遇到登录注册表单时，通常我们需要对两个按钮进行切换实现显示不同的表单，那么Vue中的组件切换正符合了这个功能要求。
 
-**方式一**
+<i class="fas fa-rainbow"></i>方式一
 
 可以使用Vue提供的v-if和v-else来实现两个组件间的切换，但是，仅支持切换两个组件
 
@@ -207,7 +207,7 @@ new Vue({
 ```
 定义flag参数，当flag=true就显示组件，当flar=false就隐藏组件
 
-**方式二**
+<i class="fas fa-rainbow"></i>方式二
 
 Vue提供了component来展示对应名称的组件。其中component是一个占位符，:is属性，可以用来指定要展示的组件名称
 
@@ -249,7 +249,7 @@ new Vue({
 即使用Vue提供的component，它能够实现自动对组件进行展示和隐藏，通过:is='组件名称'。
 
 ##### 父子组件间传值
-**父组件**给子组件传值
+<i class="fas fa-award"></i>父组件给子组件传值
 
 父组件给子组件传值，即实现在子组件中调用父组件中的methods或是获取父组件中的data.
 
@@ -443,7 +443,7 @@ com1: {
 </body>
 ```
 
-**子组件**给父组件传值
+<i class="fas fa-award"></i>子组件给父组件传值
 即实现在父组件中调用子组件中的方法
 ```bash
 <body>
@@ -502,7 +502,7 @@ com1: {
 - 在需要获取的HTML标签中指定`ref`属性，其值可自定义。
 - 在Vue实例中，使用`this.$refs.指定的值`来获取DOM对象，进行操作。
 ```bash
-<h2 ref="h2">这是h2的文本数据</h2>
+<h2 ref="h2">这是h2的文本数据</h2>>
 
 console.log(this.$refs.h2.innerText);
 ```
@@ -565,6 +565,10 @@ console.log(this.$refs.h2.innerText);
 
 
 
-
+<head> 
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/all.js"></script> 
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/v4-shims.js"></script> 
+</head> 
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css">
 
 
