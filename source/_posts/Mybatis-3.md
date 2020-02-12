@@ -11,12 +11,12 @@ tags:
 
 ---
 
-#### 场景
+### 场景(一对多)
 
 用户和账户
 一个用户可以有多个账户
 一个账户只能属于一个用户（多个账户也可以属于同一个用户）
-**此处以根据账户查询用户的姓名和地址为例**
+**此处查询账户归属的用户信息**
 
 #### 准备工作
 
@@ -240,7 +240,172 @@ public interface IAccountMapper {
 ![result](/images/mybatis1.png)
 
 
+### 场景(多对一)
 
+**此处查询用户下所有的账户信息**
 
+##### 修改实体类
+我们修改User实体类，让主表包含从表的集合引用
+```bash
+package com.loonycoder.domain;
 
+import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
+
+public class User implements Serializable {
+    private Integer id;
+    private String userName;
+    private Date birthday;
+    private String sex;
+    private String address;
+
+    private List<Account> accounts;
+
+    public List<Account> getAccounts() {
+        return accounts;
+    }
+
+    public void setAccounts(List<Account> accounts) {
+        this.accounts = accounts;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", userName='" + userName + '\'' +
+                ", birthday=" + birthday +
+                ", sex='" + sex + '\'' +
+                ", address='" + address + '\'' +
+                '}';
+    }
+}
+
+```
+
+##### 修改配置文件
+
+User接口类我们不做修改，直接用原来的查询所有用户的方法即可，我们只需要改动映射配置文件。
+修改IUserMapper.xml内容如下：
+```bash
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace里面要配置mapper接口的全限定类名-->
+<mapper namespace="com.loonycoder.dao.IUserMapper">
+    <!--配置列名和实体类属性对应关系 type属性不区分大小写-->
+    <resultMap id="userMap" type="com.loonycoder.domain.User">
+        <!--id标签配置主键，property标签配置实体类属性，column标签配置表的列名-->
+        <id property="id" column="id"></id>
+        <result property="userName" column="username"></result>
+        <result property="birthday" column="birthday"></result>
+        <result property="address" column="address"></result>
+        <result property="sex" column="sex"></result>
+    </resultMap>
+    <!--定义User的resultMap-->
+    <resultMap id="userAccountMap" type="user">
+        <id property="id" column="id"></id>
+        <result property="userName" column="username"></result>
+        <result property="sex" column="sex"></result>
+        <result property="address" column="address"></result>
+        <result property="birthday" column="birthday"></result>
+        <!--配置user对象中accounts集合的映射-->
+        <!--ofType指的是集合的泛型-->
+        <collection property="accounts" ofType="account">
+            <id property="id" column="aid"></id>
+            <result property="uid" column="uid"></result>
+            <result property="money" column="money"></result>
+        </collection>
+    </resultMap>
+    <!--id要保持和方法名一致-->
+    <!--resultType指定返回值类型，如果是List类型 配置List的泛型即可-->
+    <!--此处使用左外连接查询-->
+    <select id="selectAll" resultMap="userAccountMap">
+        select * from user u left outer join account a on u.id = a.uid;
+    </select>
+
+    <insert id="saveUser" parameterType="com.loonycoder.domain.User">
+        insert into user (username,sex,birthday,address) values (#{userName},#{sex},#{birthday},#{address});
+    </insert>
+
+    <delete id="deleteUser" parameterType="java.lang.Integer">
+        delete from user where id = #{uid};
+    </delete>
+
+    <update id="updateUser" parameterType="com.loonycoder.domain.User">
+        update user set username = #{userName},sex = #{sex},birthday = #{birthday},address = #{address} where id = #{id};
+    </update>
+    
+    <select id="selectUserByCondition" resultMap="userMap" parameterType="user">
+          select * from user
+          <where>
+            <if test="sex != null and sex != '' ">
+                and sex = #{sex}
+            </if>
+          </where>
+
+    </select>
+</mapper>
+```
+
+##### 新建测试类执行
+```bash
+    @Test
+    public void selectTest() throws Exception{
+
+        //5.使用代理对象执行方法
+        List<User> users= userDao.selectAll();
+        for (User user: users) {
+            System.out.println("每个用户下账户的信息：");
+            System.out.println(user);
+            System.out.println(user.getAccounts());
+        }
+
+    }
+```
+
+##### 执行结果
+![result](/images/mybatis2.png)
 
