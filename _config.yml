@@ -11,6 +11,14 @@ author: LoonyCoder
 language: zh-Hans
 timezone: Asia/ShangHai
 
+# 站内搜索
+search:
+  path: search.xml
+  field: post
+  format: html
+  limit: 10000
+
+
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
 url: http://yoursite.com
@@ -30,6 +38,9 @@ category_dir: categories
 code_dir: downloads/code
 i18n_dir: :lang
 skip_render:
+
+
+
 
 # Writing
 new_post_name: :title.md # File name of new posts
