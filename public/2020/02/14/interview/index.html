@@ -85,11 +85,18 @@
 <meta property="og:url" content="http://yoursite.com/2020/02/14/interview/index.html">
 <meta property="og:site_name" content="望月">
 <meta property="og:description" content="近些日子在拉勾网上看到了史上最难Java题，顺便答了一下，结果10道题错了6道，表示十分遗憾。后愤然去网上搜集各种资料，果然还是太年轻，于此记录以告诫自己，学无止境！ Apache Dubbo的默认集群容错方案A、Failover ClusterB、Failfast ClusterC、Failsafe ClusterD、Failback Cluster 答案：A 解析：Dubbo提供了随机、轮询、">
+<meta property="og:image" content="http://yoursite.com/images/kafka1.png">
+<meta property="og:image" content="http://yoursite.com/images/kafka2.png">
+<meta property="og:image" content="http://yoursite.com/images/tcp1.png">
+<meta property="og:image" content="http://yoursite.com/images/mybatisflow.png">
+<meta property="og:image" content="http://yoursite.com/images/thread.png">
+<meta property="og:image" content="http://yoursite.com/images/classloader.png">
 <meta property="article:published_time" content="2020-02-13T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-02-19T13:41:46.180Z">
+<meta property="article:modified_time" content="2020-02-19T13:45:42.578Z">
 <meta property="article:author" content="LoonyCoder">
 <meta property="article:tag" content="Java - 面试题">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/images/kafka1.png">
 
 
 
@@ -422,7 +429,7 @@
 <hr>
 <h3 id="下面关于Kafka说法错误的是"><a href="#下面关于Kafka说法错误的是" class="headerlink" title="下面关于Kafka说法错误的是:"></a>下面关于Kafka说法错误的是:</h3><p>A、消息是按照topic进行划分的，一个topic就是一个queue，一个topic可以有多个消费方，当生产方在某个topic发出一条消息后，所有订阅了这个topic的消费方都可以接受到这条消息<br>B、kafka为每个topic维护了多个partition分区，能保证一个topic的消息消费有序<br>C、所有的消息读写都是在主partition中进行，其他副本分区只会从主分区复制数据<br>D、消息的发送有三种方式：同步、异步、以及oneway，异步为默认方式</p>
 <p><strong>答案：B、D</strong></p>
-<p><strong>解析：</strong><br><a href="/images/kafka1.png">!kafka</a><br><a href="/images/kafka2.png">!kafka</a><br>Kafka只保证一个分区内的消息有序，<strong>不能保证一个topic的不同分区之间的消息有序。</strong><br>为了保证较高的处理效率，所有的消息读写都是在主patition中进行，其他副本分区只会从主分区复制数据。Kafka会在Zookeeper上针对每个Topic维护一个称为ISR(in-sync replica)，就是已同步的副本集。如果某个主分区不可用了，Kafka就会从ISR集合中选择一个副本作为新的主分区。<br>消息的发送有三种方式：同步、异步以及oneway。<strong>同步模式下后台线程中发送消息时同步获取结果，这也是默认模式。</strong><br>异步的模式允许生产者批量发送数据，可以极大的提高性能，但是会增加丢失数据的风险。oneway模式只发送消息不需要返回发送结果，消息可靠性最低，但是低延迟、高吞吐，适用于对可靠性要求不高的场景。</p>
+<p><strong>解析：</strong><br><img src="/images/kafka1.png" alt="kafka"><br><img src="/images/kafka2.png" alt="kafka"><br>Kafka只保证一个分区内的消息有序，<strong>不能保证一个topic的不同分区之间的消息有序。</strong><br>为了保证较高的处理效率，所有的消息读写都是在主patition中进行，其他副本分区只会从主分区复制数据。Kafka会在Zookeeper上针对每个Topic维护一个称为ISR(in-sync replica)，就是已同步的副本集。如果某个主分区不可用了，Kafka就会从ISR集合中选择一个副本作为新的主分区。<br>消息的发送有三种方式：同步、异步以及oneway。<strong>同步模式下后台线程中发送消息时同步获取结果，这也是默认模式。</strong><br>异步的模式允许生产者批量发送数据，可以极大的提高性能，但是会增加丢失数据的风险。oneway模式只发送消息不需要返回发送结果，消息可靠性最低，但是低延迟、高吞吐，适用于对可靠性要求不高的场景。</p>
 <hr>
 <h3 id="下面关于排序算法的描述正确的是"><a href="#下面关于排序算法的描述正确的是" class="headerlink" title="下面关于排序算法的描述正确的是:"></a>下面关于排序算法的描述正确的是:</h3><p>A、冒泡排序和插入排序都是稳定的排序算法<br>B、如果数组已经按照顺序排好序，使用插入排序，时间复杂度是O(n)<br>C、快速排序每次选择最大值座位基准值能够加入排序过程<br>D、快速排序最好情况的时间复杂度是O(nlogn)</p>
 <p><strong>答案：A、B、D</strong></p>
@@ -435,7 +442,7 @@
 <hr>
 <h3 id="关于TCP的关闭过程，说法正确的是"><a href="#关于TCP的关闭过程，说法正确的是" class="headerlink" title="关于TCP的关闭过程，说法正确的是:"></a>关于TCP的关闭过程，说法正确的是:</h3><p>A、处于TIME_WAIT状态的连接等待2MSL后真正关闭连接<br>B、对一个established状态的TCP连接，在调用shutdown函数之前调用close接口，可以让主动调用的一方进入半关闭状态<br>C、主动发送FIN消息的连接端，收到对方回应ack之前不能发只能收，在收到对方回复ack之后不能发也不能收，进入CLOSING状态<br>D、虽然TCP是可靠传输，但在已经成功建立连接的TCP连接上，也可能存在报文丢失</p>
 <p><strong>答案：A、D</strong></p>
-<p><strong>解析：</strong><br><a href="/images/tcp1.png">!TCP</a><br>A、等待2倍最大报文段生存时间之后在关闭链接，原因有两个：</p>
+<p><strong>解析：</strong><br><img src="/images/tcp1.png" alt="TCP"><br>A、等待2倍最大报文段生存时间之后在关闭链接，原因有两个：</p>
 <ul>
 <li>一、保证TCP协议的全双工连接能够可靠关闭</li>
 <li>二、保证这次连接的重复数据段从网络中消失，防止端口被重用时可能产生数据混淆</li>
@@ -454,16 +461,16 @@
 <h3 id="Mybatis在执行SQL时，正确的调用顺序是"><a href="#Mybatis在执行SQL时，正确的调用顺序是" class="headerlink" title="Mybatis在执行SQL时，正确的调用顺序是:"></a>Mybatis在执行SQL时，正确的调用顺序是:</h3><p>①SqlSessionFactory<br>②SqlSession<br>③StatementHandler<br>④ParameterHandler<br>⑤ResultSetHandler<br>⑥Executor<br>⑦TypeHandler</p>
 <p>A、①②③④⑤⑥⑦<br>B、①②⑥③④⑦⑤<br>C、①②④③⑦⑥⑤<br>D、①②③⑦④⑥⑤</p>
 <p><strong>答案：B</strong></p>
-<p><strong>解析：</strong><br><a href="/images/mybatisflow.png">!mybatisflow</a><br>在执行sql时，首先会从SqlSessionFactory中创建一个新的SqlSession。<br>sql语句是通过sqlSession中的Executor来执行，Executor根据SqlSession传递的参数执行query()方法，然后创建一个StatementHandler对象，将必要的参数传递给StatementHandler，由StatementHandler来完成对数据库的查询。<br>StatementHandler调用ParameterHandler的setParameters方法，把用户传递的参数转换成JDBC Statement所需要的参数， 调用原生JDBC来执行语句。<br>最后由ResultSetHandler的handleResultSets方法对JDBC返回的ResultSet结果集转换成对象集，并逐级返回结果，完成一次sql语句执行。</p>
+<p><strong>解析：</strong><br><img src="/images/mybatisflow.png" alt="mybatisflow"><br>在执行sql时，首先会从SqlSessionFactory中创建一个新的SqlSession。<br>sql语句是通过sqlSession中的Executor来执行，Executor根据SqlSession传递的参数执行query()方法，然后创建一个StatementHandler对象，将必要的参数传递给StatementHandler，由StatementHandler来完成对数据库的查询。<br>StatementHandler调用ParameterHandler的setParameters方法，把用户传递的参数转换成JDBC Statement所需要的参数， 调用原生JDBC来执行语句。<br>最后由ResultSetHandler的handleResultSets方法对JDBC返回的ResultSet结果集转换成对象集，并逐级返回结果，完成一次sql语句执行。</p>
 <hr>
 <h3 id="以下关于向线程池提交任务，正确的步骤是"><a href="#以下关于向线程池提交任务，正确的步骤是" class="headerlink" title="以下关于向线程池提交任务，正确的步骤是:"></a>以下关于向线程池提交任务，正确的步骤是:</h3><p>①判断是否达到了线程池设置的最大线程数，如果没有达到，就创建新线程来执行任务<br>②判断线程池中的线程数是否大于设置的核心线程数，创建核心线程执行任务<br>③判断缓冲队列是否满了，如果没满，放入队列等待执行<br>④执行拒绝策略</p>
 <p>A、②①③④<br>B、②③①④<br>C、①②③④<br>D、①③②④</p>
 <p><strong>答案：B</strong></p>
-<p><strong>解析：</strong><br><a href="/images/thread.png">!thread</a><br>我们看看向线程池提交任务时的执行顺序。<br>向线程池提交任务时，会首先判断线程池中的线程数是否大于设置的核心线程数，如果不大于，就创建一个核心线程来执行任务。<br>如果大于核心线程数，就会判断缓冲队列是否满了，如果没有满，则放入队列，等待线程空闲时执行任务。<br>如果队列已经满了，则判断是否达到了线程池设置的最大线程数，如果没有达到，就创建新线程来执行任务。<br>如果已经达到了最大线程数，则执行指定的拒绝策略。</p>
+<p><strong>解析：</strong><br><img src="/images/thread.png" alt="thread"><br>我们看看向线程池提交任务时的执行顺序。<br>向线程池提交任务时，会首先判断线程池中的线程数是否大于设置的核心线程数，如果不大于，就创建一个核心线程来执行任务。<br>如果大于核心线程数，就会判断缓冲队列是否满了，如果没有满，则放入队列，等待线程空闲时执行任务。<br>如果队列已经满了，则判断是否达到了线程池设置的最大线程数，如果没有达到，就创建新线程来执行任务。<br>如果已经达到了最大线程数，则执行指定的拒绝策略。</p>
 <hr>
 <h3 id="以下关于类的加载机制错误的是"><a href="#以下关于类的加载机制错误的是" class="headerlink" title="以下关于类的加载机制错误的是:"></a>以下关于类的加载机制错误的是:</h3><p>A、类的加载指的是将编译好的class类文件中的字节码读入到内存中，将其放在堆内并创建对应的Class对象<br>B、加载是文件到内存的过程。通过类的完全限定名查找类字节码文件，并利用字节码文件创建一个Class对象<br>C、准备阶段是进行内存分配。为类变量也就是类中由static修饰的变量分配内存，并且设置初始值是0或者null，而不是代码中设置的具体值<br>D、解析主要是解析字段、接口、方法。主要是将常量池中的符号引用替换为直接引用的过程。直接引用就是直接指向目标的指针、相对偏移量等。</p>
 <p><strong>答案：A</strong></p>
-<p><strong>解析：</strong><br><a href="/images/classloader.png">!classloader</a><br>类的加载指的是将编译好的class类文件中的字节码读入到内存中，将其放在方法区内并创建对应的Class对象。<br>类的加载分为加载、链接、初始化，其中链接又包括验证、准备、解析三步。<br>看到图中上半部分深绿色，我们逐个分析：<br>加载是文件到内存的过程。通过类的完全限定名查找此类字节码文件，并利用字节码文件创建一个Class对象<br>验证是对类文件内容验证。目的在于确保Class文件符合当前虚拟机要求，不会危害虚拟机自身安全。主要包括四种：<br>文件格式验证，元数据验证，字节码验证，符号引用验证。<br>准备阶段是进行内存分配。为类变量也就是类中由static修饰的变量分配内存，并且设置初始值，这里要注意，初始值是0或者null，而不是代码中设置的具体值，代码中设置的值是在初始化阶段完成的。另外这里也不包含用final修饰的静态变量，因为final在编译的时候就会分配了。<br>解析主要是解析字段、接口、方法。主要是将常量池中的符号引用替换为直接引用的过程。直接引用就是直接指向目标的指针、相对偏移量等。<br>最后是初始化：主要完成静态块执行与静态变量的赋值。这是类加载最后阶段，若被加载类的父类没有初始化，则先对父类进行初始化。<br>只有对类主动使用时，才会进行初始化，初始化的触发条件包括创建类的实例的时候、访问类的静态方法或者静态变量的时候、Class.forName()反射类的时候、或者某个子类被初始化的时候。</p>
+<p><strong>解析：</strong><br><img src="/images/classloader.png" alt="classloader"><br>类的加载指的是将编译好的class类文件中的字节码读入到内存中，将其放在方法区内并创建对应的Class对象。<br>类的加载分为加载、链接、初始化，其中链接又包括验证、准备、解析三步。<br>看到图中上半部分深绿色，我们逐个分析：<br>加载是文件到内存的过程。通过类的完全限定名查找此类字节码文件，并利用字节码文件创建一个Class对象<br>验证是对类文件内容验证。目的在于确保Class文件符合当前虚拟机要求，不会危害虚拟机自身安全。主要包括四种：<br>文件格式验证，元数据验证，字节码验证，符号引用验证。<br>准备阶段是进行内存分配。为类变量也就是类中由static修饰的变量分配内存，并且设置初始值，这里要注意，初始值是0或者null，而不是代码中设置的具体值，代码中设置的值是在初始化阶段完成的。另外这里也不包含用final修饰的静态变量，因为final在编译的时候就会分配了。<br>解析主要是解析字段、接口、方法。主要是将常量池中的符号引用替换为直接引用的过程。直接引用就是直接指向目标的指针、相对偏移量等。<br>最后是初始化：主要完成静态块执行与静态变量的赋值。这是类加载最后阶段，若被加载类的父类没有初始化，则先对父类进行初始化。<br>只有对类主动使用时，才会进行初始化，初始化的触发条件包括创建类的实例的时候、访问类的静态方法或者静态变量的时候、Class.forName()反射类的时候、或者某个子类被初始化的时候。</p>
 
       
     </div>

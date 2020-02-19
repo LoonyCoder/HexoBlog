@@ -48,8 +48,8 @@ D、消息的发送有三种方式：同步、异步、以及oneway，异步为�
 **答案：B、D**
 
 **解析：**
-[!kafka](/images/kafka1.png)
-[!kafka](/images/kafka2.png)
+![kafka](/images/kafka1.png)
+![kafka](/images/kafka2.png)
 Kafka只保证一个分区内的消息有序，**不能保证一个topic的不同分区之间的消息有序。**
 为了保证较高的处理效率，所有的消息读写都是在主patition中进行，其他副本分区只会从主分区复制数据。Kafka会在Zookeeper上针对每个Topic维护一个称为ISR(in-sync replica)，就是已同步的副本集。如果某个主分区不可用了，Kafka就会从ISR集合中选择一个副本作为新的主分区。
 消息的发送有三种方式：同步、异步以及oneway。**同步模式下后台线程中发送消息时同步获取结果，这也是默认模式。**
@@ -108,7 +108,7 @@ D、虽然TCP是可靠传输，但在已经成功建立连接的TCP连接上，�
 **答案：A、D**
 
 **解析：**
-[!TCP](/images/tcp1.png)
+![TCP](/images/tcp1.png)
 A、等待2倍最大报文段生存时间之后在关闭链接，原因有两个：
 - 一、保证TCP协议的全双工连接能够可靠关闭
 - 二、保证这次连接的重复数据段从网络中消失，防止端口被重用时可能产生数据混淆
@@ -179,7 +179,7 @@ D、①②③⑦④⑥⑤
 **答案：B**
 
 **解析：**
-[!mybatisflow](/images/mybatisflow.png)
+![mybatisflow](/images/mybatisflow.png)
 在执行sql时，首先会从SqlSessionFactory中创建一个新的SqlSession。
 sql语句是通过sqlSession中的Executor来执行，Executor根据SqlSession传递的参数执行query()方法，然后创建一个StatementHandler对象，将必要的参数传递给StatementHandler，由StatementHandler来完成对数据库的查询。
 StatementHandler调用ParameterHandler的setParameters方法，把用户传递的参数转换成JDBC Statement所需要的参数， 调用原生JDBC来执行语句。
@@ -202,7 +202,7 @@ D、①③②④
 **答案：B**
 
 **解析：**
-[!thread](/images/thread.png)
+![thread](/images/thread.png)
 我们看看向线程池提交任务时的执行顺序。
 向线程池提交任务时，会首先判断线程池中的线程数是否大于设置的核心线程数，如果不大于，就创建一个核心线程来执行任务。
 如果大于核心线程数，就会判断缓冲队列是否满了，如果没有满，则放入队列，等待线程空闲时执行任务。
@@ -221,7 +221,7 @@ D、解析主要是解析字段、接口、方法。主要是将常量池中的�
 **答案：A**
 
 **解析：**
-[!classloader](/images/classloader.png)
+![classloader](/images/classloader.png)
 类的加载指的是将编译好的class类文件中的字节码读入到内存中，将其放在方法区内并创建对应的Class对象。
 类的加载分为加载、链接、初始化，其中链接又包括验证、准备、解析三步。
 看到图中上半部分深绿色，我们逐个分析：
