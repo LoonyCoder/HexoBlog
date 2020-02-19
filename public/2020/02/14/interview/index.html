@@ -92,7 +92,7 @@
 <meta property="og:image" content="http://yoursite.com/images/thread.png">
 <meta property="og:image" content="http://yoursite.com/images/classloader.png">
 <meta property="article:published_time" content="2020-02-13T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-02-19T13:45:42.578Z">
+<meta property="article:modified_time" content="2020-02-19T13:58:12.461Z">
 <meta property="article:author" content="LoonyCoder">
 <meta property="article:tag" content="Java - 面试题">
 <meta name="twitter:card" content="summary">
@@ -423,7 +423,7 @@
 <li>Failfast Cluster<br>快速失败，只发起一次调用，失败立即报错。通常用于非幂等性的写操作，比如新增记录。</li>
 <li>Failsafe Cluster<br>失败安全，出现异常时，直接忽略。通常用于写入审计日志等操作。</li>
 <li>Failback Cluster<br>失败自动恢复，后台记录失败请求，定时重发。通常用于消息通知操作。</li>
-<li>Forking Cluster<br>并行调用多个服务器，只要一个成功即返回。通常用于实时性要求较高的读操作，但需要浪费更多服务资源。可通过 forks=”2″ 来设置最大并行数。</li>
+<li>Forking Cluster<br>并行调用多个服务器，只要一个成功即返回。通常用于实时性要求较高的读操作，但需要浪费更多服务资源。可通过 forks=”2” 来设置最大并行数。</li>
 <li>Broadcast Cluster<br>广播调用所有提供者，逐个调用，任意一台报错则报错 。通常用于通知所有提供者更新缓存或日志等本地资源信息。</li>
 </ul>
 <hr>
@@ -434,7 +434,7 @@
 <h3 id="下面关于排序算法的描述正确的是"><a href="#下面关于排序算法的描述正确的是" class="headerlink" title="下面关于排序算法的描述正确的是:"></a>下面关于排序算法的描述正确的是:</h3><p>A、冒泡排序和插入排序都是稳定的排序算法<br>B、如果数组已经按照顺序排好序，使用插入排序，时间复杂度是O(n)<br>C、快速排序每次选择最大值座位基准值能够加入排序过程<br>D、快速排序最好情况的时间复杂度是O(nlogn)</p>
 <p><strong>答案：A、B、D</strong></p>
 <p><strong>解析：</strong><br>快速排序时间复杂度：<br>1、 最优情况：被选出来的基准值都是当前子数组的中间数。<br>不断地把一个规模为 n 的问题分解成规模为 n/2 的问题，一直分解到规模大小为 1。如果 n 等于 2，只需要分一次;如果 n 等于 4，需要分 2 次，以此类推，对于规模为 n 的问题，一共要进行 log(n) 次的切分。<br>把规模大小为 n 的问题分解成 n/2 的两个子问题时，和基准值进行了 n-1 次比较，复杂度就是 O(n)。<br>因此，在最优情况下，快速排序的复杂度是 O(nlogn)。</p>
-<p>2、.最坏情况：基准值选择了子数组里的最大或者最小值<br>每次都把子数组分成了两个更小的子数组，其中一个的长度为 1，另外一个的长度只比原子数组少 1，这样就需要n次的切分。<br>因此，算法复杂度为 O(n的平方)。</p>
+<p>2、最坏情况：基准值选择了子数组里的最大或者最小值<br>每次都把子数组分成了两个更小的子数组，其中一个的长度为 1，另外一个的长度只比原子数组少 1，这样就需要n次的切分。<br>因此，算法复杂度为 O(n²)。</p>
 <hr>
 <h3 id="以下有关JVM的说法正确的是"><a href="#以下有关JVM的说法正确的是" class="headerlink" title="以下有关JVM的说法正确的是:"></a>以下有关JVM的说法正确的是:</h3><p>A、程序计数器是一个比较小的内存区域，用于指示当前线程所执行的字节码执行到了第几行，是线程隔离的。<br>B、虚拟机栈描述的是Java方法执行的内存模型，用于存储局部变量，操作数栈，动态链接，方法出口等信息，是线程隔离的。<br>C、方法区用于存储JVM加载的类信息、常量、静态变量、以及编译器编译后的代码等数据，是线程共享的。<br>D、堆被所有线程共享，目的是为了存放对象实例，几乎所有的对象实例都在这里分配。当堆内存没有可用空间时，会抛出OOM异常</p>
 <p><strong>答案：A、B、C、D</strong></p>
