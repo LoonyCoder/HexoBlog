@@ -300,7 +300,7 @@ public class TransferTest {
 
 #### IO流
 
-![IO流](http://cdn.tycoding.cn/20180127210359151.png)
+![IO流](/images/io.png)
 
 **1、Java中有几种类型的流？**
 字符流和字节流。字节流继承InputStream和OutputStream；字符流继承自InputStreamReader和OutputStreamWriter。
@@ -448,21 +448,21 @@ binarySearch()方法是从List中查找指定元素，其中首先判断传入�
 >单向链表
 单向链表包含每个节点Node包含两个部分：第一部分data储存当前节点数据、第二部分next存储下一节点的地址。
 + 单向链表只可向一个方向遍历，查找一个节点需要从第一个节点开始向下依次寻找
-![单向链表](http://cdn.tycoding.cn/1120165-20171207161602113-1451349858.png)
+![单向链表](/images/linktable1.png)
 
 + 单向链表插入节点从链表头部插入，将新插入节点的next指向原头部节点位置即可
-![单向链表](http://cdn.tycoding.cn/1120165-20171207162758425-142549066.png)
+![单向链表](/images/linktable2.png)
 
 + 删除节点，只需要将该节点上一个节点的next指向该节点下一个节点即可
-![单向链表](http://cdn.tycoding.cn/1120165-20171207162815925-341262498.png)
+![单向链表](/images/linktable3.png)
 
 >双向链表
 **双向链表** 包含两个指针，prev指向前一个节点，next指向后一个节点。
-![双向链表](http://cdn.tycoding.cn/双向链表.png)
+![双向链表](/images/linktable4.png)
 
 >双向循环链表
 **双向循环链表** 最后一个节点的*next*指向*head*，而*head*的*prev*指向最后一个节点，形成一个环。
-![双向循环链表](http://cdn.tycoding.cn/双向循环链表.png)
+![双向循环链表](/images/linktable5.png)
 
 ---
 
@@ -586,7 +586,7 @@ HashMap默认采用了 链地址法 解决Hash冲突问题，即通过类似单�
 ---
 
 #### 实现原理
-![hash冲突与实现原理](http://cdn.tycoding.cn/8db4a3bdfb238da1a1c4431d2b6e075c_hd.png)
+![hash冲突与实现原理](/images/hash1.png)
 这里我们需要了解两个名词：
 Table: 哈希桶数组（哈希表），存放Node元素，底层是一个Node[] table
 Node: 节点元素，Node是HashMap的一个内部类，实现了Map.Entry接口，本质是一个映射（K-V）
@@ -654,7 +654,7 @@ static final class TreeNode<K,V> extends LinkedHashMap.Entry<K,V> {
 #### Java集合框架总结
 
 ##### Collection
-![Collection](http://cdn.tycoding.cn/QQ20190623-181246.png)
+![Collection](/images/collection1.png)
 
 **List**
 
@@ -669,7 +669,7 @@ LinkedHashSet: LinkedHashSet继承自HashSet，并且其内部通过LinkedHashMa
 TreeSet 有序、唯一，红黑树
 
 ##### Map
-![Map](http://cdn.tycoding.cn/QQ20190623-181259.png)
+![Map](/images/map1.png)
 
 + HashMap: JDK1.8之前HashMap由数组和链表组成，数组时HashMap的主体，链表是为了解决Hash冲突问题。JDK1.8之后当Table中Node数量大于8时，就将链表转换为红黑树，以减少搜索时间提高效率。
 + LinkedHashMap: LinkedHashMap继承自HashMap，所有他的底层仍然由数组和链表/红黑树实现。另外，LinkedHashMap在上面的结构基础上，增加了一条双向链表，使得上面的结构可以保持键值对的插入顺序。
@@ -729,7 +729,7 @@ time_waiting|超时等待状态，他可以实现在指定时间后自动返回
 terminated|终止状态，表示当前线程已经执行完毕
 
 对应，程序会因为不同代码的执行产生不同的状态，如下图：
-![线程图](http://cdn.tycoding.cn/Java+线程状态变迁.png)
+![线程图](/images/thread2.png)
 如上，线程创建后将进入NEW（初始）状态，调用start()开始运行，当线程执行wait()方法后，线程将进入WAITING（等待）状态，可以通过wait(long)或join(long)等方法终止等待状态；当线程调用同步方法时，在没有获取到锁的情况下，线程将会进入到BLOCKED（阻塞）状态。
 
 ---
@@ -741,7 +741,7 @@ terminated|终止状态，表示当前线程已经执行完毕
 
 #### 什么是死锁？如何避免?
 举例：线程A持有资源2，线程B持有资源1，在线程A、B都没有释放自己所持有资源的情况下（锁未释放），他们都想同时获取对方的资源，因为资源1、2都被锁定，两个线程都会进入相互等待的情况，这种情况称为死锁。
-![死锁](http://cdn.tycoding.cn/2019-4死锁1.png)
+![死锁](/images/deadlock.png)
 栗子：
 ```bash
 public class DeadLockDemo {
