@@ -69,6 +69,238 @@
       </tags>
   </entry>
   <entry>
+    <title>Redis高可用解决方案总结</title>
+    <url>/2018/12/06/redis-2/</url>
+    <content><![CDATA[<p><img src="/images/redis-logo.png" alt="redis"><br>本文主要针对 Redis 常见的几种使用方式及其优缺点展开分析。</p>
+<h3 id="常见使用方式"><a href="#常见使用方式" class="headerlink" title="常见使用方式"></a>常见使用方式</h3><p>Redis 的几种常见使用方式包括：</p>
+<ul>
+<li><p>Redis 单副本；</p>
+</li>
+<li><p>Redis 多副本（主从）；</p>
+</li>
+<li><p>Redis Sentinel（哨兵）；</p>
+</li>
+<li><p>Redis Cluster；</p>
+</li>
+<li><p>Redis 自研。</p>
+</li>
+</ul>
+<hr>
+<h3 id="各种使用方式的优缺点"><a href="#各种使用方式的优缺点" class="headerlink" title="各种使用方式的优缺点"></a>各种使用方式的优缺点</h3><h4 id="Redis-单副本"><a href="#Redis-单副本" class="headerlink" title="Redis 单副本"></a>Redis 单副本</h4><p>Redis 单副本，采用单个 Redis 节点部署架构，没有备用节点实时同步数据，不提供数据持久化和备份策略，适用于数据可靠性要求不高的纯缓存业务场景。<br><img src="/images/redis1.jpg" alt="redis"><br><strong>优点</strong>：</p>
+<p>架构简单，部署方便；</p>
+<p>高性价比：缓存使用时无需备用节点（单实例可用性可以用 supervisor 或 crontab 保证），当然为了满足业务的高可用性，也可以牺牲一个备用节点，但同时刻只有一个实例对外提供服务；</p>
+<p>高性能。</p>
+<p><strong>缺点</strong>：</p>
+<p>不保证数据的可靠性；</p>
+<p>在缓存使用，进程重启后，数据丢失，即使有备用的节点解决高可用性，但是仍然不能解决缓存预热问题，因此不适用于数据可靠性要求高的业务；</p>
+<p>高性能受限于单核 CPU 的处理能力（Redis 是单线程机制），CPU 为主要瓶颈，所以适合操作命令简单，排序、计算较少的场景。也可以考虑用 Memcached 替代。</p>
+<h4 id="Redis-多副本（主从）"><a href="#Redis-多副本（主从）" class="headerlink" title="Redis 多副本（主从）"></a>Redis 多副本（主从）</h4><p>Redis 多副本，采用主从（replication）部署结构，相较于单副本而言最大的特点就是主从实例间数据实时同步，并且提供数据持久化和备份策略。主从实例部署在不同的物理服务器上，根据公司的基础环境配置，可以实现同时对外提供服务和读写分离策略。<br><img src="/images/redis2.jpg" alt="redis"></p>
+<p><strong>优点</strong>：</p>
+<p>高可靠性：一方面，采用双机主备架构，能够在主库出现故障时自动进行主备切换，从库提升为主库提供服务，保证服务平稳运行；另一方面，开启数据持久化功能和配置合理的备份策略，能有效的解决数据误操作和数据异常丢失的问题；</p>
+<p>读写分离策略：从节点可以扩展主库节点的读能力，有效应对大并发量的读操作。</p>
+<p><strong>缺点</strong>：</p>
+<p>故障恢复复杂，如果没有 RedisHA 系统（需要开发），当主库节点出现故障时，需要手动将一个从节点晋升为主节点，同时需要通知业务方变更配置，并且需要让其它从库节点去复制新主库节点，整个过程需要人为干预，比较繁琐；</p>
+<p>主库的写能力受到单机的限制，可以考虑分片；</p>
+<p>主库的存储能力受到单机的限制，可以考虑 Pika；</p>
+<p>原生复制的弊端在早期的版本中也会比较突出，如：Redis 复制中断后，Slave 会发起 psync，此时如果同步不成功，则会进行全量同步，主库执行全量备份的同时可能会造成毫秒或秒级的卡顿；又由于 COW 机制，导致极端情况下的主库内存溢出，程序异常退出或宕机；主库节点生成备份文件导致服务器磁盘 IO 和 CPU（压缩）资源消耗；发送数 GB 大小的备份文件导致服务器出口带宽暴增，阻塞请求，建议升级到最新版本。</p>
+<h4 id="Redis-多副本（主从）-1"><a href="#Redis-多副本（主从）-1" class="headerlink" title="Redis 多副本（主从）"></a>Redis 多副本（主从）</h4><p>Redis Sentinel 是社区版本推出的原生高可用解决方案，其部署架构主要包括两部分：Redis Sentinel 集群和 Redis 数据集群。</p>
+<p>其中 Redis Sentinel 集群是由若干 Sentinel 节点组成的分布式集群，可以实现故障发现、故障自动转移、配置中心和客户端通知。Redis Sentinel 的节点数量要满足 2n+1（n&gt;=1）的奇数个。<br><img src="/images/redis3.jpg" alt="redis"><br><img src="/images/redis4.jpg" alt="redis"><br><strong>优点</strong>：</p>
+<p>Redis Sentinel 集群部署简单；</p>
+<p>能够解决 Redis 主从模式下的高可用切换问题；</p>
+<p>很方便实现 Redis 数据节点的线形扩展，轻松突破 Redis 自身单线程瓶颈，可极大满足 Redis 大容量或高性能的业务需求；</p>
+<p>可以实现一套 Sentinel 监控一组 Redis 数据节点或多组数据节点。</p>
+<p><strong>缺点</strong>：</p>
+<p>部署相对 Redis 主从模式要复杂一些，原理理解更繁琐；</p>
+<p>资源浪费，Redis 数据节点中 slave 节点作为备份节点不提供服务；</p>
+<p>Redis Sentinel 主要是针对 Redis 数据节点中的主节点的高可用切换，对 Redis 的数据节点做失败判定分为主观下线和客观下线两种，对于 Redis 的从节点有对节点做主观下线操作，并不执行故障转移。</p>
+<p>不能解决读写分离问题，实现起来相对复杂。</p>
+<p><strong>建议</strong>：</p>
+<p>如果监控同一业务，可以选择一套 Sentinel 集群监控多组 Redis 数据节点的方案，反之选择一套 Sentinel 监控一组 Redis 数据节点的方案。</p>
+<p>sentinel monitor配置中的建议设置成 Sentinel 节点的一半加 1，当 Sentinel 部署在多个 IDC 的时候，单个 IDC 部署的 Sentinel 数量不建议超过（Sentinel 数量 – quorum）。</p>
+<p>合理设置参数，防止误切，控制切换灵敏度控制：</p>
+<p>a. quorum</p>
+<p>b. down-after-milliseconds 30000</p>
+<p>c. failover-timeout 180000</p>
+<p>d. maxclient</p>
+<p>e. timeout</p>
+<p>部署的各个节点服务器时间尽量要同步，否则日志的时序性会混乱。</p>
+<p>Redis 建议使用 pipeline 和 multi-keys 操作，减少 RTT 次数，提高请求效率。</p>
+<p>自行搞定配置中心（zookeeper），方便客户端对实例的链接访问。</p>
+<h4 id="Redis-Cluster"><a href="#Redis-Cluster" class="headerlink" title="Redis Cluster"></a>Redis Cluster</h4><p>Redis Cluster 是社区版推出的 Redis 分布式集群解决方案，主要解决 Redis 分布式方面的需求，比如，当遇到单机内存，并发和流量等瓶颈的时候，Redis Cluster 能起到很好的负载均衡的目的。</p>
+<p>Redis Cluster 集群节点最小配置 6 个节点以上（3 主 3 从），其中主节点提供读写操作，从节点作为备用节点，不提供请求，只作为故障转移使用。</p>
+<p>Redis Cluster 采用虚拟槽分区，所有的键根据哈希函数映射到 0～16383 个整数槽内，每个节点负责维护一部分槽以及槽所印映射的键值数据。<br><img src="/images/redis5.jpg" alt="redis"><br><strong>优点</strong>：</p>
+<p>无中心架构；</p>
+<p>数据按照 slot 存储分布在多个节点，节点间数据共享，可动态调整数据分布；</p>
+<p>可扩展性：可线性扩展到 1000 多个节点，节点可动态添加或删除；</p>
+<p>高可用性：部分节点不可用时，集群仍可用。通过增加 Slave 做 standby 数据副本，能够实现故障自动 failover，节点之间通过 gossip 协议交换状态信息，用投票机制完成 Slave 到 Master 的角色提升；</p>
+<p>降低运维成本，提高系统的扩展性和可用性。</p>
+<p><strong>缺点</strong>：</p>
+<p>Client 实现复杂，驱动要求实现 Smart Client，缓存 slots mapping 信息并及时更新，提高了开发难度，客户端的不成熟影响业务的稳定性。目前仅 JedisCluster 相对成熟，异常处理部分还不完善，比如常见的“max redirect exception”。</p>
+<p>节点会因为某些原因发生阻塞（阻塞时间大于 clutser-node-timeout），被判断下线，这种 failover 是没有必要的。</p>
+<p>数据通过异步复制，不保证数据的强一致性。</p>
+<p>多个业务使用同一套集群时，无法根据统计区分冷热数据，资源隔离性较差，容易出现相互影响的情况。</p>
+<p>Slave 在集群中充当“冷备”，不能缓解读压力，当然可以通过 SDK 的合理设计来提高 Slave 资源的利用率。</p>
+<p>Key 批量操作限制，如使用 mset、mget 目前只支持具有相同 slot 值的 Key 执行批量操作。对于映射为不同 slot 值的 Key 由于 Keys 不支持跨 slot 查询，所以执行 mset、mget、sunion 等操作支持不友好。</p>
+<p>Key 事务操作支持有限，只支持多 key 在同一节点上的事务操作，当多个 Key 分布于不同的节点上时无法使用事务功能。</p>
+<p>Key 作为数据分区的最小粒度，不能将一个很大的键值对象如 hash、list 等映射到不同的节点。</p>
+<p>不支持多数据库空间，单机下的 redis 可以支持到 16 个数据库，集群模式下只能使用 1 个数据库空间，即 db 0。</p>
+<p>复制结构只支持一层，从节点只能复制主节点，不支持嵌套树状复制结构。</p>
+<p>避免产生 hot-key，导致主库节点成为系统的短板。</p>
+<p>避免产生 big-key，导致网卡撑爆、慢查询等。</p>
+<p>重试时间应该大于 cluster-node-time 时间。</p>
+<p>Redis Cluster 不建议使用 pipeline 和 multi-keys 操作，减少 max redirect 产生的场景。</p>
+<h4 id="Redis-自研"><a href="#Redis-自研" class="headerlink" title="Redis 自研"></a>Redis 自研</h4><p>Redis 自研的高可用解决方案，主要体现在配置中心、故障探测和 failover 的处理机制上，通常需要根据企业业务的实际线上环境来定制化。<br><img src="/images/redis6.jpg" alt="redis"><br><img src="/images/redis7.jpg" alt="redis"><br>优点：</p>
+<p>高可靠性、高可用性；</p>
+<p>自主可控性高；</p>
+<p>贴切业务实际需求，可缩性好，兼容性好。</p>
+<p>缺点：</p>
+<p>实现复杂，开发成本高；</p>
+<p>需要建立配套的周边设施，如监控，域名服务，存储元数据信息的数据库等；</p>
+<p>维护成本高。</p>
+]]></content>
+      <categories>
+        <category>数据库</category>
+      </categories>
+      <tags>
+        <tag>数据库 - Redis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Redis入门</title>
+    <url>/2018/11/28/redis-1/</url>
+    <content><![CDATA[<p><img src="/images/redis-logo.png" alt="redis"></p>
+<h3 id="Redis-概述"><a href="#Redis-概述" class="headerlink" title="Redis 概述"></a>Redis 概述</h3><p>在我们日常的Java Web开发中，无不都是使用数据库来进行数据的存储，由于一般的系统任务中通常不会存在高并发的情况，所以这样看起来并没有什么问题，可是一旦涉及大数据量的需求，比如一些商品抢购的情景，或者是主页访问量瞬间较大的时候，单一使用数据库来保存数据的系统会因为面向磁盘，磁盘读/写速度比较慢的问题而存在严重的性能弊端，一瞬间成千上万的请求到来，需要系统在极短的时间内完成成千上万次的读/写操作，这个时候往往不是数据库能够承受的，极其容易造成数据库系统瘫痪，最终导致服务宕机的严重生产问题。</p>
+<hr>
+<h3 id="NoSQL-技术"><a href="#NoSQL-技术" class="headerlink" title="NoSQL 技术"></a>NoSQL 技术</h3><p>为了克服上述的问题，Java Web项目通常会引入NoSQL技术，这是一种<strong>基于内存的数据库</strong>，并且提供一定的持久化功能。</p>
+<p><strong>Redis</strong>和<strong>MongoDB</strong>是当前使用最广泛的NoSQL，而就Redis技术而言，它的性能十分优越，可以<strong>支持每秒十几万此的读/写操作</strong>，其性能远超数据库，并且还<strong>支持集群、分布式、主从同步等</strong>配置，原则上可以无限扩展，让更多的数据存储在内存中，更让人欣慰的是它还<strong>支持一定的事务能力</strong>，这保证了高并发的场景下数据的安全和一致性。</p>
+<hr>
+<h3 id="Redis-在-Java-Web-中的应用"><a href="#Redis-在-Java-Web-中的应用" class="headerlink" title="Redis 在 Java Web 中的应用"></a>Redis 在 Java Web 中的应用</h3><p>Redis 在 Java Web 主要有两个应用场景：</p>
+<ul>
+<li>存储 <strong>缓存</strong> 用的数据；</li>
+<li>需要高速读/写的场合<strong>使用它快速读/写</strong>；</li>
+</ul>
+<h4 id="缓存"><a href="#缓存" class="headerlink" title="缓存"></a>缓存</h4><p>在日常对数据库的访问中，读操作的次数远超写操作，比例大概在 <strong>1:9</strong> 到 <strong>3:7</strong>，所以需要读的可能性是比写的可能大得多的。当我们使用SQL语句去数据库进行读写操作时，数据库就会<strong>去磁盘把对应的数据索引取回来</strong>，这是一个相对较慢的过程。</p>
+<p>如果我们把数据放在 Redis 中，也就是直接放在内存之中，让服务端<strong>直接去读取内存中的数据</strong>，那么这样速度明显就会快上不少，并且会极大减小数据库的压力，但是使用内存进行数据存储开销也是比较大的，限于成本的原因，一般我们<strong>只是使用 Redis 存储一些常用和主要的数据</strong>，比如用户登录的信息等。</p>
+<p>一般而言在使用 Redis 进行存储的时候，我们需要从以下几个方面来考虑：</p>
+<ul>
+<li><strong>业务数据常用吗？命中率如何？</strong>如果命中率很低，就没有必要写入缓存；</li>
+<li><strong>该业务数据是读操作多，还是写操作多？</strong>如果写操作多，频繁需要写入数据库，也没有必要使用缓存；</li>
+<li><strong>业务数据大小如何？</strong>如果要存储几百兆字节的文件，会给缓存带来很大的压力，这样也没有必要；<br>在考虑了这些问题之后，如果觉得有必要使用缓存，那么就使用它！使用 Redis 作为缓存的读取逻辑如下图所示：<br><img src="/images/redis8.png" alt="redis"><br>从上图我们可以知道以下两点：</li>
+</ul>
+<ol>
+<li>当<strong>第一次读取数据的时候</strong>，读取 Redis 的数据就会失败，此时就会触发程序读取数据库，把数据读取出来，并且写入 Redis 中；</li>
+<li>当<strong>第二次以及以后需要读取数据时</strong>，就会直接读取 Redis，读到数据后就结束了流程，这样速度就大大提高了。<br>从上面的分析可以知道，读操作的可能性是远大于写操作的，所以使用 Redis 来处理日常中需要经常读取的数据，速度提升是显而易见的，同时也降低了对数据库的依赖，使得数据库的压力大大减少。</li>
+</ol>
+<p>分析了读操作的逻辑，下面我们来看看<strong>写操作的流程</strong>：<br><img src="/images/redis9.png" alt="redis"><br>从流程可以看出，更新或者写入的操作，需要多个 Redis 的操作，如果业务数据写次数远大于读次数那么就没有必要使用 Redis。</p>
+<blockquote>
+<p>关于使用内存存储数据，我知道谷歌好像就是<strong>把所有互联网的数据都存储在内存条</strong>的，所以才会有如此高质量、高效的搜索，但它毕竟是谷歌…</p>
+</blockquote>
+<h4 id="高速读-写的场合"><a href="#高速读-写的场合" class="headerlink" title="高速读/写的场合"></a>高速读/写的场合</h4><p>在如今的互联网中，越来越多的存在高并发的情况，比如天猫双11、抢红包、抢演唱会门票等，这些场合都是在某一个瞬间或者是某一个短暂的时刻有<strong>成千上万的请求</strong>到达服务器，如果单纯的使用数据库来进行处理，就算不崩，也会很慢的，<strong>轻则造成用户体验极差用户量流失，重则数据库瘫痪，服务宕机</strong>，而这样的场合都是不允许的！</p>
+<p>所以我们需要使用 Redis 来应对这样的高并发需求的场合，我们先来看看一次<strong>请求操作的流程图</strong>：<br><img src="/images/redis10.png" alt="redis"><br>我们来进一步阐述这个过程：</p>
+<ol>
+<li>当一个请求到达服务器时，只是把业务数据在 Redis 上进行读写，而没有对数据库进行任何的操作，这样就能大大提高读写的速度，从而满足<strong>高速响应的需求</strong>；</li>
+<li>但是这些缓存的数据仍然需要持久化，也就是存入数据库之中，所以在一个请求操作完 Redis 的读/写之后，会去<strong>判断该高速读/写的业务是否结束</strong>，这个判断通常会在秒杀商品为0，红包金额为0时成立，如果不成立，则不会操作数据库；如果成立，则触发事件将 Redis 的缓存的数据以批量的形式<strong>一次性写入数据库</strong>，从而完成持久化的工作。</li>
+</ol>
+<hr>
+<h3 id="Redis-的安装"><a href="#Redis-的安装" class="headerlink" title="Redis 的安装"></a>Redis 的安装</h3><blockquote>
+<p>操作系统：CentOS 7<br>redis版本：5.0</p>
+</blockquote>
+<h4 id="下载安装包"><a href="#下载安装包" class="headerlink" title="下载安装包"></a>下载安装包</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ wget http://download.redis.io/releases/redis-5.0.0.tar.gz</span><br></pre></td></tr></table></figure>
+<p><img src="/images/redis11.png" alt="redis"></p>
+<h4 id="解压安装包"><a href="#解压安装包" class="headerlink" title="解压安装包"></a>解压安装包</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ tar -zxvf redis-5.0.0.tar.gz</span><br></pre></td></tr></table></figure>
+<p><img src="/images/redis12.png" alt="redis"><br>没有报错就代表解压成功！</p>
+<h4 id="yum安装gcc依赖"><a href="#yum安装gcc依赖" class="headerlink" title="yum安装gcc依赖"></a>yum安装gcc依赖</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ yum install gcc</span><br></pre></td></tr></table></figure>
+<p>遇到选择，输入y即可</p>
+<h4 id="编译-amp-安装"><a href="#编译-amp-安装" class="headerlink" title="编译&amp;安装"></a>编译&amp;安装</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> redis-5.0.0/</span><br><span class="line">$ make</span><br><span class="line">$ make install</span><br></pre></td></tr></table></figure>
+<h4 id="测试是否安装成功"><a href="#测试是否安装成功" class="headerlink" title="测试是否安装成功"></a>测试是否安装成功</h4><p>先切换到redis src目录下</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> src/</span><br></pre></td></tr></table></figure>
+<h4 id="直接启动redis"><a href="#直接启动redis" class="headerlink" title="直接启动redis"></a>直接启动redis</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ./redis-server</span><br></pre></td></tr></table></figure>
+<p><img src="/images/redis13.png" alt="redis"><br>如上图：redis启动成功，但是这种启动方式需要一直打开窗口，不能进行其他操作，不太方便。<br>按 ctrl + c可以关闭窗口。</p>
+<h4 id="以后台进程方式启动redis"><a href="#以后台进程方式启动redis" class="headerlink" title="以后台进程方式启动redis"></a>以后台进程方式启动redis</h4><h5 id="第一步：修改redis-conf文件"><a href="#第一步：修改redis-conf文件" class="headerlink" title="第一步：修改redis.conf文件"></a>第一步：修改redis.conf文件</h5><p>redis.conf文件就在redis目录下</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> redis-5.0.0/</span><br><span class="line">$ vim redis.conf</span><br></pre></td></tr></table></figure>
+<p>将<strong>daemonize no</strong>修改为<strong>daemonize yes</strong><br><img src="/images/redis14.png" alt="redis"><br>配置允许所有ip都可以访问redis，将bind 127.0.0.1注释掉:<br><img src="/images/redis15.png" alt="redis"><br>并且将protected-mode改为no<br><img src="/images/redis16.png" alt="redis"></p>
+<h5 id="第二步：指定redis-conf文件启动"><a href="#第二步：指定redis-conf文件启动" class="headerlink" title="第二步：指定redis.conf文件启动"></a>第二步：指定redis.conf文件启动</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ./redis-server ~/redis-5.0.0/redis.conf</span><br></pre></td></tr></table></figure>
+<p><img src="/images/redis17.png" alt="redis"></p>
+<h5 id="第三步：关闭redis进程"><a href="#第三步：关闭redis进程" class="headerlink" title="第三步：关闭redis进程"></a>第三步：关闭redis进程</h5><p>首先使用<code>ps -aux&brvbar;grep redis</code>查看redis进程</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ps -aux | grep redis</span><br></pre></td></tr></table></figure>
+<p><img src="/images/redis18.png" alt="redis"><br>使用kill命令杀死进程,并检查是否成功关闭</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ <span class="built_in">kill</span> -9 2751</span><br></pre></td></tr></table></figure>
+<h5 id="第四步：检查是否开启了所有ip访问："><a href="#第四步：检查是否开启了所有ip访问：" class="headerlink" title="第四步：检查是否开启了所有ip访问："></a>第四步：检查是否开启了所有ip访问：</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ps -ef |grep redis</span><br></pre></td></tr></table></figure>
+<p>如果端口号前面显示的是*则说明客户端可以访问了，如果是127.0.0.1，则需要重新配置了。</p>
+<h4 id="设置redis开机自启动"><a href="#设置redis开机自启动" class="headerlink" title="设置redis开机自启动"></a>设置redis开机自启动</h4><h5 id="在-etc目录下新建redis目录"><a href="#在-etc目录下新建redis目录" class="headerlink" title="在/etc目录下新建redis目录"></a>在/etc目录下新建redis目录</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> /etc</span><br><span class="line">$ mkdir redis</span><br></pre></td></tr></table></figure>
+<h5 id="将-root-redis-5-0-0-redis-conf文件复制一份到-etc-redis目录下，并命名为6379-conf"><a href="#将-root-redis-5-0-0-redis-conf文件复制一份到-etc-redis目录下，并命名为6379-conf" class="headerlink" title="将/root/redis-5.0.0/redis.conf文件复制一份到/etc/redis目录下，并命名为6379.conf"></a>将/root/redis-5.0.0/redis.conf文件复制一份到/etc/redis目录下，并命名为6379.conf</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ cp /root/redis-5.0.0/redis.conf /etc/redis/6379.conf</span><br></pre></td></tr></table></figure>
+<h5 id="将redis的启动脚本复制一份放到-etc-init-d目录下"><a href="#将redis的启动脚本复制一份放到-etc-init-d目录下" class="headerlink" title="将redis的启动脚本复制一份放到/etc/init.d目录下"></a>将redis的启动脚本复制一份放到/etc/init.d目录下</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ cp /root/redis-5.0.0/utils/redis_init_script /etc/init.d/redisd</span><br></pre></td></tr></table></figure>
+<h5 id="设置redis开机自启动-1"><a href="#设置redis开机自启动-1" class="headerlink" title="设置redis开机自启动"></a>设置redis开机自启动</h5><p>先切换到/etc/init.d目录下，然后执行自启命令</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ chkconfig redisd on</span><br></pre></td></tr></table></figure>
+<p>如果redisd不支持chkconfig，使用vim编辑redisd文件，在第一行加入如下两行注释，保存退出</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># chkconfig:   2345 90 10</span></span><br><span class="line"><span class="comment"># description:  Redis is a persistent key-value database</span></span><br></pre></td></tr></table></figure>
+<p>注释的意思是，redis服务必须在运行级2，3，4，5下被启动或关闭，启动的优先级是90，关闭的优先级是10。<br>再次执行开机自启命令，成功。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ chkconfig redisd on</span><br></pre></td></tr></table></figure>
+
+<h4 id="以服务的形式启动和关闭redis"><a href="#以服务的形式启动和关闭redis" class="headerlink" title="以服务的形式启动和关闭redis"></a>以服务的形式启动和关闭redis</h4><h5 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ service redisd start</span><br></pre></td></tr></table></figure>
+<h5 id="关闭"><a href="#关闭" class="headerlink" title="关闭"></a>关闭</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ service redisd stop</span><br></pre></td></tr></table></figure>
+<p><img src="/images/redis19.png" alt="redis"></p>
+<hr>
+<h3 id="在-Java-中使用-Redis"><a href="#在-Java-中使用-Redis" class="headerlink" title="在 Java 中使用 Redis"></a>在 Java 中使用 Redis</h3><h4 id="第一步：添加-Jedis-依赖"><a href="#第一步：添加-Jedis-依赖" class="headerlink" title="第一步：添加 Jedis 依赖"></a>第一步：添加 Jedis 依赖</h4><p>想要在 Java 中使用 Redis 缓存，需要添加相关的Jar包依赖，打开Maven仓库的网站：<a href="https://mvnrepository.com/" target="_blank" rel="noopener">https://mvnrepository.com/</a> ，搜索Jedis：<br><img src="/images/redis20.png" alt="redis"></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;redis.clients&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;jedis&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;3.1.0&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+<p>写个简单的性能测试：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">@Test</span><br><span class="line">public void <span class="function"><span class="title">redisTester</span></span>() &#123;</span><br><span class="line">    Jedis jedis = new Jedis(<span class="string">"localhost"</span>, 6379, 100000);</span><br><span class="line">    int i = 0;</span><br><span class="line">    try &#123;</span><br><span class="line">        long start = System.currentTimeMillis();// 开始毫秒数</span><br><span class="line">        <span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">            long end = System.currentTimeMillis();</span><br><span class="line">            <span class="keyword">if</span> (end - start &gt;= 1000) &#123;// 当大于等于1000毫秒（相当于1秒）时，结束操作</span><br><span class="line">                <span class="built_in">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            i++;</span><br><span class="line">            jedis.set(<span class="string">"test"</span> + i, i + <span class="string">""</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; finally &#123;// 关闭连接</span><br><span class="line">        jedis.close();</span><br><span class="line">    &#125;</span><br><span class="line">    // 打印1秒内对Redis的操作次数</span><br><span class="line">    System.out.println(<span class="string">"redis每秒操作："</span> + i + <span class="string">"次"</span>);</span><br><span class="line">&#125;</span><br><span class="line">-----------测试结果-----------</span><br><span class="line">redis每秒操作：99776次</span><br></pre></td></tr></table></figure>
+<h4 id="第二步：使用-Redis-连接池"><a href="#第二步：使用-Redis-连接池" class="headerlink" title="第二步：使用 Redis 连接池"></a>第二步：使用 Redis 连接池</h4><p>跟数据库连接池相同，Java Redis也同样提供了类<code>redis.clients.jedis.JedisPool</code>来管理我们的Reids连接池对象，并且我们可以使用<code>redis.clients.jedis.JedisPoolConfig</code>来对连接池进行配置，代码如下：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">JedisPoolConfig poolConfig = new JedisPoolConfig();</span><br><span class="line">// 最大空闲数</span><br><span class="line">poolConfig.setMaxIdle(50);</span><br><span class="line">// 最大连接数</span><br><span class="line">poolConfig.setMaxTotal(100);</span><br><span class="line">// 最大等待毫秒数</span><br><span class="line">poolConfig.setMaxWaitMillis(20000);</span><br><span class="line">// 使用配置创建连接池</span><br><span class="line">JedisPool pool = new JedisPool(poolConfig, <span class="string">"localhost"</span>);</span><br><span class="line">// 从连接池中获取单个连接</span><br><span class="line">Jedis jedis = pool.getResource();</span><br><span class="line">// 如果需要密码</span><br><span class="line">//jedis.auth(<span class="string">"password"</span>);</span><br></pre></td></tr></table></figure>
+<p>Redis 只能支持六种数据类型（string/hash/list/set/zset/hyperloglog）的操作，但在 Java 中我们却通常以类对象为主，所以在需要 Redis 存储的五中数据类型与 Java 对象之间进行转换，如果自己编写一些工具类，比如一个角色对象的转换，还是比较容易的，但是涉及到许多对象的时候，这其中无论工作量还是工作难度都是很大的，所以总体来说，<strong>就操作对象而言，使用 Redis 还是挺难的</strong>，好在 Spring 对这些进行了封装和支持。</p>
+<h4 id="第三步：在-Spring-中使用-Redis"><a href="#第三步：在-Spring-中使用-Redis" class="headerlink" title="第三步：在 Spring 中使用 Redis"></a>第三步：在 Spring 中使用 Redis</h4><p>上面说到了 Redis 无法操作对象的问题，无法在那些基础类型和 Java 对象之间方便的转换，但是在 Spring 中，这些问题都可以<strong>通过使用RedisTemplate</strong>得到解决！</p>
+<p>想要达到这样的效果，除了 Jedis 包以外还需要在 Spring 引入 spring-data-redis 包：<a href="https://mvnrepository.com/artifact/org.springframework.data/spring-data-redis" target="_blank" rel="noopener">https://mvnrepository.com/artifact/org.springframework.data/spring-data-redis</a><br><img src="/images/redis21.png" alt="redis"></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.data&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-data-redis&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;2.2.0.RELEASE&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+<p><strong>(1) 第一步：使用Spring配置JedisPoolConfig对象</strong><br>大部分的情况下，我们还是会用到连接池的，于是先用 Spring 配置一个 JedisPoolConfig 对象：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&lt;bean id=<span class="string">"poolConfig"</span> class=<span class="string">"redis.clients.jedis.JedisPoolConfig"</span>&gt;</span><br><span class="line">    &lt;!--最大空闲数--&gt;</span><br><span class="line">    &lt;property name=<span class="string">"maxIdle"</span> value=<span class="string">"50"</span>/&gt;</span><br><span class="line">    &lt;!--最大连接数--&gt;</span><br><span class="line">    &lt;property name=<span class="string">"maxTotal"</span> value=<span class="string">"100"</span>/&gt;</span><br><span class="line">    &lt;!--最大等待时间--&gt;</span><br><span class="line">    &lt;property name=<span class="string">"maxWaitMillis"</span> value=<span class="string">"20000"</span>/&gt;</span><br><span class="line">&lt;/bean&gt;</span><br></pre></td></tr></table></figure>
+<p><strong>(2) 第二步：为连接池配置工厂模型</strong><br>好了，我们现在配置好了连接池的相关属性，那么具体使用哪种工厂实现呢？在Spring Data Redis中有四种可供我们选择的工厂模型，它们分别是：</p>
+<ul>
+<li>JredisConnectionFactory</li>
+<li>JedisConnectionFactory</li>
+<li>LettuceConnectionFactory</li>
+<li>SrpConnectionFactory<br>我们这里就简单配置成JedisConnectionFactory：<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&lt;bean id=<span class="string">"connectionFactory"</span> class=<span class="string">"org.springframework.data.redis.connection.jedis.JedisConnectionFactory"</span>&gt;</span><br><span class="line">    &lt;!--Redis服务地址--&gt;</span><br><span class="line">    &lt;property name=<span class="string">"hostName"</span> value=<span class="string">"localhost"</span>/&gt;</span><br><span class="line">    &lt;!--端口号--&gt;</span><br><span class="line">    &lt;property name=<span class="string">"port"</span> value=<span class="string">"6379"</span>/&gt;</span><br><span class="line">    &lt;!--如果有密码则需要配置密码--&gt;</span><br><span class="line">    &lt;!--&lt;property name=<span class="string">"password"</span> value=<span class="string">"password"</span>/&gt;--&gt;</span><br><span class="line">    &lt;!--连接池配置--&gt;</span><br><span class="line">    &lt;property name=<span class="string">"poolConfig"</span> ref=<span class="string">"poolConfig"</span>/&gt;</span><br><span class="line">&lt;/bean&gt;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p><strong>(3) 第三步：配置RedisTemplate</strong><br>普通的连接根本没有办法直接将对象直接存入 Redis 内存中，我们需要替代的方案：将对象序列化（可以简单的理解为继承Serializable接口）。我们可以把对象序列化之后存入Redis缓存中，然后在取出的时候又通过转换器，将序列化之后的对象反序列化回对象，这样就完成了我们的要求：<br><img src="/images/redis22.png" alt="redis"><br>RedisTemplate可以帮助我们完成这份工作，它会找到对应的序列化器去转换Redis的键值：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&lt;bean id=<span class="string">"redisTemplate"</span></span><br><span class="line">      class=<span class="string">"org.springframework.data.redis.core.RedisTemplate"</span></span><br><span class="line">      p:connection-factory-ref=<span class="string">"connectionFactory"</span>/&gt;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>我从《JavaEE互联网轻量级框架整合开发》中了解到，这一步需要配置单独的序列化器去支撑这一步的工作，但是自己在测试当中，发现只要我们的Pojo类实现了Serializable接口，就不会出现问题，所以我直接省略掉了配置序列化器这一步。<br><strong>(4) 第四步：编写测试</strong></p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">/**</span><br><span class="line"> * @author: @loonycoder</span><br><span class="line"> * @create: 2018-11-28 下午 18:22:06</span><br><span class="line"> */</span><br><span class="line">public class Student implements Serializable&#123;</span><br><span class="line"></span><br><span class="line">    private String name;</span><br><span class="line">    private int age;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 给该类一个服务类用于测试</span><br><span class="line">     */</span><br><span class="line">    public void <span class="function"><span class="title">service</span></span>() &#123;</span><br><span class="line">        System.out.println(<span class="string">"学生名字为："</span> + name);</span><br><span class="line">        System.out.println(<span class="string">"学生年龄为："</span> + age);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public String <span class="function"><span class="title">getName</span></span>() &#123;</span><br><span class="line">        <span class="built_in">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setName(String name) &#123;</span><br><span class="line">        this.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public int <span class="function"><span class="title">getAge</span></span>() &#123;</span><br><span class="line">        <span class="built_in">return</span> age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setAge(int age) &#123;</span><br><span class="line">        this.age = age;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后编写测试类：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">@Test</span><br><span class="line">public void <span class="function"><span class="title">test</span></span>() &#123;</span><br><span class="line">    ApplicationContext context =</span><br><span class="line">            new ClassPathXmlApplicationContext(<span class="string">"applicationContext.xml"</span>);</span><br><span class="line">    RedisTemplate redisTemplate = context.getBean(RedisTemplate.class);</span><br><span class="line">    Student student = new Student();</span><br><span class="line">    student.setName(<span class="string">"loonycoder"</span>);</span><br><span class="line">    student.setAge(24);</span><br><span class="line">    redisTemplate.opsForValue().<span class="built_in">set</span>(<span class="string">"student_1"</span>, student);</span><br><span class="line">    Student student1 = (Student) redisTemplate.opsForValue().get(<span class="string">"student_1"</span>);</span><br><span class="line">    student1.service();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="/images/redis23.png" alt="redis"></p>
+<h4 id="第四步：在-SpringBoot-中使用-Redis"><a href="#第四步：在-SpringBoot-中使用-Redis" class="headerlink" title="第四步：在 SpringBoot 中使用 Redis"></a>第四步：在 SpringBoot 中使用 Redis</h4><p><strong>(1)在SpringBoot中添加Redis依赖：</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&lt;!-- Radis --&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-boot-starter-data-redis&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+<p><strong>(2)添加配置文件：</strong><br>在SpringBoot中使用<code>.properties</code>或者<code>.yml</code>都可以，这里给出<code>.properties</code>的例子，因为自己的<code>.yml</code>文件看上去感觉乱糟糟的：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># REDIS (RedisProperties)</span></span><br><span class="line"><span class="comment"># Redis数据库索引（默认为0）</span></span><br><span class="line">spring.redis.database=0</span><br><span class="line"><span class="comment"># Redis服务器地址</span></span><br><span class="line">spring.redis.host=localhost</span><br><span class="line"><span class="comment"># Redis服务器连接端口</span></span><br><span class="line">spring.redis.port=6379</span><br><span class="line"><span class="comment"># Redis服务器连接密码（默认为空）</span></span><br><span class="line">spring.redis.password=</span><br><span class="line"><span class="comment"># 连接池最大连接数（使用负值表示没有限制）</span></span><br><span class="line">spring.redis.pool.max-active=8</span><br><span class="line"><span class="comment"># 连接池最大阻塞等待时间（使用负值表示没有限制）</span></span><br><span class="line">spring.redis.pool.max-wait=-1</span><br><span class="line"><span class="comment"># 连接池中的最大空闲连接</span></span><br><span class="line">spring.redis.pool.max-idle=8</span><br><span class="line"><span class="comment"># 连接池中的最小空闲连接</span></span><br><span class="line">spring.redis.pool.min-idle=0</span><br><span class="line"><span class="comment"># 连接超时时间（毫秒）</span></span><br><span class="line">spring.redis.timeout=0</span><br></pre></td></tr></table></figure>
+<p><strong>(3)测试访问：</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">@RunWith(SpringJUnit4ClassRunner.class)</span><br><span class="line">@SpringBootTest()</span><br><span class="line">public class ApplicationTests &#123;</span><br><span class="line"></span><br><span class="line">    @Autowired</span><br><span class="line">    private StringRedisTemplate stringRedisTemplate;</span><br><span class="line"></span><br><span class="line">    @Test</span><br><span class="line">    public void <span class="built_in">test</span>() throws Exception &#123;</span><br><span class="line"></span><br><span class="line">        // 保存字符串</span><br><span class="line">        stringRedisTemplate.opsForValue().<span class="built_in">set</span>(<span class="string">"loonycoder"</span>, <span class="string">"24"</span>);</span><br><span class="line">        Assert.assertEquals(<span class="string">"24"</span>, stringRedisTemplate.opsForValue().get(<span class="string">"loonycoder"</span>));</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>通过上面这段极为简单的测试案例演示了如何通过自动配置的<strong>StringRedisTemplate</strong>对象进行Redis的读写操作，该对象从命名中就可注意到支持的是String类型。原本是RedisTemplate&lt;K, V&gt;接口，StringRedisTemplate就相当于RedisTemplate&lt;String, String&gt;的实现。<br><strong>(4)存储对象：</strong><br>这一步跟上面使用Spring一样，只需要将Pojo类实现Serializable接口就可以了，这里直接贴测试代码：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">@RunWith(SpringJUnit4ClassRunner.class)</span><br><span class="line">@SpringBootTest()</span><br><span class="line">public class ApplicationTests &#123;</span><br><span class="line"></span><br><span class="line">    @Autowired</span><br><span class="line">    private RedisTemplate redisTemplate;</span><br><span class="line"></span><br><span class="line">    @Test</span><br><span class="line">    public void <span class="built_in">test</span>() throws Exception &#123;</span><br><span class="line"></span><br><span class="line">        User user = new User();</span><br><span class="line">        user.setName(<span class="string">"loonycoder"</span>);</span><br><span class="line">        user.setAge(24);</span><br><span class="line"></span><br><span class="line">        redisTemplate.opsForValue().<span class="built_in">set</span>(<span class="string">"user_1"</span>, user);</span><br><span class="line">        User user1 = (User) redisTemplate.opsForValue().get(<span class="string">"user_1"</span>);</span><br><span class="line"></span><br><span class="line">        System.out.println(user1.getName());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>参考文章：<br><a href="https://www.cnblogs.com/ityouknow/p/5748830.html" target="_blank" rel="noopener">https://www.cnblogs.com/ityouknow/p/5748830.html</a><br><a href="http://blog.didispace.com/springbootredis/" target="_blank" rel="noopener">http://blog.didispace.com/springbootredis/</a></p>
+</blockquote>
+<hr>
+<h3 id="在Redis中操作集合"><a href="#在Redis中操作集合" class="headerlink" title="在Redis中操作集合"></a>在Redis中操作集合</h3><blockquote>
+<p>引用文章：<a href="https://www.jianshu.com/p/29aaac3172b5" target="_blank" rel="noopener">https://www.jianshu.com/p/29aaac3172b5</a></p>
+</blockquote>
+<p>直接贴上两段简单的示例代码：</p>
+<h4 id="在Redis中操作List"><a href="#在Redis中操作List" class="headerlink" title="在Redis中操作List"></a>在Redis中操作List</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">// list数据类型适合于消息队列的场景:比如12306并发量太高，而同一时间段内只能处理指定数量的数据！必须满足先进先出的原则，其余数据处于等待</span><br><span class="line">@Test</span><br><span class="line">public void <span class="function"><span class="title">listPushResitTest</span></span>() &#123;</span><br><span class="line">    // leftPush依次由右边添加</span><br><span class="line">    stringRedisTemplate.opsForList().rightPush(<span class="string">"myList"</span>, <span class="string">"1"</span>);</span><br><span class="line">    stringRedisTemplate.opsForList().rightPush(<span class="string">"myList"</span>, <span class="string">"2"</span>);</span><br><span class="line">    stringRedisTemplate.opsForList().rightPush(<span class="string">"myList"</span>, <span class="string">"A"</span>);</span><br><span class="line">    stringRedisTemplate.opsForList().rightPush(<span class="string">"myList"</span>, <span class="string">"B"</span>);</span><br><span class="line">    // leftPush依次由左边添加</span><br><span class="line">    stringRedisTemplate.opsForList().leftPush(<span class="string">"myList"</span>, <span class="string">"0"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@Test</span><br><span class="line">public void <span class="function"><span class="title">listGetListResitTest</span></span>() &#123;</span><br><span class="line">    // 查询类别所有元素</span><br><span class="line">    List&lt;String&gt; listAll = stringRedisTemplate.opsForList().range(<span class="string">"myList"</span>, 0, -1);</span><br><span class="line">    logger.info(<span class="string">"list all &#123;&#125;"</span>, listAll);</span><br><span class="line">    // 查询前3个元素</span><br><span class="line">    List&lt;String&gt; list = stringRedisTemplate.opsForList().range(<span class="string">"myList"</span>, 0, 3);</span><br><span class="line">    logger.info(<span class="string">"list limit &#123;&#125;"</span>, list);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@Test</span><br><span class="line">public void <span class="function"><span class="title">listRemoveOneResitTest</span></span>() &#123;</span><br><span class="line">    // 删除先进入的B元素</span><br><span class="line">    stringRedisTemplate.opsForList().remove(<span class="string">"myList"</span>, 1, <span class="string">"B"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@Test</span><br><span class="line">public void <span class="function"><span class="title">listRemoveAllResitTest</span></span>() &#123;</span><br><span class="line">    // 删除所有A元素</span><br><span class="line">    stringRedisTemplate.opsForList().remove(<span class="string">"myList"</span>, 0, <span class="string">"A"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="在Redis中操作Hash"><a href="#在Redis中操作Hash" class="headerlink" title="在Redis中操作Hash"></a>在Redis中操作Hash</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">@Test</span><br><span class="line">public void <span class="function"><span class="title">hashPutResitTest</span></span>() &#123;</span><br><span class="line">    // map的key值相同，后添加的覆盖原有的</span><br><span class="line">    stringRedisTemplate.opsForHash().put(<span class="string">"banks:12600000"</span>, <span class="string">"a"</span>, <span class="string">"b"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@Test</span><br><span class="line">public void <span class="function"><span class="title">hashGetEntiresResitTest</span></span>() &#123;</span><br><span class="line">    // 获取map对象</span><br><span class="line">    Map&lt;Object, Object&gt; map = stringRedisTemplate.opsForHash().entries(<span class="string">"banks:12600000"</span>);</span><br><span class="line">    logger.info(<span class="string">"objects:&#123;&#125;"</span>, map);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@Test</span><br><span class="line">public void <span class="function"><span class="title">hashGeDeleteResitTest</span></span>() &#123;</span><br><span class="line">    // 根据map的key删除这个元素</span><br><span class="line">    stringRedisTemplate.opsForHash().delete(<span class="string">"banks:12600000"</span>, <span class="string">"c"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@Test</span><br><span class="line">public void <span class="function"><span class="title">hashGetKeysResitTest</span></span>() &#123;</span><br><span class="line">    // 获得map的key集合</span><br><span class="line">    Set&lt;Object&gt; objects = stringRedisTemplate.opsForHash().keys(<span class="string">"banks:12600000"</span>);</span><br><span class="line">    logger.info(<span class="string">"objects:&#123;&#125;"</span>, objects);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@Test</span><br><span class="line">public void <span class="function"><span class="title">hashGetValueListResitTest</span></span>() &#123;</span><br><span class="line">    // 获得map的value列表</span><br><span class="line">    List&lt;Object&gt; objects = stringRedisTemplate.opsForHash().values(<span class="string">"banks:12600000"</span>);</span><br><span class="line">    logger.info(<span class="string">"objects:&#123;&#125;"</span>, objects);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@Test</span><br><span class="line">public void <span class="function"><span class="title">hashSize</span></span>() &#123; // 获取map对象大小</span><br><span class="line">    long size = stringRedisTemplate.opsForHash().size(<span class="string">"banks:12600000"</span>);</span><br><span class="line">    logger.info(<span class="string">"size:&#123;&#125;"</span>, size);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>在网上看到了关于MySQL的性能测试，读写操作大概就<strong>每秒1000以下</strong>的样子，而且这还和引擎相关，所以可以看出Redis确实能在性能方面帮助许多。</p>
+]]></content>
+      <categories>
+        <category>数据库</category>
+      </categories>
+      <tags>
+        <tag>数据库 - Redis</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>高性能的HTTP服务器——Nginx</title>
     <url>/2018/11/21/nginx/</url>
     <content><![CDATA[<p><img src="/images/nginx.jpg" alt="nginx"><br>Nginx是一款高性能HTTP服务器、反向代理服务器及电子邮件（IMAP、POP3）代理服务器，官方测试nginx能够支持5万并发连接。<br><strong>Nginx应用场景：</strong><br>1、http服务器。Nginx是一个http服务器，可以独立提供http服务。可以做网页静态服务器。<br>2、虚拟主机。可以实现在一台服务器虚拟出多个网站。<br>3、反向代理，负载均衡。当网站的并发量过大需要配置服务器集群时可以使用Nginx做反向代理。并且多台服务器可以平均分摊负载。</p>
