@@ -12,14 +12,14 @@ tags:
 
 ![Spring](/images/spring_logo.jpg)
 
-### 1.AOP简介
+### AOP简介
 说到AOP，其实这是一个**面向方面的编程思想** ，它解决了OOP的一些弊端，例如我们需要为**多个不具有继承关系的类引入一个公共行为**， 比如说日志、权限验证、事务管理等等，我们需要将这些代码**重复的添加**到一系列的类中，将**产生大量的重复代码**，如果需要修改，将在每个类中去进行修改，**不便于维护**，代码的**侵入性极高**。所以就有了AOP这样面向方面编程的编程思想，其功能可以为每个需要的类**加入共同的行为**，如果需要修改，只需要修改切面中的代码，改一处等于改多处，并且便于编程，写一个切面类即可达到在每个类中加入重复代码的目的。
 
 阅读此篇文章，你将了解Spring是**如何实现AOP**（前置通知、后置通知、环绕通知），由于Spring中的事务管理是基于AOP的功能来做的，所以你将更好的能理解Spring是如何将事务统一管理起来的。
 
 ---
 
-### 2.自定义标签开启AOP
+### 自定义标签开启AOP
 
 只要用过AOP都知道，如果需要使用AOP，需要在配置文件中写这样一段配置：
 ```bash
@@ -29,7 +29,7 @@ tags:
 ```bash
 xmlns:aop="http://www.springframework.org/schema/aop"
 ```
-全局搜索命名空间<code>&lt;http\://www.springframework.org/schema/aop&gt;</code>，注意http后加一个 "\" ，可以找到**spring.handlers**文件中对应的handler类：
+全局搜索命名空间<code>&lt;http\\://www.springframework.org/schema/aop&gt;</code>，注意http后加一个“\” ，可以找到**spring.handlers**文件中对应的handler类：
 ```bash
 http\://www.springframework.org/schema/aop=org.springframework.aop.config.AopNamespaceHandler
 ```
@@ -69,9 +69,9 @@ public BeanDefinition parse(Element element, ParserContext parserContext) {
 
 ---
 
-### 3.注册AnnotationAwareAspectJAutoProxyCreator
+### 注册AnnotationAwareAspectJAutoProxyCreator
 <code>AnnotationAwareAspectJAutoProxyCreator</code>是实现AOP功能的主要类，我们先来看看这个类的结构：
-![spring](images/spring-aop1.png)
+![spring](/images/spring-aop1.png)
 此类实现了<code>BeanPostProcessor</code>，稍后将关注其后置处理Bean的方法**postProcessAfterInitialization**，并且实现了<code>BeanFactorAware</code>接口，此类将取得并存有一个<code>BeanFactory</code>实例对象。
 回到主线，关注注册此类的方法：
 ```bash
@@ -192,7 +192,7 @@ public class Service{
 
 ---
 
-### 4.实现AOP代理
+### 实现AOP代理
 #### 创建AOP代理
 上面，自定义标签的配置完成了对**Creator类的自动注册**，我们可以知道，此类实现了<code>BeanPostProcessor</code>接口，将会在IOC容器初始化每个Bean时都调用此类的**postProcessAfterInitialization**方法，此方法即为AOP代理的入口，此方法在抽象父类<code>AbstractAutoProxyCreator</code>实现：
 ```bash
@@ -668,7 +668,7 @@ public InstantiationModelAwarePointcutAdvisorImpl(AspectJExpressionPointcut decl
             aspectInstanceFactory.getAspectMetadata().getPerClausePointcut(), this.declaredPointcut);
 
         // Make it dynamic: must mutate from pre-instantiation to post-instantiation state.
-        // If it's not a dynamic pointcut, it may be optimized out
+        // If it’s not a dynamic pointcut, it may be optimized out
         // by the Spring AOP infrastructure after the first evaluation.
         this.pointcut = new PerTargetInstantiationModelPointcut(
             this.declaredPointcut, preInstantiationPointcut, aspectInstanceFactory);
@@ -1098,7 +1098,7 @@ public Object invoke(Object proxy, Method method, Object[] args) throws Throwabl
         //获取可以应用到此方法上的Interceptor列表
         List<Object> chain = this.advised.getInterceptorsAndDynamicInterceptionAdvice(method, targetClass);
 
-        // Check whether we have any advice. If we don't, we can fallback on direct
+        // Check whether we have any advice. If we don’t, we can fallback on direct
         // reflective invocation of the target, and avoid creating a MethodInvocation.
         //如果没有可以应用到此方法的通知(Interceptor)，此直接反射调用 method.invoke(target, args)
         if (chain.isEmpty()) {
