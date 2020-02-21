@@ -3,7 +3,7 @@ title: Mybatis入门及搭建
 categories:
     - Mybatis
     
-date: 2020-01-03
+date: 2018-09-30
 tags:
 	- Java
 	- Java框架

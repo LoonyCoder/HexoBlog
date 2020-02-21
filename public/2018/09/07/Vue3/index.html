@@ -1,0 +1,1226 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="前端框架," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Vue创建组件什么是组件什么是组件？组件的出现，就是为了拆分Vue实例的代码量的，能够让我们以不同的组件，来划分不同的功能模块，将来我们需要什么样地方功能，就可以去调用对应的组件即可。组件化和模块化的区别：  模块化：是从代码逻辑的角度进行划分的，方便代码分层开发，保证每个功能模块的只能单一； 组件化：是从UI界面的角度进行划分的；前端的组件化，方便了UI组件的重用；  定义Vue组件方式一1、使">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vue组件">
+<meta property="og:url" content="http://yoursite.com/2018/09/07/Vue3/index.html">
+<meta property="og:site_name" content="望月">
+<meta property="og:description" content="Vue创建组件什么是组件什么是组件？组件的出现，就是为了拆分Vue实例的代码量的，能够让我们以不同的组件，来划分不同的功能模块，将来我们需要什么样地方功能，就可以去调用对应的组件即可。组件化和模块化的区别：  模块化：是从代码逻辑的角度进行划分的，方便代码分层开发，保证每个功能模块的只能单一； 组件化：是从UI界面的角度进行划分的；前端的组件化，方便了UI组件的重用；  定义Vue组件方式一1、使">
+<meta property="article:published_time" content="2018-09-06T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-02-21T15:28:56.290Z">
+<meta property="article:author" content="LoonyCoder">
+<meta property="article:tag" content="前端框架">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":50,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":5},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/09/07/Vue3/"/>
+
+
+
+
+
+  <title>Vue组件 | 望月</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">望月</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Life is so short , just coding.</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/07/Vue3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LoonyCoder">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/author.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="望月">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Vue组件</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-07T00:00:00+08:00">
+                2018-09-07
+              </time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Web%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index">
+                    <span itemprop="name">Web前端</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3.7k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  16
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h4 id="Vue创建组件"><a href="#Vue创建组件" class="headerlink" title="Vue创建组件"></a>Vue创建组件</h4><h5 id="什么是组件"><a href="#什么是组件" class="headerlink" title="什么是组件"></a>什么是组件</h5><p>什么是组件？组件的出现，就是为了拆分Vue实例的代码量的，能够让我们以不同的组件，来划分不同的功能模块，将来我们需要什么样地方功能，就可以去调用对应的组件即可。<br>组件化和模块化的区别：</p>
+<ul>
+<li>模块化：是从代码逻辑的角度进行划分的，方便代码分层开发，保证每个功能模块的只能单一；</li>
+<li>组件化：是从UI界面的角度进行划分的；前端的组件化，方便了UI组件的重用；</li>
+</ul>
+<h5 id="定义Vue组件"><a href="#定义Vue组件" class="headerlink" title="定义Vue组件"></a>定义Vue组件</h5><p><strong>方式一</strong><br>1、使用Vue.extend来创建全局的Vue组件<br>2、通过template属性来指定组件要展示的HTML结构<br>3、通过Vue.component()定义全局组件<br>4、在HTML指定位置通过Tag标签的形式应用你的组件，组件的名称即是tag标签的名称</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=<span class="string">"app"</span>&gt;</span><br><span class="line">	&lt;!-- 组件的名称即为对应tag标签的名称 --&gt;</span><br><span class="line">	&lt;mycom1&gt;&lt;/mycom1&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">	// 创建组件</span><br><span class="line">	var com1 = Vue.extend(&#123;</span><br><span class="line">		template: <span class="string">'&lt;h3&gt;这是使用Vue.extend 创建的组件&lt;/h3&gt;'</span></span><br><span class="line">	&#125;);</span><br><span class="line"></span><br><span class="line">	// 使用Vue.component(<span class="string">'组件的名称'</span>, 创建出来的组件模板对象)，定义全局组件</span><br><span class="line">	Vue.component(<span class="string">'mycom1'</span>, com1);</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<p><strong>注意：</strong></p>
+<ul>
+<li>用Vue.component()定义组件名称的时候有两种命名方式：1、驼峰命名：Xxx；2、xxx。注意，使用驼峰命名时，tag标签不能使用驼峰名称，应将相应的大写字母替换为-加小写字母，例如：Vue.component(‘myCom’, com1)，那么tag标签应为： &lt;my-com&gt; &lt;/my-com&gt;</li>
+</ul>
+<p><strong>方式二</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 组件的名称即为对应tag标签的名称 --&gt;</span><br><span class="line">&lt;mycom1&gt;&lt;/mycom1&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line"></span><br><span class="line">	// 使用Vue.component(<span class="string">'组件的名称'</span>, 创建出来的组件模板对象)，定义全局组件</span><br><span class="line">	Vue.component(<span class="string">'mycom1'</span>, Vue.extend(&#123;</span><br><span class="line">		template: <span class="string">'&lt;h3&gt;这是使用Vue.extend 创建的组件&lt;/h3&gt;'</span></span><br><span class="line">	&#125;));</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p>方式二就像是方式一的简化版，但是注意：<br>在template中定义的内容只能存在一个根节点元素，即上面例子中template中不能出现和 &lt;h3&gt;平级的标签。<br>比如下面这种写法就是<strong>错误的</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Vue.component(<span class="string">'mycom1'</span>, Vue.extend(&#123;</span><br><span class="line">	template: <span class="string">'&lt;h3&gt;这是使用Vue.extend 创建的组件&lt;/h3&gt;&lt;span&gt;&lt;/span&gt;'</span></span><br><span class="line">&#125;));</span><br></pre></td></tr></table></figure>
+<p>解决办法就是，外层嵌套一个根标签就行了：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Vue.component(<span class="string">'mycom1'</span>, Vue.extend(&#123;</span><br><span class="line">	template: <span class="string">'&lt;div&gt;&lt;h3&gt;这是使用Vue.extend 创建的组件&lt;/h3&gt;&lt;span&gt;&lt;/span&gt;&lt;/div&gt;'</span></span><br><span class="line">&#125;));</span><br></pre></td></tr></table></figure>
+<p><strong>方式三</strong><br>1、JavaScript中仍使用Vue.component来定义全局组件，和方式二相似，但是里面不再是template: ‘HTML结构’了，而是引用一个外部标签的id值，即template:’id’。<br>2、在被Vue实例控制的app外面，定义&lt;template id=”id”&gt;你的HTML结构&lt;/template&gt;<br>这种方式的好处就是是就组件代码都是定义在HTML结构中的，有智能代码提示；而JavaScript中定义组件仅是写一个引用。<br>实例：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=<span class="string">"app"</span>&gt;</span><br><span class="line">	&lt;!-- 页面引用 --&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&lt;template id=<span class="string">"tmp"</span>&gt;</span><br><span class="line">	&lt;!-- 比如仅存在一个根节点元素 --&gt;</span><br><span class="line">	&lt;div&gt;</span><br><span class="line">		&lt;h1&gt;&lt;/h1&gt;&gt;</span><br><span class="line">		&lt;h2&gt;&lt;/h2&gt;</span><br><span class="line">	&lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">//JavaScript部分</span><br><span class="line">Vue.component(<span class="string">'mycom'</span>, &#123;</span><br><span class="line">	template: <span class="string">'#tmp'</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p><strong>定义私</strong>有组件<br>除了上面讲到的定义全局组件，我们也可以定义私有组件，使用components: {}函数。<br>如：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=<span class="string">"app"</span>&gt;</span><br><span class="line">    &lt;tem&gt;&lt;/tem&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;template id=<span class="string">"tmp"</span>&gt;</span><br><span class="line">    &lt;h3&gt;这是私有组件&lt;/h3&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line">&lt;script <span class="built_in">type</span>=<span class="string">"text/javascript"</span> src=<span class="string">"../lib/vue.js"</span>&gt;&lt;/script&gt;</span><br><span class="line">&lt;script <span class="built_in">type</span>=<span class="string">"text/javascript"</span>&gt;</span><br><span class="line">new Vue(&#123;</span><br><span class="line">    el: <span class="string">'#app'</span>,</span><br><span class="line">    data: &#123;&#125;,</span><br><span class="line">    methods: &#123;&#125;,</span><br><span class="line">    components: &#123;</span><br><span class="line">        tem: &#123;</span><br><span class="line">            template: <span class="string">'#tmp'</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;);</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<h5 id="组件元素"><a href="#组件元素" class="headerlink" title="组件元素"></a>组件元素</h5><p><strong>组件的</strong>data<br>在组件中，同样可以有自己的data数据，但是用法和Vue实例中的data用法有所不同：<br>1、组件中的data必须是一个方法，即</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data: <span class="function"><span class="title">function</span></span>()&#123; &#125;</span><br></pre></td></tr></table></figure>
+<p>2、组件中的data方法必须返回一个Object对象</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">data: <span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">	<span class="built_in">return</span> object</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>实例：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=<span class="string">"app"</span>&gt;</span><br><span class="line">    &lt;mycom1&gt;&lt;/mycom1&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;script <span class="built_in">type</span>=<span class="string">"text/javascript"</span> src=<span class="string">"../lib/vue.js"</span>&gt;&lt;/script&gt;</span><br><span class="line">&lt;script <span class="built_in">type</span>=<span class="string">"text/javascript"</span>&gt;</span><br><span class="line">Vue.component(<span class="string">'mycom1'</span>, Vue.extend(&#123;</span><br><span class="line">	data: <span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">		<span class="built_in">return</span> &#123;</span><br><span class="line">			msg: <span class="string">'这是组件的data'</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;,</span><br><span class="line">	template: <span class="string">'&lt;h3&gt;这是使用Vue.extend 创建的组件-- &#123;&#123;msg&#125;&#125;&lt;/h3&gt;'</span></span><br><span class="line">&#125;));</span><br><span class="line"></span><br><span class="line">new Vue(&#123;</span><br><span class="line">    el: <span class="string">'#app'</span>,</span><br><span class="line">    data: &#123;&#125;,</span><br><span class="line">    methods: &#123;&#125;,</span><br><span class="line">    components: &#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>组件的</strong>切换<br>在遇到登录注册表单时，通常我们需要对两个按钮进行切换实现显示不同的表单，那么Vue中的组件切换正符合了这个功能要求。</p>
+<p><strong>方式一</strong></p>
+<p>可以使用Vue提供的v-if和v-else来实现两个组件间的切换，但是，仅支持切换两个组件</p>
+<p>实例：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=<span class="string">"app"</span>&gt;</span><br><span class="line">    &lt;a href=<span class="string">"#"</span> @click.prevent=<span class="string">"flag=true"</span>&gt;登录&lt;/a&gt;</span><br><span class="line">    &lt;a href=<span class="string">"#"</span> @click.prevent=<span class="string">"flag=false"</span>&gt;注册&lt;/a&gt;</span><br><span class="line"></span><br><span class="line">    &lt;login v-if=<span class="string">"flag"</span>&gt;&lt;/login&gt;</span><br><span class="line">    &lt;register v-else=<span class="string">"flag"</span>&gt;&lt;/register&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;template id=<span class="string">"login"</span>&gt;</span><br><span class="line">    &lt;h3&gt;这是登录表单&lt;/h3&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line">&lt;template id=<span class="string">"register"</span>&gt;</span><br><span class="line">	&lt;h3&gt;这是注册表单&lt;/h3&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line">&lt;script <span class="built_in">type</span>=<span class="string">"text/javascript"</span> src=<span class="string">"../lib/vue.js"</span>&gt;&lt;/script&gt;</span><br><span class="line">&lt;script <span class="built_in">type</span>=<span class="string">"text/javascript"</span>&gt;</span><br><span class="line">// 创建登录组件</span><br><span class="line">Vue.component(<span class="string">'login'</span>, &#123;</span><br><span class="line">	template: <span class="string">'#login'</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">// 创建注册组件</span><br><span class="line">Vue.component(<span class="string">'register'</span>, &#123;</span><br><span class="line">	template: <span class="string">'#register'</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">new Vue(&#123;</span><br><span class="line">    el: <span class="string">'#app'</span>,</span><br><span class="line">    data: &#123;</span><br><span class="line">    	flag: <span class="literal">true</span></span><br><span class="line">    &#125;,</span><br><span class="line">    methods: &#123;&#125;</span><br><span class="line"></span><br><span class="line">&#125;);</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<p>定义flag参数，当flag=true就显示组件，当flar=false就隐藏组件</p>
+<p><strong>方式二</strong></p>
+<p>Vue提供了component来展示对应名称的组件。其中component是一个占位符，:is属性，可以用来指定要展示的组件名称</p>
+<p>实例：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=<span class="string">"app"</span>&gt;</span><br><span class="line">    &lt;a href=<span class="string">"#"</span> @click.prevent=<span class="string">"comName='login'"</span>&gt;登录&lt;/a&gt;</span><br><span class="line">    &lt;a href=<span class="string">"#"</span> @click.prevent=<span class="string">"comName='register'"</span>&gt;注册&lt;/a&gt;</span><br><span class="line"></span><br><span class="line">    &lt;component :is=<span class="string">"comName"</span>&gt;&lt;/component&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;template id=<span class="string">"login"</span>&gt;</span><br><span class="line">    &lt;h3&gt;这是登录表单&lt;/h3&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line">&lt;template id=<span class="string">"register"</span>&gt;</span><br><span class="line">	&lt;h3&gt;这是注册表单&lt;/h3&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line">&lt;script <span class="built_in">type</span>=<span class="string">"text/javascript"</span> src=<span class="string">"../lib/vue.js"</span>&gt;&lt;/script&gt;</span><br><span class="line">&lt;script <span class="built_in">type</span>=<span class="string">"text/javascript"</span>&gt;</span><br><span class="line">// 创建登录组件</span><br><span class="line">Vue.component(<span class="string">'login'</span>, &#123;</span><br><span class="line">	template: <span class="string">'#login'</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">// 创建注册组件</span><br><span class="line">Vue.component(<span class="string">'register'</span>, &#123;</span><br><span class="line">	template: <span class="string">'#register'</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">new Vue(&#123;</span><br><span class="line">    el: <span class="string">'#app'</span>,</span><br><span class="line">    data: &#123;</span><br><span class="line">    	comName: <span class="string">'login'</span></span><br><span class="line">    &#125;,</span><br><span class="line">    methods: &#123;&#125;</span><br><span class="line">&#125;);</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<p>即使用Vue提供的component，它能够实现自动对组件进行展示和隐藏，通过:is=’组件名称’。</p>
+<h5 id="父子组件间传值"><a href="#父子组件间传值" class="headerlink" title="父子组件间传值"></a>父子组件间传值</h5><p><strong>父组件</strong>给子组件传值</p>
+<p>父组件给子组件传值，即实现在子组件中调用父组件中的methods或是获取父组件中的data.</p>
+<p><strong>传参数</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;!-- 父组件实例 --&gt;</span><br><span class="line">    &lt;div id=<span class="string">"app"</span>&gt;</span><br><span class="line">		</span><br><span class="line">        &lt;!-- 子组件实例 --&gt;</span><br><span class="line">        &lt;com1&gt;&lt;/com1&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line"></span><br><span class="line">    &lt;script <span class="built_in">type</span>=<span class="string">"text/javascript"</span> src=<span class="string">"../lib/vue.js"</span>&gt;&lt;/script&gt;</span><br><span class="line">    &lt;script <span class="built_in">type</span>=<span class="string">"text/javascript"</span>&gt;</span><br><span class="line"></span><br><span class="line">    new Vue(&#123;</span><br><span class="line">        el: <span class="string">'#app'</span>,</span><br><span class="line">        data: &#123;</span><br><span class="line">        	msg: <span class="string">'这是父组件data值'</span></span><br><span class="line">        &#125;,</span><br><span class="line">        methods: &#123;</span><br><span class="line">        	<span class="function"><span class="title">show</span></span>()&#123;</span><br><span class="line">        		console.log(<span class="string">"这是父组件的show方法"</span>);</span><br><span class="line">        	&#125;</span><br><span class="line">        &#125;,</span><br><span class="line"></span><br><span class="line">        // 子组件</span><br><span class="line">        components: &#123;</span><br><span class="line">        	com1: &#123;</span><br><span class="line">        		template: <span class="string">'&lt;h2&gt;这是子组件&lt;/h2&gt;'</span></span><br><span class="line">        	&#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">    &lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br></pre></td></tr></table></figure>
+<p>如上，当我们直接在子组件中引用父组件data中定义的msg数据，将上面的修改为：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">com1: &#123;</span><br><span class="line">	template: <span class="string">'&lt;h2&gt;这是子组件--&#123;&#123;msg&#125;&#125;&lt;/h2&gt;'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>那么就会报错。所以就证实了默认在子组件中不能访问父组件中的data或methods。<br>为了解决子组件获取父组件数据，Vue提供了以下方式获取：</p>
+<ul>
+<li>1、父组件在引用子组件的时候，通过属性绑定的方式v-bind:，把需要传递给子组件的数据以属性绑定的形式传递到子组件内部，供子组件使用。</li>
+<li>2、在子组件中，通过props: []获取到父组件传递过来的数据；这样就完成了父组件向子组件传值</li>
+</ul>
+<p><strong>实例：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;!-- 父组件实例 --&gt;</span><br><span class="line">    &lt;div id=<span class="string">"app"</span>&gt;</span><br><span class="line">		</span><br><span class="line">        &lt;!-- 子组件实例 --&gt;</span><br><span class="line">        &lt;com1 :fatoson=<span class="string">"msg"</span>&gt;&lt;/com1&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line"></span><br><span class="line">    &lt;script <span class="built_in">type</span>=<span class="string">"text/javascript"</span> src=<span class="string">"../lib/vue.js"</span>&gt;&lt;/script&gt;</span><br><span class="line">    &lt;script <span class="built_in">type</span>=<span class="string">"text/javascript"</span>&gt;</span><br><span class="line"></span><br><span class="line">    new Vue(&#123;</span><br><span class="line">        el: <span class="string">'#app'</span>,</span><br><span class="line">        data: &#123;</span><br><span class="line">        	msg: <span class="string">'这是父组件data值'</span></span><br><span class="line">        &#125;,</span><br><span class="line">        methods: &#123;&#125;,</span><br><span class="line"></span><br><span class="line">        // 子组件</span><br><span class="line">        components: &#123;</span><br><span class="line">        	com1: &#123;</span><br><span class="line">        		template: <span class="string">'&lt;h2&gt;这是子组件--&#123;&#123;fatoson&#125;&#125;&lt;/h2&gt;'</span>,</span><br><span class="line">        		props: [<span class="string">'fatoson'</span>]</span><br><span class="line">        	&#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">    &lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br></pre></td></tr></table></figure>
+
+<p>如上，我们在子组件实例中使用了v-bind绑定了一个参数fatoson，其值是：msg即在父组件data中定义的值；那么就相当于父组件的一个data数据被Vue绑定到了子组件实例中，且父组件data值的别名是fatoson，那么在子组件中通过props: []属性就能获取到这个别名，然后就实现了父组件向子组件传值。需要注意以下：</p>
+<ul>
+<li>1、我们可以将为子组件绑定的参数名称是父组件值的别名。即此时msg相当于fatoson。</li>
+<li>2、注意命名中若是驼峰命名，在HTML中必须用-替换。</li>
+<li>3、注意props是Vue为父组将向子组件传值提供的一个参数，且他是唯一的数组类型的。</li>
+<li>4、注意子组件通过props获取到的父组件的值是只读的，即不能修改。</li>
+</ul>
+<p><strong>传方法</strong><br>上面讲了父组件给子组件传递普通的参数，下面我们将了解到父组件怎样给子组件传递方法。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;!-- 父组件实例 --&gt;</span><br><span class="line">    &lt;div id=<span class="string">"app"</span>&gt;</span><br><span class="line">		</span><br><span class="line">        &lt;!-- 子组件实例 --&gt;</span><br><span class="line">        &lt;com1 @open=<span class="string">"show"</span>&gt;&lt;/com1&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    &lt;template id=<span class="string">"tmp"</span>&gt;</span><br><span class="line">    	&lt;div&gt;</span><br><span class="line">    		&lt;h2&gt;这是子组件&lt;/h2&gt;</span><br><span class="line">    		&lt;input <span class="built_in">type</span>=<span class="string">"button"</span> @click=<span class="string">"myclick"</span> value=<span class="string">"子组件按钮，点击触发父组件方法"</span>/&gt;</span><br><span class="line">    	&lt;/div&gt;</span><br><span class="line">    &lt;/template&gt;</span><br><span class="line"></span><br><span class="line">    &lt;script <span class="built_in">type</span>=<span class="string">"text/javascript"</span> src=<span class="string">"../lib/vue.js"</span>&gt;&lt;/script&gt;</span><br><span class="line">    &lt;script <span class="built_in">type</span>=<span class="string">"text/javascript"</span>&gt;</span><br><span class="line"></span><br><span class="line">    new Vue(&#123;</span><br><span class="line">        el: <span class="string">'#app'</span>,</span><br><span class="line">        data: &#123;</span><br><span class="line">        	msg: <span class="string">'这是父组件data值'</span></span><br><span class="line">        &#125;,</span><br><span class="line">        methods: &#123;</span><br><span class="line">        	<span class="function"><span class="title">show</span></span>()&#123;</span><br><span class="line">        		console.log(<span class="string">"这是父组件的show方法"</span>);</span><br><span class="line">        	&#125;</span><br><span class="line">        &#125;,</span><br><span class="line"></span><br><span class="line">        // 子组件</span><br><span class="line">        components: &#123;</span><br><span class="line">        	com1: &#123;</span><br><span class="line">        		template: <span class="string">'#tmp'</span>,</span><br><span class="line">        		props: [<span class="string">'fatoson'</span>],</span><br><span class="line">        		methods: &#123;</span><br><span class="line">        			<span class="function"><span class="title">myclick</span></span>()&#123;</span><br><span class="line">       		 			this.<span class="variable">$emit</span>(<span class="string">'open'</span>);</span><br><span class="line">        			&#125;</span><br><span class="line">        		&#125;</span><br><span class="line">        	&#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">    &lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>解释：</strong></p>
+<ul>
+<li>1、这里子组件的template数据引用外部的&lt;template&gt;&lt;/template&gt;中的HTML代码。</li>
+<li>2、与传值思路相同，传递方法也需要在子组件实例中使用v-on即@来绑定方法，方法别名@open，方法的值是show是在父组件中定义的方法名。</li>
+<li>3、与传值思路相同，传值使用了props来接受传递的参数，那么传方法提供了$emit()元素</li>
+</ul>
+<p><strong>综合</strong><br>上面讲的父组件向子组件传递方法，那么既然是方法就肯定能传递方法参数。我们只需要在父组件方法中指定值名称即可</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@子组件接收的方法别名=<span class="string">"父组件中的方法(父组件中的参数值或data)"</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;!-- 父组件实例 --&gt;</span><br><span class="line">    &lt;div id=<span class="string">"app"</span>&gt;</span><br><span class="line">		</span><br><span class="line">        &lt;!-- 子组件实例 --&gt;</span><br><span class="line">        &lt;com1 @open=<span class="string">"show(fatosonval)"</span>&gt;&lt;/com1&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    &lt;template id=<span class="string">"tmp"</span>&gt;</span><br><span class="line">    	&lt;div&gt;</span><br><span class="line">    		&lt;h2&gt;这是子组件&lt;/h2&gt;</span><br><span class="line">    		&lt;input <span class="built_in">type</span>=<span class="string">"button"</span> @click=<span class="string">"myclick"</span> value=<span class="string">"子组件按钮，点击触发父组件方法"</span>/&gt;</span><br><span class="line">    	&lt;/div&gt;</span><br><span class="line">    &lt;/template&gt;</span><br><span class="line"></span><br><span class="line">    &lt;script <span class="built_in">type</span>=<span class="string">"text/javascript"</span> src=<span class="string">"../lib/vue.js"</span>&gt;&lt;/script&gt;</span><br><span class="line">    &lt;script <span class="built_in">type</span>=<span class="string">"text/javascript"</span>&gt;</span><br><span class="line"></span><br><span class="line">    new Vue(&#123;</span><br><span class="line">        el: <span class="string">'#app'</span>,</span><br><span class="line">        data: &#123;</span><br><span class="line">        	fatosonval: &#123;</span><br><span class="line">        		id: <span class="string">'1'</span>,</span><br><span class="line">        		name: <span class="string">'Loonycoder'</span></span><br><span class="line">        	&#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        methods: &#123;</span><br><span class="line">        	show(data)&#123;</span><br><span class="line">        		console.log(data);</span><br><span class="line">        	&#125;</span><br><span class="line">        &#125;,</span><br><span class="line"></span><br><span class="line">        // 子组件</span><br><span class="line">        components: &#123;</span><br><span class="line">        	com1: &#123;</span><br><span class="line">        		template: <span class="string">'#tmp'</span>,</span><br><span class="line">        		methods: &#123;</span><br><span class="line">        			<span class="function"><span class="title">myclick</span></span>()&#123;</span><br><span class="line">       		 			this.<span class="variable">$emit</span>(<span class="string">'open'</span>);</span><br><span class="line">        			&#125;</span><br><span class="line">        		&#125;</span><br><span class="line">        	&#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">    &lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>子组件</strong>给父组件传值<br>即实现在父组件中调用子组件中的方法</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;!-- 父组件实例 --&gt;</span><br><span class="line">    &lt;div id=<span class="string">"app"</span>&gt;</span><br><span class="line">		</span><br><span class="line">        &lt;!-- 子组件实例 --&gt;</span><br><span class="line">        &lt;com1 @open=<span class="string">"show"</span>&gt;&lt;/com1&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    &lt;template id=<span class="string">"tmp"</span>&gt;</span><br><span class="line">    	&lt;div&gt;</span><br><span class="line">    		&lt;h2&gt;这是子组件&lt;/h2&gt;</span><br><span class="line">    		&lt;input <span class="built_in">type</span>=<span class="string">"button"</span> @click=<span class="string">"myclick"</span> value=<span class="string">"子组件按钮，点击触发父组件方法"</span>/&gt;</span><br><span class="line">    	&lt;/div&gt;</span><br><span class="line">    &lt;/template&gt;</span><br><span class="line"></span><br><span class="line">    &lt;script <span class="built_in">type</span>=<span class="string">"text/javascript"</span> src=<span class="string">"../lib/vue.js"</span>&gt;&lt;/script&gt;</span><br><span class="line">    &lt;script <span class="built_in">type</span>=<span class="string">"text/javascript"</span>&gt;</span><br><span class="line"></span><br><span class="line">    new Vue(&#123;</span><br><span class="line">        el: <span class="string">'#app'</span>,</span><br><span class="line">        data: &#123;</span><br><span class="line">        	fatosonval: null</span><br><span class="line">        &#125;,</span><br><span class="line">        methods: &#123;</span><br><span class="line">        	show(data)&#123;</span><br><span class="line">        		console.log(data);</span><br><span class="line">        	&#125;</span><br><span class="line">        &#125;,</span><br><span class="line"></span><br><span class="line">        // 子组件</span><br><span class="line">        components: &#123;</span><br><span class="line">        	com1: &#123;</span><br><span class="line">        		template: <span class="string">'#tmp'</span>,</span><br><span class="line">        		<span class="function"><span class="title">data</span></span>()&#123;</span><br><span class="line">        			<span class="built_in">return</span> &#123;</span><br><span class="line">        				sonval: &#123; name: <span class="string">'Loonycoder'</span>, age: 24 &#125;</span><br><span class="line">        			&#125;</span><br><span class="line">        		&#125;,</span><br><span class="line">        		methods: &#123;</span><br><span class="line">        			<span class="function"><span class="title">myclick</span></span>()&#123;</span><br><span class="line">       		 			this.<span class="variable">$emit</span>(<span class="string">'open'</span>, this.sonval);</span><br><span class="line">        			&#125;</span><br><span class="line">        		&#125;</span><br><span class="line">        	&#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">    &lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br></pre></td></tr></table></figure>
+<p>之前我们实现父组件向子组件传值的时候，需要在@open()中指定父组件中的data，而子组件给父组件传值的时候就不需要再指定了，而是直接在调用子组件中的open（这是父组件方法的别名），将子组件的值写进$emit(‘方法别名’, data参数)中即可。</p>
+<h5 id="Vue获取DOM元素和组件"><a href="#Vue获取DOM元素和组件" class="headerlink" title="Vue获取DOM元素和组件"></a>Vue获取DOM元素和组件</h5><p>首先我们需要明白的就是Vue并不提倡我们操作DOM元素，Vue的宗旨就是让我们只关心业务逻辑。<br>那么通常我们需要获取一个如&lt;h2&gt;&lt;/h2&gt;中的值，采用原生JS通常需要先为tag标签定义一个id属性，然后通过JS代码document.getElementById(‘id’).innterText来获取到&lt;h2&gt;中的文本数据，而Vue也实现了操作原生DOM的功能：</p>
+<ul>
+<li>在需要获取的HTML标签中指定<code>ref</code>属性，其值可自定义。</li>
+<li>在Vue实例中，使用<code>this.$refs.指定的值</code>来获取DOM对象，进行操作。<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;h2 ref=<span class="string">"h2"</span>&gt;这是h2的文本数据&lt;/h2&gt;</span><br><span class="line"></span><br><span class="line">console.log(this.<span class="variable">$refs</span>.h2.innerText);</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p><strong>通过$refs还能轻易获取子组件中的data和methods数据</strong><br>首先需要为子组件引用实例定义ref=”com1”属性，然后在Vue实例中通过this.$refs.com1即可获取子组件中的所有对象，即还能获取到子组件中的data和methods<br>实例：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;!-- 父组件实例 --&gt;</span><br><span class="line">    &lt;div id=<span class="string">"app"</span>&gt;</span><br><span class="line">        &lt;!-- 子组件实例 --&gt;</span><br><span class="line">        &lt;com1 ref=<span class="string">"com1"</span>&gt;&lt;/com1&gt;</span><br><span class="line">        &lt;input <span class="built_in">type</span>=<span class="string">"button"</span> @click=<span class="string">"show"</span> value=<span class="string">"获取元素"</span>&gt;</span><br><span class="line"></span><br><span class="line">        &lt;h2 ref=<span class="string">"h2"</span>&gt;这是父组件&lt;/h2&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    &lt;template id=<span class="string">"tmp"</span>&gt;</span><br><span class="line">        &lt;div&gt;</span><br><span class="line">            &lt;h2&gt;这是子组件&lt;/h2&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">    &lt;/template&gt;</span><br><span class="line">    &lt;script <span class="built_in">type</span>=<span class="string">"text/javascript"</span> src=<span class="string">"../lib/vue.js"</span>&gt;&lt;/script&gt;</span><br><span class="line">    &lt;script <span class="built_in">type</span>=<span class="string">"text/javascript"</span>&gt;</span><br><span class="line">    new Vue(&#123;</span><br><span class="line">        el: <span class="string">'#app'</span>,</span><br><span class="line">        methods: &#123;</span><br><span class="line">            <span class="function"><span class="title">show</span></span>()&#123;</span><br><span class="line">                // console.log(this.<span class="variable">$refs</span>.h2.innerText);</span><br><span class="line">                // console.log(this.<span class="variable">$refs</span>.com1); //获取子组件中的所有实例对象</span><br><span class="line">                // console.log(this.<span class="variable">$refs</span>.com1.sonval); //获取子组件中定义的data值</span><br><span class="line">                console.log(this.<span class="variable">$refs</span>.com1.sonshow()); //调用子组件中定义的方法</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line"></span><br><span class="line">        // 子组件</span><br><span class="line">        components: &#123;</span><br><span class="line">            com1: &#123;</span><br><span class="line">                template: <span class="string">'#tmp'</span>,</span><br><span class="line">                <span class="function"><span class="title">data</span></span>() &#123;</span><br><span class="line">                    <span class="built_in">return</span> &#123;</span><br><span class="line">                        sonval: &#123; name: <span class="string">'Loonycoder'</span>, age: 24 &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;,</span><br><span class="line">                methods: &#123;</span><br><span class="line">                    <span class="function"><span class="title">sonshow</span></span>() &#123;</span><br><span class="line">                        console.log(<span class="string">'子组件的方法'</span>);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">    &lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6/" rel="tag"># 前端框架</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/30/Vue2/" rel="next" title="Vue过滤器和Vue-resource">
+                <i class="fa fa-chevron-left"></i> Vue过滤器和Vue-resource
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/09/15/Vue4/" rel="prev" title="Vue路由">
+                Vue路由 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/author.png"
+                alt="LoonyCoder" />
+            
+              <p class="site-author-name" itemprop="name">LoonyCoder</p>
+              <p class="site-description motion-element" itemprop="description">Code bestful and be a best coder.</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Vue创建组件"><span class="nav-number">1.</span> <span class="nav-text">Vue创建组件</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#什么是组件"><span class="nav-number">1.1.</span> <span class="nav-text">什么是组件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#定义Vue组件"><span class="nav-number">1.2.</span> <span class="nav-text">定义Vue组件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#组件元素"><span class="nav-number">1.3.</span> <span class="nav-text">组件元素</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#父子组件间传值"><span class="nav-number">1.4.</span> <span class="nav-text">父子组件间传值</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Vue获取DOM元素和组件"><span class="nav-number">1.5.</span> <span class="nav-text">Vue获取DOM元素和组件</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">loonycoder</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">57.9k</span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
