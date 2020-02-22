@@ -121,7 +121,7 @@
               
                 <p class="mt-3">
                   <i class="fas fa-calendar-alt" aria-hidden="true"></i>&nbsp;
-                  星期三, 十一月 7日 2018, 12:00 凌晨
+                  星期三, 十一月 7日 2018, 9:55 上午
                 </p>
               
 
@@ -174,7 +174,7 @@
             <blockquote>
 <p>阅读这篇文章前，最好有代理模式的基础，以及了解关于Spring扩展点例如BeanPostProcessor和如何使用自定义标签集成Spring，这些文章在我的博客里都能找到。当然，也最好有使用AOP的经验，这篇文章不会讲解如何使用AOP。</p>
 </blockquote>
-<p><img src="/images/spring_logo.jpg" alt="Spring"></p>
+<p><img src="/images/spring_logo.jpg" srcset="/img/loading.gif" alt="Spring"></p>
 <h3 id="AOP简介"><a href="#AOP简介" class="headerlink" title="AOP简介"></a>AOP简介</h3><p>说到AOP，其实这是一个<strong>面向方面的编程思想</strong> ，它解决了OOP的一些弊端，例如我们需要为<strong>多个不具有继承关系的类引入一个公共行为</strong>， 比如说日志、权限验证、事务管理等等，我们需要将这些代码<strong>重复的添加</strong>到一系列的类中，将<strong>产生大量的重复代码</strong>，如果需要修改，将在每个类中去进行修改，<strong>不便于维护</strong>，代码的<strong>侵入性极高</strong>。所以就有了AOP这样面向方面编程的编程思想，其功能可以为每个需要的类<strong>加入共同的行为</strong>，如果需要修改，只需要修改切面中的代码，改一处等于改多处，并且便于编程，写一个切面类即可达到在每个类中加入重复代码的目的。</p>
 <p>阅读此篇文章，你将了解Spring是<strong>如何实现AOP</strong>（前置通知、后置通知、环绕通知），由于Spring中的事务管理是基于AOP的功能来做的，所以你将更好的能理解Spring是如何将事务统一管理起来的。</p>
 <hr>
@@ -190,7 +190,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">@Nullable</span><br><span class="line">//我们只关注解析的主方法，parse方法</span><br><span class="line">public BeanDefinition parse(Element element, ParserContext parserContext) &#123;</span><br><span class="line">    //注册一个类到IOC容器中</span><br><span class="line">    AopNamespaceUtils.registerAspectJAnnotationAutoProxyCreatorIfNecessary(parserContext, element);</span><br><span class="line">    extendBeanDefinition(element, parserContext);</span><br><span class="line">    <span class="built_in">return</span> null;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <hr>
-<h3 id="注册AnnotationAwareAspectJAutoProxyCreator"><a href="#注册AnnotationAwareAspectJAutoProxyCreator" class="headerlink" title="注册AnnotationAwareAspectJAutoProxyCreator"></a>注册AnnotationAwareAspectJAutoProxyCreator</h3><p><code>AnnotationAwareAspectJAutoProxyCreator</code>是实现AOP功能的主要类，我们先来看看这个类的结构：<br><img src="/images/spring-aop1.png" alt="spring"><br>此类实现了<code>BeanPostProcessor</code>，稍后将关注其后置处理Bean的方法<strong>postProcessAfterInitialization</strong>，并且实现了<code>BeanFactorAware</code>接口，此类将取得并存有一个<code>BeanFactory</code>实例对象。<br>回到主线，关注注册此类的方法：</p>
+<h3 id="注册AnnotationAwareAspectJAutoProxyCreator"><a href="#注册AnnotationAwareAspectJAutoProxyCreator" class="headerlink" title="注册AnnotationAwareAspectJAutoProxyCreator"></a>注册AnnotationAwareAspectJAutoProxyCreator</h3><p><code>AnnotationAwareAspectJAutoProxyCreator</code>是实现AOP功能的主要类，我们先来看看这个类的结构：<br><img src="/images/spring-aop1.png" srcset="/img/loading.gif" alt="spring"><br>此类实现了<code>BeanPostProcessor</code>，稍后将关注其后置处理Bean的方法<strong>postProcessAfterInitialization</strong>，并且实现了<code>BeanFactorAware</code>接口，此类将取得并存有一个<code>BeanFactory</code>实例对象。<br>回到主线，关注注册此类的方法：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">public static void registerAspectJAnnotationAutoProxyCreatorIfNecessary(</span><br><span class="line">    ParserContext parserContext, Element sourceElement) &#123;</span><br><span class="line">//将一个类作为Bean注册到IOC容器中</span><br><span class="line">    BeanDefinition beanDefinition = AopConfigUtils.registerAspectJAnnotationAutoProxyCreatorIfNecessary(</span><br><span class="line">        parserContext.getRegistry(), parserContext.extractSource(sourceElement));</span><br><span class="line">    //处理proxy-target-class与expose-proxy属性</span><br><span class="line">    useClassProxyingIfNecessary(parserContext.getRegistry(), sourceElement);</span><br><span class="line">    //注册组件并通知</span><br><span class="line">    registerComponentIfNecessary(beanDefinition, parserContext);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>其中，在注册这个类的过程中主要完成了3件事：</p>
 <ol>
