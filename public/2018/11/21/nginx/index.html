@@ -1,424 +1,170 @@
 <!DOCTYPE html>
+<html lang="zh-Hans">
 
 
 
-  
 
 
-<html class="theme-next gemini use-motion" lang="zh-Hans">
 <head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-<meta name="theme-color" content="#222">
-
-
-
-
-
-
-
-
-
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
   
-  
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <meta name="description" content="Code bestful and be a best coder.">
+  <meta name="author" content="LoonyCoder">
+  <meta name="keywords" content="隐约雷鸣，阴霾天空，但盼风雨来，能留你于此">
+  <title>高性能的HTTP服务器——Nginx ~ 望月Plenilune</title>
+
+  <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css"  >
+<link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css"  >
+<link rel="stylesheet" href="/lib/mdbootstrap/css/mdb.min.css"  >
+<link rel="stylesheet" href="/lib/github-markdown/github-markdown.min.css"  >
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
 
 
 
+  <link rel="stylesheet" href="/lib/prettify/tomorrow-night-eighties.min.css"  >
+
+<link rel="stylesheet" href="/css/main.css"  >
 
 
-
-
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
-
-<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
-
-
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
-
-
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
-
-
-  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
-
-
-
-
-
-  <meta name="keywords" content="HTTP服务器," />
-
-
-
-
-
-
-
-
-
-
-<meta name="description" content="Nginx是一款高性能HTTP服务器、反向代理服务器及电子邮件（IMAP、POP3）代理服务器，官方测试nginx能够支持5万并发连接。Nginx应用场景：1、http服务器。Nginx是一个http服务器，可以独立提供http服务。可以做网页静态服务器。2、虚拟主机。可以实现在一台服务器虚拟出多个网站。3、反向代理，负载均衡。当网站的并发量过大需要配置服务器集群时可以使用Nginx做反向代理。并">
-<meta property="og:type" content="article">
-<meta property="og:title" content="高性能的HTTP服务器——Nginx">
-<meta property="og:url" content="http://yoursite.com/2018/11/21/nginx/index.html">
-<meta property="og:site_name" content="望月">
-<meta property="og:description" content="Nginx是一款高性能HTTP服务器、反向代理服务器及电子邮件（IMAP、POP3）代理服务器，官方测试nginx能够支持5万并发连接。Nginx应用场景：1、http服务器。Nginx是一个http服务器，可以独立提供http服务。可以做网页静态服务器。2、虚拟主机。可以实现在一台服务器虚拟出多个网站。3、反向代理，负载均衡。当网站的并发量过大需要配置服务器集群时可以使用Nginx做反向代理。并">
-<meta property="og:image" content="http://yoursite.com/images/nginx.jpg">
-<meta property="og:image" content="http://yoursite.com/images/nginx1.png">
-<meta property="og:image" content="http://yoursite.com/images/nginx2.png">
-<meta property="og:image" content="http://yoursite.com/images/nginx3.png">
-<meta property="og:image" content="http://yoursite.com/images/nginx4.png">
-<meta property="og:image" content="http://yoursite.com/images/nginx5.png">
-<meta property="og:image" content="http://yoursite.com/images/nginx6.png">
-<meta property="og:image" content="http://yoursite.com/images/nginx7.png">
-<meta property="article:published_time" content="2018-11-20T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-02-21T15:32:21.607Z">
-<meta property="article:author" content="LoonyCoder">
-<meta property="article:tag" content="HTTP服务器">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://yoursite.com/images/nginx.jpg">
-
-
-
-<script type="text/javascript" id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Gemini',
-    version: '5.1.4',
-    sidebar: {"position":"right","display":"post","offset":50,"b2t":true,"scrollpercent":true,"onmobile":false},
-    fancybox: true,
-    tabs: true,
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    duoshuo: {
-      userId: '0',
-      author: '博主'
-    },
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":5},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
-  };
-</script>
-
-
-
-  <link rel="canonical" href="http://yoursite.com/2018/11/21/nginx/"/>
-
-
-
-
-
-  <title>高性能的HTTP服务器——Nginx | 望月</title>
-  
-
-
-
-
-
-
+  <link rel="stylesheet" href="/lib/fancybox/jquery.fancybox.min.css"  >
 
 
 <meta name="generator" content="Hexo 4.2.0"></head>
 
 
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>望月Plenilune</strong>&nbsp;</a>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
-
-  
-  
-    
-  
-
-  <div class="container sidebar-position-right page-post-detail">
-    <div class="headband"></div>
-
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta ">
-    
-
-    <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">望月</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
-    </div>
-      
-        <p class="site-subtitle">Life is so short , just coding.</p>
-      
-  </div>
-
-  <div class="site-nav-toggle">
-    <button>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
     </button>
-  </div>
-</div>
 
-<nav class="site-nav">
-  
-
-  
-    <ul id="menu" class="menu">
-      
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
         
-        <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
-            
-            首页
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-about">
-          <a href="/about/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
-            
-            关于
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-tags">
-          <a href="/tags/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
-            
-            标签
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-categories">
-          <a href="/categories/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
-            
-            分类
-          </a>
-        </li>
-      
-
-      
-        <li class="menu-item menu-item-search">
           
-            <a href="javascript:;" class="popup-trigger">
           
-            
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
-            
-            搜索
-          </a>
-        </li>
-      
-    </ul>
-  
-
-  
-    <div class="site-search">
-      
-  <div class="popup search-popup local-search-popup">
-  <div class="local-search-header clearfix">
-    <span class="search-icon">
-      <i class="fa fa-search"></i>
-    </span>
-    <span class="popup-btn-close">
-      <i class="fa fa-times-circle"></i>
-    </span>
-    <div class="local-search-input-wrapper">
-      <input autocomplete="off"
-             placeholder="搜索..." spellcheck="false"
-             type="text" id="local-search-input">
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/">Home</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/archives/">Archives</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/categories/">Categories</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/tags/">Tags</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/about/">About</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
     </div>
   </div>
-  <div id="local-search-result"></div>
-</div>
-
-
-
-    </div>
-  
 </nav>
 
-
-
- </div>
-    </header>
-
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          <div id="content" class="content">
-            
-
-  <div id="posts" class="posts-expand">
-    
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/21/nginx/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="LoonyCoder">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/author.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="望月">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">高性能的HTTP服务器——Nginx</h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-21T00:00:00+08:00">
-                2018-11-21
-              </time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Nginx/" itemprop="url" rel="index">
-                    <span itemprop="name">Nginx</span>
-                  </a>
-                </span>
-
-                
-                
+    <div class="view intro-2" id="background" false
+         style="background: url('/images/post_banner.jpg')no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask rgba-black-light flex-center">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
               
             </span>
-          
 
-          
             
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
+              <br>
               
+                <p class="mt-3">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>&nbsp;
+                  Wednesday, November 21st 2018, 12:00 am
+                </p>
+              
+
+              <p>
                 
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
+                  
+                  &nbsp;<i class="far fa-chart-bar"></i>
+                  <span class="post-count">
+                    3.5k 字
+                  </span>&nbsp;
                 
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  3.5k
-                </span>
-              
 
-              
-                <span class="post-meta-divider">|</span>
-              
+                
+                  
+                  &nbsp;<i class="far fa-clock"></i>
+                  <span class="post-count">
+                      14 分钟
+                  </span>&nbsp;
+                
 
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
                 
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  14
-                </span>
-              
-            </div>
-          
+              </p>
+            
+          </div>
 
           
-
         </div>
-      </header>
-    
+      </div>
+    </div>
+  </header>
 
+  <main>
     
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
-      
-        <p><img src="/images/nginx.jpg" alt="nginx"><br>Nginx是一款高性能HTTP服务器、反向代理服务器及电子邮件（IMAP、POP3）代理服务器，官方测试nginx能够支持5万并发连接。<br><strong>Nginx应用场景：</strong><br>1、http服务器。Nginx是一个http服务器，可以独立提供http服务。可以做网页静态服务器。<br>2、虚拟主机。可以实现在一台服务器虚拟出多个网站。<br>3、反向代理，负载均衡。当网站的并发量过大需要配置服务器集群时可以使用Nginx做反向代理。并且多台服务器可以平均分摊负载。</p>
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="py-5 z-depth-3" id="board">
+        <div class="post-content mx-auto" id="post">
+          <div class="markdown-body">
+            <p><img src="/images/nginx.jpg" srcset="/img/loading.gif" alt="nginx"><br>Nginx是一款高性能HTTP服务器、反向代理服务器及电子邮件（IMAP、POP3）代理服务器，官方测试nginx能够支持5万并发连接。<br><strong>Nginx应用场景：</strong><br>1、http服务器。Nginx是一个http服务器，可以独立提供http服务。可以做网页静态服务器。<br>2、虚拟主机。可以实现在一台服务器虚拟出多个网站。<br>3、反向代理，负载均衡。当网站的并发量过大需要配置服务器集群时可以使用Nginx做反向代理。并且多台服务器可以平均分摊负载。</p>
 <h3 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h3><h4 id="本文章默认使用的软件："><a href="#本文章默认使用的软件：" class="headerlink" title="本文章默认使用的软件："></a>本文章默认使用的软件：</h4><ul>
 <li>CentOS 7</li>
 <li>Nginx-1.12.2</li>
@@ -448,7 +194,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar zxvf nginx-1.12.2.tar.gz</span><br></pre></td></tr></table></figure>
 <p><strong>2、创建Makefile文件，执行命令</strong></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># cd nginx-1.12.2</span></span><br><span class="line">[root@localhost nginx-1.12.2]<span class="comment"># ./configure</span></span><br></pre></td></tr></table></figure>
-<p><img src="/images/nginx1.png" alt="nginx"><br>完成后可以看到Makefile文件：<br><img src="/images/nginx2.png" alt="nginx"><br><strong>拓展</strong><br>Makefile是一种配置文件，Makefile定义了一系列的规则来指定，哪些文件需要先编译，哪些文件需要后编译…。Makefile就像一个Shell脚本一样。</p>
+<p><img src="/images/nginx1.png" srcset="/img/loading.gif" alt="nginx"><br>完成后可以看到Makefile文件：<br><img src="/images/nginx2.png" srcset="/img/loading.gif" alt="nginx"><br><strong>拓展</strong><br>Makefile是一种配置文件，Makefile定义了一系列的规则来指定，哪些文件需要先编译，哪些文件需要后编译…。Makefile就像一个Shell脚本一样。</p>
 <p><strong>3、编译</strong><br>执行命令：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost nginx-1.12.2]<span class="comment"># make</span></span><br></pre></td></tr></table></figure>
 
@@ -456,13 +202,13 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost nginx-1.12.2]<span class="comment"># make install</span></span><br></pre></td></tr></table></figure>
 <p>到此，Nginx安装已经完成。</p>
 <hr>
-<h3 id="Nginx启动与访问"><a href="#Nginx启动与访问" class="headerlink" title="Nginx启动与访问"></a>Nginx启动与访问</h3><p>上面我本编译安装的Nginx其实默认被安装在CentOS7系统的/usr/local/nginx目录。<br><img src="/images/nginx3.png" alt="nginx"></p>
+<h3 id="Nginx启动与访问"><a href="#Nginx启动与访问" class="headerlink" title="Nginx启动与访问"></a>Nginx启动与访问</h3><p>上面我本编译安装的Nginx其实默认被安装在CentOS7系统的/usr/local/nginx目录。<br><img src="/images/nginx3.png" srcset="/img/loading.gif" alt="nginx"></p>
 <h4 id="启动Nginx"><a href="#启动Nginx" class="headerlink" title="启动Nginx"></a>启动Nginx</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost nginx]<span class="comment"># cd sbin</span></span><br><span class="line">[root@localhost sbin]<span class="comment"># ./nginx</span></span><br></pre></td></tr></table></figure>
 <p>此时已经启动成功Nginx，可以直接在浏览器上输入虚拟机IP（可通过ip addr命令查看），即可访问到Nginx欢迎界面，如果显示未连接，可以：<br>1、先使用本机的终端工具ping虚拟机IP地址看是否成功</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ping ip</span><br></pre></td></tr></table></figure>
 <p>如果ping成功，请看下一步，如果失败，请检查虚拟机是否联网。<br>2、关闭CentOS7的防火墙，开放80端口</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost sbin]<span class="comment"># systemctl stop firewalld.service #停止firewall</span></span><br><span class="line">[root@localhost sbin]<span class="comment"># systemctl disable firewalld.service #禁止firewall开机启动</span></span><br><span class="line">[root@localhost sbin]<span class="comment"># firewall-cmd --state #查看默认防火墙状态（关闭后显示notrunning，开启后显示running）</span></span><br></pre></td></tr></table></figure>
-<p>一般情况下就能访问到了：<br><img src="/images/nginx4.png" alt="nginx"></p>
+<p>一般情况下就能访问到了：<br><img src="/images/nginx4.png" srcset="/img/loading.gif" alt="nginx"></p>
 <h4 id="查看Nginx进程"><a href="#查看Nginx进程" class="headerlink" title="查看Nginx进程"></a>查看Nginx进程</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost sbin]<span class="comment"># ps aux|grep nginx</span></span><br></pre></td></tr></table></figure>
 
 <h4 id="关闭Nginx"><a href="#关闭Nginx" class="headerlink" title="关闭Nginx"></a>关闭Nginx</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost sbin]<span class="comment"># ./nginx -s stop</span></span><br></pre></td></tr></table></figure>
@@ -507,10 +253,10 @@
 <p>什么是反向代理？<br>反向代理（Reverse Proxy）方式是指以代理服务器来接受Internet上的连接请求，然后将请求转发给内部网络上的服务器，并从服务器上得到的结果返回给Internet上请求连接的客户端，此时代理服务器对外就表现为一个反向代理服务器。</p>
 </blockquote>
 <blockquote>
-<p>正向代理<br><img src="/images/nginx5.png" alt="nginx"><br><strong>正向代理</strong>，主要针对客户端。当用户通过PC向Internet发送请求时，可以通过一个代理服务器来统一处理请求并转发给Internet，比如一个教室的所有学生机都需要通过老师的教师机才能实现联网，那么这个教师机就相当于一个代理服务器，负责将PC的网络请求转发给Internet，然后Internet将相应的数据再通过代理服务器转发给不同的PC。</p>
+<p>正向代理<br><img src="/images/nginx5.png" srcset="/img/loading.gif" alt="nginx"><br><strong>正向代理</strong>，主要针对客户端。当用户通过PC向Internet发送请求时，可以通过一个代理服务器来统一处理请求并转发给Internet，比如一个教室的所有学生机都需要通过老师的教师机才能实现联网，那么这个教师机就相当于一个代理服务器，负责将PC的网络请求转发给Internet，然后Internet将相应的数据再通过代理服务器转发给不同的PC。</p>
 </blockquote>
 <blockquote>
-<p>反向代理<br><img src="/images/nginx6.png" alt="nginx"><br><strong>反向代理</strong>的过程则刚好相反，主要针对服务器。当用户通过网络请求不同的资源，而这些资源被分布在不同的服务器上，那么不同的请求就应该指向对应不同的服务器，那么就需要一个中介：反向代理服务器。通过反向代理服务器将不同的资源请求信息发送给不同的服务器，然后服务器将不同的信心都返回给反向代理服务器，最后通过反向代理服务器将这些结果信息展示在Internet上。</p>
+<p>反向代理<br><img src="/images/nginx6.png" srcset="/img/loading.gif" alt="nginx"><br><strong>反向代理</strong>的过程则刚好相反，主要针对服务器。当用户通过网络请求不同的资源，而这些资源被分布在不同的服务器上，那么不同的请求就应该指向对应不同的服务器，那么就需要一个中介：反向代理服务器。通过反向代理服务器将不同的资源请求信息发送给不同的服务器，然后服务器将不同的信心都返回给反向代理服务器，最后通过反向代理服务器将这些结果信息展示在Internet上。</p>
 </blockquote>
 <h4 id="配置反向代理"><a href="#配置反向代理" class="headerlink" title="配置反向代理"></a>配置反向代理</h4><p>这里我们以一个非常实用的案例来演示如何配置Nginx的反向代理实现不同的域名访问不同的页面。<br>1、在服务器上安装JDK8和Tomcat8<br>通过rz命令将本地的JDK和Tomcat安装包上传到服务器。因为Tomcat解压即可用，我们这里记录一下如何安装JDK：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 解压</span></span><br><span class="line">tar zxvf jdk-8u191-linux-x64.tar.gz</span><br><span class="line"></span><br><span class="line"><span class="comment"># 配置JDK环境</span></span><br><span class="line">vi /etc/profile</span><br></pre></td></tr></table></figure>
@@ -525,7 +271,7 @@
 <p>并写入：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;title&gt;Hello&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;h2&gt;Hello Tomcat!&lt;/h2&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
 
-<p>保存并退出，再次访问<a href="http://192.168.148.132:8080/" target="_blank" rel="noopener">http://192.168.148.132:8080/</a>发现展示的即是我们刚创建的页面<br><img src="/images/nginx7.png" alt="nginx"></p>
+<p>保存并退出，再次访问<a href="http://192.168.148.132:8080/" target="_blank" rel="noopener">http://192.168.148.132:8080/</a>发现展示的即是我们刚创建的页面<br><img src="/images/nginx7.png" srcset="/img/loading.gif" alt="nginx"></p>
 <p>3、配置反向代理<br>之前讲了<strong>反向代理</strong>的概念，那么很实用的一个例子就是，当我们想在购买的阿里云服务器上部署两个项目，一个项目是用Nginx部署的静态网站（占用80端口），另一个项目部署在Tomcat服务器上（占用8080端口）。<br>这时，我们固然是可以通过：ip:8080来访问我们的Web项目的，但是请求路径上显示了端口好久显得很别扭，为此，我们通过Nginx的反向代理就能解决：</p>
 <ul>
 <li><p>3.1在本地配置一个二级域名映射<br>修改本机的hosts文件，添加：</p>
@@ -554,723 +300,250 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">upstream site &#123;</span><br><span class="line">     server 192.168.148.132:8080;</span><br><span class="line">     server 192.168.148.132:8180;</span><br><span class="line">     server 192.168.148.132:8280;</span><br><span class="line">&#125;</span><br><span class="line">server &#123;</span><br><span class="line">    listen 80;</span><br><span class="line">    server_name site.loonycoder.com;</span><br><span class="line">    location / &#123;</span><br><span class="line">        proxy_pass http://site;</span><br><span class="line">        index index.html;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>这样我们就给Nginx配置了3台服务器，都指向了site.loonycoder.com这个域名地址，那么访问这个地址时同时会访问这三台服务器，也就是三台服务器平均分摊访问压力。<br>为了更好的实现效果，我们可以依次修改tomcat-2和tomcat-3服务器的/webapps/ROOT/index.html网页显示数据，更容易区分每次访问的是哪台服务器。<br>然后运行这三个Tomcat服务器，在浏览器上访问：site.loonycoder.com，多次刷新页面，每次访问的都是不同的页面，且依次是配置负载均衡的三台服务器次序。<br>如果你想让某个服务器承担更大的压力，可以为其设置权重：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">upstream site &#123;</span><br><span class="line">     server 192.168.148.132:8080;</span><br><span class="line">     server 192.168.148.132:8180 weight=2;</span><br><span class="line">     server 192.168.148.132:8280;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/HTTP%E6%9C%8D%E5%8A%A1%E5%99%A8/" rel="tag"># HTTP服务器</a>
-          
-        </div>
-      
-
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2018/11/14/docker/" rel="next" title="容器化部署神器——Docker">
-                <i class="fa fa-chevron-left"></i> 容器化部署神器——Docker
-              </a>
-            
+            <hr>
           </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
+          <br>
+          <div>
+            <p>
             
-              <a href="/2018/11/28/redis-1/" rel="prev" title="Redis入门">
-                Redis入门 <i class="fa fa-chevron-right"></i>
-              </a>
+              <span>
+                <i class="iconfont icon-inbox"></i>
+                
+                  <a class="hover-with-bg" href="/categories/Nginx">Nginx</a>
+                  &nbsp;
+                
+              </span>&nbsp;&nbsp;
+            
+            
+              <span>
+                <i class="iconfont icon-tag"></i>
+                
+                  <a class="hover-with-bg" href="/tags/HTTP%E6%9C%8D%E5%8A%A1%E5%99%A8">HTTP服务器</a>
+                
+              </span>
+            
+            </p>
+            
+              <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" target="_blank" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
             
           </div>
         </div>
-      
-
-      
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-
-    <div class="post-spread">
-      
-    </div>
-  </div>
-
-
-          </div>
-          
-
-
-          
-
-  
-
-
-
-        </div>
-        
-          
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
-  </div>
-
-  <aside id="sidebar" class="sidebar">
-    
-    <div class="sidebar-inner">
-
-      
-
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
-
-      <section class="site-overview-wrap sidebar-panel">
-        <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-            
-              <img class="site-author-image" itemprop="image"
-                src="/images/author.png"
-                alt="LoonyCoder" />
-            
-              <p class="site-author-name" itemprop="name">LoonyCoder</p>
-              <p class="site-description motion-element" itemprop="description">Code bestful and be a best coder.</p>
-          </div>
-
-          <nav class="site-state motion-element">
-
-            
-              <div class="site-state-item site-state-posts">
-              
-                <a href="/archives">
-              
-                  <span class="site-state-item-count">20</span>
-                  <span class="site-state-item-name">日志</span>
-                </a>
-              </div>
-            
-
-            
-              
-              
-              <div class="site-state-item site-state-categories">
-                <a href="/categories/index.html">
-                  <span class="site-state-item-count">10</span>
-                  <span class="site-state-item-name">分类</span>
-                </a>
-              </div>
-            
-
-            
-              
-              
-              <div class="site-state-item site-state-tags">
-                <a href="/tags/index.html">
-                  <span class="site-state-item-count">13</span>
-                  <span class="site-state-item-name">标签</span>
-                </a>
-              </div>
-            
-
-          </nav>
-
-          
-
-          
-
-          
-          
-
-          
-          
-
-          
-
-        </div>
-      </section>
-
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#写在前面"><span class="nav-number">1.</span> <span class="nav-text">写在前面</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#本文章默认使用的软件："><span class="nav-number">1.1.</span> <span class="nav-text">本文章默认使用的软件：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#开发工具："><span class="nav-number">1.2.</span> <span class="nav-text">开发工具：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装Nginx"><span class="nav-number">2.</span> <span class="nav-text">安装Nginx</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#环境准备"><span class="nav-number">2.1.</span> <span class="nav-text">环境准备</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装"><span class="nav-number">2.2.</span> <span class="nav-text">安装</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Nginx启动与访问"><span class="nav-number">3.</span> <span class="nav-text">Nginx启动与访问</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#启动Nginx"><span class="nav-number">3.1.</span> <span class="nav-text">启动Nginx</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查看Nginx进程"><span class="nav-number">3.2.</span> <span class="nav-text">查看Nginx进程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#关闭Nginx"><span class="nav-number">3.3.</span> <span class="nav-text">关闭Nginx</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#重启Nginx"><span class="nav-number">3.4.</span> <span class="nav-text">重启Nginx</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#检查Nginx配置文件是否正确"><span class="nav-number">3.5.</span> <span class="nav-text">检查Nginx配置文件是否正确</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#部署静态网站"><span class="nav-number">4.</span> <span class="nav-text">部署静态网站</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#绑定域名"><span class="nav-number">4.1.</span> <span class="nav-text">绑定域名</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Nginx反向代理"><span class="nav-number">5.</span> <span class="nav-text">Nginx反向代理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#配置反向代理"><span class="nav-number">5.1.</span> <span class="nav-text">配置反向代理</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Nginx配置负载均衡"><span class="nav-number">6.</span> <span class="nav-text">Nginx配置负载均衡</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
-      
-
-      
-        <div class="back-to-top">
-          <i class="fa fa-arrow-up"></i>
-          
-            <span id="scrollpercent"><span>0</span>%</span>
-          
-        </div>
-      
-
-    </div>
-  </aside>
-
-
-        
       </div>
-    </main>
+    </div>
+    <div class="d-none d-lg-block col-lg-2 toc-container">
+      
+  <div id="toc">
+    <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
+    <div id="tocbot"></div>
+  </div>
 
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
-  <span class="with-love">
-    <i class="fa fa-user"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">loonycoder</span>
-
-  
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item-icon">
-      <i class="fa fa-area-chart"></i>
-    </span>
-    
-      <span class="post-meta-item-text">Site words total count&#58;</span>
-    
-    <span title="Site words total count">78k</span>
-  
+    </div>
+  </div>
 </div>
 
+<!-- custom -->
 
 
+<!-- Comments -->
+<div class="col-lg-7 mx-auto nopadding-md">
+  <div class="container comments mx-auto" id="comments">
+    
+      <br><br>
+      
+      
 
+    
+  </div>
+</div>
 
+    
+  </main>
 
+  
+    <a class="z-depth-1" id="scroll-top-button" href="#" role="button">
+      <i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i>
+    </a>
+  
 
-
-
-<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
-
-
-        
-
-
-
-
-
-
-
-
-        
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
-    </footer>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+    <i class="iconfont icon-love"></i>
+    <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
+    <br>
 
     
 
+
+    
+
+
+    <!-- cnzz Analytics icon -->
     
 
   </div>
+</footer>
 
+<!-- SCRIPTS -->
+<script src="/lib/jquery/jquery.min.js" ></script>
+<script src="/lib/popper/popper.min.js" ></script>
+<script src="/lib/bootstrap/js/bootstrap.min.js" ></script>
+<script src="/lib/mdbootstrap/js/mdb.min.js" ></script>
+<script src="/js/main.js" ></script>
+
+
+  <script src="/js/lazyload.js" ></script>
+
+
+
+  <script src="/js/post.js" ></script>
   
-
-<script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
-</script>
-
-
-
-
-
-
-
-
-
-  
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
-  
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
-
-
-
-  
-  
-
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
-
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
-
-
-
-  
-
-
-  
-
-
-
-
-	
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-  <script type="text/javascript">
-    // Popup Window;
-    var isfetched = false;
-    var isXml = true;
-    // Search DB path;
-    var search_path = "search.xml";
-    if (search_path.length === 0) {
-      search_path = "search.xml";
-    } else if (/json$/i.test(search_path)) {
-      isXml = false;
-    }
-    var path = "/" + search_path;
-    // monitor main search box;
-
-    var onPopupClose = function (e) {
-      $('.popup').hide();
-      $('#local-search-input').val('');
-      $('.search-result-list').remove();
-      $('#no-result').remove();
-      $(".local-search-pop-overlay").remove();
-      $('body').css('overflow', '');
-    }
-
-    function proceedsearch() {
-      $("body")
-        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
-        .css('overflow', 'hidden');
-      $('.search-popup-overlay').click(onPopupClose);
-      $('.popup').toggle();
-      var $localSearchInput = $('#local-search-input');
-      $localSearchInput.attr("autocapitalize", "none");
-      $localSearchInput.attr("autocorrect", "off");
-      $localSearchInput.focus();
-    }
-
-    // search function;
-    var searchFunc = function(path, search_id, content_id) {
-      'use strict';
-
-      // start loading animation
-      $("body")
-        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
-          '<div id="search-loading-icon">' +
-          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
-          '</div>' +
-          '</div>')
-        .css('overflow', 'hidden');
-      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
-
-      $.ajax({
-        url: path,
-        dataType: isXml ? "xml" : "json",
-        async: true,
-        success: function(res) {
-          // get the contents from search data
-          isfetched = true;
-          $('.popup').detach().appendTo('.header-inner');
-          var datas = isXml ? $("entry", res).map(function() {
-            return {
-              title: $("title", this).text(),
-              content: $("content",this).text(),
-              url: $("url" , this).text()
-            };
-          }).get() : res;
-          var input = document.getElementById(search_id);
-          var resultContent = document.getElementById(content_id);
-          var inputEventFunction = function() {
-            var searchText = input.value.trim().toLowerCase();
-            var keywords = searchText.split(/[\s\-]+/);
-            if (keywords.length > 1) {
-              keywords.push(searchText);
-            }
-            var resultItems = [];
-            if (searchText.length > 0) {
-              // perform local searching
-              datas.forEach(function(data) {
-                var isMatch = false;
-                var hitCount = 0;
-                var searchTextCount = 0;
-                var title = data.title.trim();
-                var titleInLowerCase = title.toLowerCase();
-                var content = data.content.trim().replace(/<[^>]+>/g,"");
-                var contentInLowerCase = content.toLowerCase();
-                var articleUrl = decodeURIComponent(data.url);
-                var indexOfTitle = [];
-                var indexOfContent = [];
-                // only match articles with not empty titles
-                if(title != '') {
-                  keywords.forEach(function(keyword) {
-                    function getIndexByWord(word, text, caseSensitive) {
-                      var wordLen = word.length;
-                      if (wordLen === 0) {
-                        return [];
-                      }
-                      var startPosition = 0, position = [], index = [];
-                      if (!caseSensitive) {
-                        text = text.toLowerCase();
-                        word = word.toLowerCase();
-                      }
-                      while ((position = text.indexOf(word, startPosition)) > -1) {
-                        index.push({position: position, word: word});
-                        startPosition = position + wordLen;
-                      }
-                      return index;
-                    }
-
-                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
-                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
-                  });
-                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
-                    isMatch = true;
-                    hitCount = indexOfTitle.length + indexOfContent.length;
-                  }
-                }
-
-                // show search results
-
-                if (isMatch) {
-                  // sort index by position of keyword
-
-                  [indexOfTitle, indexOfContent].forEach(function (index) {
-                    index.sort(function (itemLeft, itemRight) {
-                      if (itemRight.position !== itemLeft.position) {
-                        return itemRight.position - itemLeft.position;
-                      } else {
-                        return itemLeft.word.length - itemRight.word.length;
-                      }
-                    });
-                  });
-
-                  // merge hits into slices
-
-                  function mergeIntoSlice(text, start, end, index) {
-                    var item = index[index.length - 1];
-                    var position = item.position;
-                    var word = item.word;
-                    var hits = [];
-                    var searchTextCountInSlice = 0;
-                    while (position + word.length <= end && index.length != 0) {
-                      if (word === searchText) {
-                        searchTextCountInSlice++;
-                      }
-                      hits.push({position: position, length: word.length});
-                      var wordEnd = position + word.length;
-
-                      // move to next position of hit
-
-                      index.pop();
-                      while (index.length != 0) {
-                        item = index[index.length - 1];
-                        position = item.position;
-                        word = item.word;
-                        if (wordEnd > position) {
-                          index.pop();
-                        } else {
-                          break;
-                        }
-                      }
-                    }
-                    searchTextCount += searchTextCountInSlice;
-                    return {
-                      hits: hits,
-                      start: start,
-                      end: end,
-                      searchTextCount: searchTextCountInSlice
-                    };
-                  }
-
-                  var slicesOfTitle = [];
-                  if (indexOfTitle.length != 0) {
-                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
-                  }
-
-                  var slicesOfContent = [];
-                  while (indexOfContent.length != 0) {
-                    var item = indexOfContent[indexOfContent.length - 1];
-                    var position = item.position;
-                    var word = item.word;
-                    // cut out 100 characters
-                    var start = position - 20;
-                    var end = position + 80;
-                    if(start < 0){
-                      start = 0;
-                    }
-                    if (end < position + word.length) {
-                      end = position + word.length;
-                    }
-                    if(end > content.length){
-                      end = content.length;
-                    }
-                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
-                  }
-
-                  // sort slices in content by search text's count and hits' count
-
-                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
-                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
-                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
-                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
-                      return sliceRight.hits.length - sliceLeft.hits.length;
-                    } else {
-                      return sliceLeft.start - sliceRight.start;
-                    }
-                  });
-
-                  // select top N slices in content
-
-                  var upperBound = parseInt('1');
-                  if (upperBound >= 0) {
-                    slicesOfContent = slicesOfContent.slice(0, upperBound);
-                  }
-
-                  // highlight title and content
-
-                  function highlightKeyword(text, slice) {
-                    var result = '';
-                    var prevEnd = slice.start;
-                    slice.hits.forEach(function (hit) {
-                      result += text.substring(prevEnd, hit.position);
-                      var end = hit.position + hit.length;
-                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
-                      prevEnd = end;
-                    });
-                    result += text.substring(prevEnd, slice.end);
-                    return result;
-                  }
-
-                  var resultItem = '';
-
-                  if (slicesOfTitle.length != 0) {
-                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
-                  } else {
-                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
-                  }
-
-                  slicesOfContent.forEach(function (slice) {
-                    resultItem += "<a href='" + articleUrl + "'>" +
-                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
-                      "...</p>" + "</a>";
-                  });
-
-                  resultItem += "</li>";
-                  resultItems.push({
-                    item: resultItem,
-                    searchTextCount: searchTextCount,
-                    hitCount: hitCount,
-                    id: resultItems.length
-                  });
-                }
-              })
-            };
-            if (keywords.length === 1 && keywords[0] === "") {
-              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
-            } else if (resultItems.length === 0) {
-              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
-            } else {
-              resultItems.sort(function (resultLeft, resultRight) {
-                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
-                  return resultRight.searchTextCount - resultLeft.searchTextCount;
-                } else if (resultLeft.hitCount !== resultRight.hitCount) {
-                  return resultRight.hitCount - resultLeft.hitCount;
-                } else {
-                  return resultRight.id - resultLeft.id;
-                }
-              });
-              var searchResultList = '<ul class=\"search-result-list\">';
-              resultItems.forEach(function (result) {
-                searchResultList += result.item;
-              })
-              searchResultList += "</ul>";
-              resultContent.innerHTML = searchResultList;
-            }
-          }
-
-          if ('auto' === 'auto') {
-            input.addEventListener('input', inputEventFunction);
-          } else {
-            $('.search-icon').click(inputEventFunction);
-            input.addEventListener('keypress', function (event) {
-              if (event.keyCode === 13) {
-                inputEventFunction();
-              }
-            });
-          }
-
-          // remove loading animation
-          $(".local-search-pop-overlay").remove();
-          $('body').css('overflow', '');
-
-          proceedsearch();
-        }
+    <script src="/lib/tocbot/tocbot.min.js" ></script>
+    <script>
+      $(document).ready(function () {
+        tocbot.init({
+          tocSelector: '#tocbot',
+          contentSelector: '.post-content',
+          headingSelector: 'h1,h2,h3,h4,h5,h6',
+          linkClass: 'tocbot-link',
+          activeLinkClass: 'tocbot-active-link',
+          listClass: 'tocbot-list',
+          isCollapsedClass: 'tocbot-is-collapsed',
+          collapsibleClass: 'tocbot-is-collapsible',
+          scrollSmooth: true,
+        });
       });
+    </script>
+  
+
+
+
+  <script src="/lib/smoothscroll/SmoothScroll.min.js" ></script>
+
+
+
+
+<!-- Plugins -->
+
+
+  
+
+  
+
+  
+
+  
+
+  <!-- cnzz Analytics -->
+  
+
+
+
+  <script src="/lib/prettify/prettify.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      $('pre').addClass('prettyprint  linenums');
+      prettyPrint();
+    })
+  </script>
+
+
+
+  <script src="/lib/typed/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "高性能的HTTP服务器——Nginx&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script src="/lib/anchor/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
     }
+    anchors.add(res.join(", "))
+  </script>
 
-    // handle and trigger popup window;
-    $('.popup-trigger').click(function(e) {
-      e.stopPropagation();
-      if (isfetched === false) {
-        searchFunc(path, 'local-search-input', 'local-search-result');
-      } else {
-        proceedsearch();
-      };
-    });
 
-    $('.popup-btn-close').click(onPopupClose);
-    $('.popup').click(function(e){
-      e.stopPropagation();
-    });
-    $(document).on('keyup', function (event) {
-      var shouldDismissSearchPopup = event.which === 27 &&
-        $('.search-popup').is(':visible');
-      if (shouldDismissSearchPopup) {
-        onPopupClose();
+
+  <script src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      getSearchFile(path);
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script src="/lib/fancybox/jquery.fancybox.min.js" ></script>
+  <script>
+    $("#post img:not(.no-zoom img, img[no-zoom])").each(
+      function () {
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "images");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
       }
-    });
+    );
   </script>
 
 
 
 
 
-  
 
-  
 
-  
 
-  
-  
 
-  
 
-  
 
-  
 
-  
 </body>
 </html>

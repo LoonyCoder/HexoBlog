@@ -1,429 +1,170 @@
 <!DOCTYPE html>
+<html lang="zh-Hans">
 
 
 
-  
 
 
-<html class="theme-next gemini use-motion" lang="zh-Hans">
 <head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-<meta name="theme-color" content="#222">
-
-
-
-
-
-
-
-
-
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
   
-  
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <meta name="description" content="Code bestful and be a best coder.">
+  <meta name="author" content="LoonyCoder">
+  <meta name="keywords" content="隐约雷鸣，阴霾天空，但盼风雨来，能留你于此">
+  <title>Java基础（一） ~ 望月Plenilune</title>
+
+  <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css"  >
+<link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css"  >
+<link rel="stylesheet" href="/lib/mdbootstrap/css/mdb.min.css"  >
+<link rel="stylesheet" href="/lib/github-markdown/github-markdown.min.css"  >
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
 
 
 
+  <link rel="stylesheet" href="/lib/prettify/tomorrow-night-eighties.min.css"  >
+
+<link rel="stylesheet" href="/css/main.css"  >
 
 
-
-
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
-
-<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
-
-
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
-
-
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
-
-
-  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
-
-
-
-
-
-  <meta name="keywords" content="Java,Java基础," />
-
-
-
-
-
-
-
-
-
-
-<meta name="description" content="记录一些Java基础的知识点，为了自己查阅资料的时候方便一些。  Java基础JDK和JRE的区别？1、jre即Java Runtime Environment，Java运行环境。包括Java虚拟机和Java类库2、jdk是Java开发工具包，例如：tools.jar  &#x3D;&#x3D; 和 equals的区别1、&#x3D;&#x3D;是一个比较运算符，对于基本类型，比较的是具体的数值(int、double..)；对于引用类型">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Java基础（一）">
-<meta property="og:url" content="http://yoursite.com/2018/08/01/JavaBasic1/index.html">
-<meta property="og:site_name" content="望月">
-<meta property="og:description" content="记录一些Java基础的知识点，为了自己查阅资料的时候方便一些。  Java基础JDK和JRE的区别？1、jre即Java Runtime Environment，Java运行环境。包括Java虚拟机和Java类库2、jdk是Java开发工具包，例如：tools.jar  &#x3D;&#x3D; 和 equals的区别1、&#x3D;&#x3D;是一个比较运算符，对于基本类型，比较的是具体的数值(int、double..)；对于引用类型">
-<meta property="og:image" content="http://yoursite.com/images/io.png">
-<meta property="og:image" content="http://yoursite.com/images/linktable1.png">
-<meta property="og:image" content="http://yoursite.com/images/linktable2.png">
-<meta property="og:image" content="http://yoursite.com/images/linktable3.png">
-<meta property="og:image" content="http://yoursite.com/images/linktable4.png">
-<meta property="og:image" content="http://yoursite.com/images/linktable5.png">
-<meta property="og:image" content="http://yoursite.com/images/hash1.png">
-<meta property="og:image" content="http://cdn.tycoding.cn/JDK1.8%E4%B9%8B%E5%90%8E%E7%9A%84HashMap%E5%BA%95%E5%B1%82%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84.jpg">
-<meta property="og:image" content="http://yoursite.com/images/collection1.png">
-<meta property="og:image" content="http://yoursite.com/images/map1.png">
-<meta property="og:image" content="http://yoursite.com/images/thread2.png">
-<meta property="og:image" content="http://yoursite.com/images/deadlock.png">
-<meta property="article:published_time" content="2018-07-31T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-02-21T15:27:44.892Z">
-<meta property="article:author" content="LoonyCoder">
-<meta property="article:tag" content="Java">
-<meta property="article:tag" content="Java基础">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://yoursite.com/images/io.png">
-
-
-
-<script type="text/javascript" id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Gemini',
-    version: '5.1.4',
-    sidebar: {"position":"right","display":"post","offset":50,"b2t":true,"scrollpercent":true,"onmobile":false},
-    fancybox: true,
-    tabs: true,
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    duoshuo: {
-      userId: '0',
-      author: '博主'
-    },
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":5},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
-  };
-</script>
-
-
-
-  <link rel="canonical" href="http://yoursite.com/2018/08/01/JavaBasic1/"/>
-
-
-
-
-
-  <title>Java基础（一） | 望月</title>
-  
-
-
-
-
-
-
+  <link rel="stylesheet" href="/lib/fancybox/jquery.fancybox.min.css"  >
 
 
 <meta name="generator" content="Hexo 4.2.0"></head>
 
 
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>望月Plenilune</strong>&nbsp;</a>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
-
-  
-  
-    
-  
-
-  <div class="container sidebar-position-right page-post-detail">
-    <div class="headband"></div>
-
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta ">
-    
-
-    <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">望月</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
-    </div>
-      
-        <p class="site-subtitle">Life is so short , just coding.</p>
-      
-  </div>
-
-  <div class="site-nav-toggle">
-    <button>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
     </button>
-  </div>
-</div>
 
-<nav class="site-nav">
-  
-
-  
-    <ul id="menu" class="menu">
-      
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
         
-        <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
-            
-            首页
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-about">
-          <a href="/about/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
-            
-            关于
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-tags">
-          <a href="/tags/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
-            
-            标签
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-categories">
-          <a href="/categories/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
-            
-            分类
-          </a>
-        </li>
-      
-
-      
-        <li class="menu-item menu-item-search">
           
-            <a href="javascript:;" class="popup-trigger">
           
-            
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
-            
-            搜索
-          </a>
-        </li>
-      
-    </ul>
-  
-
-  
-    <div class="site-search">
-      
-  <div class="popup search-popup local-search-popup">
-  <div class="local-search-header clearfix">
-    <span class="search-icon">
-      <i class="fa fa-search"></i>
-    </span>
-    <span class="popup-btn-close">
-      <i class="fa fa-times-circle"></i>
-    </span>
-    <div class="local-search-input-wrapper">
-      <input autocomplete="off"
-             placeholder="搜索..." spellcheck="false"
-             type="text" id="local-search-input">
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/">Home</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/archives/">Archives</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/categories/">Categories</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/tags/">Tags</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/about/">About</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
     </div>
   </div>
-  <div id="local-search-result"></div>
-</div>
-
-
-
-    </div>
-  
 </nav>
 
-
-
- </div>
-    </header>
-
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          <div id="content" class="content">
-            
-
-  <div id="posts" class="posts-expand">
-    
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/01/JavaBasic1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="LoonyCoder">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/author.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="望月">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">Java基础（一）</h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-01T00:00:00+08:00">
-                2018-08-01
-              </time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
+    <div class="view intro-2" id="background" false
+         style="background: url('/images/post_banner.jpg')no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask rgba-black-light flex-center">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
               
             </span>
-          
 
-          
             
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
+              <br>
               
+                <p class="mt-3">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>&nbsp;
+                  Wednesday, August 1st 2018, 12:00 am
+                </p>
+              
+
+              <p>
                 
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
+                  
+                  &nbsp;<i class="far fa-chart-bar"></i>
+                  <span class="post-count">
+                    9.7k 字
+                  </span>&nbsp;
                 
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  9.7k
-                </span>
-              
 
-              
-                <span class="post-meta-divider">|</span>
-              
+                
+                  
+                  &nbsp;<i class="far fa-clock"></i>
+                  <span class="post-count">
+                      37 分钟
+                  </span>&nbsp;
+                
 
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
                 
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  37
-                </span>
-              
-            </div>
-          
+              </p>
+            
+          </div>
 
           
-
         </div>
-      </header>
-    
+      </div>
+    </div>
+  </header>
 
+  <main>
     
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
-      
-        <p>记录一些Java基础的知识点，为了自己查阅资料的时候方便一些。</p>
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="py-5 z-depth-3" id="board">
+        <div class="post-content mx-auto" id="post">
+          <div class="markdown-body">
+            <p>记录一些Java基础的知识点，为了自己查阅资料的时候方便一些。</p>
 <hr>
 <h3 id="Java基础"><a href="#Java基础" class="headerlink" title="Java基础"></a>Java基础</h3><h4 id="JDK和JRE的区别？"><a href="#JDK和JRE的区别？" class="headerlink" title="JDK和JRE的区别？"></a>JDK和JRE的区别？</h4><p>1、jre即Java Runtime Environment，Java运行环境。包括Java虚拟机和Java类库<br>2、jdk是Java开发工具包，例如：tools.jar</p>
 <hr>
@@ -524,7 +265,7 @@
 
 <p>方法传递时传递的参数其实仅值原参数的一个拷贝，对于基本类型传递的就是具体的值的拷贝，对于引用类型传递的是对象地址。<br>所以上面的例子中，基本数据类型a,b经过swap方法并没有改变原始值，而引用类型arr数组经过swap方法就改变了原始值（因为直接对对象堆内存地址数据操作）。</p>
 <hr>
-<h4 id="IO流"><a href="#IO流" class="headerlink" title="IO流"></a>IO流</h4><p><img src="/images/io.png" alt="IO流"></p>
+<h4 id="IO流"><a href="#IO流" class="headerlink" title="IO流"></a>IO流</h4><p><img src="/images/io.png" srcset="/img/loading.gif" alt="IO流"></p>
 <p><strong>1、Java中有几种类型的流？</strong><br>字符流和字节流。字节流继承InputStream和OutputStream；字符流继承自InputStreamReader和OutputStreamWriter。</p>
 <p><strong>2、谈谈Java IO中的方法阻塞</strong><br>Java中的阻塞式方法是指在程序调用该方法时，必须等待输入数据可用或检测到输入结果时结束或抛出异常，否则程序会一直停留在该语句上，不会执行下面的语句。比如read()和readLine()方法。</p>
 <p><strong>3、字符流和字节流的区别？</strong><br>数据的输入和输出在计算机中最终都是通过字节的形式传递的，对应通过InputStream和OutputStream实现，他们都是针对字节操作的。<br>而有时候通常需要读取一些完全是字符的文本数据，通常使用基于字节流的包装类字符流完成操作，他们通过InputStreamReader和OutputStreamWriter实现。<br>字符流是字节流的包装，即使有时候读取的是字符流，但也可能需要转换为字节写入。</p>
@@ -572,18 +313,18 @@
 <p>单向链表<br>单向链表包含每个节点Node包含两个部分：第一部分data储存当前节点数据、第二部分next存储下一节点的地址。</p>
 </blockquote>
 <ul>
-<li><p>单向链表只可向一个方向遍历，查找一个节点需要从第一个节点开始向下依次寻找<br><img src="/images/linktable1.png" alt="单向链表"></p>
+<li><p>单向链表只可向一个方向遍历，查找一个节点需要从第一个节点开始向下依次寻找<br><img src="/images/linktable1.png" srcset="/img/loading.gif" alt="单向链表"></p>
 </li>
-<li><p>单向链表插入节点从链表头部插入，将新插入节点的next指向原头部节点位置即可<br><img src="/images/linktable2.png" alt="单向链表"></p>
+<li><p>单向链表插入节点从链表头部插入，将新插入节点的next指向原头部节点位置即可<br><img src="/images/linktable2.png" srcset="/img/loading.gif" alt="单向链表"></p>
 </li>
-<li><p>删除节点，只需要将该节点上一个节点的next指向该节点下一个节点即可<br><img src="/images/linktable3.png" alt="单向链表"></p>
+<li><p>删除节点，只需要将该节点上一个节点的next指向该节点下一个节点即可<br><img src="/images/linktable3.png" srcset="/img/loading.gif" alt="单向链表"></p>
 </li>
 </ul>
 <blockquote>
-<p>双向链表<br><strong>双向链表</strong> 包含两个指针，prev指向前一个节点，next指向后一个节点。<br><img src="/images/linktable4.png" alt="双向链表"></p>
+<p>双向链表<br><strong>双向链表</strong> 包含两个指针，prev指向前一个节点，next指向后一个节点。<br><img src="/images/linktable4.png" srcset="/img/loading.gif" alt="双向链表"></p>
 </blockquote>
 <blockquote>
-<p>双向循环链表<br><strong>双向循环链表</strong> 最后一个节点的<em>next</em>指向<em>head</em>，而<em>head</em>的<em>prev</em>指向最后一个节点，形成一个环。<br><img src="/images/linktable5.png" alt="双向循环链表"></p>
+<p>双向循环链表<br><strong>双向循环链表</strong> 最后一个节点的<em>next</em>指向<em>head</em>，而<em>head</em>的<em>prev</em>指向最后一个节点，形成一个环。<br><img src="/images/linktable5.png" srcset="/img/loading.gif" alt="双向循环链表"></p>
 </blockquote>
 <hr>
 <h4 id="ArrayList和Vector和LinkedList的区别？"><a href="#ArrayList和Vector和LinkedList的区别？" class="headerlink" title="ArrayList和Vector和LinkedList的区别？"></a>ArrayList和Vector和LinkedList的区别？</h4><ul>
@@ -620,7 +361,7 @@
 <hr>
 <h4 id="Hash冲突"><a href="#Hash冲突" class="headerlink" title="Hash冲突"></a>Hash冲突</h4><p>假设将100个数据通过Hash散列后存储到10个不同的容器中，必定会出现多个元素分布到同一个容器中。具体到HashMap集合中，若将多个K-V数据存入put，HashMap根据元素key计算到对应的hashCode值，如果计算得到多个不同的key对应的hashCode值相同（即要储存到同一位置），此时这种现象就称为 Hash冲突。<br>HashMap默认采用了 链地址法 解决Hash冲突问题，即通过类似单链表的方式将 冲突的元素 串起来，搜索时遍历这个链表即可。注意： 如果冲突的Hash越来越多，这个链就会越来越长。</p>
 <hr>
-<h4 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h4><p><img src="/images/hash1.png" alt="hash冲突与实现原理"><br>这里我们需要了解两个名词：<br>Table: 哈希桶数组（哈希表），存放Node元素，底层是一个Node[] table<br>Node: 节点元素，Node是HashMap的一个内部类，实现了Map.Entry接口，本质是一个映射（K-V）<br>HashMap内部的一些关键属性需要了解：<br>DEFAULT_INITIAL_CAPACITY: Tabale数组的初始化长度，默认是1 &lt;&lt; 4，2^4 = 16<br>MAXIMUM_CAPACITY: Table数组最高长度，默认为1 &lt;&lt; 30，2^30 = 1073741824<br>DEFAULT_LOAD_FACTOR: 负载因子，当总元素数 &gt; 数组长度 * 负载因子时，Table数组将扩容，默认是0.75<br>TREEIFY_THRESHOLD: 树化阀值，当单个Table内Node数量超过该值，则将链表转换为红黑树，默认是8<br>UNTREEIFY_THRESHOLD: 链化阀值，当扩容期间单个Table的Entry数量小于该值，则将红黑数转换为链表，默认为6<br>MIN_TREEIFY_CAPACITY: 最小树化阀值，当Table中所有元素超过该值，才会进行树化<br>size: 当前HashMap实际存在的键值对数量<br>threshold: HashMap所能容纳的最大数据量的Node（键值对）个数。Node[] table初始化长度length是16，loadFactor负载因子默认是0.75，threshold = length * loadFactor<br>loadFactor: 负载因子，默认是0.17<br>modCount: 记录HashMap内部结构发生变化的次数<br>HashMap内部存在一个NodeTable数组，这个数组的初始化长度是DEFAULT_INITIAL_CAPACITY，他是一个单向链表：</p>
+<h4 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h4><p><img src="/images/hash1.png" srcset="/img/loading.gif" alt="hash冲突与实现原理"><br>这里我们需要了解两个名词：<br>Table: 哈希桶数组（哈希表），存放Node元素，底层是一个Node[] table<br>Node: 节点元素，Node是HashMap的一个内部类，实现了Map.Entry接口，本质是一个映射（K-V）<br>HashMap内部的一些关键属性需要了解：<br>DEFAULT_INITIAL_CAPACITY: Tabale数组的初始化长度，默认是1 &lt;&lt; 4，2^4 = 16<br>MAXIMUM_CAPACITY: Table数组最高长度，默认为1 &lt;&lt; 30，2^30 = 1073741824<br>DEFAULT_LOAD_FACTOR: 负载因子，当总元素数 &gt; 数组长度 * 负载因子时，Table数组将扩容，默认是0.75<br>TREEIFY_THRESHOLD: 树化阀值，当单个Table内Node数量超过该值，则将链表转换为红黑树，默认是8<br>UNTREEIFY_THRESHOLD: 链化阀值，当扩容期间单个Table的Entry数量小于该值，则将红黑数转换为链表，默认为6<br>MIN_TREEIFY_CAPACITY: 最小树化阀值，当Table中所有元素超过该值，才会进行树化<br>size: 当前HashMap实际存在的键值对数量<br>threshold: HashMap所能容纳的最大数据量的Node（键值对）个数。Node[] table初始化长度length是16，loadFactor负载因子默认是0.75，threshold = length * loadFactor<br>loadFactor: 负载因子，默认是0.17<br>modCount: 记录HashMap内部结构发生变化的次数<br>HashMap内部存在一个NodeTable数组，这个数组的初始化长度是DEFAULT_INITIAL_CAPACITY，他是一个单向链表：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">static class Node&lt;K,V&gt; implements Map.Entry&lt;K,V&gt; &#123;</span><br><span class="line">    final int <span class="built_in">hash</span>; //key的Hash值</span><br><span class="line">    final K key; //key</span><br><span class="line">    V value; //value</span><br><span class="line">    Node&lt;K,V&gt; next; //下一个节点</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>参考单链表的结构，Table中每个Node节点包含两个部分，Node元素作为节点的header，next指向下一个节点。<strong>这种链式结构的存在正是为了解决Hash冲突</strong></p>
@@ -628,7 +369,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">map.put(<span class="string">"loonycoder"</span>, <span class="string">"18"</span>);</span><br></pre></td></tr></table></figure>
 <p>HashMap将根据”loonycoder”这个Key得到其hashCode值，然后经过Hash算法定位到其在HashMap储存的位置，如果两个不同的key定位到了同一个位置，此时就发生了Hash冲突。<br>在JDK1.7之前，解决Hash冲突的方式是将冲突的Node节点放在一个链表中。在JDK1.8中，当Table中链长超过TREEIFY_THRESHOLD阀值后，会将链表转换为红黑树的实现TreeNode:</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">static final class TreeNode&lt;K,V&gt; extends LinkedHashMap.Entry&lt;K,V&gt; &#123;</span><br><span class="line">    TreeNode&lt;K,V&gt; parent;  // red-black tree links</span><br><span class="line">    TreeNode&lt;K,V&gt; left;</span><br><span class="line">    TreeNode&lt;K,V&gt; right;</span><br><span class="line">    TreeNode&lt;K,V&gt; prev;    // needed to unlink next upon deletion</span><br><span class="line">    boolean red;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>当发生<strong>Hash冲突</strong>时，根据HashMap默认采用的 <strong>链地址法</strong>，即将冲突的Hash串成一个链式结构储存到HashMap对应的位置。但是 随着Hash冲突越来越多，这个<strong>链将越来越长</strong>，这就将导致遍历碰撞key时的消耗不断增加，也就直接导致了性能的不足。在JDK1.8后，HashMap对单个Table中的Node超出某个阀值后，将开始树化操作（链表转换为红黑树），这对搜索的性能将会有很大的提升。<br><img src="http://cdn.tycoding.cn/JDK1.8%E4%B9%8B%E5%90%8E%E7%9A%84HashMap%E5%BA%95%E5%B1%82%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84.jpg" alt="地址链法"></p>
+<p>当发生<strong>Hash冲突</strong>时，根据HashMap默认采用的 <strong>链地址法</strong>，即将冲突的Hash串成一个链式结构储存到HashMap对应的位置。但是 随着Hash冲突越来越多，这个<strong>链将越来越长</strong>，这就将导致遍历碰撞key时的消耗不断增加，也就直接导致了性能的不足。在JDK1.8后，HashMap对单个Table中的Node超出某个阀值后，将开始树化操作（链表转换为红黑树），这对搜索的性能将会有很大的提升。<br><img src="http://cdn.tycoding.cn/JDK1.8%E4%B9%8B%E5%90%8E%E7%9A%84HashMap%E5%BA%95%E5%B1%82%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84.jpg" srcset="/img/loading.gif" alt="地址链法"></p>
 <p><strong>总结</strong><br>到此，我们总结一下HashMap的实现原理：</p>
 <ul>
 <li>HashMap根据key的hashCode值存储元素。put新元素会遍历链表，根据新元素的key计算hashCode得到散列位置，如果该位置有值再调用equals判断value是否相同，相同就散列到其他位置储存。</li>
@@ -645,12 +386,12 @@
 <li>Comparable接口来自java.lang包，提供compareTo(Object obj) 方法排序</li>
 <li>Comparator接口来自java.util包，提供compare(Object obj1, Object obj2)方法排序<br>当需要对一个集合采用一种方式排序，使用Comparable接口；如果需要对一个集合采用两种排序方式就使用Comparator接口。</li>
 </ul>
-<h4 id="Java集合框架总结"><a href="#Java集合框架总结" class="headerlink" title="Java集合框架总结"></a>Java集合框架总结</h4><h5 id="Collection"><a href="#Collection" class="headerlink" title="Collection"></a>Collection</h5><p><img src="/images/collection1.png" alt="Collection"></p>
+<h4 id="Java集合框架总结"><a href="#Java集合框架总结" class="headerlink" title="Java集合框架总结"></a>Java集合框架总结</h4><h5 id="Collection"><a href="#Collection" class="headerlink" title="Collection"></a>Collection</h5><p><img src="/images/collection1.png" srcset="/img/loading.gif" alt="Collection"></p>
 <p><strong>List</strong></p>
 <p>ArrayList: Object数组，线程不安全，查询快，增删慢，效率高<br>Vector: Object数组，线程安全，查询快，增删慢，效率低<br>LinkedList: 双向链表，线程不安全，查询慢，增删快，效率高</p>
 <p><strong>Set</strong></p>
 <p>HashSet: 无序、唯一，基于HashMap实现，底层采用HashMap存储元素<br>LinkedHashSet: LinkedHashSet继承自HashSet，并且其内部通过LinkedHashMap实现<br>TreeSet 有序、唯一，红黑树</p>
-<h5 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h5><p><img src="/images/map1.png" alt="Map"></p>
+<h5 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h5><p><img src="/images/map1.png" srcset="/img/loading.gif" alt="Map"></p>
 <ul>
 <li>HashMap: JDK1.8之前HashMap由数组和链表组成，数组时HashMap的主体，链表是为了解决Hash冲突问题。JDK1.8之后当Table中Node数量大于8时，就将链表转换为红黑树，以减少搜索时间提高效率。</li>
 <li>LinkedHashMap: LinkedHashMap继承自HashMap，所有他的底层仍然由数组和链表/红黑树实现。另外，LinkedHashMap在上面的结构基础上，增加了一条双向链表，使得上面的结构可以保持键值对的插入顺序。</li>
@@ -713,11 +454,11 @@
 <td align="left">终止状态，表示当前线程已经执行完毕</td>
 </tr>
 </tbody></table>
-<p>对应，程序会因为不同代码的执行产生不同的状态，如下图：<br><img src="/images/thread2.png" alt="线程图"><br>如上，线程创建后将进入NEW（初始）状态，调用start()开始运行，当线程执行wait()方法后，线程将进入WAITING（等待）状态，可以通过wait(long)或join(long)等方法终止等待状态；当线程调用同步方法时，在没有获取到锁的情况下，线程将会进入到BLOCKED（阻塞）状态。</p>
+<p>对应，程序会因为不同代码的执行产生不同的状态，如下图：<br><img src="/images/thread2.png" srcset="/img/loading.gif" alt="线程图"><br>如上，线程创建后将进入NEW（初始）状态，调用start()开始运行，当线程执行wait()方法后，线程将进入WAITING（等待）状态，可以通过wait(long)或join(long)等方法终止等待状态；当线程调用同步方法时，在没有获取到锁的情况下，线程将会进入到BLOCKED（阻塞）状态。</p>
 <hr>
 <h4 id="什么是上下文切换？"><a href="#什么是上下文切换？" class="headerlink" title="什么是上下文切换？"></a>什么是上下文切换？</h4><p>简单来说，并发编程中实际线程的数量都可能大于CPU核心的个数，而COU一个核心在任意时刻只能被一个线程使用，CPU为了保证并发的线程都有被执行，采用<strong>随机分配时间片并轮转</strong>的方式；而一个线程的时间片用户将保存并进入就绪状态直到下次分配时间片再执行，这个 <strong>任务从保存到再加载的过程就是一次上下文切换</strong>。</p>
 <hr>
-<h4 id="什么是死锁？如何避免"><a href="#什么是死锁？如何避免" class="headerlink" title="什么是死锁？如何避免?"></a>什么是死锁？如何避免?</h4><p>举例：线程A持有资源2，线程B持有资源1，在线程A、B都没有释放自己所持有资源的情况下（锁未释放），他们都想同时获取对方的资源，因为资源1、2都被锁定，两个线程都会进入相互等待的情况，这种情况称为死锁。<br><img src="/images/deadlock.png" alt="死锁"><br>栗子：</p>
+<h4 id="什么是死锁？如何避免"><a href="#什么是死锁？如何避免" class="headerlink" title="什么是死锁？如何避免?"></a>什么是死锁？如何避免?</h4><p>举例：线程A持有资源2，线程B持有资源1，在线程A、B都没有释放自己所持有资源的情况下（锁未释放），他们都想同时获取对方的资源，因为资源1、2都被锁定，两个线程都会进入相互等待的情况，这种情况称为死锁。<br><img src="/images/deadlock.png" srcset="/img/loading.gif" alt="死锁"><br>栗子：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">public class DeadLockDemo &#123;</span><br><span class="line">    private static Object resource1 = new Object();//资源 1</span><br><span class="line">    private static Object resource2 = new Object();//资源 2</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        new Thread(() -&gt; &#123;</span><br><span class="line">            synchronized (resource1) &#123;</span><br><span class="line">                System.out.println(Thread.currentThread() + <span class="string">"get resource1"</span>);</span><br><span class="line">                try &#123;</span><br><span class="line">                    Thread.sleep(1000);</span><br><span class="line">                &#125; catch (InterruptedException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">                System.out.println(Thread.currentThread() + <span class="string">"waiting get resource2"</span>);</span><br><span class="line">                synchronized (resource2) &#123;</span><br><span class="line">                    System.out.println(Thread.currentThread() + <span class="string">"get resource2"</span>);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;, <span class="string">"线程 1"</span>).start();</span><br><span class="line"></span><br><span class="line">        new Thread(() -&gt; &#123;</span><br><span class="line">            synchronized (resource2) &#123;</span><br><span class="line">                System.out.println(Thread.currentThread() + <span class="string">"get resource2"</span>);</span><br><span class="line">                try &#123;</span><br><span class="line">                    Thread.sleep(1000);</span><br><span class="line">                &#125; catch (InterruptedException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">                System.out.println(Thread.currentThread() + <span class="string">"waiting get resource1"</span>);</span><br><span class="line">                synchronized (resource1) &#123;</span><br><span class="line">                    System.out.println(Thread.currentThread() + <span class="string">"get resource1"</span>);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;, <span class="string">"线程 2"</span>).start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>Output：</p>
@@ -753,721 +494,252 @@
 </ul>
 <hr>
 
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/Java/" rel="tag"># Java</a>
-          
-            <a href="/tags/Java%E5%9F%BA%E7%A1%80/" rel="tag"># Java基础</a>
-          
-        </div>
-      
-
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
+            <hr>
           </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
+          <br>
+          <div>
+            <p>
             
-              <a href="/2018/08/08/JavaBasic2/" rel="prev" title="Java基础（二）">
-                Java基础（二） <i class="fa fa-chevron-right"></i>
-              </a>
+              <span>
+                <i class="iconfont icon-inbox"></i>
+                
+                  <a class="hover-with-bg" href="/categories/Java">Java</a>
+                  &nbsp;
+                
+              </span>&nbsp;&nbsp;
+            
+            
+              <span>
+                <i class="iconfont icon-tag"></i>
+                
+                  <a class="hover-with-bg" href="/tags/Java">Java</a>
+                
+                  <a class="hover-with-bg" href="/tags/Java%E5%9F%BA%E7%A1%80">Java基础</a>
+                
+              </span>
+            
+            </p>
+            
+              <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" target="_blank" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
             
           </div>
         </div>
-      
-
-      
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-
-    <div class="post-spread">
-      
-    </div>
-  </div>
-
-
-          </div>
-          
-
-
-          
-
-  
-
-
-
-        </div>
-        
-          
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
-  </div>
-
-  <aside id="sidebar" class="sidebar">
-    
-    <div class="sidebar-inner">
-
-      
-
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
-
-      <section class="site-overview-wrap sidebar-panel">
-        <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-            
-              <img class="site-author-image" itemprop="image"
-                src="/images/author.png"
-                alt="LoonyCoder" />
-            
-              <p class="site-author-name" itemprop="name">LoonyCoder</p>
-              <p class="site-description motion-element" itemprop="description">Code bestful and be a best coder.</p>
-          </div>
-
-          <nav class="site-state motion-element">
-
-            
-              <div class="site-state-item site-state-posts">
-              
-                <a href="/archives">
-              
-                  <span class="site-state-item-count">20</span>
-                  <span class="site-state-item-name">日志</span>
-                </a>
-              </div>
-            
-
-            
-              
-              
-              <div class="site-state-item site-state-categories">
-                <a href="/categories/index.html">
-                  <span class="site-state-item-count">10</span>
-                  <span class="site-state-item-name">分类</span>
-                </a>
-              </div>
-            
-
-            
-              
-              
-              <div class="site-state-item site-state-tags">
-                <a href="/tags/index.html">
-                  <span class="site-state-item-count">13</span>
-                  <span class="site-state-item-name">标签</span>
-                </a>
-              </div>
-            
-
-          </nav>
-
-          
-
-          
-
-          
-          
-
-          
-          
-
-          
-
-        </div>
-      </section>
-
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Java基础"><span class="nav-number">1.</span> <span class="nav-text">Java基础</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#JDK和JRE的区别？"><span class="nav-number">1.1.</span> <span class="nav-text">JDK和JRE的区别？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#和-equals的区别"><span class="nav-number">1.2.</span> <span class="nav-text">&#x3D;&#x3D; 和 equals的区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#两个对象的hashCode-相同，则equals-一定为true？"><span class="nav-number">1.3.</span> <span class="nav-text">两个对象的hashCode()相同，则equals()一定为true？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#final的作用"><span class="nav-number">1.4.</span> <span class="nav-text">final的作用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#String属于基本数据类型吗？"><span class="nav-number">1.5.</span> <span class="nav-text">String属于基本数据类型吗？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#static关键字？是否可覆盖？"><span class="nav-number">1.6.</span> <span class="nav-text">static关键字？是否可覆盖？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#自动拆、装箱"><span class="nav-number">1.7.</span> <span class="nav-text">自动拆、装箱</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Overriding和Overloaded"><span class="nav-number">1.8.</span> <span class="nav-text">Overriding和Overloaded</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Java支持多继承吗？"><span class="nav-number">1.9.</span> <span class="nav-text">Java支持多继承吗？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#接口和抽象类的区别？"><span class="nav-number">1.10.</span> <span class="nav-text">接口和抽象类的区别？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#引用传递和值传递"><span class="nav-number">1.11.</span> <span class="nav-text">引用传递和值传递</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#IO流"><span class="nav-number">1.12.</span> <span class="nav-text">IO流</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#说说List、Set、Map三者的区别"><span class="nav-number">1.13.</span> <span class="nav-text">说说List、Set、Map三者的区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Array和ArrayList有什么区别？"><span class="nav-number">1.14.</span> <span class="nav-text">Array和ArrayList有什么区别？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ArrayList和LinkedList的区别？"><span class="nav-number">1.15.</span> <span class="nav-text">ArrayList和LinkedList的区别？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ArrayList和Vector和LinkedList的区别？"><span class="nav-number">1.16.</span> <span class="nav-text">ArrayList和Vector和LinkedList的区别？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#谈谈ArrayList的扩容机制"><span class="nav-number">1.17.</span> <span class="nav-text">谈谈ArrayList的扩容机制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HashMap和HashTable的区别？"><span class="nav-number">1.18.</span> <span class="nav-text">HashMap和HashTable的区别？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HashMap和HashSet区别"><span class="nav-number">1.19.</span> <span class="nav-text">HashMap和HashSet区别?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HashSet如何检查重复？"><span class="nav-number">1.20.</span> <span class="nav-text">HashSet如何检查重复？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HashMap底层实现？"><span class="nav-number">1.21.</span> <span class="nav-text">HashMap底层实现？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Hash"><span class="nav-number">1.22.</span> <span class="nav-text">Hash</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Hash冲突"><span class="nav-number">1.23.</span> <span class="nav-text">Hash冲突</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实现原理"><span class="nav-number">1.24.</span> <span class="nav-text">实现原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Collection和Collections的区别？"><span class="nav-number">1.25.</span> <span class="nav-text">Collection和Collections的区别？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Comparable和Comparator的区别？"><span class="nav-number">1.26.</span> <span class="nav-text">Comparable和Comparator的区别？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Java集合框架总结"><span class="nav-number">1.27.</span> <span class="nav-text">Java集合框架总结</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Collection"><span class="nav-number">1.27.1.</span> <span class="nav-text">Collection</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Map"><span class="nav-number">1.27.2.</span> <span class="nav-text">Map</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java并发"><span class="nav-number">2.</span> <span class="nav-text">Java并发</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#线程和进程的区别？"><span class="nav-number">2.1.</span> <span class="nav-text">线程和进程的区别？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#从JVM角度分析进程和线程的关系？"><span class="nav-number">2.2.</span> <span class="nav-text">从JVM角度分析进程和线程的关系？</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#为什么方法区和堆是线程共享区？"><span class="nav-number">2.2.1.</span> <span class="nav-text">为什么方法区和堆是线程共享区？</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#为什么虚拟机栈和本地方法栈是线程独占区？"><span class="nav-number">2.2.2.</span> <span class="nav-text">为什么虚拟机栈和本地方法栈是线程独占区？</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#程序计数器是什么？"><span class="nav-number">2.2.3.</span> <span class="nav-text">程序计数器是什么？</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#说说并行和并发的区别？"><span class="nav-number">2.3.</span> <span class="nav-text">说说并行和并发的区别？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用多线程可能带来什么问题？"><span class="nav-number">2.4.</span> <span class="nav-text">使用多线程可能带来什么问题？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#说说线程的生命周期和状态？"><span class="nav-number">2.5.</span> <span class="nav-text">说说线程的生命周期和状态？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#什么是上下文切换？"><span class="nav-number">2.6.</span> <span class="nav-text">什么是上下文切换？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#什么是死锁？如何避免"><span class="nav-number">2.7.</span> <span class="nav-text">什么是死锁？如何避免?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#说说sleep-方法和wait-方法的区别？"><span class="nav-number">2.8.</span> <span class="nav-text">说说sleep()方法和wait()方法的区别？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#调用start-方法会执行run-方法，为什么不能直接调用run-方法？"><span class="nav-number">2.9.</span> <span class="nav-text">调用start()方法会执行run()方法，为什么不能直接调用run()方法？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#synchronized关键字"><span class="nav-number">2.10.</span> <span class="nav-text">synchronized关键字</span></a></li></ol></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
-      
-
-      
-        <div class="back-to-top">
-          <i class="fa fa-arrow-up"></i>
-          
-            <span id="scrollpercent"><span>0</span>%</span>
-          
-        </div>
-      
-
-    </div>
-  </aside>
-
-
-        
       </div>
-    </main>
+    </div>
+    <div class="d-none d-lg-block col-lg-2 toc-container">
+      
+  <div id="toc">
+    <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
+    <div id="tocbot"></div>
+  </div>
 
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
-  <span class="with-love">
-    <i class="fa fa-user"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">loonycoder</span>
-
-  
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item-icon">
-      <i class="fa fa-area-chart"></i>
-    </span>
-    
-      <span class="post-meta-item-text">Site words total count&#58;</span>
-    
-    <span title="Site words total count">78k</span>
-  
+    </div>
+  </div>
 </div>
 
+<!-- custom -->
 
 
+<!-- Comments -->
+<div class="col-lg-7 mx-auto nopadding-md">
+  <div class="container comments mx-auto" id="comments">
+    
+      <br><br>
+      
+      
 
+    
+  </div>
+</div>
 
+    
+  </main>
 
+  
+    <a class="z-depth-1" id="scroll-top-button" href="#" role="button">
+      <i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i>
+    </a>
+  
 
-
-
-<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
-
-
-        
-
-
-
-
-
-
-
-
-        
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
-    </footer>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+    <i class="iconfont icon-love"></i>
+    <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
+    <br>
 
     
 
+
+    
+
+
+    <!-- cnzz Analytics icon -->
     
 
   </div>
+</footer>
 
+<!-- SCRIPTS -->
+<script src="/lib/jquery/jquery.min.js" ></script>
+<script src="/lib/popper/popper.min.js" ></script>
+<script src="/lib/bootstrap/js/bootstrap.min.js" ></script>
+<script src="/lib/mdbootstrap/js/mdb.min.js" ></script>
+<script src="/js/main.js" ></script>
+
+
+  <script src="/js/lazyload.js" ></script>
+
+
+
+  <script src="/js/post.js" ></script>
   
-
-<script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
-</script>
-
-
-
-
-
-
-
-
-
-  
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
-  
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
-
-
-
-  
-  
-
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
-
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
-
-
-
-  
-
-
-  
-
-
-
-
-	
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-  <script type="text/javascript">
-    // Popup Window;
-    var isfetched = false;
-    var isXml = true;
-    // Search DB path;
-    var search_path = "search.xml";
-    if (search_path.length === 0) {
-      search_path = "search.xml";
-    } else if (/json$/i.test(search_path)) {
-      isXml = false;
-    }
-    var path = "/" + search_path;
-    // monitor main search box;
-
-    var onPopupClose = function (e) {
-      $('.popup').hide();
-      $('#local-search-input').val('');
-      $('.search-result-list').remove();
-      $('#no-result').remove();
-      $(".local-search-pop-overlay").remove();
-      $('body').css('overflow', '');
-    }
-
-    function proceedsearch() {
-      $("body")
-        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
-        .css('overflow', 'hidden');
-      $('.search-popup-overlay').click(onPopupClose);
-      $('.popup').toggle();
-      var $localSearchInput = $('#local-search-input');
-      $localSearchInput.attr("autocapitalize", "none");
-      $localSearchInput.attr("autocorrect", "off");
-      $localSearchInput.focus();
-    }
-
-    // search function;
-    var searchFunc = function(path, search_id, content_id) {
-      'use strict';
-
-      // start loading animation
-      $("body")
-        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
-          '<div id="search-loading-icon">' +
-          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
-          '</div>' +
-          '</div>')
-        .css('overflow', 'hidden');
-      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
-
-      $.ajax({
-        url: path,
-        dataType: isXml ? "xml" : "json",
-        async: true,
-        success: function(res) {
-          // get the contents from search data
-          isfetched = true;
-          $('.popup').detach().appendTo('.header-inner');
-          var datas = isXml ? $("entry", res).map(function() {
-            return {
-              title: $("title", this).text(),
-              content: $("content",this).text(),
-              url: $("url" , this).text()
-            };
-          }).get() : res;
-          var input = document.getElementById(search_id);
-          var resultContent = document.getElementById(content_id);
-          var inputEventFunction = function() {
-            var searchText = input.value.trim().toLowerCase();
-            var keywords = searchText.split(/[\s\-]+/);
-            if (keywords.length > 1) {
-              keywords.push(searchText);
-            }
-            var resultItems = [];
-            if (searchText.length > 0) {
-              // perform local searching
-              datas.forEach(function(data) {
-                var isMatch = false;
-                var hitCount = 0;
-                var searchTextCount = 0;
-                var title = data.title.trim();
-                var titleInLowerCase = title.toLowerCase();
-                var content = data.content.trim().replace(/<[^>]+>/g,"");
-                var contentInLowerCase = content.toLowerCase();
-                var articleUrl = decodeURIComponent(data.url);
-                var indexOfTitle = [];
-                var indexOfContent = [];
-                // only match articles with not empty titles
-                if(title != '') {
-                  keywords.forEach(function(keyword) {
-                    function getIndexByWord(word, text, caseSensitive) {
-                      var wordLen = word.length;
-                      if (wordLen === 0) {
-                        return [];
-                      }
-                      var startPosition = 0, position = [], index = [];
-                      if (!caseSensitive) {
-                        text = text.toLowerCase();
-                        word = word.toLowerCase();
-                      }
-                      while ((position = text.indexOf(word, startPosition)) > -1) {
-                        index.push({position: position, word: word});
-                        startPosition = position + wordLen;
-                      }
-                      return index;
-                    }
-
-                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
-                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
-                  });
-                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
-                    isMatch = true;
-                    hitCount = indexOfTitle.length + indexOfContent.length;
-                  }
-                }
-
-                // show search results
-
-                if (isMatch) {
-                  // sort index by position of keyword
-
-                  [indexOfTitle, indexOfContent].forEach(function (index) {
-                    index.sort(function (itemLeft, itemRight) {
-                      if (itemRight.position !== itemLeft.position) {
-                        return itemRight.position - itemLeft.position;
-                      } else {
-                        return itemLeft.word.length - itemRight.word.length;
-                      }
-                    });
-                  });
-
-                  // merge hits into slices
-
-                  function mergeIntoSlice(text, start, end, index) {
-                    var item = index[index.length - 1];
-                    var position = item.position;
-                    var word = item.word;
-                    var hits = [];
-                    var searchTextCountInSlice = 0;
-                    while (position + word.length <= end && index.length != 0) {
-                      if (word === searchText) {
-                        searchTextCountInSlice++;
-                      }
-                      hits.push({position: position, length: word.length});
-                      var wordEnd = position + word.length;
-
-                      // move to next position of hit
-
-                      index.pop();
-                      while (index.length != 0) {
-                        item = index[index.length - 1];
-                        position = item.position;
-                        word = item.word;
-                        if (wordEnd > position) {
-                          index.pop();
-                        } else {
-                          break;
-                        }
-                      }
-                    }
-                    searchTextCount += searchTextCountInSlice;
-                    return {
-                      hits: hits,
-                      start: start,
-                      end: end,
-                      searchTextCount: searchTextCountInSlice
-                    };
-                  }
-
-                  var slicesOfTitle = [];
-                  if (indexOfTitle.length != 0) {
-                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
-                  }
-
-                  var slicesOfContent = [];
-                  while (indexOfContent.length != 0) {
-                    var item = indexOfContent[indexOfContent.length - 1];
-                    var position = item.position;
-                    var word = item.word;
-                    // cut out 100 characters
-                    var start = position - 20;
-                    var end = position + 80;
-                    if(start < 0){
-                      start = 0;
-                    }
-                    if (end < position + word.length) {
-                      end = position + word.length;
-                    }
-                    if(end > content.length){
-                      end = content.length;
-                    }
-                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
-                  }
-
-                  // sort slices in content by search text's count and hits' count
-
-                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
-                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
-                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
-                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
-                      return sliceRight.hits.length - sliceLeft.hits.length;
-                    } else {
-                      return sliceLeft.start - sliceRight.start;
-                    }
-                  });
-
-                  // select top N slices in content
-
-                  var upperBound = parseInt('1');
-                  if (upperBound >= 0) {
-                    slicesOfContent = slicesOfContent.slice(0, upperBound);
-                  }
-
-                  // highlight title and content
-
-                  function highlightKeyword(text, slice) {
-                    var result = '';
-                    var prevEnd = slice.start;
-                    slice.hits.forEach(function (hit) {
-                      result += text.substring(prevEnd, hit.position);
-                      var end = hit.position + hit.length;
-                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
-                      prevEnd = end;
-                    });
-                    result += text.substring(prevEnd, slice.end);
-                    return result;
-                  }
-
-                  var resultItem = '';
-
-                  if (slicesOfTitle.length != 0) {
-                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
-                  } else {
-                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
-                  }
-
-                  slicesOfContent.forEach(function (slice) {
-                    resultItem += "<a href='" + articleUrl + "'>" +
-                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
-                      "...</p>" + "</a>";
-                  });
-
-                  resultItem += "</li>";
-                  resultItems.push({
-                    item: resultItem,
-                    searchTextCount: searchTextCount,
-                    hitCount: hitCount,
-                    id: resultItems.length
-                  });
-                }
-              })
-            };
-            if (keywords.length === 1 && keywords[0] === "") {
-              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
-            } else if (resultItems.length === 0) {
-              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
-            } else {
-              resultItems.sort(function (resultLeft, resultRight) {
-                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
-                  return resultRight.searchTextCount - resultLeft.searchTextCount;
-                } else if (resultLeft.hitCount !== resultRight.hitCount) {
-                  return resultRight.hitCount - resultLeft.hitCount;
-                } else {
-                  return resultRight.id - resultLeft.id;
-                }
-              });
-              var searchResultList = '<ul class=\"search-result-list\">';
-              resultItems.forEach(function (result) {
-                searchResultList += result.item;
-              })
-              searchResultList += "</ul>";
-              resultContent.innerHTML = searchResultList;
-            }
-          }
-
-          if ('auto' === 'auto') {
-            input.addEventListener('input', inputEventFunction);
-          } else {
-            $('.search-icon').click(inputEventFunction);
-            input.addEventListener('keypress', function (event) {
-              if (event.keyCode === 13) {
-                inputEventFunction();
-              }
-            });
-          }
-
-          // remove loading animation
-          $(".local-search-pop-overlay").remove();
-          $('body').css('overflow', '');
-
-          proceedsearch();
-        }
+    <script src="/lib/tocbot/tocbot.min.js" ></script>
+    <script>
+      $(document).ready(function () {
+        tocbot.init({
+          tocSelector: '#tocbot',
+          contentSelector: '.post-content',
+          headingSelector: 'h1,h2,h3,h4,h5,h6',
+          linkClass: 'tocbot-link',
+          activeLinkClass: 'tocbot-active-link',
+          listClass: 'tocbot-list',
+          isCollapsedClass: 'tocbot-is-collapsed',
+          collapsibleClass: 'tocbot-is-collapsible',
+          scrollSmooth: true,
+        });
       });
+    </script>
+  
+
+
+
+  <script src="/lib/smoothscroll/SmoothScroll.min.js" ></script>
+
+
+
+
+<!-- Plugins -->
+
+
+  
+
+  
+
+  
+
+  
+
+  <!-- cnzz Analytics -->
+  
+
+
+
+  <script src="/lib/prettify/prettify.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      $('pre').addClass('prettyprint  linenums');
+      prettyPrint();
+    })
+  </script>
+
+
+
+  <script src="/lib/typed/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "Java基础（一）&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script src="/lib/anchor/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
     }
+    anchors.add(res.join(", "))
+  </script>
 
-    // handle and trigger popup window;
-    $('.popup-trigger').click(function(e) {
-      e.stopPropagation();
-      if (isfetched === false) {
-        searchFunc(path, 'local-search-input', 'local-search-result');
-      } else {
-        proceedsearch();
-      };
-    });
 
-    $('.popup-btn-close').click(onPopupClose);
-    $('.popup').click(function(e){
-      e.stopPropagation();
-    });
-    $(document).on('keyup', function (event) {
-      var shouldDismissSearchPopup = event.which === 27 &&
-        $('.search-popup').is(':visible');
-      if (shouldDismissSearchPopup) {
-        onPopupClose();
+
+  <script src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      getSearchFile(path);
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script src="/lib/fancybox/jquery.fancybox.min.js" ></script>
+  <script>
+    $("#post img:not(.no-zoom img, img[no-zoom])").each(
+      function () {
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "images");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
       }
-    });
+    );
   </script>
 
 
 
 
 
-  
 
-  
 
-  
 
-  
-  
 
-  
 
-  
 
-  
 
-  
 </body>
 </html>

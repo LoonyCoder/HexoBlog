@@ -3,8 +3,8 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: 望月
-subtitle: Life is so short , just coding.
+title: 望月Plenilune
+subtitle: Life Is So Short , Just Coding.
 description: Code bestful and be a best coder.
 keywords: 隐约雷鸣，阴霾天空，但盼风雨来，能留你于此
 author: LoonyCoder
@@ -104,7 +104,7 @@ ignore:
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: next
+theme: fluid
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
