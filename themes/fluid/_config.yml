@@ -34,13 +34,13 @@ fun_features: # 一些好玩的功能
     element: h1,h2,h3,h4,h5,h6
     placement: right # icon放置的位置： left | right
     visible: hover # 默认悬浮显示，可选：hover（鼠标在元素上悬浮时显示） | always（一直显示） | touch（移动端触摸显示）
-    icon: "" # 可选：§ | # | ❡ 等，留空则为默认效果
+    icon: "❡" # 可选：§ | # | ❡ 等，留空则为默认效果
   mouse_click:  # 鼠标点击动效
-    enable: false
-    style: values # 目前设置两个值：values（价值观词汇） | love（爱心）
+    enable: true
+    style: love # 目前设置两个值：values（价值观词汇） | love（爱心）
 
 color:  # 主体颜色配置，可以从这里寻找启发： https://www.webdesignrankings.com/resources/lolcolors/
-  body_bg_color: "#eee"
+  body_bg_color: "#ccc"
   navbar_bg_color: "#2f4154"
   navbar_text_color: "white"
   text_color: "#3c4858"

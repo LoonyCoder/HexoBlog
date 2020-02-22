@@ -16,7 +16,7 @@
   <meta name="description" content="Life Is So Short , Just Coding.">
   <meta name="author" content="LoonyCoder">
   <meta name="keywords" content="隐约雷鸣，阴霾天空，但盼风雨来，能留你于此">
-  <title>归档 ~ 望月Plenilune</title>
+  <title>望月Plenilune</title>
 
   <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css"  >
 <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css"  >
@@ -39,7 +39,7 @@
 
 
 <body>
-  <header style="height: 80vh;">
+  <header style="height: 100vh;">
     <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand"
@@ -107,7 +107,7 @@
 </nav>
 
     <div class="view intro-2" id="background" parallax=true
-         style="background: url('/images/banner.png')no-repeat center center;
+         style="background: url('/images/moon.jpg')no-repeat center center;
            background-size: cover;">
       <div class="full-bg-img">
         <div class="mask rgba-black-light flex-center">
@@ -119,6 +119,10 @@
             
           </div>
 
+          
+            <div class="scroll-down-bar">
+              <i class="fas fa-angle-down scroll-down-arrow"></i>
+            </div>
           
         </div>
       </div>
@@ -135,48 +139,237 @@
               <div class="col-12 col-md-10 m-auto">
                 
 
-<div class="list-group">
-  <p class="h4">共计 20 篇文章</p>
-  <hr>
-  
+
+  <div class="row mx-auto index-card">
     
-      
-      <p class="h5">2018</p>
     
-    <a href="/2018/12/14/linux-1/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">Linux常用命令</span>
-      <span style="float: right;">12-14</span>
-    </a>
-  
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/2018/10/06/Mybatis-2/">
+        <p class="h4 index-header">Mybatis的增删改查操作</p>
+      </a>
+
+      <a href="/2018/10/06/Mybatis-2/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">准备工作基于我们之前创建的Mybatis项目即可，我在此采用的依旧是基于xml的开发方式。
+
+Mybatis的查询操作在mapper接口中新增查询方法12345678910111213141516package com.loonycoder.dao;import com.loonycoder.domain.User;import java.util.List;public interface IUserMapper &#123;    /**     * 查询用户     * @return     */    public List&lt;User&gt; selectAll();     </div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2018-10-06&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Mybatis">Mybatis</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/Java">Java</a>&nbsp;
+          
+            <a href="/tags/Java%E6%A1%86%E6%9E%B6%20-%20%E6%95%B0%E6%8D%AE%E5%BA%93">Java框架 - 数据库</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
     
-    <a href="/2018/12/06/redis-2/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">Redis高可用解决方案总结</span>
-      <span style="float: right;">12-06</span>
-    </a>
-  
     
-    <a href="/2018/11/28/redis-1/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">Redis入门</span>
-      <span style="float: right;">11-28</span>
-    </a>
-  
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/2018/09/30/Mybatis-1/">
+        <p class="h4 index-header">Mybatis入门及搭建</p>
+      </a>
+
+      <a href="/2018/09/30/Mybatis-1/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">上大学的时候自学过一段时间mybatis框架，感觉很好用。但是在工作中并没有用到，于是翻出之前的视频重新复习了一下。
+
+Mybatis的配置方式开发一、准备工作因为Mybatis是持久层框架，所以在此之前我们要做一些准备工作，首先我们要在Mysql中建好表并插入数据。建表及导入sql
+123456789101112CREATE TABLE `user` (  `id` int(11) NOT NULL auto_increment,  `username` varchar(32) NOT NULL COMMENT '用户名称',  `birthday` datetime default NUL</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2018-09-30&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Mybatis">Mybatis</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/Java">Java</a>&nbsp;
+          
+            <a href="/tags/Java%E6%A1%86%E6%9E%B6%20-%20%E6%95%B0%E6%8D%AE%E5%BA%93">Java框架 - 数据库</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
     
-    <a href="/2018/11/21/nginx/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">高性能的HTTP服务器——Nginx</span>
-      <span style="float: right;">11-21</span>
-    </a>
-  
     
-    <a href="/2018/11/14/docker/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">容器化部署神器——Docker</span>
-      <span style="float: right;">11-14</span>
-    </a>
-  
-</div>
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/2018/09/23/Shiro/">
+        <p class="h4 index-header">Shiro会话管理</p>
+      </a>
+
+      <a href="/2018/09/23/Shiro/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">Shiro在线会话管理参考文章：
+
+跟我学Shrio-在线会话
+Spring Boot Shiro在线会话管理
+
+实现效果预览：
+Shiro提供一个对象org.apache.shiro.session.mgt.eis.SessionDAO，通过此对象可以获取到Shiro的Session中有效的Session对象，通过此对象，我们可以获取到用户登录的数据，比如：用户名、密码、ID、SessionID、登录时间、最后访问时间、IP地址等等。
+
+下面我们实现两个功能：
+
+获取在线会话列表
+实现强制下线功能
+
+准备ShiroConfig这里我使用的是Redis来储存Shiro的Session信息，修改</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2018-09-23&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Java%E6%A1%86%E6%9E%B6">Java框架</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/%E6%A1%86%E6%9E%B6">框架</a>&nbsp;
+          
+            <a href="/tags/%E6%9D%83%E9%99%90%E6%A1%86%E6%9E%B6">权限框架</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/2018/09/15/Vue4/">
+        <p class="h4 index-header">Vue路由</p>
+      </a>
+
+      <a href="/2018/09/15/Vue4/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">Vue路由什么是Vue路由？
+后端路由：即请求的URL地址都对应后端的接口，请求URL响应对应的服务器的资源。
+前端路由：对于单页面程序来说，主要通过URL中的hash(#号)来实现不同页面之间的切换，同时，hash有一个特点：HTTP请求中不会包含hash相关的内容；所以单页面程序中的页面跳转主要通过hash实现。
+
+入门导入类库首先需要导入vue-router组件类库：
+1&lt;script type="text/javascript" src="../lib/vue-router.js"&gt;&lt;/script&gt;
+当导入类库后，window全局对象中就存在了一个路由的构造函</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2018-09-15&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Web%E5%89%8D%E7%AB%AF">Web前端</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6">前端框架</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/2018/09/07/Vue3/">
+        <p class="h4 index-header">Vue组件</p>
+      </a>
+
+      <a href="/2018/09/07/Vue3/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">Vue创建组件什么是组件什么是组件？组件的出现，就是为了拆分Vue实例的代码量的，能够让我们以不同的组件，来划分不同的功能模块，将来我们需要什么样地方功能，就可以去调用对应的组件即可。组件化和模块化的区别：
+
+模块化：是从代码逻辑的角度进行划分的，方便代码分层开发，保证每个功能模块的只能单一；
+组件化：是从UI界面的角度进行划分的；前端的组件化，方便了UI组件的重用；
+
+定义Vue组件方式一1、使用Vue.extend来创建全局的Vue组件2、通过template属性来指定组件要展示的HTML结构3、通过Vue.component()定义全局组件4、在HTML指定位置通过Tag标签的形式应用你</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2018-09-07&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Web%E5%89%8D%E7%AB%AF">Web前端</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6">前端框架</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+
 
   <nav aria-label="index posts navigation">
     <span class="pagination pg-blue justify-content-center mt-5" id="pagination">
-      <span class="page-number current">1</span><a class="page-number" href="/archives/2018/page/2/">2</a><a class="page-number" href="/archives/2018/page/3/">3</a><a class="page-number" href="/archives/2018/page/4/">4</a><a class="extend next" rel="next" href="/archives/2018/page/2/"><i class="fas fa-angle-double-right"></i></a>
+      <a class="extend prev" rel="prev" href="/page/2/"><i class="fas fa-angle-double-left"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/"><i class="fas fa-angle-double-right"></i></a>
     </span>
   </nav>
   
@@ -185,6 +378,7 @@
       ele.href += '#board';
     }
   </script>
+
 
 
               </div>
@@ -310,7 +504,7 @@
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "归档&nbsp;",
+        "Code bestful and be a best coder. But life is so Short , just coding.&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 70,
