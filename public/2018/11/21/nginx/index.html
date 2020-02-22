@@ -171,7 +171,7 @@
       <div class="py-5 z-depth-3" id="board">
         <div class="post-content mx-auto" id="post">
           <div class="markdown-body">
-            <p><img src="/images/nginx.jpg" alt="nginx"><br>Nginx是一款高性能HTTP服务器、反向代理服务器及电子邮件（IMAP、POP3）代理服务器，官方测试nginx能够支持5万并发连接。<br><strong>Nginx应用场景：</strong><br>1、http服务器。Nginx是一个http服务器，可以独立提供http服务。可以做网页静态服务器。<br>2、虚拟主机。可以实现在一台服务器虚拟出多个网站。<br>3、反向代理，负载均衡。当网站的并发量过大需要配置服务器集群时可以使用Nginx做反向代理。并且多台服务器可以平均分摊负载。</p>
+            <p><img src="/images/nginx.jpg" srcset="/img/loading.gif" alt="nginx"><br>Nginx是一款高性能HTTP服务器、反向代理服务器及电子邮件（IMAP、POP3）代理服务器，官方测试nginx能够支持5万并发连接。<br><strong>Nginx应用场景：</strong><br>1、http服务器。Nginx是一个http服务器，可以独立提供http服务。可以做网页静态服务器。<br>2、虚拟主机。可以实现在一台服务器虚拟出多个网站。<br>3、反向代理，负载均衡。当网站的并发量过大需要配置服务器集群时可以使用Nginx做反向代理。并且多台服务器可以平均分摊负载。</p>
 <h3 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h3><h4 id="本文章默认使用的软件："><a href="#本文章默认使用的软件：" class="headerlink" title="本文章默认使用的软件："></a>本文章默认使用的软件：</h4><ul>
 <li>CentOS 7</li>
 <li>Nginx-1.12.2</li>
@@ -201,7 +201,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar zxvf nginx-1.12.2.tar.gz</span><br></pre></td></tr></table></figure>
 <p><strong>2、创建Makefile文件，执行命令</strong></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># cd nginx-1.12.2</span></span><br><span class="line">[root@localhost nginx-1.12.2]<span class="comment"># ./configure</span></span><br></pre></td></tr></table></figure>
-<p><img src="/images/nginx1.png" alt="nginx"><br>完成后可以看到Makefile文件：<br><img src="/images/nginx2.png" alt="nginx"><br><strong>拓展</strong><br>Makefile是一种配置文件，Makefile定义了一系列的规则来指定，哪些文件需要先编译，哪些文件需要后编译…。Makefile就像一个Shell脚本一样。</p>
+<p><img src="/images/nginx1.png" srcset="/img/loading.gif" alt="nginx"><br>完成后可以看到Makefile文件：<br><img src="/images/nginx2.png" srcset="/img/loading.gif" alt="nginx"><br><strong>拓展</strong><br>Makefile是一种配置文件，Makefile定义了一系列的规则来指定，哪些文件需要先编译，哪些文件需要后编译…。Makefile就像一个Shell脚本一样。</p>
 <p><strong>3、编译</strong><br>执行命令：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost nginx-1.12.2]<span class="comment"># make</span></span><br></pre></td></tr></table></figure>
 
@@ -209,13 +209,13 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost nginx-1.12.2]<span class="comment"># make install</span></span><br></pre></td></tr></table></figure>
 <p>到此，Nginx安装已经完成。</p>
 <hr>
-<h3 id="Nginx启动与访问"><a href="#Nginx启动与访问" class="headerlink" title="Nginx启动与访问"></a>Nginx启动与访问</h3><p>上面我本编译安装的Nginx其实默认被安装在CentOS7系统的/usr/local/nginx目录。<br><img src="/images/nginx3.png" alt="nginx"></p>
+<h3 id="Nginx启动与访问"><a href="#Nginx启动与访问" class="headerlink" title="Nginx启动与访问"></a>Nginx启动与访问</h3><p>上面我本编译安装的Nginx其实默认被安装在CentOS7系统的/usr/local/nginx目录。<br><img src="/images/nginx3.png" srcset="/img/loading.gif" alt="nginx"></p>
 <h4 id="启动Nginx"><a href="#启动Nginx" class="headerlink" title="启动Nginx"></a>启动Nginx</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost nginx]<span class="comment"># cd sbin</span></span><br><span class="line">[root@localhost sbin]<span class="comment"># ./nginx</span></span><br></pre></td></tr></table></figure>
 <p>此时已经启动成功Nginx，可以直接在浏览器上输入虚拟机IP（可通过ip addr命令查看），即可访问到Nginx欢迎界面，如果显示未连接，可以：<br>1、先使用本机的终端工具ping虚拟机IP地址看是否成功</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ping ip</span><br></pre></td></tr></table></figure>
 <p>如果ping成功，请看下一步，如果失败，请检查虚拟机是否联网。<br>2、关闭CentOS7的防火墙，开放80端口</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost sbin]<span class="comment"># systemctl stop firewalld.service #停止firewall</span></span><br><span class="line">[root@localhost sbin]<span class="comment"># systemctl disable firewalld.service #禁止firewall开机启动</span></span><br><span class="line">[root@localhost sbin]<span class="comment"># firewall-cmd --state #查看默认防火墙状态（关闭后显示notrunning，开启后显示running）</span></span><br></pre></td></tr></table></figure>
-<p>一般情况下就能访问到了：<br><img src="/images/nginx4.png" alt="nginx"></p>
+<p>一般情况下就能访问到了：<br><img src="/images/nginx4.png" srcset="/img/loading.gif" alt="nginx"></p>
 <h4 id="查看Nginx进程"><a href="#查看Nginx进程" class="headerlink" title="查看Nginx进程"></a>查看Nginx进程</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost sbin]<span class="comment"># ps aux|grep nginx</span></span><br></pre></td></tr></table></figure>
 
 <h4 id="关闭Nginx"><a href="#关闭Nginx" class="headerlink" title="关闭Nginx"></a>关闭Nginx</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost sbin]<span class="comment"># ./nginx -s stop</span></span><br></pre></td></tr></table></figure>
@@ -254,16 +254,16 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost conf]<span class="comment"># cd ../sbin</span></span><br><span class="line">[root@localhost sbin]<span class="comment"># ./nginx -s stop</span></span><br><span class="line">[root@localhost sbin]<span class="comment"># ./nginx</span></span><br></pre></td></tr></table></figure>
 <p>访问192.168.148.132发现还是Nginx的Welcome页面，因为nginx.conf默认配置的80端口就是指向Nginx欢迎页，且默认的server_name就是localhost。那么想实现不同的域名访问不同的资源且还必须是80端口，就需要绑定域名：<br>修改nginx.conf</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    listen 80;</span><br><span class="line">    server_name www.loonycoder.com;</span><br><span class="line">    location / &#123;</span><br><span class="line">        root my;</span><br><span class="line">        index index.html;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>如上，很简单，只需要把server_name改为我们要绑定的域名地址就好了，然后重启Nginx，在浏览器上访问&lt;<a href="http://www.loonycoder.com&gt;就展示我们之前创建的index.html，而输入192.168.148.132访问的还是Nginx的欢迎页，这就实现了域名的绑定。多个域名绑定同一个IP地址，但是不同的域名指向了不同的资源地址。" target="_blank" rel="noopener">www.loonycoder.com&gt;就展示我们之前创建的index.html，而输入192.168.148.132访问的还是Nginx的欢迎页，这就实现了域名的绑定。多个域名绑定同一个IP地址，但是不同的域名指向了不同的资源地址。</a></p>
+<p>如上，很简单，只需要把server_name改为我们要绑定的域名地址就好了，然后重启Nginx，在浏览器上访问<a href="http://www.loonycoder.com" target="_blank" rel="noopener">http://www.loonycoder.com</a>就展示我们之前创建的index.html，而输入192.168.148.132访问的还是Nginx的欢迎页，这就实现了域名的绑定。多个域名绑定同一个IP地址，但是不同的域名指向了不同的资源地址。</p>
 <hr>
 <h3 id="Nginx反向代理"><a href="#Nginx反向代理" class="headerlink" title="Nginx反向代理"></a>Nginx反向代理</h3><blockquote>
 <p>什么是反向代理？<br>反向代理（Reverse Proxy）方式是指以代理服务器来接受Internet上的连接请求，然后将请求转发给内部网络上的服务器，并从服务器上得到的结果返回给Internet上请求连接的客户端，此时代理服务器对外就表现为一个反向代理服务器。</p>
 </blockquote>
 <blockquote>
-<p>正向代理<br><img src="/images/nginx5.png" alt="nginx"><br><strong>正向代理</strong>，主要针对客户端。当用户通过PC向Internet发送请求时，可以通过一个代理服务器来统一处理请求并转发给Internet，比如一个教室的所有学生机都需要通过老师的教师机才能实现联网，那么这个教师机就相当于一个代理服务器，负责将PC的网络请求转发给Internet，然后Internet将相应的数据再通过代理服务器转发给不同的PC。</p>
+<p>正向代理<br><img src="/images/nginx5.png" srcset="/img/loading.gif" alt="nginx"><br><strong>正向代理</strong>，主要针对客户端。当用户通过PC向Internet发送请求时，可以通过一个代理服务器来统一处理请求并转发给Internet，比如一个教室的所有学生机都需要通过老师的教师机才能实现联网，那么这个教师机就相当于一个代理服务器，负责将PC的网络请求转发给Internet，然后Internet将相应的数据再通过代理服务器转发给不同的PC。</p>
 </blockquote>
 <blockquote>
-<p>反向代理<br><img src="/images/nginx6.png" alt="nginx"><br><strong>反向代理</strong>的过程则刚好相反，主要针对服务器。当用户通过网络请求不同的资源，而这些资源被分布在不同的服务器上，那么不同的请求就应该指向对应不同的服务器，那么就需要一个中介：反向代理服务器。通过反向代理服务器将不同的资源请求信息发送给不同的服务器，然后服务器将不同的信心都返回给反向代理服务器，最后通过反向代理服务器将这些结果信息展示在Internet上。</p>
+<p>反向代理<br><img src="/images/nginx6.png" srcset="/img/loading.gif" alt="nginx"><br><strong>反向代理</strong>的过程则刚好相反，主要针对服务器。当用户通过网络请求不同的资源，而这些资源被分布在不同的服务器上，那么不同的请求就应该指向对应不同的服务器，那么就需要一个中介：反向代理服务器。通过反向代理服务器将不同的资源请求信息发送给不同的服务器，然后服务器将不同的信心都返回给反向代理服务器，最后通过反向代理服务器将这些结果信息展示在Internet上。</p>
 </blockquote>
 <h4 id="配置反向代理"><a href="#配置反向代理" class="headerlink" title="配置反向代理"></a>配置反向代理</h4><p>这里我们以一个非常实用的案例来演示如何配置Nginx的反向代理实现不同的域名访问不同的页面。<br>1、在服务器上安装JDK8和Tomcat8<br>通过rz命令将本地的JDK和Tomcat安装包上传到服务器。因为Tomcat解压即可用，我们这里记录一下如何安装JDK：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 解压</span></span><br><span class="line">tar zxvf jdk-8u191-linux-x64.tar.gz</span><br><span class="line"></span><br><span class="line"><span class="comment"># 配置JDK环境</span></span><br><span class="line">vi /etc/profile</span><br></pre></td></tr></table></figure>
@@ -278,7 +278,7 @@
 <p>并写入：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;title&gt;Hello&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;h2&gt;Hello Tomcat!&lt;/h2&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
 
-<p>保存并退出，再次访问<a href="http://192.168.148.132:8080/" target="_blank" rel="noopener">http://192.168.148.132:8080/</a>发现展示的即是我们刚创建的页面<br><img src="/images/nginx7.png" alt="nginx"></p>
+<p>保存并退出，再次访问<a href="http://192.168.148.132:8080/" target="_blank" rel="noopener">http://192.168.148.132:8080/</a>发现展示的即是我们刚创建的页面<br><img src="/images/nginx7.png" srcset="/img/loading.gif" alt="nginx"></p>
 <p>3、配置反向代理<br>之前讲了<strong>反向代理</strong>的概念，那么很实用的一个例子就是，当我们想在购买的阿里云服务器上部署两个项目，一个项目是用Nginx部署的静态网站（占用80端口），另一个项目部署在Tomcat服务器上（占用8080端口）。<br>这时，我们固然是可以通过：ip:8080来访问我们的Web项目的，但是请求路径上显示了端口好久显得很别扭，为此，我们通过Nginx的反向代理就能解决：</p>
 <ul>
 <li><p>3.1在本地配置一个二级域名映射<br>修改本机的hosts文件，添加：</p>
