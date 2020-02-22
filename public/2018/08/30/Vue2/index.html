@@ -60,7 +60,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/">Home</a>
+            <a class="nav-link" href="/">首页</a>
           </li>
         
           
@@ -68,7 +68,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/archives/">Archives</a>
+            <a class="nav-link" href="/archives/">归档</a>
           </li>
         
           
@@ -76,7 +76,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/categories/">Categories</a>
+            <a class="nav-link" href="/categories/">分类</a>
           </li>
         
           
@@ -84,7 +84,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/tags/">Tags</a>
+            <a class="nav-link" href="/tags/">标签</a>
           </li>
         
           
@@ -92,7 +92,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/about/">About</a>
+            <a class="nav-link" href="/about/">关于</a>
           </li>
         
         
@@ -142,6 +142,13 @@
                   </span>&nbsp;
                 
 
+                
+                  <!-- 不蒜子统计文章PV -->
+                  
+                  &nbsp;<i class="far fa-eye" aria-hidden="true"></i>&nbsp;
+                  <span id="busuanzi_container_page_pv">
+                    <span id="busuanzi_value_page_pv"></span> 次
+                  </span>&nbsp;
                 
               </p>
             
@@ -263,11 +270,11 @@
 <li>destroyed: Vue实例销毁后调用，调用后，Vue实例指示的所有东西都会解除绑定，所有的事件监听器都会被移除，所所有的子实例也会被销毁。</li>
 </ul>
 </blockquote>
-<h5 id="beforeCreate"><a href="#beforeCreate" class="headerlink" title="beforeCreate"></a>beforeCreate</h5><p>此函数执行的时候，data和methods中的数据还没有初始化。<br><img src="/images/vue7.png" srcset="/img/loading.gif" alt="beforeCreate"><br><img src="/images/vue8.png" srcset="/img/loading.gif" alt="beforeCreate"></p>
-<h5 id="created"><a href="#created" class="headerlink" title="created"></a>created</h5><p>此函数中，data和methods都已经初始化好了，如果需要调用methods中的方法或操作data中的值最早就在created函数中操作。<br><img src="/images/vue9.png" srcset="/img/loading.gif" alt="created"><br><img src="/images/vue10.png" srcset="/img/loading.gif" alt="created"></p>
-<h5 id="beforeMount"><a href="#beforeMount" class="headerlink" title="beforeMount"></a>beforeMount</h5><p>此函数执行的时候，模板已经在内存中编译好了，但是尚未挂载到页面中去。<br><img src="/images/vue11.png" srcset="/img/loading.gif" alt="beforeMount"><br><img src="/images/vue12.png" srcset="/img/loading.gif" alt="beforeMount"></p>
-<h5 id="mounted"><a href="#mounted" class="headerlink" title="mounted"></a>mounted</h5><p>只要执行完了mounted，表示整个Vue实例已经初始化完毕了，此时组件已经进入了运行阶段。<br><img src="/images/vue13.png" srcset="/img/loading.gif" alt="mounted"></p>
-<h5 id="图示"><a href="#图示" class="headerlink" title="图示"></a>图示</h5><p><img src="/images/vue14.png" srcset="/img/loading.gif" alt="图示"></p>
+<h5 id="beforeCreate"><a href="#beforeCreate" class="headerlink" title="beforeCreate"></a>beforeCreate</h5><p>此函数执行的时候，data和methods中的数据还没有初始化。<br><img src="/images/vue7.png" alt="beforeCreate"><br><img src="/images/vue8.png" alt="beforeCreate"></p>
+<h5 id="created"><a href="#created" class="headerlink" title="created"></a>created</h5><p>此函数中，data和methods都已经初始化好了，如果需要调用methods中的方法或操作data中的值最早就在created函数中操作。<br><img src="/images/vue9.png" alt="created"><br><img src="/images/vue10.png" alt="created"></p>
+<h5 id="beforeMount"><a href="#beforeMount" class="headerlink" title="beforeMount"></a>beforeMount</h5><p>此函数执行的时候，模板已经在内存中编译好了，但是尚未挂载到页面中去。<br><img src="/images/vue11.png" alt="beforeMount"><br><img src="/images/vue12.png" alt="beforeMount"></p>
+<h5 id="mounted"><a href="#mounted" class="headerlink" title="mounted"></a>mounted</h5><p>只要执行完了mounted，表示整个Vue实例已经初始化完毕了，此时组件已经进入了运行阶段。<br><img src="/images/vue13.png" alt="mounted"></p>
+<h5 id="图示"><a href="#图示" class="headerlink" title="图示"></a>图示</h5><p><img src="/images/vue14.png" alt="图示"></p>
 <hr>
 <h3 id="vue-resource实现请求提交"><a href="#vue-resource实现请求提交" class="headerlink" title="vue-resource实现请求提交"></a>vue-resource实现请求提交</h3><p>作为一个后端开发者，我们需要的数据都应该是从数据库中取出来的，目前JSP页面越来越不常用，而更常用HTML页面，那么就体现出来类似Vue这种框架的好处了。<br>下面我们就了解一下怎样使用Vue实现发送AJAX的请求：</p>
 <h5 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h5><p>首先使用Vue实现发送AJAX请求，我们需要导入一个包：</p>
@@ -363,7 +370,7 @@
     <div class="d-none d-lg-block col-lg-2 toc-container">
       
   <div id="toc">
-    <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
+    <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
     <div id="tocbot"></div>
   </div>
 
@@ -401,7 +408,7 @@
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -410,7 +417,7 @@
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">keyword</label>
+                 for="local-search-input">关键词</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
@@ -421,12 +428,26 @@
 
   <footer class="mt-5">
   <div class="text-center py-3">
-    <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+    <a href="https://github.com/Loonycoder" target="_blank" rel="nofollow noopener"><b>望月</b></a>
     <i class="iconfont icon-love"></i>
-    <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
+    <a href="https://github.com/Loonycoder" target="_blank" rel="nofollow noopener"> <b>LoonyCoder</b></a>
     <br>
 
     
+  
+    <!-- 不蒜子统计PV -->
+    
+    &nbsp;<span id="busuanzi_container_site_pv"></span>访问量 
+          <span id="busuanzi_value_site_pv"></span> &nbsp;
+  
+  
+    <!-- 不蒜子统计UV -->
+    
+    &nbsp;<span id="busuanzi_container_site_uv"></span>访客数 
+            <span id="busuanzi_value_site_uv"></span> &nbsp;
+  
+  <br>
+
 
 
     
@@ -475,6 +496,8 @@
   <script src="/lib/smoothscroll/SmoothScroll.min.js" ></script>
 
 
+
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
 
 
 <!-- Plugins -->

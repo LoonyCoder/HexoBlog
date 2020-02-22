@@ -60,7 +60,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/">Home</a>
+            <a class="nav-link" href="/">首页</a>
           </li>
         
           
@@ -68,7 +68,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/archives/">Archives</a>
+            <a class="nav-link" href="/archives/">归档</a>
           </li>
         
           
@@ -76,7 +76,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/categories/">Categories</a>
+            <a class="nav-link" href="/categories/">分类</a>
           </li>
         
           
@@ -84,7 +84,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/tags/">Tags</a>
+            <a class="nav-link" href="/tags/">标签</a>
           </li>
         
           
@@ -92,7 +92,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/about/">About</a>
+            <a class="nav-link" href="/about/">关于</a>
           </li>
         
         
@@ -143,6 +143,13 @@
                 
 
                 
+                  <!-- 不蒜子统计文章PV -->
+                  
+                  &nbsp;<i class="far fa-eye" aria-hidden="true"></i>&nbsp;
+                  <span id="busuanzi_container_page_pv">
+                    <span id="busuanzi_value_page_pv"></span> 次
+                  </span>&nbsp;
+                
               </p>
             
           </div>
@@ -169,10 +176,10 @@
 <h3 id="Mybatis的配置方式开发"><a href="#Mybatis的配置方式开发" class="headerlink" title="Mybatis的配置方式开发"></a>Mybatis的配置方式开发</h3><h4 id="一、准备工作"><a href="#一、准备工作" class="headerlink" title="一、准备工作"></a>一、准备工作</h4><p>因为Mybatis是持久层框架，所以在此之前我们要做一些准备工作，首先我们要在Mysql中建好表并插入数据。<br>建表及导入sql</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE `user` (</span><br><span class="line">  `id` int(11) NOT NULL auto_increment,</span><br><span class="line">  `username` varchar(32) NOT NULL COMMENT <span class="string">'用户名称'</span>,</span><br><span class="line">  `birthday` datetime default NULL COMMENT <span class="string">'生日'</span>,</span><br><span class="line">  `sex` char(1) default NULL COMMENT <span class="string">'性别'</span>,</span><br><span class="line">  `address` varchar(256) default NULL COMMENT <span class="string">'地址'</span>,</span><br><span class="line">  PRIMARY KEY  (`id`)</span><br><span class="line">) ENGINE=InnoDB DEFAULT CHARSET=utf8;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">insert  into `user`(`id`,`username`,`birthday`,`sex`,`address`) values (1,<span class="string">'张三'</span>,<span class="string">'2018-02-27 17:47:08'</span>,<span class="string">'男'</span>,<span class="string">'北京'</span>),(2,<span class="string">'李四'</span>,<span class="string">'2018-03-02 15:09:37'</span>,<span class="string">'女'</span>,<span class="string">'深圳'</span>),(3,<span class="string">'王五'</span>,<span class="string">'2018-03-04 11:34:34'</span>,<span class="string">'女'</span>,<span class="string">'成都'</span>),(4,<span class="string">'赵六'</span>,<span class="string">'2018-03-04 12:04:06'</span>,<span class="string">'男'</span>,<span class="string">'上海'</span>),(5,<span class="string">'loonycoder'</span>,<span class="string">'2018-03-07 17:37:26'</span>,<span class="string">'男'</span>,<span class="string">'西安'</span>),(6,<span class="string">'望月'</span>,<span class="string">'2018-03-08 11:44:00'</span>,<span class="string">'女'</span>,<span class="string">'杭州'</span>);</span><br></pre></td></tr></table></figure>
 
-<p>如图：<br><img src="/images/table.png" srcset="/img/loading.gif" alt="建表"></p>
-<h4 id="二、新建项目"><a href="#二、新建项目" class="headerlink" title="二、新建项目"></a>二、新建项目</h4><p>我们这里要新建一个maven项目。<br><img src="/images/1.png" srcset="/img/loading.gif" alt="创建Maven项目"></p>
-<p><img src="/images/2.png" srcset="/img/loading.gif" alt="创建Maven项目"></p>
-<p><img src="/images/3.png" srcset="/img/loading.gif" alt="创建Maven项目"></p>
+<p>如图：<br><img src="/images/table.png" alt="建表"></p>
+<h4 id="二、新建项目"><a href="#二、新建项目" class="headerlink" title="二、新建项目"></a>二、新建项目</h4><p>我们这里要新建一个maven项目。<br><img src="/images/1.png" alt="创建Maven项目"></p>
+<p><img src="/images/2.png" alt="创建Maven项目"></p>
+<p><img src="/images/3.png" alt="创建Maven项目"></p>
 <p>创建完成之后，我们打开pom.xml文件引入依赖。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=<span class="string">"1.0"</span> encoding=<span class="string">"UTF-8"</span>?&gt;</span><br><span class="line">&lt;project xmlns=<span class="string">"http://maven.apache.org/POM/4.0.0"</span></span><br><span class="line">         xmlns:xsi=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span><br><span class="line">         xsi:schemaLocation=<span class="string">"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"</span>&gt;</span><br><span class="line">    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;</span><br><span class="line"></span><br><span class="line">    &lt;groupId&gt;com.loonycoder&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;MybatisDemo&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;</span><br><span class="line"></span><br><span class="line">    &lt;packaging&gt;jar&lt;/packaging&gt;</span><br><span class="line">    &lt;dependencies&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.mybatis&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;mybatis&lt;/artifactId&gt;</span><br><span class="line">            &lt;version&gt;3.4.4&lt;/version&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;mysql&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;</span><br><span class="line">            &lt;version&gt;5.1.6&lt;/version&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;log4j&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;log4j&lt;/artifactId&gt;</span><br><span class="line">            &lt;version&gt;1.2.17&lt;/version&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;junit&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;junit&lt;/artifactId&gt;</span><br><span class="line">            &lt;version&gt;4.12&lt;/version&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">    &lt;/dependencies&gt;</span><br><span class="line"></span><br><span class="line">&lt;/project&gt;</span><br></pre></td></tr></table></figure>
 
@@ -193,7 +200,7 @@
 <p>配置数据源的时候，把url、username、password 修改成你自己的数据库链接、用户名和密码即可。</p>
 <p>注意：<br><strong>下方的mapper部分的配置我接下来会讲，后续按照你自己配置的路径配置即可。</strong></p>
 <hr>
-<h4 id="六、配置mapper文件"><a href="#六、配置mapper文件" class="headerlink" title="六、配置mapper文件"></a>六、配置mapper文件</h4><p>前面虽然配置了mybatis主配置文件，但是我们在实际操作中如果存在多个对象的dao接口，主配置文件需要怎么准确找到该接口呢？<br>我们就需要为每个dao配置一个独立的配置文件<br>我习惯上把文件命名成 <strong>xxxMapper.xml</strong>，这里命名成xxxDao.xml是为了方便理解。<br>文件存放目录为/resources目录下，与实体对象dao接口的包同级。<br><img src="/images/mapperxml.png" srcset="/img/loading.gif" alt="xml文件配置"></p>
+<h4 id="六、配置mapper文件"><a href="#六、配置mapper文件" class="headerlink" title="六、配置mapper文件"></a>六、配置mapper文件</h4><p>前面虽然配置了mybatis主配置文件，但是我们在实际操作中如果存在多个对象的dao接口，主配置文件需要怎么准确找到该接口呢？<br>我们就需要为每个dao配置一个独立的配置文件<br>我习惯上把文件命名成 <strong>xxxMapper.xml</strong>，这里命名成xxxDao.xml是为了方便理解。<br>文件存放目录为/resources目录下，与实体对象dao接口的包同级。<br><img src="/images/mapperxml.png" alt="xml文件配置"></p>
 <p>代码如下：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=<span class="string">"1.0"</span> encoding=<span class="string">"UTF-8"</span> ?&gt;</span><br><span class="line">&lt;!DOCTYPE mapper</span><br><span class="line">        PUBLIC <span class="string">"-//mybatis.org//DTD Mapper 3.0//EN"</span></span><br><span class="line">        <span class="string">"http://mybatis.org/dtd/mybatis-3-mapper.dtd"</span>&gt;</span><br><span class="line">&lt;!--namespace需要配置dao的全限定类名--&gt;</span><br><span class="line">&lt;mapper namespace=<span class="string">"com.loonycoder.dao.IUserDao"</span>&gt;</span><br><span class="line">    &lt;!--配置查询所有--&gt;</span><br><span class="line">    &lt;!--id一定要是方法的名称--&gt;</span><br><span class="line">    &lt;select id=<span class="string">"findAll"</span> resultType=<span class="string">"com.loonycoder.domain.User"</span>&gt;</span><br><span class="line">        select * from user;</span><br><span class="line">    &lt;/select&gt;</span><br><span class="line">&lt;/mapper&gt;</span><br></pre></td></tr></table></figure>
 
@@ -202,11 +209,11 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Set root category priority to INFO and its only appender to CONSOLE.</span></span><br><span class="line"><span class="comment">#log4j.rootCategory=INFO,CONSOLE             debug  info  warn  error  fatal</span></span><br><span class="line">log4j.rootCategory=debug, CONSOLE, LOGFILE</span><br><span class="line"></span><br><span class="line"><span class="comment"># Set the enterprise logger category to FATAL and its only appender to CONSOLE.</span></span><br><span class="line">log4j.logger.org.apache.axis.enterprise=FATAL, CONSOLE</span><br><span class="line"></span><br><span class="line"><span class="comment"># CONSOLE is set to be a ConsoleAppender using a PatternLayout.</span></span><br><span class="line">log4j.appender.CONSOLE=org.apache.log4j.ConsoleAppender</span><br><span class="line">log4j.appender.CONSOLE.layout=org.apache.log4j.PatternLayout</span><br><span class="line">log4j.appender.CONSOLE.layout.ConversionPattern=%d&#123;ISO8601&#125; %-6r [%15.15t] %-5p %30.30c %x - %m\n</span><br><span class="line"></span><br><span class="line"><span class="comment"># LOGFILE is set to be a File appender using a PatternLayout.</span></span><br><span class="line">log.appender.LOGFILE=org.apache.log4j.FileAppender</span><br><span class="line">log.appender.LOGFILE.FILE=/usr/gmx/LearnWorkspace</span><br><span class="line">log.appender.LOGFILE.Append=<span class="literal">true</span></span><br><span class="line">log.appender.LOGFILE.layout=org.apache.log4j.PatternLayout</span><br><span class="line">log.appender.LOGFILE.layout.ConversionPattern=%d&#123;ISO8601&#125; %-6r [%15.15t] %-5p %30.30c %x - %m\n</span><br></pre></td></tr></table></figure>
 
 <hr>
-<h4 id="八、测试案例"><a href="#八、测试案例" class="headerlink" title="八、测试案例"></a>八、测试案例</h4><p>如此，我们的mybatis就搭建完成了，我们接下来测试一下。<br>在/test/java目录下新建一个test类<br>如图：<br><img src="/images/test.png" srcset="/img/loading.gif" alt="test类"></p>
+<h4 id="八、测试案例"><a href="#八、测试案例" class="headerlink" title="八、测试案例"></a>八、测试案例</h4><p>如此，我们的mybatis就搭建完成了，我们接下来测试一下。<br>在/test/java目录下新建一个test类<br>如图：<br><img src="/images/test.png" alt="test类"></p>
 <p>代码如下：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">package com.loonycoder;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">import com.loonycoder.dao.IUserDao;</span><br><span class="line">import com.loonycoder.domain.User;</span><br><span class="line">import org.apache.ibatis.io.Resources;</span><br><span class="line">import org.apache.ibatis.session.SqlSession;</span><br><span class="line">import org.apache.ibatis.session.SqlSessionFactory;</span><br><span class="line">import org.apache.ibatis.session.SqlSessionFactoryBuilder;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">import java.io.InputStream;</span><br><span class="line">import java.util.List;</span><br><span class="line"></span><br><span class="line">public class MybatisTest &#123;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) throws Exception&#123;</span><br><span class="line">        //1.读取配置文件</span><br><span class="line">        InputStream inputStream = Resources.getResourceAsStream(<span class="string">"SqlMapConfig.xml"</span>);</span><br><span class="line">        //2.创建SqlSessionFactory工厂</span><br><span class="line">        SqlSessionFactoryBuilder sqlSessionFactoryBuilder = new SqlSessionFactoryBuilder();</span><br><span class="line">        SqlSessionFactory sqlSessionFactory = sqlSessionFactoryBuilder.build(inputStream);</span><br><span class="line">        //3.使用工厂创建SqlSession对象</span><br><span class="line">        SqlSession session = sqlSessionFactory.openSession();</span><br><span class="line">        //4.使用SqlSession创建dao接口的代理对象</span><br><span class="line">        IUserDao userDao = session.getMapper(IUserDao.class);</span><br><span class="line">        //5.使用代理对象执行方法</span><br><span class="line">        List&lt;User&gt; users= userDao.findAll();</span><br><span class="line">        <span class="keyword">for</span> (User user: users) &#123;</span><br><span class="line">            System.out.println(user);</span><br><span class="line">        &#125;</span><br><span class="line">        //6.释放资源</span><br><span class="line">        session.close();</span><br><span class="line">        inputStream.close();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>运行结果：<br><img src="/images/testResult.png" srcset="/img/loading.gif" alt="运行结果"></p>
+<p>运行结果：<br><img src="/images/testResult.png" alt="运行结果"></p>
 <hr>
 <h3 id="Mybaits的注解方式开发"><a href="#Mybaits的注解方式开发" class="headerlink" title="Mybaits的注解方式开发"></a>Mybaits的注解方式开发</h3><p>Mybatis也为我们提供了基于注解的开发方式<br>基于注解开发意味着脱离xml配置，所以我们在上述项目中可以直接移除com/loonycoder/dao/IUserDao.xml文件<br>同时需要修改SqlMapConfig.xml中的映射配置文件部分</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=<span class="string">"1.0"</span> encoding=<span class="string">"UTF-8"</span>?&gt;</span><br><span class="line">&lt;!DOCTYPE configuration</span><br><span class="line">        PUBLIC <span class="string">"-//mybatis.org//DTD Config 3.0//EN"</span></span><br><span class="line">        <span class="string">"http://mybatis.org/dtd/mybatis-3-config.dtd"</span>&gt;</span><br><span class="line">&lt;!--mybatis的主配置文件--&gt;</span><br><span class="line">&lt;configuration&gt;</span><br><span class="line">    &lt;!--配置环境--&gt;</span><br><span class="line">    &lt;environments default=<span class="string">"mysql"</span>&gt;</span><br><span class="line">        &lt;environment id=<span class="string">"mysql"</span>&gt;</span><br><span class="line">            &lt;!--配置事务--&gt;</span><br><span class="line">            &lt;transactionManager <span class="built_in">type</span>=<span class="string">"JDBC"</span>&gt;&lt;/transactionManager&gt;</span><br><span class="line">            &lt;!--配置数据源（连接池）--&gt;</span><br><span class="line">            &lt;dataSource <span class="built_in">type</span>=<span class="string">"POOLED"</span>&gt;</span><br><span class="line">                &lt;property name=<span class="string">"driver"</span> value=<span class="string">"com.mysql.jdbc.Driver"</span> /&gt;</span><br><span class="line">                &lt;property name=<span class="string">"url"</span> value=<span class="string">"jdbc:mysql://localhost:3306/mybatis"</span> /&gt;</span><br><span class="line">                &lt;property name=<span class="string">"username"</span> value=<span class="string">"root"</span> /&gt;</span><br><span class="line">                &lt;property name=<span class="string">"password"</span> value=<span class="string">"root"</span> /&gt;</span><br><span class="line">            &lt;/dataSource&gt;</span><br><span class="line">        &lt;/environment&gt;</span><br><span class="line">    &lt;/environments&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!--配置映射文件（mapper类的映射文件）--&gt;</span><br><span class="line">    &lt;mappers&gt;</span><br><span class="line">        &lt;!--此处做了修改，之前的属性是resource，现在改为class，并且指定到dao接口的全限定类名--&gt;</span><br><span class="line">        &lt;mapper class=<span class="string">"com.loonycoder.dao.IUserDao"</span> /&gt;</span><br><span class="line">    &lt;/mappers&gt;</span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure>
@@ -214,7 +221,7 @@
 <p>同时需要在dao接口的方法上添加注解@Select</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">package com.loonycoder.dao;</span><br><span class="line"></span><br><span class="line">import com.loonycoder.domain.User;</span><br><span class="line"></span><br><span class="line">import java.util.List;</span><br><span class="line"></span><br><span class="line">public interface IUserDao &#123;</span><br><span class="line">    @Select(<span class="string">"select * from user"</span>)</span><br><span class="line">    List&lt;User&gt; findAll();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>运行结果：<br><img src="/images/testResult.png" srcset="/img/loading.gif" alt="运行结果"></p>
+<p>运行结果：<br><img src="/images/testResult.png" alt="运行结果"></p>
 
             <hr>
           </div>
@@ -251,7 +258,7 @@
     <div class="d-none d-lg-block col-lg-2 toc-container">
       
   <div id="toc">
-    <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
+    <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
     <div id="tocbot"></div>
   </div>
 
@@ -289,7 +296,7 @@
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -298,7 +305,7 @@
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">keyword</label>
+                 for="local-search-input">关键词</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
@@ -309,12 +316,26 @@
 
   <footer class="mt-5">
   <div class="text-center py-3">
-    <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+    <a href="https://github.com/Loonycoder" target="_blank" rel="nofollow noopener"><b>望月</b></a>
     <i class="iconfont icon-love"></i>
-    <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
+    <a href="https://github.com/Loonycoder" target="_blank" rel="nofollow noopener"> <b>LoonyCoder</b></a>
     <br>
 
     
+  
+    <!-- 不蒜子统计PV -->
+    
+    &nbsp;<span id="busuanzi_container_site_pv"></span>访问量 
+          <span id="busuanzi_value_site_pv"></span> &nbsp;
+  
+  
+    <!-- 不蒜子统计UV -->
+    
+    &nbsp;<span id="busuanzi_container_site_uv"></span>访客数 
+            <span id="busuanzi_value_site_uv"></span> &nbsp;
+  
+  <br>
+
 
 
     
@@ -363,6 +384,8 @@
   <script src="/lib/smoothscroll/SmoothScroll.min.js" ></script>
 
 
+
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
 
 
 <!-- Plugins -->

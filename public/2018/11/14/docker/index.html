@@ -60,7 +60,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/">Home</a>
+            <a class="nav-link" href="/">首页</a>
           </li>
         
           
@@ -68,7 +68,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/archives/">Archives</a>
+            <a class="nav-link" href="/archives/">归档</a>
           </li>
         
           
@@ -76,7 +76,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/categories/">Categories</a>
+            <a class="nav-link" href="/categories/">分类</a>
           </li>
         
           
@@ -84,7 +84,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/tags/">Tags</a>
+            <a class="nav-link" href="/tags/">标签</a>
           </li>
         
           
@@ -92,7 +92,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/about/">About</a>
+            <a class="nav-link" href="/about/">关于</a>
           </li>
         
         
@@ -143,6 +143,13 @@
                 
 
                 
+                  <!-- 不蒜子统计文章PV -->
+                  
+                  &nbsp;<i class="far fa-eye" aria-hidden="true"></i>&nbsp;
+                  <span id="busuanzi_container_page_pv">
+                    <span id="busuanzi_value_page_pv"></span> 次
+                  </span>&nbsp;
+                
               </p>
             
           </div>
@@ -164,7 +171,7 @@
       <div class="py-5 z-depth-3" id="board">
         <div class="post-content mx-auto" id="post">
           <div class="markdown-body">
-            <p><img src="/images/docker1.jpg" srcset="/img/loading.gif" alt="docker"><br><strong>Docker</strong>是一种容器技术，它的存在就是为了解决容器技术本身的复杂性。Docker容器拥有很高的性能，同时同一台宿主机中可以运行更多的容器，是用户尽可能的充分利用系统资源。</p>
+            <p><img src="/images/docker1.jpg" alt="docker"><br><strong>Docker</strong>是一种容器技术，它的存在就是为了解决容器技术本身的复杂性。Docker容器拥有很高的性能，同时同一台宿主机中可以运行更多的容器，是用户尽可能的充分利用系统资源。</p>
 <h4 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h4><blockquote>
 <p>1.什么是虚拟化？<br>在计算机中，虚拟化（Virtualization）是一种资源管理技术，是将计算机的各种实体资源，如服务器、网络、内存及储存等，予以抽象、转换后呈现出来，打破实体结构间的不可切割的障碍，是用户可以比原来的组态更好的方式来应用这些资源。这些资源的新虚拟部分是不受现有资源的架设方式、地域或物理组态所限制。</p>
 </blockquote>
@@ -176,13 +183,13 @@
 </blockquote>
 <p><strong>限制</strong><br>1、由于“客居”与操作系统，容器只能运行与底层主机相同或相似的操作系统，比如在Ubuntu服务中运行CentOS，但无法运行Windows。<br>2、相对于彻底隔离的管理程序虚拟化，容器被认为是不安全的。<br>最新的容器技术引入了OpenVZ、Solaris Zones以及Linux容器（LXC）。使用这些新技术，容器不再仅仅是一个单纯的运行环境。在自己的权限类内，容器更像一个完整宿主机。和传统虚拟化及半虚拟化想比，容器不需要模拟层（emulation layer）和管理层（hypervisor layer），而使用操作系统的系统调用接口。</p>
 <h4 id="Docker特点"><a href="#Docker特点" class="headerlink" title="Docker特点"></a>Docker特点</h4><p>1、上手快<br>2、用户可以很容易的把自己的程序Docker化。Docker依赖于“写时复制”（copy-on-write）模型，开箱即用。<br>快速高效的开发声明周期</p>
-<h4 id="Docker组件"><a href="#Docker组件" class="headerlink" title="Docker组件"></a>Docker组件</h4><h5 id="Docker客户端和服务器"><a href="#Docker客户端和服务器" class="headerlink" title="Docker客户端和服务器"></a>Docker客户端和服务器</h5><p>Docker是一个客户端-服务器（C/S）架构程序。Docker客户端只需要向Docker服务器或守护进程发出请求，服务器或守护进程将完成所有工作并返回结果。Docker提供了一个命令行工具Docker以及一整套RESTful API。你可以在同一台宿主机上运行Docker守护进程和客户端，也可以从本地的Docker客户端连接到运行在另一台宿主机上的远程Docker守护进程。<br><img src="/images/docker2.png" srcset="/img/loading.gif" alt="docker"></p>
+<h4 id="Docker组件"><a href="#Docker组件" class="headerlink" title="Docker组件"></a>Docker组件</h4><h5 id="Docker客户端和服务器"><a href="#Docker客户端和服务器" class="headerlink" title="Docker客户端和服务器"></a>Docker客户端和服务器</h5><p>Docker是一个客户端-服务器（C/S）架构程序。Docker客户端只需要向Docker服务器或守护进程发出请求，服务器或守护进程将完成所有工作并返回结果。Docker提供了一个命令行工具Docker以及一整套RESTful API。你可以在同一台宿主机上运行Docker守护进程和客户端，也可以从本地的Docker客户端连接到运行在另一台宿主机上的远程Docker守护进程。<br><img src="/images/docker2.png" alt="docker"></p>
 <h5 id="Docker镜像"><a href="#Docker镜像" class="headerlink" title="Docker镜像"></a>Docker镜像</h5><p><strong>镜像</strong> 是构建Docker的基石。用户及基于镜像来运行自己的容器。镜像也是Docker声明周期中的“构建”部分。奖项是基于联合文件系统的一种层式结构，由一系列指令一步一步构建出来。</p>
 <h5 id="Registry-注册中心"><a href="#Registry-注册中心" class="headerlink" title="Registry 注册中心"></a>Registry 注册中心</h5><p>Docker用Registry来保存用户构建的镜像。Registry分为共有和私有两种。Docker公司运营公共的Registry叫做Docker Hub。</p>
-<h5 id="Docker容器"><a href="#Docker容器" class="headerlink" title="Docker容器"></a>Docker容器</h5><p>Docker可以帮助你构建和部署容器，你只需要把你的程序打包放进容器即可。容器是基于镜像启动的，容器找那个可以运行一个或多个进程。我们可以认为，镜像是Docker生命周期中构建和打包阶段，而容器则是启动或执行阶段。容器基于镜像启动。<br><img src="/images/docker3.png" srcset="/img/loading.gif" alt="docker"></p>
+<h5 id="Docker容器"><a href="#Docker容器" class="headerlink" title="Docker容器"></a>Docker容器</h5><p>Docker可以帮助你构建和部署容器，你只需要把你的程序打包放进容器即可。容器是基于镜像启动的，容器找那个可以运行一个或多个进程。我们可以认为，镜像是Docker生命周期中构建和打包阶段，而容器则是启动或执行阶段。容器基于镜像启动。<br><img src="/images/docker3.png" alt="docker"></p>
 <h4 id="Docker的安装与启动"><a href="#Docker的安装与启动" class="headerlink" title="Docker的安装与启动"></a>Docker的安装与启动</h4><p>前提：本例中使用了CentOS7作为服务器<br>通过以下命令在线在CentOS7中安装Docker：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install docker</span><br></pre></td></tr></table></figure>
-<p><img src="/images/docker4.png" srcset="/img/loading.gif" alt="docker"></p>
+<p><img src="/images/docker4.png" alt="docker"></p>
 <p><strong>查看Docker版本</strong></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># docker -v</span></span><br><span class="line">Docker version 1.13.1, build 8633870/1.13.1</span><br></pre></td></tr></table></figure>
 
@@ -202,10 +209,10 @@
 <p>7.查看Docker帮助文档</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker -<span class="built_in">help</span></span><br></pre></td></tr></table></figure>
 
-<h4 id="Docker镜像操作"><a href="#Docker镜像操作" class="headerlink" title="Docker镜像操作"></a>Docker镜像操作</h4><p>Docker镜像由文件系统堆叠而成（是一种文件的储存形式）。最低端是一个文件引导系统，即bootfs。实际上，当一个容器启动后，它将会被移动到内存中，而引导文件系统则会被卸载，以留出更多的内存供磁盘镜像使用。Docker容器启动是需要一些文件的，而这些文件就可以被称为Docker镜像。<br><img src="/images/docker5.png" srcset="/img/loading.gif" alt="docker"></p>
+<h4 id="Docker镜像操作"><a href="#Docker镜像操作" class="headerlink" title="Docker镜像操作"></a>Docker镜像操作</h4><p>Docker镜像由文件系统堆叠而成（是一种文件的储存形式）。最低端是一个文件引导系统，即bootfs。实际上，当一个容器启动后，它将会被移动到内存中，而引导文件系统则会被卸载，以留出更多的内存供磁盘镜像使用。Docker容器启动是需要一些文件的，而这些文件就可以被称为Docker镜像。<br><img src="/images/docker5.png" alt="docker"></p>
 <p>1、列出镜像</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># docker images</span></span><br></pre></td></tr></table></figure>
-<p><img src="/images/docker6.png" srcset="/img/loading.gif" alt="docker"></p>
+<p><img src="/images/docker6.png" alt="docker"></p>
 <ul>
 <li>REPOSITORY: 镜像所在的仓库名称</li>
 <li>TAG： 镜像标签</li>
@@ -216,7 +223,7 @@
 <p>这些镜像都储存在Docker宿主机的/var/lib/docker目录下。</p>
 <p>2、搜索镜像</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># docker search 镜像名称</span></span><br></pre></td></tr></table></figure>
-<p><img src="/images/docker7.png" srcset="/img/loading.gif" alt="docker"></p>
+<p><img src="/images/docker7.png" alt="docker"></p>
 <p>3、从Docker Hub拉取镜像<br>去Docker Hub官网查找所需的Docker镜像：<a href="https://hub.docker.com/explore/" target="_blank" rel="noopener">https://hub.docker.com/explore/</a> ，然后通过以下命令在线pull：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># docker pull 镜像名称</span></span><br><span class="line">[root@localhost ~]<span class="comment"># docker pull 镜像名称:版本</span></span><br></pre></td></tr></table></figure>
 <p>因为官方提供的Docker镜像加速服务很慢，我们可以配置ustc的镜像。输入以下命令配置ustc镜像：</p>
@@ -247,7 +254,7 @@
 <h4 id="创建和启动容器"><a href="#创建和启动容器" class="headerlink" title="创建和启动容器"></a>创建和启动容器</h4><p><strong>创建容器常用的参数说明</strong><br>1.创建容器命令：docker run<br>2.-i: 表示运行容器<br>3.-t: 表示容器启动后会进入其命令行，加入这两个参数后，容器创建就能登录进去。即分配一个伪终端。<br>4.—name: 为创建的容器命名<br>5.-v: 表示目录映射关系（前者是宿主机目录，后者是映射到宿主机上的目录），可以使用多个-v做多个目录或文件映射。注意：最好做目录映射，在宿主机上修改，然后共享到容器上。<br>6.-d: 在run后面加上-d参数，则会创建一个守护式容器在后台运行（这样创建容器后不会自动登录容器，如果只加-i -t两个参数，创建后就会自动进去容器）。<br>7.-p： 表示端口映射，前者是宿主机端口，后者是容器内的映射端口。可以使用多个-p做多个端口映射。</p>
 <h5 id="交互式容器"><a href="#交互式容器" class="headerlink" title="交互式容器"></a>交互式容器</h5><p>创建一个交互式容器并取名为mycentos5:</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@localhost ~]<span class="comment"># docker run -it --name=mycentos5 centos:7 /bin/bash</span></span><br><span class="line">[root@53f33e279914 /]<span class="comment">#</span></span><br></pre></td></tr></table></figure>
-<p>此时我们可以新建一个连接，通过docker ps命令看到刚才创建的容器正在启动中：<br><img src="/images/docker8.png" srcset="/img/loading.gif" alt="docker"><br>通过exit命令可以退出当前容器：</p>
+<p>此时我们可以新建一个连接，通过docker ps命令看到刚才创建的容器正在启动中：<br><img src="/images/docker8.png" alt="docker"><br>通过exit命令可以退出当前容器：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@53f33e279914 /]<span class="comment"># exit</span></span><br><span class="line"><span class="built_in">exit</span></span><br><span class="line">[root@localhost ~]<span class="comment">#</span></span><br></pre></td></tr></table></figure>
 <p>此时再通过docker ps命令查看刚才启动的容器也停止了。</p>
 <h5 id="守护式容器"><a href="#守护式容器" class="headerlink" title="守护式容器"></a>守护式容器</h5><p>输入以下命令创建一个名字为mycentos6的容器：</p>
@@ -282,19 +289,19 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># docker exec -it docker_mysql /bin/bash</span></span><br></pre></td></tr></table></figure>
 <p>登录MySQL</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql -u root -p</span><br></pre></td></tr></table></figure>
-<p>4.远程连接MySQL<br><img src="/images/docker9.png" srcset="/img/loading.gif" alt="docker"></p>
+<p>4.远程连接MySQL<br><img src="/images/docker9.png" alt="docker"></p>
 <h4 id="Tomcat部署"><a href="#Tomcat部署" class="headerlink" title="Tomcat部署"></a>Tomcat部署</h4><p>1.拉取Tomcat-8 &amp;&amp; JDK-8 镜像</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># docker pull tomcat:8-jre8</span></span><br></pre></td></tr></table></figure>
 <p>2.部署Web应用<br>为了更好的演示Docker部署Tomcat的使用方式，我们可以先将需要部署的web项目发送到服务器的某个路径下，我这里在/root/目录下创建了/root/site/目录作为项目的根目录，在其中创建index.html文件并写入：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;title&gt;Hello&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;h2&gt;Hello Docker-Tomcat!&lt;/h2&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
 <p>3.创建Tomcat容器</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># docker run -di --name=docker_tomcat -p 9000:8080 -v /root/site/:/usr/local/tomcat/webapps/ROOT --privileged=true tomcat:8-jre8</span></span><br></pre></td></tr></table></figure>
-<p>以上就创建一个Tomcat容器，其容器名称Wiedocker_tomcat，-di表示是一个守护式容器；-p 9000:8080表示此容器端口映射为9000-&gt;8080，即对外的端口是9000，映射到容器里Tomcat服务器的端口8080，–privileged是以root权限运行。<br><img src="/images/docker10.png" srcset="/img/loading.gif" alt="docker"><br>通过命令看到，当我们启动了容器，其中的Tomcat服务器也自动启动了。当然对于部署Nginx或MySQL的Docker容器，当启动容器时都会启动对应的服务。<br><strong>注意</strong><br>上面我们指定了宿主机的/root/site/目录映射到docker_tomcat容器的/usr/local/tomcat/webapps/ROOT目录，为什么是这个目录呢？<br>Docker虚拟化，它会在内部虚拟一个操作系统，是在其宿主机内核上的一层空间，所有有一定的目录结构，我们可以通过docker exec -it docker_tomcat /bin/bash命令进入到docker_tomcat容器内部，通过ls命令查看目录会发现其Tomcat服务器确实安装在docker_tomcat容器的/usr/local/tomcat目录下。<br>最后，我们在浏览器上访问：<a href="http://192.168.148.132:9000/" target="_blank" rel="noopener">http://192.168.148.132:9000/</a>，即发现页面展示了我们刚才在/root/site/目录下创建的index.html网页：<br><img src="/images/docker11.png" srcset="/img/loading.gif" alt="docker"><br>所以，如果你想要修改容器中Tomcat的端口号，直接进入容器的/usr/local/tomcat/conf/server.xml自改即可。</p>
+<p>以上就创建一个Tomcat容器，其容器名称Wiedocker_tomcat，-di表示是一个守护式容器；-p 9000:8080表示此容器端口映射为9000-&gt;8080，即对外的端口是9000，映射到容器里Tomcat服务器的端口8080，–privileged是以root权限运行。<br><img src="/images/docker10.png" alt="docker"><br>通过命令看到，当我们启动了容器，其中的Tomcat服务器也自动启动了。当然对于部署Nginx或MySQL的Docker容器，当启动容器时都会启动对应的服务。<br><strong>注意</strong><br>上面我们指定了宿主机的/root/site/目录映射到docker_tomcat容器的/usr/local/tomcat/webapps/ROOT目录，为什么是这个目录呢？<br>Docker虚拟化，它会在内部虚拟一个操作系统，是在其宿主机内核上的一层空间，所有有一定的目录结构，我们可以通过docker exec -it docker_tomcat /bin/bash命令进入到docker_tomcat容器内部，通过ls命令查看目录会发现其Tomcat服务器确实安装在docker_tomcat容器的/usr/local/tomcat目录下。<br>最后，我们在浏览器上访问：<a href="http://192.168.148.132:9000/" target="_blank" rel="noopener">http://192.168.148.132:9000/</a>，即发现页面展示了我们刚才在/root/site/目录下创建的index.html网页：<br><img src="/images/docker11.png" alt="docker"><br>所以，如果你想要修改容器中Tomcat的端口号，直接进入容器的/usr/local/tomcat/conf/server.xml自改即可。</p>
 <h4 id="Nginx部署"><a href="#Nginx部署" class="headerlink" title="Nginx部署"></a>Nginx部署</h4><p>1.拉取Nginx镜像</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull nginx</span><br></pre></td></tr></table></figure>
 <p>2.创建Nginx容器</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -di --name=docker_nginx -p 80:80 nginx</span><br></pre></td></tr></table></figure>
-<p>测试<br><img src="/images/docker12.png" srcset="/img/loading.gif" alt="docker"><br>在浏览器上访问：<a href="http://192.168.148.132/" target="_blank" rel="noopener">http://192.168.148.132/</a>可以进入到Nginx的欢迎页。</p>
+<p>测试<br><img src="/images/docker12.png" alt="docker"><br>在浏览器上访问：<a href="http://192.168.148.132/" target="_blank" rel="noopener">http://192.168.148.132/</a>可以进入到Nginx的欢迎页。</p>
 <h4 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h4><p>以上我们介绍了MySQL、Tomcat、Nginx容器的创建，对于其他的服务，如Redis等操作基本相同，不再阐述。</p>
 <h4 id="备份与迁移"><a href="#备份与迁移" class="headerlink" title="备份与迁移"></a>备份与迁移</h4><p>1.容器保存为镜像<br>可以通过以下命令将我们已创建（配置好的）容器打包为镜像，这样我们以后就能用该镜像再次创建新的容器了：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker commit docker_tomcat my_tomcat</span><br></pre></td></tr></table></figure>
@@ -337,7 +344,7 @@
     <div class="d-none d-lg-block col-lg-2 toc-container">
       
   <div id="toc">
-    <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
+    <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
     <div id="tocbot"></div>
   </div>
 
@@ -375,7 +382,7 @@
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -384,7 +391,7 @@
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">keyword</label>
+                 for="local-search-input">关键词</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
@@ -395,12 +402,26 @@
 
   <footer class="mt-5">
   <div class="text-center py-3">
-    <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+    <a href="https://github.com/Loonycoder" target="_blank" rel="nofollow noopener"><b>望月</b></a>
     <i class="iconfont icon-love"></i>
-    <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
+    <a href="https://github.com/Loonycoder" target="_blank" rel="nofollow noopener"> <b>LoonyCoder</b></a>
     <br>
 
     
+  
+    <!-- 不蒜子统计PV -->
+    
+    &nbsp;<span id="busuanzi_container_site_pv"></span>访问量 
+          <span id="busuanzi_value_site_pv"></span> &nbsp;
+  
+  
+    <!-- 不蒜子统计UV -->
+    
+    &nbsp;<span id="busuanzi_container_site_uv"></span>访客数 
+            <span id="busuanzi_value_site_uv"></span> &nbsp;
+  
+  <br>
+
 
 
     
@@ -449,6 +470,8 @@
   <script src="/lib/smoothscroll/SmoothScroll.min.js" ></script>
 
 
+
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
 
 
 <!-- Plugins -->

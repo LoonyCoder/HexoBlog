@@ -60,7 +60,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/">Home</a>
+            <a class="nav-link" href="/">首页</a>
           </li>
         
           
@@ -68,7 +68,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/archives/">Archives</a>
+            <a class="nav-link" href="/archives/">归档</a>
           </li>
         
           
@@ -76,7 +76,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/categories/">Categories</a>
+            <a class="nav-link" href="/categories/">分类</a>
           </li>
         
           
@@ -84,7 +84,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/tags/">Tags</a>
+            <a class="nav-link" href="/tags/">标签</a>
           </li>
         
           
@@ -92,7 +92,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/about/">About</a>
+            <a class="nav-link" href="/about/">关于</a>
           </li>
         
         
@@ -143,6 +143,13 @@
                 
 
                 
+                  <!-- 不蒜子统计文章PV -->
+                  
+                  &nbsp;<i class="far fa-eye" aria-hidden="true"></i>&nbsp;
+                  <span id="busuanzi_container_page_pv">
+                    <span id="busuanzi_value_page_pv"></span> 次
+                  </span>&nbsp;
+                
               </p>
             
           </div>
@@ -170,7 +177,7 @@
 </ul>
 <h4 id="入门"><a href="#入门" class="headerlink" title="入门"></a>入门</h4><h5 id="导入类库"><a href="#导入类库" class="headerlink" title="导入类库"></a>导入类库</h5><p>首先需要导入vue-router组件类库：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script <span class="built_in">type</span>=<span class="string">"text/javascript"</span> src=<span class="string">"../lib/vue-router.js"</span>&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure>
-<p>当导入类库后，window全局对象中就存在了一个路由的构造函数： VueRouter；就像导入Vue类库后存在一个Vue的构造函数一样，我们能够通过new VueRouter的方式实例化路由对象。<br>如果你使用了new VueRouter({});构造函数来实例化了一个路由对象，你会发现浏览器路径中会出现#/路径，这个路径就是前面讲到的URL中的hash，他并不会向后端发送任何请求，而仅仅是作页面跳转，如果你#/后拼接了一个不存在的路径，自然也不会进行跳转，页面也不会发送任何请求。<br><strong>实例：</strong><br><img src="/images/vue15.png" srcset="/img/loading.gif" alt="vue"></p>
+<p>当导入类库后，window全局对象中就存在了一个路由的构造函数： VueRouter；就像导入Vue类库后存在一个Vue的构造函数一样，我们能够通过new VueRouter的方式实例化路由对象。<br>如果你使用了new VueRouter({});构造函数来实例化了一个路由对象，你会发现浏览器路径中会出现#/路径，这个路径就是前面讲到的URL中的hash，他并不会向后端发送任何请求，而仅仅是作页面跳转，如果你#/后拼接了一个不存在的路径，自然也不会进行跳转，页面也不会发送任何请求。<br><strong>实例：</strong><br><img src="/images/vue15.png" alt="vue"></p>
 <h5 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h5><p>上面我们讲到了使用new VueRouter({})的方式实例化一个路由对象，其中包含几个参数：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- HTML --&gt;</span><br><span class="line">&lt;div id=<span class="string">"app"</span>&gt;</span><br><span class="line">    </span><br><span class="line">    &lt;!-- 给路由对象创建一个容器，包裹在父组件`app`内</span><br><span class="line">        相当于一个占位符，路由规则匹配到的组件内容就会展示到`&lt;router-view&gt;&lt;/router-view&gt;`中</span><br><span class="line">    --&gt;</span><br><span class="line">    &lt;router-view&gt;&lt;/router-view&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- ===============分割线===================== --&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- JavaScript --&gt;</span><br><span class="line">//创建login组件</span><br><span class="line">var login = &#123;</span><br><span class="line">    template: <span class="string">'login组件'</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//创建register组件</span><br><span class="line">var register = &#123;</span><br><span class="line">    template: <span class="string">'register组件'</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// Router实例</span><br><span class="line">var 路由对象名称 = new VueRouter(&#123;</span><br><span class="line">    routes: [</span><br><span class="line">        &#123; path: <span class="string">'/监听URL路径'</span>, component: login(组件名称) &#125;,</span><br><span class="line">        &#123; path: <span class="string">'/监听URL路径'</span>, component: register(组件名称) &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">// Vue实例</span><br><span class="line">var vm = new Vue(&#123;</span><br><span class="line">    el: <span class="string">'app'</span>,</span><br><span class="line">    data: &#123;&#125;,</span><br><span class="line">    methods: &#123;&#125;,</span><br><span class="line">    router: 路由对象名称   </span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 
@@ -200,7 +207,7 @@
 <p>但是上面的实例中，我们发现默认进入的根路径中仅有一个父组件名称，一般我们的登录页面应该直接显示登录框，所以vue-router提供了重定向的动能{path: ‘’, redirect: ‘’}，即在router: []中监听根路径，如果监听都访问的是根路径就重定向到登录URL就好了。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var routerObj = new VueRouter(&#123;</span><br><span class="line">    routes: [</span><br><span class="line">        &#123; path: <span class="string">'/'</span>, redirect: <span class="string">'/login'</span> &#125;,</span><br><span class="line">        &#123; path: <span class="string">'/login'</span>, component: login &#125;,</span><br><span class="line">        &#123; path: <span class="string">'/register'</span>, component: register &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 
-<h4 id="路由参数传递"><a href="#路由参数传递" class="headerlink" title="路由参数传递"></a>路由参数传递</h4><p>在进行页面跳转，即路由的时候，我们可能需要在发送URL时传递一些参数，常见的就如<a href="http://www.loonycoder.com/api?id=1&amp;name=&#39;loonycoder&#39;" target="_blank" rel="noopener">http://www.loonycoder.com/api?id=1&amp;name=&#39;loonycoder&#39;</a>这种格式。<br>那么在URL中传递的参数，vue-router提供了一种获取方式：this.$route。<br>那么什么时候能获取到传递的参数呢？ 回顾前面讲到的Vue声明周期函数，那么在自定义组件中自然也存在生命周期函数，所以最早操作组件data和methods中数据的阶段就是created这个声明周期函数的阶段。<br>实例：<br><img src="/images/vue16.png" srcset="/img/loading.gif" alt="vue"><br><img src="/images/vue17.png" srcset="/img/loading.gif" alt="vue"></p>
+<h4 id="路由参数传递"><a href="#路由参数传递" class="headerlink" title="路由参数传递"></a>路由参数传递</h4><p>在进行页面跳转，即路由的时候，我们可能需要在发送URL时传递一些参数，常见的就如<a href="http://www.loonycoder.com/api?id=1&amp;name=&#39;loonycoder&#39;" target="_blank" rel="noopener">http://www.loonycoder.com/api?id=1&amp;name=&#39;loonycoder&#39;</a>这种格式。<br>那么在URL中传递的参数，vue-router提供了一种获取方式：this.$route。<br>那么什么时候能获取到传递的参数呢？ 回顾前面讲到的Vue声明周期函数，那么在自定义组件中自然也存在生命周期函数，所以最早操作组件data和methods中数据的阶段就是created这个声明周期函数的阶段。<br>实例：<br><img src="/images/vue16.png" alt="vue"><br><img src="/images/vue17.png" alt="vue"></p>
 <p>上面打印的值中，我们能看到，我们再VueRouter中创建的path匹配规则，实际在HTML中会被渲染为相关的正则表达式，来实现路径的匹配。<br>其次，我们还能发现，在URL中拼接的参数id在this.$route对象的query属性中，我们通过this.$route.query.id即可获得传递的id值：2。</p>
 <h4 id="路由嵌套"><a href="#路由嵌套" class="headerlink" title="路由嵌套"></a>路由嵌套</h4><p>路由嵌套，顾名思义即在父级路由内部存在子路由。例如：</p>
 <blockquote>
@@ -209,12 +216,12 @@
 <p><strong>实例：</strong></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=<span class="string">"UTF-8"</span>&gt;</span><br><span class="line">    &lt;title&gt;&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;div id=<span class="string">"app"</span>&gt;</span><br><span class="line">        &lt;router-link to=<span class="string">"/account"</span>&gt;Account&lt;/router-link&gt;</span><br><span class="line"></span><br><span class="line">        &lt;router-view&gt;&lt;/router-view&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line"></span><br><span class="line">    &lt;template id=<span class="string">"tmp"</span>&gt;</span><br><span class="line">        &lt;div&gt;</span><br><span class="line">            &lt;h1&gt;这是Account组件&lt;/h1&gt;</span><br><span class="line"></span><br><span class="line">            &lt;router-link to=<span class="string">"/account/login"</span>&gt;登录&lt;/router-link&gt;</span><br><span class="line">            &lt;router-link to=<span class="string">"/account/register"</span>&gt;注册&lt;/router-link&gt;</span><br><span class="line"></span><br><span class="line">            &lt;router-view&gt;&lt;/router-view&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">    &lt;/template&gt;</span><br><span class="line">    &lt;script <span class="built_in">type</span>=<span class="string">"text/javascript"</span> src=<span class="string">"../lib/vue.js"</span>&gt;&lt;/script&gt;</span><br><span class="line">    &lt;script <span class="built_in">type</span>=<span class="string">"text/javascript"</span> src=<span class="string">"../lib/vue-router.js"</span>&gt;&lt;/script&gt;</span><br><span class="line">    &lt;script <span class="built_in">type</span>=<span class="string">"text/javascript"</span>&gt;</span><br><span class="line"></span><br><span class="line">        var account = &#123;</span><br><span class="line">            template: <span class="string">'#tmp'</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        var login = &#123;</span><br><span class="line">            template: <span class="string">'&lt;h2&gt;登录组件&lt;/h2&gt;'</span>,</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        var register = &#123;</span><br><span class="line">            template: <span class="string">'&lt;h2&gt;注册组件&lt;/h2&gt;'</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        var routerObj = new VueRouter(&#123;</span><br><span class="line">            routes: [</span><br><span class="line">                &#123; </span><br><span class="line">                    path: <span class="string">'/account'</span>, </span><br><span class="line">                    component: account,</span><br><span class="line">                    children: [</span><br><span class="line">                        &#123; path: <span class="string">'login'</span>, component: login &#125;,</span><br><span class="line">                        &#123; path: <span class="string">'register'</span>, component: register &#125;</span><br><span class="line">                    ]</span><br><span class="line">                &#125;,</span><br><span class="line">            ]</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        var vm = new Vue(&#123;</span><br><span class="line">            el: <span class="string">'#app'</span>,</span><br><span class="line">            data: &#123;&#125;,</span><br><span class="line">            methods: &#123;&#125;,</span><br><span class="line">            router: routerObj</span><br><span class="line">        &#125;);</span><br><span class="line">    &lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
 
-<p>如上，我们使用了routes: []中的另外一个属性：children，顾名思义就是表示这个父规则/account下存在一些子规则，且在URL中应该体现出来：<br><img src="/images/vue18.png" srcset="/img/loading.gif" alt="vue"></p>
+<p>如上，我们使用了routes: []中的另外一个属性：children，顾名思义就是表示这个父规则/account下存在一些子规则，且在URL中应该体现出来：<br><img src="/images/vue18.png" alt="vue"></p>
 <p><strong>注意：</strong><br>在children中定义的子组件的path规则不能加/，即如上的，直接写path: login即可，这样请求account/login地址时，vue-router会找/account规则下的login规则，且不加/vue-router才会自动将login视为account下的子路径，并自动拼接account/，否则不会自动拼接，那么也无法完成路由的嵌套。</p>
 <h4 id="命名视图"><a href="#命名视图" class="headerlink" title="命名视图"></a>命名视图</h4><p>我们常见的后台开发页面，经常遇到上、左、中的布局方式；那么以前我们可能使用iframe实现页面间的跳转，但是现在我们学习的路由要比其更加的方便好用。<br><strong>命名视图</strong>的思想就是为每一个页面展示的视图都起一个名字，目的是为了为每个&lt;router-view&gt;&lt;/router-view&gt;容器刚好匹配一个指定的视图。使用方式：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;router-view&gt;&lt;/router-view&gt;</span><br><span class="line">&lt;router-view name=<span class="string">"left"</span>&gt;&lt;/router-view&gt;</span><br><span class="line">&lt;router-view name=<span class="string">"main"</span>&gt;&lt;/router-view&gt;</span><br><span class="line"></span><br><span class="line">routes: [</span><br><span class="line">    &#123; </span><br><span class="line">        path: <span class="string">'/'</span>, components: &#123;</span><br><span class="line">            <span class="string">'default'</span>: header</span><br><span class="line">            <span class="string">'left'</span>: left</span><br><span class="line">            <span class="string">'main'</span>: main</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
 
-<p><strong>解释：</strong><br>其中的path是根路径/，而使用components代替之前的component，目的就是可匹配其下的多个规则；default表示默认的视图组件是header这个组件，即会匹配到第一个&lt;router-view&gt;视图容器中；下面的两个组件会根据name名称需要对应的组件。<br>实现上、左、中的布局：<br><strong>思路：</strong><br>1、我们需要创建三个组件，名称分别为：header、left、main；并且在app中创建三个&lt;router-view&gt;&lt;/router-view&gt;路由容器。<br>2、采用<strong>命名视图</strong>的方式为每个视图都起一个名字：&lt;router-view name=”left”&gt;&lt;/router-view&gt; …<br>3、注册路由实例。<br>实例：<br><img src="/images/vue19.png" srcset="/img/loading.gif" alt="vue"><br><img src="/images/vue20.png" srcset="/img/loading.gif" alt="vue"></p>
+<p><strong>解释：</strong><br>其中的path是根路径/，而使用components代替之前的component，目的就是可匹配其下的多个规则；default表示默认的视图组件是header这个组件，即会匹配到第一个&lt;router-view&gt;视图容器中；下面的两个组件会根据name名称需要对应的组件。<br>实现上、左、中的布局：<br><strong>思路：</strong><br>1、我们需要创建三个组件，名称分别为：header、left、main；并且在app中创建三个&lt;router-view&gt;&lt;/router-view&gt;路由容器。<br>2、采用<strong>命名视图</strong>的方式为每个视图都起一个名字：&lt;router-view name=”left”&gt;&lt;/router-view&gt; …<br>3、注册路由实例。<br>实例：<br><img src="/images/vue19.png" alt="vue"><br><img src="/images/vue20.png" alt="vue"></p>
 
             <hr>
           </div>
@@ -249,7 +256,7 @@
     <div class="d-none d-lg-block col-lg-2 toc-container">
       
   <div id="toc">
-    <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
+    <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
     <div id="tocbot"></div>
   </div>
 
@@ -287,7 +294,7 @@
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -296,7 +303,7 @@
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">keyword</label>
+                 for="local-search-input">关键词</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
@@ -307,12 +314,26 @@
 
   <footer class="mt-5">
   <div class="text-center py-3">
-    <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+    <a href="https://github.com/Loonycoder" target="_blank" rel="nofollow noopener"><b>望月</b></a>
     <i class="iconfont icon-love"></i>
-    <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
+    <a href="https://github.com/Loonycoder" target="_blank" rel="nofollow noopener"> <b>LoonyCoder</b></a>
     <br>
 
     
+  
+    <!-- 不蒜子统计PV -->
+    
+    &nbsp;<span id="busuanzi_container_site_pv"></span>访问量 
+          <span id="busuanzi_value_site_pv"></span> &nbsp;
+  
+  
+    <!-- 不蒜子统计UV -->
+    
+    &nbsp;<span id="busuanzi_container_site_uv"></span>访客数 
+            <span id="busuanzi_value_site_uv"></span> &nbsp;
+  
+  <br>
+
 
 
     
@@ -361,6 +382,8 @@
   <script src="/lib/smoothscroll/SmoothScroll.min.js" ></script>
 
 
+
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
 
 
 <!-- Plugins -->

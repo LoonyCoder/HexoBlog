@@ -60,7 +60,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/">Home</a>
+            <a class="nav-link" href="/">首页</a>
           </li>
         
           
@@ -68,7 +68,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/archives/">Archives</a>
+            <a class="nav-link" href="/archives/">归档</a>
           </li>
         
           
@@ -76,7 +76,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/categories/">Categories</a>
+            <a class="nav-link" href="/categories/">分类</a>
           </li>
         
           
@@ -84,7 +84,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/tags/">Tags</a>
+            <a class="nav-link" href="/tags/">标签</a>
           </li>
         
           
@@ -92,7 +92,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/about/">About</a>
+            <a class="nav-link" href="/about/">关于</a>
           </li>
         
         
@@ -143,6 +143,13 @@
                 
 
                 
+                  <!-- 不蒜子统计文章PV -->
+                  
+                  &nbsp;<i class="far fa-eye" aria-hidden="true"></i>&nbsp;
+                  <span id="busuanzi_container_page_pv">
+                    <span id="busuanzi_value_page_pv"></span> 次
+                  </span>&nbsp;
+                
               </p>
             
           </div>
@@ -173,7 +180,7 @@
 <h4 id="新建测试类执行"><a href="#新建测试类执行" class="headerlink" title="新建测试类执行"></a>新建测试类执行</h4><p>由于读取配置文件、创建SqlSessionFactory工厂等步骤复用性较高，我们在这里进行了抽取。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line">package com.loonycoder;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">import com.loonycoder.dao.IUserMapper;</span><br><span class="line">import com.loonycoder.domain.User;</span><br><span class="line">import org.apache.ibatis.io.Resources;</span><br><span class="line">import org.apache.ibatis.session.SqlSession;</span><br><span class="line">import org.apache.ibatis.session.SqlSessionFactory;</span><br><span class="line">import org.apache.ibatis.session.SqlSessionFactoryBuilder;</span><br><span class="line">import org.junit.After;</span><br><span class="line">import org.junit.Before;</span><br><span class="line">import org.junit.Test;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">import java.io.InputStream;</span><br><span class="line">import java.util.Date;</span><br><span class="line">import java.util.List;</span><br><span class="line"></span><br><span class="line">public class MybatisTest &#123;</span><br><span class="line"></span><br><span class="line">    private InputStream inputStream;</span><br><span class="line">    private SqlSessionFactory sqlSessionFactory;</span><br><span class="line">    private SqlSession session;</span><br><span class="line">    private IUserMapper userDao;</span><br><span class="line"></span><br><span class="line">    //before注解代表在测试方法执行前执行</span><br><span class="line">    @Before</span><br><span class="line">    public void init() throws Exception&#123;</span><br><span class="line">        //1.读取配置文件</span><br><span class="line">        inputStream = Resources.getResourceAsStream(<span class="string">"SqlMapConfig.xml"</span>);</span><br><span class="line">        //2.创建SqlSessionFactory工厂</span><br><span class="line">        SqlSessionFactoryBuilder sqlSessionFactoryBuilder = new SqlSessionFactoryBuilder();</span><br><span class="line">        sqlSessionFactory = sqlSessionFactoryBuilder.build(inputStream);</span><br><span class="line">        //3.使用工厂创建SqlSession对象</span><br><span class="line">        session = sqlSessionFactory.openSession();</span><br><span class="line">        //4.使用SqlSession创建dao接口的代理对象</span><br><span class="line">        userDao = session.getMapper(IUserMapper.class);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    //after注解代表在测试方法执行后执行</span><br><span class="line">    @After</span><br><span class="line">    public void destroy() throws Exception&#123;</span><br><span class="line">        //6.释放资源</span><br><span class="line">        session.close();</span><br><span class="line">        inputStream.close();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    @Test</span><br><span class="line">    public void selectTest() throws Exception&#123;</span><br><span class="line"></span><br><span class="line">        //5.使用代理对象执行方法</span><br><span class="line">        List&lt;User&gt; users= userDao.selectAll();</span><br><span class="line">        <span class="keyword">for</span> (User user: users) &#123;</span><br><span class="line">            System.out.println(user);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h4 id="执行结果"><a href="#执行结果" class="headerlink" title="执行结果"></a>执行结果</h4><p><img src="/images/execResult1.png" srcset="/img/loading.gif" alt="执行结果"></p>
+<h4 id="执行结果"><a href="#执行结果" class="headerlink" title="执行结果"></a>执行结果</h4><p><img src="/images/execResult1.png" alt="执行结果"></p>
 <hr>
 <h3 id="Mybatis的保存操作"><a href="#Mybatis的保存操作" class="headerlink" title="Mybatis的保存操作"></a>Mybatis的保存操作</h3><h4 id="在mapper接口中新增保存方法"><a href="#在mapper接口中新增保存方法" class="headerlink" title="在mapper接口中新增保存方法"></a>在mapper接口中新增保存方法</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 保存用户</span><br><span class="line"> * @param user</span><br><span class="line"> */</span><br><span class="line">public void saveUser(User user);</span><br></pre></td></tr></table></figure>
 
@@ -183,7 +190,7 @@
 <h4 id="新建测试类执行-1"><a href="#新建测试类执行-1" class="headerlink" title="新建测试类执行"></a>新建测试类执行</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">public void <span class="function"><span class="title">insertTest</span></span>()&#123;</span><br><span class="line">    User user = new User();</span><br><span class="line">    user.setUserName(<span class="string">"Lisa"</span>);</span><br><span class="line">    user.setBirthday(new Date());</span><br><span class="line">    user.setAddress(<span class="string">"广东"</span>);</span><br><span class="line">    user.setSex(<span class="string">"女"</span>);</span><br><span class="line">    userDao.saveUser(user);</span><br><span class="line">    session.commit();//记得手动提交事务</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p><strong>注意：一定要手动提交事务，否则虽然不会报错，但是不会入表！！！</strong></p>
-<h4 id="执行结果-1"><a href="#执行结果-1" class="headerlink" title="执行结果"></a>执行结果</h4><p><img src="/images/execResult2.png" srcset="/img/loading.gif" alt="执行结果"></p>
+<h4 id="执行结果-1"><a href="#执行结果-1" class="headerlink" title="执行结果"></a>执行结果</h4><p><img src="/images/execResult2.png" alt="执行结果"></p>
 <hr>
 <h3 id="Mybatis的删除操作"><a href="#Mybatis的删除操作" class="headerlink" title="Mybatis的删除操作"></a>Mybatis的删除操作</h3><h4 id="在mapper接口中新增删除方法"><a href="#在mapper接口中新增删除方法" class="headerlink" title="在mapper接口中新增删除方法"></a>在mapper接口中新增删除方法</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line">    * 删除用户</span><br><span class="line">    * @param userId</span><br><span class="line">    */</span><br><span class="line">   public void deleteUser(Integer userId);</span><br></pre></td></tr></table></figure>
 
@@ -192,7 +199,7 @@
 <p><strong>注意：因为该方法只有一个参数，所以我们在sql中标注的uid部分其实是可以随便写的，因为mybatis只会找到这一个参数</strong></p>
 <h4 id="新建测试类执行-2"><a href="#新建测试类执行-2" class="headerlink" title="新建测试类执行"></a>新建测试类执行</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">   public void <span class="function"><span class="title">deleteTest</span></span>()&#123;</span><br><span class="line">       userDao.deleteUser(53);</span><br><span class="line">       session.commit();//记得手动提交事务</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
 
-<h4 id="执行结果-2"><a href="#执行结果-2" class="headerlink" title="执行结果"></a>执行结果</h4><p>删除前：<br><img src="/images/execBefore.png" srcset="/img/loading.gif" alt="执行结果"><br>删除后：<br><img src="/images/execAfter.png" srcset="/img/loading.gif" alt="执行结果"></p>
+<h4 id="执行结果-2"><a href="#执行结果-2" class="headerlink" title="执行结果"></a>执行结果</h4><p>删除前：<br><img src="/images/execBefore.png" alt="执行结果"><br>删除后：<br><img src="/images/execAfter.png" alt="执行结果"></p>
 <hr>
 <h3 id="Mybatis的修改操作"><a href="#Mybatis的修改操作" class="headerlink" title="Mybatis的修改操作"></a>Mybatis的修改操作</h3><h4 id="在mapper接口中新增修改方法"><a href="#在mapper接口中新增修改方法" class="headerlink" title="在mapper接口中新增修改方法"></a>在mapper接口中新增修改方法</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 修改用户</span><br><span class="line"> * @param user</span><br><span class="line"> */</span><br><span class="line">public void updateUser(User user);</span><br></pre></td></tr></table></figure>
 
@@ -200,7 +207,7 @@
 
 <h4 id="新建测试类执行-3"><a href="#新建测试类执行-3" class="headerlink" title="新建测试类执行"></a>新建测试类执行</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">public void <span class="function"><span class="title">updateTest</span></span>()&#123;</span><br><span class="line">    User user = new User();</span><br><span class="line">    user.setId(41);</span><br><span class="line">    user.setUserName(<span class="string">"张三丰"</span>);</span><br><span class="line">    session.commit();//记得手动提交事务</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h4 id="执行结果-3"><a href="#执行结果-3" class="headerlink" title="执行结果"></a>执行结果</h4><p>修改前：<br><img src="/images/execAfter.png" srcset="/img/loading.gif" alt="执行结果"><br>修改后：<br><img src="/images/execAfter1.png" srcset="/img/loading.gif" alt="执行结果"></p>
+<h4 id="执行结果-3"><a href="#执行结果-3" class="headerlink" title="执行结果"></a>执行结果</h4><p>修改前：<br><img src="/images/execAfter.png" alt="执行结果"><br>修改后：<br><img src="/images/execAfter1.png" alt="执行结果"></p>
 
             <hr>
           </div>
@@ -237,7 +244,7 @@
     <div class="d-none d-lg-block col-lg-2 toc-container">
       
   <div id="toc">
-    <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
+    <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
     <div id="tocbot"></div>
   </div>
 
@@ -275,7 +282,7 @@
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -284,7 +291,7 @@
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">keyword</label>
+                 for="local-search-input">关键词</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
@@ -295,12 +302,26 @@
 
   <footer class="mt-5">
   <div class="text-center py-3">
-    <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+    <a href="https://github.com/Loonycoder" target="_blank" rel="nofollow noopener"><b>望月</b></a>
     <i class="iconfont icon-love"></i>
-    <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
+    <a href="https://github.com/Loonycoder" target="_blank" rel="nofollow noopener"> <b>LoonyCoder</b></a>
     <br>
 
     
+  
+    <!-- 不蒜子统计PV -->
+    
+    &nbsp;<span id="busuanzi_container_site_pv"></span>访问量 
+          <span id="busuanzi_value_site_pv"></span> &nbsp;
+  
+  
+    <!-- 不蒜子统计UV -->
+    
+    &nbsp;<span id="busuanzi_container_site_uv"></span>访客数 
+            <span id="busuanzi_value_site_uv"></span> &nbsp;
+  
+  <br>
+
 
 
     
@@ -349,6 +370,8 @@
   <script src="/lib/smoothscroll/SmoothScroll.min.js" ></script>
 
 
+
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
 
 
 <!-- Plugins -->

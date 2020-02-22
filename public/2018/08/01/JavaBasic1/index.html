@@ -60,7 +60,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/">Home</a>
+            <a class="nav-link" href="/">首页</a>
           </li>
         
           
@@ -68,7 +68,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/archives/">Archives</a>
+            <a class="nav-link" href="/archives/">归档</a>
           </li>
         
           
@@ -76,7 +76,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/categories/">Categories</a>
+            <a class="nav-link" href="/categories/">分类</a>
           </li>
         
           
@@ -84,7 +84,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/tags/">Tags</a>
+            <a class="nav-link" href="/tags/">标签</a>
           </li>
         
           
@@ -92,7 +92,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/about/">About</a>
+            <a class="nav-link" href="/about/">关于</a>
           </li>
         
         
@@ -142,6 +142,13 @@
                   </span>&nbsp;
                 
 
+                
+                  <!-- 不蒜子统计文章PV -->
+                  
+                  &nbsp;<i class="far fa-eye" aria-hidden="true"></i>&nbsp;
+                  <span id="busuanzi_container_page_pv">
+                    <span id="busuanzi_value_page_pv"></span> 次
+                  </span>&nbsp;
                 
               </p>
             
@@ -265,7 +272,7 @@
 
 <p>方法传递时传递的参数其实仅值原参数的一个拷贝，对于基本类型传递的就是具体的值的拷贝，对于引用类型传递的是对象地址。<br>所以上面的例子中，基本数据类型a,b经过swap方法并没有改变原始值，而引用类型arr数组经过swap方法就改变了原始值（因为直接对对象堆内存地址数据操作）。</p>
 <hr>
-<h4 id="IO流"><a href="#IO流" class="headerlink" title="IO流"></a>IO流</h4><p><img src="/images/io.png" srcset="/img/loading.gif" alt="IO流"></p>
+<h4 id="IO流"><a href="#IO流" class="headerlink" title="IO流"></a>IO流</h4><p><img src="/images/io.png" alt="IO流"></p>
 <p><strong>1、Java中有几种类型的流？</strong><br>字符流和字节流。字节流继承InputStream和OutputStream；字符流继承自InputStreamReader和OutputStreamWriter。</p>
 <p><strong>2、谈谈Java IO中的方法阻塞</strong><br>Java中的阻塞式方法是指在程序调用该方法时，必须等待输入数据可用或检测到输入结果时结束或抛出异常，否则程序会一直停留在该语句上，不会执行下面的语句。比如read()和readLine()方法。</p>
 <p><strong>3、字符流和字节流的区别？</strong><br>数据的输入和输出在计算机中最终都是通过字节的形式传递的，对应通过InputStream和OutputStream实现，他们都是针对字节操作的。<br>而有时候通常需要读取一些完全是字符的文本数据，通常使用基于字节流的包装类字符流完成操作，他们通过InputStreamReader和OutputStreamWriter实现。<br>字符流是字节流的包装，即使有时候读取的是字符流，但也可能需要转换为字节写入。</p>
@@ -313,18 +320,18 @@
 <p>单向链表<br>单向链表包含每个节点Node包含两个部分：第一部分data储存当前节点数据、第二部分next存储下一节点的地址。</p>
 </blockquote>
 <ul>
-<li><p>单向链表只可向一个方向遍历，查找一个节点需要从第一个节点开始向下依次寻找<br><img src="/images/linktable1.png" srcset="/img/loading.gif" alt="单向链表"></p>
+<li><p>单向链表只可向一个方向遍历，查找一个节点需要从第一个节点开始向下依次寻找<br><img src="/images/linktable1.png" alt="单向链表"></p>
 </li>
-<li><p>单向链表插入节点从链表头部插入，将新插入节点的next指向原头部节点位置即可<br><img src="/images/linktable2.png" srcset="/img/loading.gif" alt="单向链表"></p>
+<li><p>单向链表插入节点从链表头部插入，将新插入节点的next指向原头部节点位置即可<br><img src="/images/linktable2.png" alt="单向链表"></p>
 </li>
-<li><p>删除节点，只需要将该节点上一个节点的next指向该节点下一个节点即可<br><img src="/images/linktable3.png" srcset="/img/loading.gif" alt="单向链表"></p>
+<li><p>删除节点，只需要将该节点上一个节点的next指向该节点下一个节点即可<br><img src="/images/linktable3.png" alt="单向链表"></p>
 </li>
 </ul>
 <blockquote>
-<p>双向链表<br><strong>双向链表</strong> 包含两个指针，prev指向前一个节点，next指向后一个节点。<br><img src="/images/linktable4.png" srcset="/img/loading.gif" alt="双向链表"></p>
+<p>双向链表<br><strong>双向链表</strong> 包含两个指针，prev指向前一个节点，next指向后一个节点。<br><img src="/images/linktable4.png" alt="双向链表"></p>
 </blockquote>
 <blockquote>
-<p>双向循环链表<br><strong>双向循环链表</strong> 最后一个节点的<em>next</em>指向<em>head</em>，而<em>head</em>的<em>prev</em>指向最后一个节点，形成一个环。<br><img src="/images/linktable5.png" srcset="/img/loading.gif" alt="双向循环链表"></p>
+<p>双向循环链表<br><strong>双向循环链表</strong> 最后一个节点的<em>next</em>指向<em>head</em>，而<em>head</em>的<em>prev</em>指向最后一个节点，形成一个环。<br><img src="/images/linktable5.png" alt="双向循环链表"></p>
 </blockquote>
 <hr>
 <h4 id="ArrayList和Vector和LinkedList的区别？"><a href="#ArrayList和Vector和LinkedList的区别？" class="headerlink" title="ArrayList和Vector和LinkedList的区别？"></a>ArrayList和Vector和LinkedList的区别？</h4><ul>
@@ -361,7 +368,7 @@
 <hr>
 <h4 id="Hash冲突"><a href="#Hash冲突" class="headerlink" title="Hash冲突"></a>Hash冲突</h4><p>假设将100个数据通过Hash散列后存储到10个不同的容器中，必定会出现多个元素分布到同一个容器中。具体到HashMap集合中，若将多个K-V数据存入put，HashMap根据元素key计算到对应的hashCode值，如果计算得到多个不同的key对应的hashCode值相同（即要储存到同一位置），此时这种现象就称为 Hash冲突。<br>HashMap默认采用了 链地址法 解决Hash冲突问题，即通过类似单链表的方式将 冲突的元素 串起来，搜索时遍历这个链表即可。注意： 如果冲突的Hash越来越多，这个链就会越来越长。</p>
 <hr>
-<h4 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h4><p><img src="/images/hash1.png" srcset="/img/loading.gif" alt="hash冲突与实现原理"><br>这里我们需要了解两个名词：<br>Table: 哈希桶数组（哈希表），存放Node元素，底层是一个Node[] table<br>Node: 节点元素，Node是HashMap的一个内部类，实现了Map.Entry接口，本质是一个映射（K-V）<br>HashMap内部的一些关键属性需要了解：<br>DEFAULT_INITIAL_CAPACITY: Tabale数组的初始化长度，默认是1 &lt;&lt; 4，2^4 = 16<br>MAXIMUM_CAPACITY: Table数组最高长度，默认为1 &lt;&lt; 30，2^30 = 1073741824<br>DEFAULT_LOAD_FACTOR: 负载因子，当总元素数 &gt; 数组长度 * 负载因子时，Table数组将扩容，默认是0.75<br>TREEIFY_THRESHOLD: 树化阀值，当单个Table内Node数量超过该值，则将链表转换为红黑树，默认是8<br>UNTREEIFY_THRESHOLD: 链化阀值，当扩容期间单个Table的Entry数量小于该值，则将红黑数转换为链表，默认为6<br>MIN_TREEIFY_CAPACITY: 最小树化阀值，当Table中所有元素超过该值，才会进行树化<br>size: 当前HashMap实际存在的键值对数量<br>threshold: HashMap所能容纳的最大数据量的Node（键值对）个数。Node[] table初始化长度length是16，loadFactor负载因子默认是0.75，threshold = length * loadFactor<br>loadFactor: 负载因子，默认是0.17<br>modCount: 记录HashMap内部结构发生变化的次数<br>HashMap内部存在一个NodeTable数组，这个数组的初始化长度是DEFAULT_INITIAL_CAPACITY，他是一个单向链表：</p>
+<h4 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h4><p><img src="/images/hash1.png" alt="hash冲突与实现原理"><br>这里我们需要了解两个名词：<br>Table: 哈希桶数组（哈希表），存放Node元素，底层是一个Node[] table<br>Node: 节点元素，Node是HashMap的一个内部类，实现了Map.Entry接口，本质是一个映射（K-V）<br>HashMap内部的一些关键属性需要了解：<br>DEFAULT_INITIAL_CAPACITY: Tabale数组的初始化长度，默认是1 &lt;&lt; 4，2^4 = 16<br>MAXIMUM_CAPACITY: Table数组最高长度，默认为1 &lt;&lt; 30，2^30 = 1073741824<br>DEFAULT_LOAD_FACTOR: 负载因子，当总元素数 &gt; 数组长度 * 负载因子时，Table数组将扩容，默认是0.75<br>TREEIFY_THRESHOLD: 树化阀值，当单个Table内Node数量超过该值，则将链表转换为红黑树，默认是8<br>UNTREEIFY_THRESHOLD: 链化阀值，当扩容期间单个Table的Entry数量小于该值，则将红黑数转换为链表，默认为6<br>MIN_TREEIFY_CAPACITY: 最小树化阀值，当Table中所有元素超过该值，才会进行树化<br>size: 当前HashMap实际存在的键值对数量<br>threshold: HashMap所能容纳的最大数据量的Node（键值对）个数。Node[] table初始化长度length是16，loadFactor负载因子默认是0.75，threshold = length * loadFactor<br>loadFactor: 负载因子，默认是0.17<br>modCount: 记录HashMap内部结构发生变化的次数<br>HashMap内部存在一个NodeTable数组，这个数组的初始化长度是DEFAULT_INITIAL_CAPACITY，他是一个单向链表：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">static class Node&lt;K,V&gt; implements Map.Entry&lt;K,V&gt; &#123;</span><br><span class="line">    final int <span class="built_in">hash</span>; //key的Hash值</span><br><span class="line">    final K key; //key</span><br><span class="line">    V value; //value</span><br><span class="line">    Node&lt;K,V&gt; next; //下一个节点</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>参考单链表的结构，Table中每个Node节点包含两个部分，Node元素作为节点的header，next指向下一个节点。<strong>这种链式结构的存在正是为了解决Hash冲突</strong></p>
@@ -369,7 +376,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">map.put(<span class="string">"loonycoder"</span>, <span class="string">"18"</span>);</span><br></pre></td></tr></table></figure>
 <p>HashMap将根据”loonycoder”这个Key得到其hashCode值，然后经过Hash算法定位到其在HashMap储存的位置，如果两个不同的key定位到了同一个位置，此时就发生了Hash冲突。<br>在JDK1.7之前，解决Hash冲突的方式是将冲突的Node节点放在一个链表中。在JDK1.8中，当Table中链长超过TREEIFY_THRESHOLD阀值后，会将链表转换为红黑树的实现TreeNode:</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">static final class TreeNode&lt;K,V&gt; extends LinkedHashMap.Entry&lt;K,V&gt; &#123;</span><br><span class="line">    TreeNode&lt;K,V&gt; parent;  // red-black tree links</span><br><span class="line">    TreeNode&lt;K,V&gt; left;</span><br><span class="line">    TreeNode&lt;K,V&gt; right;</span><br><span class="line">    TreeNode&lt;K,V&gt; prev;    // needed to unlink next upon deletion</span><br><span class="line">    boolean red;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>当发生<strong>Hash冲突</strong>时，根据HashMap默认采用的 <strong>链地址法</strong>，即将冲突的Hash串成一个链式结构储存到HashMap对应的位置。但是 随着Hash冲突越来越多，这个<strong>链将越来越长</strong>，这就将导致遍历碰撞key时的消耗不断增加，也就直接导致了性能的不足。在JDK1.8后，HashMap对单个Table中的Node超出某个阀值后，将开始树化操作（链表转换为红黑树），这对搜索的性能将会有很大的提升。<br><img src="http://cdn.tycoding.cn/JDK1.8%E4%B9%8B%E5%90%8E%E7%9A%84HashMap%E5%BA%95%E5%B1%82%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84.jpg" srcset="/img/loading.gif" alt="地址链法"></p>
+<p>当发生<strong>Hash冲突</strong>时，根据HashMap默认采用的 <strong>链地址法</strong>，即将冲突的Hash串成一个链式结构储存到HashMap对应的位置。但是 随着Hash冲突越来越多，这个<strong>链将越来越长</strong>，这就将导致遍历碰撞key时的消耗不断增加，也就直接导致了性能的不足。在JDK1.8后，HashMap对单个Table中的Node超出某个阀值后，将开始树化操作（链表转换为红黑树），这对搜索的性能将会有很大的提升。<br><img src="http://cdn.tycoding.cn/JDK1.8%E4%B9%8B%E5%90%8E%E7%9A%84HashMap%E5%BA%95%E5%B1%82%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84.jpg" alt="地址链法"></p>
 <p><strong>总结</strong><br>到此，我们总结一下HashMap的实现原理：</p>
 <ul>
 <li>HashMap根据key的hashCode值存储元素。put新元素会遍历链表，根据新元素的key计算hashCode得到散列位置，如果该位置有值再调用equals判断value是否相同，相同就散列到其他位置储存。</li>
@@ -386,12 +393,12 @@
 <li>Comparable接口来自java.lang包，提供compareTo(Object obj) 方法排序</li>
 <li>Comparator接口来自java.util包，提供compare(Object obj1, Object obj2)方法排序<br>当需要对一个集合采用一种方式排序，使用Comparable接口；如果需要对一个集合采用两种排序方式就使用Comparator接口。</li>
 </ul>
-<h4 id="Java集合框架总结"><a href="#Java集合框架总结" class="headerlink" title="Java集合框架总结"></a>Java集合框架总结</h4><h5 id="Collection"><a href="#Collection" class="headerlink" title="Collection"></a>Collection</h5><p><img src="/images/collection1.png" srcset="/img/loading.gif" alt="Collection"></p>
+<h4 id="Java集合框架总结"><a href="#Java集合框架总结" class="headerlink" title="Java集合框架总结"></a>Java集合框架总结</h4><h5 id="Collection"><a href="#Collection" class="headerlink" title="Collection"></a>Collection</h5><p><img src="/images/collection1.png" alt="Collection"></p>
 <p><strong>List</strong></p>
 <p>ArrayList: Object数组，线程不安全，查询快，增删慢，效率高<br>Vector: Object数组，线程安全，查询快，增删慢，效率低<br>LinkedList: 双向链表，线程不安全，查询慢，增删快，效率高</p>
 <p><strong>Set</strong></p>
 <p>HashSet: 无序、唯一，基于HashMap实现，底层采用HashMap存储元素<br>LinkedHashSet: LinkedHashSet继承自HashSet，并且其内部通过LinkedHashMap实现<br>TreeSet 有序、唯一，红黑树</p>
-<h5 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h5><p><img src="/images/map1.png" srcset="/img/loading.gif" alt="Map"></p>
+<h5 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h5><p><img src="/images/map1.png" alt="Map"></p>
 <ul>
 <li>HashMap: JDK1.8之前HashMap由数组和链表组成，数组时HashMap的主体，链表是为了解决Hash冲突问题。JDK1.8之后当Table中Node数量大于8时，就将链表转换为红黑树，以减少搜索时间提高效率。</li>
 <li>LinkedHashMap: LinkedHashMap继承自HashMap，所有他的底层仍然由数组和链表/红黑树实现。另外，LinkedHashMap在上面的结构基础上，增加了一条双向链表，使得上面的结构可以保持键值对的插入顺序。</li>
@@ -454,11 +461,11 @@
 <td align="left">终止状态，表示当前线程已经执行完毕</td>
 </tr>
 </tbody></table>
-<p>对应，程序会因为不同代码的执行产生不同的状态，如下图：<br><img src="/images/thread2.png" srcset="/img/loading.gif" alt="线程图"><br>如上，线程创建后将进入NEW（初始）状态，调用start()开始运行，当线程执行wait()方法后，线程将进入WAITING（等待）状态，可以通过wait(long)或join(long)等方法终止等待状态；当线程调用同步方法时，在没有获取到锁的情况下，线程将会进入到BLOCKED（阻塞）状态。</p>
+<p>对应，程序会因为不同代码的执行产生不同的状态，如下图：<br><img src="/images/thread2.png" alt="线程图"><br>如上，线程创建后将进入NEW（初始）状态，调用start()开始运行，当线程执行wait()方法后，线程将进入WAITING（等待）状态，可以通过wait(long)或join(long)等方法终止等待状态；当线程调用同步方法时，在没有获取到锁的情况下，线程将会进入到BLOCKED（阻塞）状态。</p>
 <hr>
 <h4 id="什么是上下文切换？"><a href="#什么是上下文切换？" class="headerlink" title="什么是上下文切换？"></a>什么是上下文切换？</h4><p>简单来说，并发编程中实际线程的数量都可能大于CPU核心的个数，而COU一个核心在任意时刻只能被一个线程使用，CPU为了保证并发的线程都有被执行，采用<strong>随机分配时间片并轮转</strong>的方式；而一个线程的时间片用户将保存并进入就绪状态直到下次分配时间片再执行，这个 <strong>任务从保存到再加载的过程就是一次上下文切换</strong>。</p>
 <hr>
-<h4 id="什么是死锁？如何避免"><a href="#什么是死锁？如何避免" class="headerlink" title="什么是死锁？如何避免?"></a>什么是死锁？如何避免?</h4><p>举例：线程A持有资源2，线程B持有资源1，在线程A、B都没有释放自己所持有资源的情况下（锁未释放），他们都想同时获取对方的资源，因为资源1、2都被锁定，两个线程都会进入相互等待的情况，这种情况称为死锁。<br><img src="/images/deadlock.png" srcset="/img/loading.gif" alt="死锁"><br>栗子：</p>
+<h4 id="什么是死锁？如何避免"><a href="#什么是死锁？如何避免" class="headerlink" title="什么是死锁？如何避免?"></a>什么是死锁？如何避免?</h4><p>举例：线程A持有资源2，线程B持有资源1，在线程A、B都没有释放自己所持有资源的情况下（锁未释放），他们都想同时获取对方的资源，因为资源1、2都被锁定，两个线程都会进入相互等待的情况，这种情况称为死锁。<br><img src="/images/deadlock.png" alt="死锁"><br>栗子：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">public class DeadLockDemo &#123;</span><br><span class="line">    private static Object resource1 = new Object();//资源 1</span><br><span class="line">    private static Object resource2 = new Object();//资源 2</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        new Thread(() -&gt; &#123;</span><br><span class="line">            synchronized (resource1) &#123;</span><br><span class="line">                System.out.println(Thread.currentThread() + <span class="string">"get resource1"</span>);</span><br><span class="line">                try &#123;</span><br><span class="line">                    Thread.sleep(1000);</span><br><span class="line">                &#125; catch (InterruptedException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">                System.out.println(Thread.currentThread() + <span class="string">"waiting get resource2"</span>);</span><br><span class="line">                synchronized (resource2) &#123;</span><br><span class="line">                    System.out.println(Thread.currentThread() + <span class="string">"get resource2"</span>);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;, <span class="string">"线程 1"</span>).start();</span><br><span class="line"></span><br><span class="line">        new Thread(() -&gt; &#123;</span><br><span class="line">            synchronized (resource2) &#123;</span><br><span class="line">                System.out.println(Thread.currentThread() + <span class="string">"get resource2"</span>);</span><br><span class="line">                try &#123;</span><br><span class="line">                    Thread.sleep(1000);</span><br><span class="line">                &#125; catch (InterruptedException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">                System.out.println(Thread.currentThread() + <span class="string">"waiting get resource1"</span>);</span><br><span class="line">                synchronized (resource1) &#123;</span><br><span class="line">                    System.out.println(Thread.currentThread() + <span class="string">"get resource1"</span>);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;, <span class="string">"线程 2"</span>).start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>Output：</p>
@@ -529,7 +536,7 @@
     <div class="d-none d-lg-block col-lg-2 toc-container">
       
   <div id="toc">
-    <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
+    <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
     <div id="tocbot"></div>
   </div>
 
@@ -567,7 +574,7 @@
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -576,7 +583,7 @@
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">keyword</label>
+                 for="local-search-input">关键词</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
@@ -587,12 +594,26 @@
 
   <footer class="mt-5">
   <div class="text-center py-3">
-    <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+    <a href="https://github.com/Loonycoder" target="_blank" rel="nofollow noopener"><b>望月</b></a>
     <i class="iconfont icon-love"></i>
-    <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
+    <a href="https://github.com/Loonycoder" target="_blank" rel="nofollow noopener"> <b>LoonyCoder</b></a>
     <br>
 
     
+  
+    <!-- 不蒜子统计PV -->
+    
+    &nbsp;<span id="busuanzi_container_site_pv"></span>访问量 
+          <span id="busuanzi_value_site_pv"></span> &nbsp;
+  
+  
+    <!-- 不蒜子统计UV -->
+    
+    &nbsp;<span id="busuanzi_container_site_uv"></span>访客数 
+            <span id="busuanzi_value_site_uv"></span> &nbsp;
+  
+  <br>
+
 
 
     
@@ -641,6 +662,8 @@
   <script src="/lib/smoothscroll/SmoothScroll.min.js" ></script>
 
 
+
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
 
 
 <!-- Plugins -->

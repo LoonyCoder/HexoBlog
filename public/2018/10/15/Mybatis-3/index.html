@@ -60,7 +60,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/">Home</a>
+            <a class="nav-link" href="/">首页</a>
           </li>
         
           
@@ -68,7 +68,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/archives/">Archives</a>
+            <a class="nav-link" href="/archives/">归档</a>
           </li>
         
           
@@ -76,7 +76,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/categories/">Categories</a>
+            <a class="nav-link" href="/categories/">分类</a>
           </li>
         
           
@@ -84,7 +84,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/tags/">Tags</a>
+            <a class="nav-link" href="/tags/">标签</a>
           </li>
         
           
@@ -92,7 +92,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/about/">About</a>
+            <a class="nav-link" href="/about/">关于</a>
           </li>
         
         
@@ -143,6 +143,13 @@
                 
 
                 
+                  <!-- 不蒜子统计文章PV -->
+                  
+                  &nbsp;<i class="far fa-eye" aria-hidden="true"></i>&nbsp;
+                  <span id="busuanzi_container_page_pv">
+                    <span id="busuanzi_value_page_pv"></span> 次
+                  </span>&nbsp;
+                
               </p>
             
           </div>
@@ -185,7 +192,7 @@
 
 <h5 id="新建测试类执行"><a href="#新建测试类执行" class="headerlink" title="新建测试类执行"></a>新建测试类执行</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">public void <span class="function"><span class="title">selectAllAccount</span></span>()&#123;</span><br><span class="line">    List&lt;Account&gt; accts = accountMapper.selectAll();</span><br><span class="line">    <span class="keyword">for</span> (Account acct : accts) &#123;</span><br><span class="line">        System.out.println(<span class="string">"每个账户下的用户信息"</span>);</span><br><span class="line">        System.out.println(acct);</span><br><span class="line">        System.out.println(acct.getUser());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h5 id="执行结果"><a href="#执行结果" class="headerlink" title="执行结果"></a>执行结果</h5><p><img src="/images/mybatis1.png" srcset="/img/loading.gif" alt="result"></p>
+<h5 id="执行结果"><a href="#执行结果" class="headerlink" title="执行结果"></a>执行结果</h5><p><img src="/images/mybatis1.png" alt="result"></p>
 <hr>
 <h3 id="场景-多对一"><a href="#场景-多对一" class="headerlink" title="场景(多对一)"></a>场景(多对一)</h3><p>需要实现：</p>
 <ul>
@@ -199,7 +206,7 @@
 
 <h5 id="新建测试类执行-1"><a href="#新建测试类执行-1" class="headerlink" title="新建测试类执行"></a>新建测试类执行</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">public void selectTest() throws Exception&#123;</span><br><span class="line"></span><br><span class="line">    //5.使用代理对象执行方法</span><br><span class="line">    List&lt;User&gt; users= userDao.selectAll();</span><br><span class="line">    <span class="keyword">for</span> (User user: users) &#123;</span><br><span class="line">        System.out.println(<span class="string">"每个用户下账户的信息："</span>);</span><br><span class="line">        System.out.println(user);</span><br><span class="line">        System.out.println(user.getAccounts());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h5 id="执行结果-1"><a href="#执行结果-1" class="headerlink" title="执行结果"></a>执行结果</h5><p><img src="/images/mybatis2.png" srcset="/img/loading.gif" alt="result"></p>
+<h5 id="执行结果-1"><a href="#执行结果-1" class="headerlink" title="执行结果"></a>执行结果</h5><p><img src="/images/mybatis2.png" alt="result"></p>
 <hr>
 <h3 id="场景-多对多"><a href="#场景-多对多" class="headerlink" title="场景(多对多)"></a>场景(多对多)</h3><p>用户和角色<br>一个用户有多个角色<br>一个角色有多个用户<br>需要实现：</p>
 <ul>
@@ -224,7 +231,7 @@
 
 <h5 id="新建测试类执行-2"><a href="#新建测试类执行-2" class="headerlink" title="新建测试类执行"></a>新建测试类执行</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">public void <span class="function"><span class="title">selectRoleAll</span></span>()&#123;</span><br><span class="line">    List&lt;Role&gt; roles = roleMapper.selectAll();</span><br><span class="line">    <span class="keyword">for</span> (Role role:roles) &#123;</span><br><span class="line">        System.out.println(<span class="string">"每个角色的用户信息："</span>);</span><br><span class="line">        System.out.println(role);</span><br><span class="line">        System.out.println(role.getUsers());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h5 id="执行结果-2"><a href="#执行结果-2" class="headerlink" title="执行结果"></a>执行结果</h5><p><img src="/images/mybatis3.png" srcset="/img/loading.gif" alt="result"></p>
+<h5 id="执行结果-2"><a href="#执行结果-2" class="headerlink" title="执行结果"></a>执行结果</h5><p><img src="/images/mybatis3.png" alt="result"></p>
 <hr>
 <h5 id="根据用户查询角色"><a href="#根据用户查询角色" class="headerlink" title="根据用户查询角色"></a>根据用户查询角色</h5><p>同理，我们修改用户实体类，添加多对多的关系映射：一个用户具备多个角色</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br></pre></td><td class="code"><pre><span class="line">package com.loonycoder.domain;</span><br><span class="line"></span><br><span class="line">import java.io.Serializable;</span><br><span class="line">import java.util.Date;</span><br><span class="line">import java.util.List;</span><br><span class="line"></span><br><span class="line">public class User implements Serializable &#123;</span><br><span class="line">    private Integer id;</span><br><span class="line">    private String userName;</span><br><span class="line">    private Date birthday;</span><br><span class="line">    private String sex;</span><br><span class="line">    private String address;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//    多对多关系映射：一个用户具备多个角色</span><br><span class="line">    private List&lt;Role&gt; roles;</span><br><span class="line"></span><br><span class="line">    public List&lt;Role&gt; <span class="function"><span class="title">getRoles</span></span>() &#123;</span><br><span class="line">        <span class="built_in">return</span> roles;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setRoles(List&lt;Role&gt; roles) &#123;</span><br><span class="line">        this.roles = roles;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private List&lt;Account&gt; accounts;</span><br><span class="line"></span><br><span class="line">    public List&lt;Account&gt; <span class="function"><span class="title">getAccounts</span></span>() &#123;</span><br><span class="line">        <span class="built_in">return</span> accounts;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setAccounts(List&lt;Account&gt; accounts) &#123;</span><br><span class="line">        this.accounts = accounts;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public Integer <span class="function"><span class="title">getId</span></span>() &#123;</span><br><span class="line">        <span class="built_in">return</span> id;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setId(Integer id) &#123;</span><br><span class="line">        this.id = id;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public String <span class="function"><span class="title">getUserName</span></span>() &#123;</span><br><span class="line">        <span class="built_in">return</span> userName;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setUserName(String userName) &#123;</span><br><span class="line">        this.userName = userName;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public Date <span class="function"><span class="title">getBirthday</span></span>() &#123;</span><br><span class="line">        <span class="built_in">return</span> birthday;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setBirthday(Date birthday) &#123;</span><br><span class="line">        this.birthday = birthday;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public String <span class="function"><span class="title">getSex</span></span>() &#123;</span><br><span class="line">        <span class="built_in">return</span> sex;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setSex(String sex) &#123;</span><br><span class="line">        this.sex = sex;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public String <span class="function"><span class="title">getAddress</span></span>() &#123;</span><br><span class="line">        <span class="built_in">return</span> address;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setAddress(String address) &#123;</span><br><span class="line">        this.address = address;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public String <span class="function"><span class="title">toString</span></span>() &#123;</span><br><span class="line">        <span class="built_in">return</span> <span class="string">"User&#123;"</span> +</span><br><span class="line">                <span class="string">"id="</span> + id +</span><br><span class="line">                <span class="string">", userName='"</span> + userName + <span class="string">'\'</span><span class="string">' +</span></span><br><span class="line"><span class="string">                ", birthday=" + birthday +</span></span><br><span class="line"><span class="string">                ", sex='</span><span class="string">" + sex + '\'' +</span></span><br><span class="line"><span class="string">                "</span>, address=<span class="string">'" + address + '</span>\<span class="string">''</span> +</span><br><span class="line">                <span class="string">'&#125;'</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -238,7 +245,7 @@
 <p>新建测试方法：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">public void <span class="function"><span class="title">selectUserRoleAll</span></span>()&#123;</span><br><span class="line">    List&lt;User&gt; users = userDao.selectUserRoleAll();</span><br><span class="line">    <span class="keyword">for</span> (User user:users) &#123;</span><br><span class="line">        System.out.println(<span class="string">"每个用户的角色信息："</span>);</span><br><span class="line">        System.out.println(user);</span><br><span class="line">        System.out.println(user.getRoles());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>执行结果：<br><img src="/images/mybatis4.png" srcset="/img/loading.gif" alt="result"></p>
+<p>执行结果：<br><img src="/images/mybatis4.png" alt="result"></p>
 
             <hr>
           </div>
@@ -275,7 +282,7 @@
     <div class="d-none d-lg-block col-lg-2 toc-container">
       
   <div id="toc">
-    <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
+    <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
     <div id="tocbot"></div>
   </div>
 
@@ -313,7 +320,7 @@
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -322,7 +329,7 @@
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">keyword</label>
+                 for="local-search-input">关键词</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
@@ -333,12 +340,26 @@
 
   <footer class="mt-5">
   <div class="text-center py-3">
-    <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+    <a href="https://github.com/Loonycoder" target="_blank" rel="nofollow noopener"><b>望月</b></a>
     <i class="iconfont icon-love"></i>
-    <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
+    <a href="https://github.com/Loonycoder" target="_blank" rel="nofollow noopener"> <b>LoonyCoder</b></a>
     <br>
 
     
+  
+    <!-- 不蒜子统计PV -->
+    
+    &nbsp;<span id="busuanzi_container_site_pv"></span>访问量 
+          <span id="busuanzi_value_site_pv"></span> &nbsp;
+  
+  
+    <!-- 不蒜子统计UV -->
+    
+    &nbsp;<span id="busuanzi_container_site_uv"></span>访客数 
+            <span id="busuanzi_value_site_uv"></span> &nbsp;
+  
+  <br>
+
 
 
     
@@ -387,6 +408,8 @@
   <script src="/lib/smoothscroll/SmoothScroll.min.js" ></script>
 
 
+
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
 
 
 <!-- Plugins -->

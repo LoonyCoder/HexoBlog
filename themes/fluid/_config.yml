@@ -58,7 +58,7 @@ web_analytics:  # 网页访问统计
 
 lazyload: # 对页面中的图片进行懒加载处理，可见范围外的图片不会加载
   enable: true
-  onlypost: false  # 仅在文章页使用懒加载
+  onlypost: true  # 仅在文章页使用懒加载
 
 smooth_scroll: # 平滑滚动效果
   enable: true
@@ -102,9 +102,9 @@ banner_parallax: true  # 头图滚动视差
 #---------------------------
 footer:
   statistics:  # 统计网站 PV、UV，使用的是不蒜子，显示在页脚
-    enable: false
-    pv_format: "总访问量 {} 次"  # 显示的文本，{}是数字的占位符（必须包含)，下同
-    uv_format: "总访客数 {} 人"
+    enable: true
+    pv_format: "访问量 {} "  # 显示的文本，{}是数字的占位符（必须包含)，下同
+    uv_format: "访客数 {} "
 
   beian:  # The footer of China's website policy, other areas keep disable
     enable: false
@@ -122,7 +122,7 @@ scroll_top_arrow:  # 向顶部滚动的箭头
 # Index Page
 #---------------------------
 index:
-  banner_img: /img/default.png  # 首页 Banner 头图，以下相同
+  banner_img: /images/moon.jpg  # 首页 Banner 头图，以下相同
   banner_img_height: 100  # 头图高度，屏幕百分比，available: 0 - 100
   slogan:  # 首页副标题的独立设置
     enable: true  # 为 false 则不显示任何内容
@@ -154,7 +154,7 @@ post:
       enable: true
       format: "{} 分钟"
     views:  # 阅读次数，统计基于不蒜子
-      enable: false
+      enable: true
       format: "{} 次"
   toc:  # 文章右侧目录
     enable: true
@@ -307,7 +307,7 @@ about:  # 以下仅为页面顶部的基本信息，更多内容请在 ./pages/a
 # 404 Page
 #---------------------------
 page404:
-  banner_img: /img/default.png
+  banner_img: /images/banner.png
   banner_img_height: 80  # available: 0 - 100
   subtitle: 'Page not found'
 
@@ -317,7 +317,7 @@ page404:
 # Links Page
 #---------------------------
 links:
-  banner_img: /img/default.png
+  banner_img: /images/banner.png
   banner_img_height: 80  # available: 0 - 100
   items:
     Fluid Docs: [https://hexo.fluid-dev.com/docs/, 主题使用指南]
