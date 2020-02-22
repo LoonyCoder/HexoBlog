@@ -16,7 +16,7 @@
   <meta name="description" content="Life Is So Short , Just Coding.">
   <meta name="author" content="LoonyCoder">
   <meta name="keywords" content="隐约雷鸣，阴霾天空，但盼风雨来，能留你于此">
-  <title>归档 ~ 望月Plenilune</title>
+  <title>望月Plenilune</title>
 
   <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css"  >
 <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css"  >
@@ -39,7 +39,7 @@
 
 
 <body>
-  <header style="height: 80vh;">
+  <header style="height: 100vh;">
     <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand"
@@ -107,7 +107,7 @@
 </nav>
 
     <div class="view intro-2" id="background" parallax=true
-         style="background: url('/images/archive.jpg')no-repeat center center;
+         style="background: url('/images/moon.jpg')no-repeat center center;
            background-size: cover;">
       <div class="full-bg-img">
         <div class="mask rgba-black-light flex-center">
@@ -119,6 +119,10 @@
             
           </div>
 
+          
+            <div class="scroll-down-bar">
+              <i class="fas fa-angle-down scroll-down-arrow"></i>
+            </div>
           
         </div>
       </div>
@@ -135,48 +139,56 @@
               <div class="col-12 col-md-10 m-auto">
                 
 
-<div class="list-group">
-  <p class="h4">共计 21 篇文章</p>
-  <hr>
-  
+
+  <div class="row mx-auto index-card">
     
-      
-      <p class="h5">2018</p>
     
-    <a href="/2018/12/14/linux-1/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">Linux常用命令</span>
-      <span style="float: right;">12-14</span>
-    </a>
-  
-    
-    <a href="/2018/12/14/ActiveMQ/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">消息中间件ActiveMQ入门学习</span>
-      <span style="float: right;">12-14</span>
-    </a>
-  
-    
-    <a href="/2018/12/06/redis-2/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">Redis高可用解决方案总结</span>
-      <span style="float: right;">12-06</span>
-    </a>
-  
-    
-    <a href="/2018/11/28/redis-1/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">Redis入门</span>
-      <span style="float: right;">11-28</span>
-    </a>
-  
-    
-    <a href="/2018/11/21/nginx/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">高性能的HTTP服务器——Nginx</span>
-      <span style="float: right;">11-21</span>
-    </a>
-  
-</div>
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/2018/08/01/JavaBasic1/">
+        <p class="h4 index-header">Java基础（一）</p>
+      </a>
+
+      <a href="/2018/08/01/JavaBasic1/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">记录一些Java基础的知识点，为了自己查阅资料的时候方便一些。
+
+Java基础JDK和JRE的区别？1、jre即Java Runtime Environment，Java运行环境。包括Java虚拟机和Java类库2、jdk是Java开发工具包，例如：tools.jar
+
+== 和 equals的区别1、==是一个比较运算符，对于基本类型，比较的是具体的数值(int、double..)；对于引用类型，比较的是对象的内存地址2、equals是超类Object就具有的方法，因此所有的引用类型都具有这个方法，只用用来比较引用数据类型。equals方法默认比较的对象内存地址，如果重写该方法，一般比较的是</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2018-08-01&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Java">Java</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/Java">Java</a>&nbsp;
+          
+            <a href="/tags/Java%E5%9F%BA%E7%A1%80">Java基础</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+
 
   <nav aria-label="index posts navigation">
     <span class="pagination pg-blue justify-content-center mt-5" id="pagination">
-      <span class="page-number current">1</span><a class="page-number" href="/archives/2018/page/2/">2</a><a class="page-number" href="/archives/2018/page/3/">3</a><a class="page-number" href="/archives/2018/page/4/">4</a><a class="extend next" rel="next" href="/archives/2018/page/2/"><i class="fas fa-angle-double-right"></i></a>
+      <a class="extend prev" rel="prev" href="/page/4/"><i class="fas fa-angle-double-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span>
     </span>
   </nav>
   
@@ -185,6 +197,7 @@
       ele.href += '#board';
     }
   </script>
+
 
 
               </div>
@@ -310,7 +323,7 @@
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "归档&nbsp;",
+        "Code bestful and be a best coder , but life is so short , just coding.&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 70,
