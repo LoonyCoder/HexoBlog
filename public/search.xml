@@ -69,6 +69,146 @@
       </tags>
   </entry>
   <entry>
+    <title>Linux常用命令</title>
+    <url>/2018/12/14/linux-1/</url>
+    <content><![CDATA[<p><img src="/images/linux-logo.jpg" alt="linux"></p>
+<hr>
+<h3 id="基本命令"><a href="#基本命令" class="headerlink" title="基本命令"></a>基本命令</h3><h4 id="关机和重启"><a href="#关机和重启" class="headerlink" title="关机和重启"></a>关机和重启</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ shutdown -h now        立刻关机</span><br><span class="line">$ shutdown -h 5        5分钟后关机</span><br><span class="line">$ poweroff            立刻关机</span><br></pre></td></tr></table></figure>
+<h4 id="帮助命令"><a href="#帮助命令" class="headerlink" title="帮助命令"></a>帮助命令</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">--<span class="built_in">help</span>命令</span><br><span class="line">$ shutdown --<span class="built_in">help</span>：</span><br><span class="line">$ ifconfig  --<span class="built_in">help</span>：查看网卡信息</span><br><span class="line"> </span><br><span class="line">--man命令（命令说明书） </span><br><span class="line">$ man shutdown</span><br><span class="line">--注意：man shutdown打开命令说明书之后，使用按键q退出</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="目录操作命令"><a href="#目录操作命令" class="headerlink" title="目录操作命令"></a>目录操作命令</h3><h4 id="目录切换-cd"><a href="#目录切换-cd" class="headerlink" title="目录切换 cd"></a>目录切换 cd</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">--命令：<span class="built_in">cd</span> 目录</span><br><span class="line">$ <span class="built_in">cd</span> /        切换到根目录</span><br><span class="line">$ <span class="built_in">cd</span> /usr        切换到根目录下的usr目录</span><br><span class="line">$ <span class="built_in">cd</span> ../        切换到上一级目录 或者  <span class="built_in">cd</span> ..</span><br><span class="line">$ <span class="built_in">cd</span> ~        切换到home目录</span><br><span class="line">$ <span class="built_in">cd</span> -        切换到上次访问的目录</span><br></pre></td></tr></table></figure>
+<h4 id="目录查看-ls-al"><a href="#目录查看-ls-al" class="headerlink" title="目录查看 ls [-al]"></a>目录查看 ls [-al]</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">--命令：ls [-al]</span><br><span class="line">$ ls                查看当前目录下的所有目录和文件</span><br><span class="line">$ ls -a            查看当前目录下的所有目录和文件（包括隐藏的文件）</span><br><span class="line">$ ls -l 或 ll       列表查看当前目录下的所有目录和文件（列表查看，显示更多信息）</span><br><span class="line">$ ls /dir            查看指定目录下的所有目录和文件   如：ls /usr</span><br></pre></td></tr></table></figure>
+<h4 id="目录操作-增删改查"><a href="#目录操作-增删改查" class="headerlink" title="目录操作 [增删改查]"></a>目录操作 [增删改查]</h4><h5 id="创建目录-增-mkdir"><a href="#创建目录-增-mkdir" class="headerlink" title="创建目录 [增] mkdir"></a>创建目录 [增] mkdir</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">--命令：mkdir 目录</span><br><span class="line">$ mkdir xxx           在当前目录下创建一个名为xxx的目录</span><br><span class="line">$ mkdir /usr/xxx   在指定目录下创建一个名为xxx的目录</span><br></pre></td></tr></table></figure>
+<h5 id="删除目录或文件-删-rm"><a href="#删除目录或文件-删-rm" class="headerlink" title="删除目录或文件 [删] rm"></a>删除目录或文件 [删] rm</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">--命令：rm [-rf] 目录</span><br><span class="line"></span><br><span class="line">删除文件：</span><br><span class="line">$ rm 文件        删除当前目录下的文件</span><br><span class="line">$ rm -f 文件    删除当前目录的的文件（不询问）</span><br><span class="line"></span><br><span class="line">删除目录：</span><br><span class="line">$ rm -r xxx  递归删除当前目录下的xxx目录</span><br><span class="line">$ rm -rf xxx  递归删除当前目录下的xxx目录（不询问）</span><br><span class="line"></span><br><span class="line">全部删除：</span><br><span class="line">$ rm -rf *    将当前目录下的所有目录和文件全部删除</span><br><span class="line">$ rm -rf /*    【自杀命令！慎用！慎用！慎用！】将根目录下的所有文件全部删除</span><br><span class="line"></span><br><span class="line">注意：rm不仅可以删除目录，也可以删除其他文件或压缩包，为了方便大家的记忆，无论删除任何目录或文件，都直接使用 rm -rf 目录/文件/压缩包</span><br></pre></td></tr></table></figure>
+<h5 id="目录修改-改-mv和cp"><a href="#目录修改-改-mv和cp" class="headerlink" title="目录修改 [改] mv和cp"></a>目录修改 [改] mv和cp</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">一、重命名目录</span><br><span class="line">    命令：mv 当前目录  新目录</span><br><span class="line">    例如：mv xxx coder    将目录xxx改为coder</span><br><span class="line">    注意：mv的语法不仅可以对目录进行重命名而且也可以对各种文件，压缩包等进行重命名的操作</span><br><span class="line"></span><br><span class="line">二、剪切目录</span><br><span class="line">    命令：mv 目录名称 目录的新位置</span><br><span class="line">    示例：将/usr/tmp目录下的xxx目录剪切到 /usr目录下面     mv /usr/tmp/xxx /usr</span><br><span class="line">    注意：mv语法不仅可以对目录进行剪切操作，对文件和压缩包等都可执行剪切操作</span><br><span class="line"></span><br><span class="line">三、拷贝目录</span><br><span class="line">    命令：cp -r 目录名称 目录拷贝的目标位置   -r代表递归</span><br><span class="line">    示例：将/usr/tmp目录下的xxx目录复制到 /usr目录下面     cp /usr/tmp/xxx  /usr</span><br><span class="line">    注意：cp命令不仅可以拷贝目录还可以拷贝文件，压缩包等，拷贝文件和压缩包时不用写-r递归</span><br></pre></td></tr></table></figure>
+<h5 id="搜索目录-查-find"><a href="#搜索目录-查-find" class="headerlink" title="搜索目录 [查] find"></a>搜索目录 [查] find</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ find 目录 参数 文件名称</span><br><span class="line">示例：find /usr/tmp -name <span class="string">'a*'</span>  查找/usr/tmp目录下的所有以a开头的目录或文件</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="文件操作命令"><a href="#文件操作命令" class="headerlink" title="文件操作命令"></a>文件操作命令</h3><h4 id="文件操作-增删改查"><a href="#文件操作-增删改查" class="headerlink" title="文件操作 [增删改查]"></a>文件操作 [增删改查]</h4><h5 id="新建文件-增-touch"><a href="#新建文件-增-touch" class="headerlink" title="新建文件 [增] touch"></a>新建文件 [增] touch</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ touch 文件名</span><br><span class="line">示例：在当前目录创建一个名为aa.txt的文件 touch xxx.txt</span><br></pre></td></tr></table></figure>
+<h5 id="删除文件-删-rm"><a href="#删除文件-删-rm" class="headerlink" title="删除文件 [删] rm"></a>删除文件 [删] rm</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ rm -rf 文件名</span><br></pre></td></tr></table></figure>
+<h5 id="修改文件-改-vi-vim"><a href="#修改文件-改-vi-vim" class="headerlink" title="修改文件 [改] vi/vim"></a>修改文件 [改] vi/vim</h5><p><strong>[vi编辑器的3种模式]</strong><br>基本上vi可以分为三种状态，分别是命令模式（command mode）、插入模式（Insert mode）和底行模式（last line mode），各模式的功能区分如下：</p>
+<ul>
+<li><p>命令行模式command mode）<br>控制屏幕光标的移动，字符、字或行的删除，查找，移动复制某区段及进入Insert mode下，或者到 last line mode。<br>  命令行模式下的常用命令：</p>
+<pre><code>- 控制光标移动：↑，↓，j
+- 删除当前行：dd 
+- 查找：/字符
+- 进入编辑模式：i o a
+- 进入底行模式：:</code></pre></li>
+<li><p>编辑模式（Insert mode）<br>  只有在Insert mode下，才可以做文字输入，按「ESC」键可回到命令行模式。<br>  编辑模式下常用命令：</p>
+<pre><code>- ESC 退出编辑模式到命令行模式；</code></pre></li>
+<li><p>底行模式（last line mode）<br>  将文件保存或退出vi，也可以设置编辑环境，如寻找字符串、列出行号……等。<br>  底行模式下常用命令：</p>
+<pre><code>- 退出编辑：   :q
+- 强制退出：   :q!
+- 保存并退出：  :wq</code></pre></li>
+</ul>
+<p><strong>打开文件</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ vi 文件名</span><br><span class="line">示例：打开当前目录下的xxx.txt文件  vi xxx.txt 或者 vim xxx.txt</span><br><span class="line">注意：使用vi编辑器打开文件后，并不能编辑，因为此时处于命令模式，点击键盘i/a/o进入编辑模式。</span><br></pre></td></tr></table></figure>
+
+<p><strong>编辑文件</strong></p>
+<p>使用vi编辑器打开文件后点击按键：i ，a或者o即可进入编辑模式。<br>i:在光标所在字符前开始插入<br>a:在光标所在字符后开始插入<br>o:在光标所在行的下面另起一新行插入</p>
+<p><strong>保存或者取消编辑</strong></p>
+<p>保存文件：<br>第一步：ESC  进入命令行模式<br>第二步：:     进入底行模式<br>第三步：wq     保存并退出编辑<br>取消编辑：</p>
+<p>第一步：ESC  进入命令行模式<br>第二步：:     进入底行模式<br>第三步：q!     撤销本次修改并退出编辑</p>
+<h5 id="文件的查看-查"><a href="#文件的查看-查" class="headerlink" title="文件的查看 [查]"></a>文件的查看 [查]</h5><p>文件的查看命令：cat/more/less/tail<br><strong>cat：看最后一屏</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">示例：使用cat查看/etc/sudo.conf文件，只能显示最后一屏内容</span><br><span class="line">$ cat sudo.conf</span><br></pre></td></tr></table></figure>
+<p><strong>more：百分比显示</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">示例：使用more查看/etc/sudo.conf文件，可以显示百分比，回车可以向下一行，空格可以向下一页，q可以退出查看</span><br><span class="line">$ more sudo.conf</span><br></pre></td></tr></table></figure>
+<p><strong>less：翻页查看</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">示例：使用less查看/etc/sudo.conf文件，可以使用键盘上的PgUp和PgDn向上    和向下翻页，q结束查看</span><br><span class="line">$ less sudo.conf</span><br></pre></td></tr></table></figure>
+<p><strong>tail：指定行数或者动态查看</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">示例：使用tail -10 查看/etc/sudo.conf文件的后10行，Ctrl+C结束  </span><br><span class="line">$ tail -10 sudo.conf</span><br></pre></td></tr></table></figure>
+<h4 id="权限修改"><a href="#权限修改" class="headerlink" title="权限修改"></a>权限修改</h4><p>rwx：r代表可读，w代表可写，x代表该文件是一个可执行文件，如果rwx任意位置变为-则代表不可读或不可写或不可执行文件。</p>
+<p>示例：给xxx.txt文件权限改为可执行文件权限，xxx.txt文件的权限是-rw — —</p>
+<p>第一位：-就代表是文件，d代表是文件夹<br>第一段（3位）：代表拥有者的权限<br>第二段（3位）：代表拥有者所在的组，组员的权限<br>第三段（最后3位）：代表的是其他用户的权限</p>
+<p>421  421  421<br>rw-  —  —</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ chmod +x xxx.txt</span><br><span class="line">或者采用8421法</span><br><span class="line">$ chmod 100 xxx.txt</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="压缩文件操作"><a href="#压缩文件操作" class="headerlink" title="压缩文件操作"></a>压缩文件操作</h3><h4 id="打包和压缩"><a href="#打包和压缩" class="headerlink" title="打包和压缩"></a>打包和压缩</h4><p>Windows的压缩文件的扩展名  .zip/.rar<br>linux中的打包文件：xxx.tar<br>linux中的压缩文件：xxx.gz<br>linux中打包并压缩的文件：.tar.gz</p>
+<p>Linux中的打包文件一般是以.tar结尾的，压缩的命令一般是以.gz结尾的。<br>而一般情况下打包和压缩是一起进行的，打包并压缩后的文件的后缀名一般.tar.gz。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">命令：tar -zcvf 打包压缩后的文件名 要打包的文件</span><br><span class="line">其中：z：调用gzip压缩命令进行压缩</span><br><span class="line">  c：打包文件</span><br><span class="line">  v：显示运行过程</span><br><span class="line">  f：指定文件名</span><br><span class="line">示例：打包并压缩/usr/tmp下的所有文件压缩后的压缩包指定名称为xxx.tar</span><br><span class="line">$ tar -zcvf xxx.tar xx.txt xxx.txt </span><br><span class="line">或</span><br><span class="line">$ tar -zcvf xx.tar *</span><br></pre></td></tr></table></figure>
+<h4 id="解压"><a href="#解压" class="headerlink" title="解压"></a>解压</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">命令：tar [-zxvf] 压缩文件    </span><br><span class="line">其中：x：代表解压</span><br><span class="line">示例：将/usr/tmp下的xxx.tar解压到当前目录下</span><br><span class="line">$ tar -zxvf xxx.tar</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">示例：将/usr/tmp 下的xx.tar解压到根目录/usr下</span><br><span class="line">$ tar -zxvf xx.tar -C /usr -C代表指定解压的位置</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="查找命令"><a href="#查找命令" class="headerlink" title="查找命令"></a>查找命令</h3><h4 id="grep"><a href="#grep" class="headerlink" title="grep"></a>grep</h4><p>grep命令是一种强大的文本搜索工具<br>使用实例：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ps -ef | grep sshd  查找指定ssh服务进程 </span><br><span class="line">$ ps -ef | grep sshd | grep -v grep 查找指定服务进程，排除grep本身 </span><br><span class="line">$ ps -ef | grep sshd -c 查找指定进程个数</span><br></pre></td></tr></table></figure>
+<h4 id="find"><a href="#find" class="headerlink" title="find"></a>find</h4><p>find命令在目录结构中搜索文件，并对搜索结果执行指定的操作。<br>find 默认搜索当前目录及其子目录，并且不过滤任何结果（也就是返回所有文件），将它们全都显示在屏幕上。<br>使用实例：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ find . -name <span class="string">"*.log"</span> -ls  在当前目录查找以.<span class="built_in">log</span>结尾的文件，并显示详细信息。 </span><br><span class="line">$ find /root/ -perm 600   查找/root/目录下权限为600的文件 </span><br><span class="line">$ find . -<span class="built_in">type</span> f -name <span class="string">"*.log"</span>  查找当目录，以.<span class="built_in">log</span>结尾的普通文件 </span><br><span class="line">$ find . -<span class="built_in">type</span> d | sort   查找当前所有目录并排序 </span><br><span class="line">$ find . -size +100M  查找当前目录大于100M的文件</span><br></pre></td></tr></table></figure>
+<h4 id="locate"><a href="#locate" class="headerlink" title="locate"></a>locate</h4><p>locate 让使用者可以很快速的搜寻某个路径。默认每天自动更新一次，所以使用locate 命令查不到最新变动过的文件。为了避免这种情况，可以在使用locate之前，<font style="color: red">先使用updatedb命令</font>，手动更新数据库。如果数据库中没有查询的数据，则会报出<font style="color: red">locate: can not stat () ‘/var/lib/mlocate/mlocate.db’: No such file or directory</font>该错误！updatedb即可！</p>
+<p><strong><code>yum -y install mlocate</code>如果是精简版CentOS系统需要安装locate命令</strong><br>使用实例：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">updatedb</span><br><span class="line">$ locate /etc/sh 搜索etc目录下所有以sh开头的文件 </span><br><span class="line">$ locate <span class="built_in">pwd</span> 查找和<span class="built_in">pwd</span>相关的所有文件</span><br></pre></td></tr></table></figure>
+<h4 id="whereis"><a href="#whereis" class="headerlink" title="whereis"></a>whereis</h4><p>whereis命令是定位可执行文件、源代码文件、帮助文件在文件系统中的位置。这些文件的属性应属于原始代码，二进制文件，或是帮助文件。<br>使用实例：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ whereis ls    将和ls文件相关的文件都查找出来</span><br></pre></td></tr></table></figure>
+<h4 id="which"><a href="#which" class="headerlink" title="which"></a>which</h4><p>which命令的作用是在PATH变量指定的路径中，搜索某个系统命令的位置，并且返回第一个搜索结果。<br>使用实例：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ <span class="built_in">which</span> <span class="built_in">pwd</span>  查找<span class="built_in">pwd</span>命令所在路径 </span><br><span class="line">$ <span class="built_in">which</span> java  查找path中java的路径</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="su-sudo"><a href="#su-sudo" class="headerlink" title="su/sudo"></a>su/sudo</h3><h4 id="su"><a href="#su" class="headerlink" title="su"></a>su</h4><p>su用于用户之间的切换。但是切换前的用户依然保持登录状态。如果是root 向普通或虚拟用户切换不需要密码，反之普通用户切换到其它任何用户都需要密码验证。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ su <span class="built_in">test</span>:切换到<span class="built_in">test</span>用户，但是路径还是/root目录</span><br><span class="line">$ su - <span class="built_in">test</span> : 切换到<span class="built_in">test</span>用户，路径变成了/home/<span class="built_in">test</span></span><br><span class="line">$ su : 切换到root用户，但是路径还是原来的路径</span><br><span class="line">$ su - : 切换到root用户，并且路径是/root</span><br></pre></td></tr></table></figure>
+<p>su不足：如果某个用户需要使用root权限、则必须要把root密码告诉此用户。<br>退出返回之前的用户：exit</p>
+<h4 id="sudo"><a href="#sudo" class="headerlink" title="sudo"></a>sudo</h4><p>sudo是为所有想使用root权限的普通用户设计的。可以让普通用户具有临时使用root权限的权利。只需输入自己账户的密码即可。<br>进入sudo配置文件命令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vi /etc/sudoer或者visudo</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">案例：</span><br><span class="line">允许hadoop用户以root身份执行各种应用命令，需要输入hadoop用户的密码。</span><br><span class="line">$ hadoop  ALL=(ALL)   ALL </span><br><span class="line"> </span><br><span class="line">案例：</span><br><span class="line">只允许hadoop用户以root身份执行ls 、cat命令，并且执行时候免输入密码。 </span><br><span class="line">配置文件中： </span><br><span class="line">$ hadoop  ALL=NOPASSWD:  /bin/ls, /bin/cat</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="系统服务"><a href="#系统服务" class="headerlink" title="系统服务"></a>系统服务</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ service iptables status  --查看iptables服务的状态</span><br><span class="line">$ service iptables start  --开启iptables服务</span><br><span class="line">$ service iptables stop  --停止iptables服务</span><br><span class="line">$ service iptables restart  --重启iptables服务</span><br><span class="line">$ chkconfig iptables off  --关闭iptables服务的开机自启动</span><br><span class="line">$ chkconfig iptables on  --开启iptables服务的开机自启动</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="网络管理"><a href="#网络管理" class="headerlink" title="网络管理"></a>网络管理</h3><h4 id="主机名配置"><a href="#主机名配置" class="headerlink" title="主机名配置"></a>主机名配置</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[root@loonycoder ~]<span class="comment"># vi /etc/sysconfig/network</span></span><br><span class="line">NETWORKING=yes</span><br><span class="line">HOSTNAME=loonycoder</span><br></pre></td></tr></table></figure>
+<h4 id="IP-地址配置"><a href="#IP-地址配置" class="headerlink" title="IP 地址配置"></a>IP 地址配置</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[root@loonycoder ~]<span class="comment"># vi /etc/sysconfig/network-scripts/ifcfg-eth0</span></span><br></pre></td></tr></table></figure>
+<h4 id="域名映射"><a href="#域名映射" class="headerlink" title="域名映射"></a>域名映射</h4><p>/etc/hosts文件用于在通过主机名进行访问时做ip地址解析之用。所以，你想访问一个什么样的主机名，就需要把这个主机名和它对应的ip地址。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[root@loonycoder ~]<span class="comment"># vi /etc/hosts</span></span><br><span class="line"><span class="comment">#### 在最后加上</span></span><br><span class="line">192.168.0.1  node1</span><br><span class="line">192.168.0.2  node2</span><br><span class="line">192.168.0.3  node3</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="定时任务指令crontab-配置"><a href="#定时任务指令crontab-配置" class="headerlink" title="定时任务指令crontab 配置"></a>定时任务指令crontab 配置</h3><p>crontab是Unix和Linux用于设置定时任务的指令。通过crontab命令，可以在固定间隔时间,执行指定的系统指令或shell脚本。时间间隔的单位可以是分钟、小时、日、月、周及以上的任意组合。<br>crontab安装：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ yum install crontabs</span><br></pre></td></tr></table></figure>
+<p>服务操作说明：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ service crond start   <span class="comment">## 启动服务 </span></span><br><span class="line">$ service crond stop    <span class="comment">## 关闭服务 </span></span><br><span class="line">$ service crond restart <span class="comment">## 重启服务</span></span><br></pre></td></tr></table></figure>
+<h4 id="命令格式"><a href="#命令格式" class="headerlink" title="命令格式"></a>命令格式</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ crontab [-u user] file</span><br><span class="line">$ crontab [-u user] [ -e | -l | -r ]</span><br></pre></td></tr></table></figure>
+<p>参数说明：<br><strong>-u user</strong>：用来设定某个用户的crontab服务  </p>
+<p><strong>file</strong>：file是命令文件的名字,表示将file做为crontab的任务列表文件<br>并载入crontab。</p>
+<p><strong>-e</strong>：编辑某个用户的crontab文件内容。如果不指定用户，则表示编辑当前<br>用户的crontab文件。</p>
+<p><strong>-l</strong>：显示某个用户的crontab文件内容。如果不指定用户，则表示显示当前<br>用户的crontab文件内容。</p>
+<p><strong>-r</strong>：删除定时任务配置，从/var/spool/cron目录中删除某个用户的crontab<br>文件，如果不指定用户，则默认删除当前用户的crontab文件。</p>
+<p>命令示例：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ crontab file [-u user] <span class="comment">## 用指定的文件替代目前的crontab</span></span><br><span class="line">$ crontab -l [-u user]  <span class="comment">## 列出用户目前的crontab</span></span><br><span class="line">$ crontab -e [-u user]  <span class="comment">## 编辑用户目前的crontab</span></span><br></pre></td></tr></table></figure>
+<h4 id="配置说明、实例"><a href="#配置说明、实例" class="headerlink" title="配置说明、实例"></a>配置说明、实例</h4><p>命令：*   *    *   *   *   command  </p>
+<p>解释：分  时  日  月  周  命令</p>
+<p>第1列表示分钟1～59 每分钟用*或者 */1表示    </p>
+<p>第2列表示小时0～23（0表示0点）</p>
+<p>第3列表示日期1～31  </p>
+<p>第4列表示月份1～12  </p>
+<p>第5列标识号星期0～6（0表示星期天）  </p>
+<p>第6列要运行的命令</p>
+<p>配置实例：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#先打开定时任务所在的文件：</span></span><br><span class="line">$ crontab -e</span><br><span class="line"> </span><br><span class="line"><span class="comment">#每分钟执行一次date命令 </span></span><br><span class="line">$ */1 * * * * date &gt;&gt; /root/date.txt</span><br><span class="line"> </span><br><span class="line"><span class="comment">#每晚的21:30重启apache。 </span></span><br><span class="line">$ 30 21 * * * service httpd restart</span><br><span class="line"> </span><br><span class="line"><span class="comment">#每月1、10、22日的4 : 45重启apache。  </span></span><br><span class="line">$ 45 4 1,10,22 * * service httpd restart</span><br><span class="line"> </span><br><span class="line"><span class="comment">#每周六、周日的1 : 10重启apache。 </span></span><br><span class="line">$ 10 1 * * 6,0 service httpd restart</span><br><span class="line"> </span><br><span class="line"><span class="comment">#每天18 : 00至23 : 00之间每隔30分钟重启apache。</span></span><br><span class="line">$ 0,30   18-23    *   *   *   service httpd restart</span><br><span class="line"></span><br><span class="line"><span class="comment">#晚上11点到早上7点之间，每隔一小时重启apache</span></span><br><span class="line">$ *  23-7/1    *   *   *   service httpd restart</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="其他命令"><a href="#其他命令" class="headerlink" title="其他命令"></a>其他命令</h3><h4 id="查看当前目录：pwd"><a href="#查看当前目录：pwd" class="headerlink" title="查看当前目录：pwd"></a>查看当前目录：pwd</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ <span class="built_in">pwd</span>     <span class="comment">#查看当前目录路径</span></span><br></pre></td></tr></table></figure>
+<h4 id="查看进程：ps-ef"><a href="#查看进程：ps-ef" class="headerlink" title="查看进程：ps -ef"></a>查看进程：ps -ef</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ps -ef  <span class="comment">#查看所有正在运行的进程</span></span><br></pre></td></tr></table></figure>
+<h4 id="结束进程：kill"><a href="#结束进程：kill" class="headerlink" title="结束进程：kill"></a>结束进程：kill</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ <span class="built_in">kill</span> pid 或者 <span class="built_in">kill</span> -9 pid <span class="comment">#(强制杀死进程)           #pid:进程号</span></span><br></pre></td></tr></table></figure>
+<h4 id="网络通信命令："><a href="#网络通信命令：" class="headerlink" title="网络通信命令："></a>网络通信命令：</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># ifconfig：查看网卡信息</span></span><br><span class="line"></span><br><span class="line">$ ifconfig 或 ifconfig | more</span><br><span class="line"></span><br><span class="line"><span class="comment"># ping：查看与某台机器的连接情况</span></span><br><span class="line"></span><br><span class="line">$ ping ip</span><br><span class="line"></span><br><span class="line">$ netstat -an：查看当前系统端口</span><br><span class="line"></span><br><span class="line">$ netstat -an</span><br><span class="line"></span><br><span class="line"><span class="comment"># 搜索指定端口</span></span><br><span class="line"></span><br><span class="line">$ netstat -an | grep 8080</span><br></pre></td></tr></table></figure>
+<h4 id="配置网络"><a href="#配置网络" class="headerlink" title="配置网络"></a>配置网络</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ setup</span><br></pre></td></tr></table></figure>
+<h4 id="重启网络"><a href="#重启网络" class="headerlink" title="重启网络"></a>重启网络</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ service network restart</span><br></pre></td></tr></table></figure>
+<h4 id="切换用户"><a href="#切换用户" class="headerlink" title="切换用户"></a>切换用户</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ su -用户名</span><br></pre></td></tr></table></figure>
+<h4 id="关闭防火墙"><a href="#关闭防火墙" class="headerlink" title="关闭防火墙"></a>关闭防火墙</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ chkconfig iptables off</span><br><span class="line">或</span><br><span class="line">$ iptables -L;</span><br><span class="line">$ iptables -F;</span><br><span class="line">$ service iptables stop</span><br></pre></td></tr></table></figure>
+<h4 id="修改文件权限"><a href="#修改文件权限" class="headerlink" title="修改文件权限"></a>修改文件权限</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ chmod 777</span><br></pre></td></tr></table></figure>
+<h4 id="清屏"><a href="#清屏" class="headerlink" title="清屏"></a>清屏</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ clear</span><br><span class="line">或者</span><br><span class="line">$ ctrl + l</span><br></pre></td></tr></table></figure>
+<h4 id="vi模式下快捷键"><a href="#vi模式下快捷键" class="headerlink" title="vi模式下快捷键"></a>vi模式下快捷键</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">esc后:</span><br><span class="line">保存并退出快捷键：<span class="built_in">shift</span>+z+z</span><br><span class="line">光标跳到最后一行快捷键：<span class="built_in">shift</span>+g</span><br><span class="line">删除一行：dd</span><br><span class="line">复制一行内容：y+y</span><br><span class="line">粘贴复制的内容：p</span><br></pre></td></tr></table></figure>
+
+
+
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux - 服务器</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Redis高可用解决方案总结</title>
     <url>/2018/12/06/redis-2/</url>
     <content><![CDATA[<p><img src="/images/redis-logo.png" alt="redis"><br>本文主要针对 Redis 常见的几种使用方式及其优缺点展开分析。</p>
