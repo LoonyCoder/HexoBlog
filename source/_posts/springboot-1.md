@@ -17,6 +17,8 @@ tags:
 
 ---
 
+![springboot](/images/springboot/springboot_logo.png)
+
 #### 初识Spring Boot
 
 在之前我们一直使用Spring、SpringMVC、Mybatis进行开发，的确，Spring让我们认识到了项目开发原来可以这么方便。但是大量的配置文件却是令人头痛的，即使我们想写一个简单的请求映射并在浏览器上发送Get请求测试，那么需要：
