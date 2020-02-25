@@ -72,7 +72,7 @@ tags:
 查看"resource"目录是否带有四个横线，如果没有，同样的方式设置成"Resources Boot"
 ![ssm](/images/ssm/ssm7.png)
 
-在刚才新建的java文件下新建"com"包，再在com包下新建四个包，分别命名为：pojo、service、dao、controller。（如果出现下图中所示的包名重叠的情况，可以点击图中所示的图标，将"Hide empty middle package取消掉"）
+在刚才新建的java文件下新建"com.loonycoder"包，再在com包下新建四个包，分别命名为：pojo、service、dao、controller。
 
 ![ssm](/images/ssm/ssm8.png)
 
