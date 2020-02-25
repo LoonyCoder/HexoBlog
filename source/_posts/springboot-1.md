@@ -13,7 +13,7 @@ tags:
 ### 写在前面
 
 源码地址：[SpringBoot搭建](https://github.com/LoonyCoder/springboot)
-欢迎star/fork，给作者一些孤立！
+欢迎star/fork，给作者一些鼓励！
 
 ---
 
