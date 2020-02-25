@@ -784,7 +784,7 @@ FROM paper
 
 > 2.在resource/spring包下分别新建配置文件：spring-dao.xml , spring-mvc.xml , spring-service.xml
 
-<font style="color: red"><b>spring-dao.xml<b></font>
+<font style="color: red">**spring-dao.xml**</font>
 
 ```bash
 <?xml version="1.0" encoding="UTF-8" ?>
@@ -887,7 +887,7 @@ http://www.springframework.org/schema/context/spring-context.xsd">
 </beans>
 ```
 
-<font style="color: red"><b>spring-mvc.xml<b></font>
+<font style="color: red">**spring-mvc.xml**</font>
 
 ```bash
 <?xml version="1.0" encoding="UTF-8" ?>
@@ -958,7 +958,7 @@ http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 </beans>
 ```
 
-<font style="color: red"><b>spring-service.xml<b></font>
+<font style="color: red">**spring-service.xml**</font>
 
 ```bash
 <?xml version="1.0" encoding="UTF-8" ?>
