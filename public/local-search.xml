@@ -29,6 +29,33 @@
   
   
   <entry>
+    <title>通俗易懂搞定HashMap的底层原理</title>
+    <link href="/2019/02/06/hashmap/"/>
+    <url>/2019/02/06/hashmap/</url>
+    
+    <content type="html"><![CDATA[<p><strong>HashMap的底层原理面试必考题。</strong></p><p>为什么面试官如此青睐这道题？</p><p>HashMap里面涉及了很多的知识点，可以比较全面考察面试者的基本功，想要拿到一个好offer,这是一个迈不过的坎，接下来我用最通俗易懂的语言带着大家揭开HashMap的神秘面纱</p><p><strong>一：HashMap的节点</strong>：HashMap是一个集合，键值对的集合,源码中每个节点用Node&lt;K,V&gt;表示</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">static class Node&lt;K,V&gt; implements Map.Entry&lt;K,V&gt; &#123;</span><br><span class="line">   final int <span class="built_in">hash</span>;</span><br><span class="line">   final K key;</span><br><span class="line">   V value;</span><br><span class="line">   Node&lt;K,V&gt; next;</span><br></pre></td></tr></table></figure><p>Node是一个内部类，这里的key为键，value为值，next指向下一个元素，可以看出HashMap中的元素不是一个单纯的键值对，<strong>还包含下一个元素的引用</strong>。</p><p><strong>二：HashMap的数据结构</strong>：HashMap的数据结构为 <strong>数组+(链表或红黑树)</strong>，上图：</p><p><img src="/images/hashmap/hashmap1.jpg" srcset="/img/loading.gif" alt="hashmap"></p><p>为什么采用这种结构来存储元素呢？</p><p><strong>数组的特点：查询效率高，插入，删除效率低。</strong></p><p><strong>链表的特点：查询效率低，插入删除效率高。</strong></p><p>在HashMap底层使用数组加（链表或红黑树）的结构完美的解决了数组和链表的问题，使得查询和插入，删除的效率都很高。</p><p><strong>三：HashMap存储元素的过程：</strong></p><p>有这样一段代码：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">HashMap&lt;String,String&gt; map = new HashMap&lt;String,String&gt;();</span><br><span class="line">map.put(<span class="string">"loonycoder"</span>,<span class="string">"24"</span>);</span><br><span class="line">map.put(<span class="string">"欧阳娜娜"</span>,<span class="string">"22"</span>);</span><br></pre></td></tr></table></figure><p>现在我要把键值对 “loonycoder”,”24”存入map:</p><p>第一步：计算出键“loonycode”的hashcode，该值用来定位要将这个元素存放到数组中的什么位置。</p><p><strong>什么是hashcode？</strong></p><p>在Object类中有一个方法:</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public native int hashCode();</span><br></pre></td></tr></table></figure><p>该方法用native修饰，所以是一个本地方法，所谓本地方法就是非java代码，这个代码通常用c或c++写成，在java中可以去调用它。</p><p>调用这个方法会生成一个int型的整数，我们叫它哈希码，哈希码和调用它的对象地址和内容有关。</p><p><strong>哈希码的特点是:</strong></p><p><strong>对于同一个对象如果没有被修改（使用equals比较返回true）那么无论何时它的hashcode值都是相同的</strong></p><p><strong>对于两个对象如果他们的equals返回false,那么他们的hashcode值也有可能相等</strong></p><p>明白了hashcode我们再来看元素如何通过hashcode定位到要存储在数组的哪里，通过hashcode值和数组长度取模我们可以得到元素存储的下标。</p><p>loonycoder的hashcode为20977295 数组长度为 16则要存储在数组索引为 20977295%16=1的地方<br><img src="/images/hashmap/hashmap2.png" srcset="/img/loading.gif" alt="hashmap"></p><p>可以分两种情况:</p><ol><li><p>数组索引为1的地方是空的，这种情况很简单，直接将元素放进去就好了。</p></li><li><p>已经有元素占据了索引为1的位置，这种情况下我们需要判断一下该位置的元素和当前元素是否相等，使用equals来比较。</p></li></ol><p>如果使用默认的规则是比较两个对象的地址。也就是两者需要是同一个对象才相等，当然我们也可以重写equals方法来实现我们自己的比较规则最常见的是通过比较属性值来判断是否相等。</p><p><strong>如果两者相等则直接覆盖，如果不等则在原元素下面使用链表的结构存储该元素</strong></p><p><img src="/images/hashmap/hashmap3.png" srcset="/img/loading.gif" alt="hashmap"></p><p>每个元素节点都有一个next属性指向下一个节点，这里由数组结构变成了数组+链表结构,红黑树又是怎么回事呢？</p><p>因为链表中元素太多的时候会影响查找效率，所以当链表的元素个数达到8的时候使用链表存储就转变成了使用红黑树存储，原因就是<strong>红黑树是平衡二叉树，在查找性能方面比链表要高。</strong></p><p><strong>四：HashMap中的两个重要的参数</strong>：HashMap中有两个重要的参数：<strong>初始容量大小和加载因子</strong>，初始容量大小是创建时给数组分配的容量大小，默认值为16，<strong>用数组容量大小乘以加载因子得到一个值，一旦数组中存储的元素个数超过该值就会调用rehash方法将数组容量增加到原来的两倍，专业术语叫做扩容。</strong></p><p><strong>在做扩容的时候会生成一个新的数组，原来的所有数据需要重新计算哈希码值重新分配到新的数组，所以扩容的操作非常消耗性能。</strong></p><p><img src="/images/hashmap/hashmap4.png" srcset="/img/loading.gif" alt="hashmap"></p><p>创建HashMap时我们可以通过合理的设置初始容量大小来达到尽量少的扩容的目的。加载因子也可以设置，但是除非特殊情况不建议设置。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>HashMap</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Java</tag>
+      
+      <tag>数据结构</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Spring、SpringMVC、Mybatis整合之工程搭建</title>
     <link href="/2019/01/28/ssm/"/>
     <url>/2019/01/28/ssm/</url>
