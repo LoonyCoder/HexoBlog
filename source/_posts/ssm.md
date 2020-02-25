@@ -1,5 +1,5 @@
 ---
-title: Spring、SpringMVC、Mybatis整合之工程搭建
+title: Spring、SpringMVC、Mybatis整合+实现简单CRUD
 categories:
     - SSM框架
     
@@ -11,7 +11,8 @@ tags:
 ---
 ### 写在前面
 
-源码地址：[SSM整合](https://github.com/LoonyCoder/ssm)
+仓库地址：[SSM整合](https://github.com/LoonyCoder/ssm)
+欢迎star/fork，给作者一些鼓励！
 
 ---
 
