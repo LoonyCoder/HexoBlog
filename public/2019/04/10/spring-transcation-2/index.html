@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="description" content="Life Is So Short , Just Coding.">
+  <meta name="author" content="LoonyCoder">
+  <meta name="keywords" content="隐约雷鸣，阴霾天空，但盼风雨来，能留你于此">
+  <title>Spring事务管理实现方式之编程式事务与声明式事务详解 ~ 望月Plenilune</title>
+
+  <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css"  >
+<link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css"  >
+<link rel="stylesheet" href="/lib/mdbootstrap/css/mdb.min.css"  >
+<link rel="stylesheet" href="/lib/github-markdown/github-markdown.min.css"  >
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
+
+
+
+  <link rel="stylesheet" href="/lib/prettify/tomorrow-night-eighties.min.css"  >
+
+<link rel="stylesheet" href="/css/main.css"  >
+
+
+  <link rel="stylesheet" href="/lib/fancybox/jquery.fancybox.min.css"  >
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>望月Plenilune</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/archives/">归档</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/categories/">分类</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/tags/">标签</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/about/">关于</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="view intro-2" id="background" false
+         style="background: url('/images/post_banner.jpg')no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask rgba-black-light flex-center">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              <br>
+              
+                <p class="mt-3">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>&nbsp;
+                  星期三, 四月 10日 2019, 6:06 晚上
+                </p>
+              
+
+              <p>
+                
+                  
+                  &nbsp;<i class="far fa-chart-bar"></i>
+                  <span class="post-count">
+                    2.3k 字
+                  </span>&nbsp;
+                
+
+                
+                  
+                  &nbsp;<i class="far fa-clock"></i>
+                  <span class="post-count">
+                      9 分钟
+                  </span>&nbsp;
+                
+
+                
+                  <!-- 不蒜子统计文章PV -->
+                  
+                  &nbsp;<i class="far fa-eye" aria-hidden="true"></i>&nbsp;
+                  <span id="busuanzi_container_page_pv">
+                    <span id="busuanzi_value_page_pv"></span> 次
+                  </span>&nbsp;
+                
+              </p>
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="py-5 z-depth-3" id="board">
+        <div class="post-content mx-auto" id="post">
+          <div class="markdown-body">
+            <h3 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h3><p>关于Spring事务的传播级别和隔离级别以及分布式事务的简单配置可以参考我上一篇文章<a href="">Spring事务隔离级别、传播行为以及Spring+Mybatis+Atomikos实现分布式事务管理</a>;</p>
+<hr>
+<h3 id="编程式事务"><a href="#编程式事务" class="headerlink" title="编程式事务"></a>编程式事务</h3><p><strong>编码方式实现事务管理（代码演示为JDBC事务管理）</strong></p>
+<p>Spring实现编程式事务，依赖于2大类，分别是上篇文章提到的PlatformTransactionManager，与模版类TransactionTemplate（推荐使用）。下面分别详细介绍Spring是如何通过该类实现事务管理。</p>
+<ol>
+<li>PlatformTransactionManager，上篇文章已经详情解说了该类所拥有的方法，具体请参考上一篇文章。</li>
+</ol>
+<blockquote>
+<p>事务管理器配置</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=<span class="string">"dataSource"</span> class=<span class="string">"com.mchange.v2.c3p0.ComboPooledDataSource"</span>&gt;</span><br><span class="line">  &lt;property name=<span class="string">"jdbcUrl"</span> value=<span class="string">"<span class="variable">$&#123;db.jdbcUrl&#125;</span>"</span> /&gt;</span><br><span class="line">  &lt;property name=<span class="string">"user"</span> value=<span class="string">"<span class="variable">$&#123;user&#125;</span>"</span> /&gt;</span><br><span class="line">  &lt;property name=<span class="string">"password"</span> value=<span class="string">"<span class="variable">$&#123;password&#125;</span>"</span> /&gt;</span><br><span class="line">  &lt;property name=<span class="string">"driverClass"</span> value=<span class="string">"<span class="variable">$&#123;db.driverClass&#125;</span>"</span> /&gt;</span><br><span class="line">   &lt;!--连接池中保留的最小连接数。 --&gt; </span><br><span class="line">     &lt;property name=<span class="string">"minPoolSize"</span>&gt; </span><br><span class="line">         &lt;value&gt;5&lt;/value&gt; </span><br><span class="line">     &lt;/property&gt; </span><br><span class="line">     &lt;!--连接池中保留的最大连接数。Default: 15 --&gt; </span><br><span class="line">     &lt;property name=<span class="string">"maxPoolSize"</span>&gt; </span><br><span class="line">         &lt;value&gt;30&lt;/value&gt; </span><br><span class="line">     &lt;/property&gt; </span><br><span class="line">     &lt;!--初始化时获取的连接数，取值应在minPoolSize与maxPoolSize之间。Default: 3 --&gt; </span><br><span class="line">     &lt;property name=<span class="string">"initialPoolSize"</span>&gt; </span><br><span class="line">         &lt;value&gt;10&lt;/value&gt; </span><br><span class="line">     &lt;/property&gt; </span><br><span class="line">     &lt;!--最大空闲时间,60秒内未使用则连接被丢弃。若为0则永不丢弃。Default: 0 --&gt; </span><br><span class="line">     &lt;property name=<span class="string">"maxIdleTime"</span>&gt; </span><br><span class="line">         &lt;value&gt;60&lt;/value&gt; </span><br><span class="line">     &lt;/property&gt; </span><br><span class="line">     &lt;!--当连接池中的连接耗尽的时候c3p0一次同时获取的连接数。Default: 3 --&gt; </span><br><span class="line">     &lt;property name=<span class="string">"acquireIncrement"</span>&gt; </span><br><span class="line">         &lt;value&gt;5&lt;/value&gt; </span><br><span class="line">     &lt;/property&gt; </span><br><span class="line">     &lt;!--JDBC的标准参数，用以控制数据源内加载的PreparedStatements数量。但由于预缓存的statements 属于单个connection而不是整个连接池。所以设置这个参数需要考虑到多方面的因素。  如果maxStatements与maxStatementsPerConnection均为0，则缓存被关闭。Default: 0 --&gt; </span><br><span class="line">     &lt;property name=<span class="string">"maxStatements"</span>&gt; </span><br><span class="line">         &lt;value&gt;0&lt;/value&gt; </span><br><span class="line">     &lt;/property&gt; </span><br><span class="line">     &lt;!--每60秒检查所有连接池中的空闲连接。Default: 0 --&gt; </span><br><span class="line">     &lt;property name=<span class="string">"idleConnectionTestPeriod"</span>&gt; </span><br><span class="line">         &lt;value&gt;60&lt;/value&gt; </span><br><span class="line">     &lt;/property&gt; </span><br><span class="line">     &lt;!--定义在从数据库获取新连接失败后重复尝试的次数。Default: 30 --&gt; </span><br><span class="line">     &lt;property name=<span class="string">"acquireRetryAttempts"</span>&gt; </span><br><span class="line">         &lt;value&gt;30&lt;/value&gt; </span><br><span class="line">     &lt;/property&gt; </span><br><span class="line">     &lt;!--获取连接失败将会引起所有等待连接池来获取连接的线程抛出异常。但是数据源仍有效保留，并在下次调用getConnection()的时候继续尝试获取连接。如果设为<span class="literal">true</span>，那么在尝试获取连接失败后该数据源将申明已断开并永久关闭。Default: <span class="literal">false</span> --&gt; </span><br><span class="line">     &lt;property name=<span class="string">"breakAfterAcquireFailure"</span>&gt; </span><br><span class="line">         &lt;value&gt;<span class="literal">true</span>&lt;/value&gt; </span><br><span class="line">     &lt;/property&gt; </span><br><span class="line">     &lt;!--因性能消耗大请只在需要的时候使用它。如果设为<span class="literal">true</span>那么在每个connection提交的 时候都将校验其有效性。建议使用idleConnectionTestPeriod或automaticTestTable等方法来提升连接测试的性能。Default: <span class="literal">false</span> --&gt; </span><br><span class="line">     &lt;property name=<span class="string">"testConnectionOnCheckout"</span>&gt; </span><br><span class="line">         &lt;value&gt;<span class="literal">false</span>&lt;/value&gt; </span><br><span class="line">     &lt;/property&gt; </span><br><span class="line">&lt;/bean&gt;</span><br><span class="line">&lt;!--DataSourceTransactionManager位于org.springframework.jdbc.datasource包下，数据源事务管理类，提供对单个javax.sql.DataSource数据源的事务管理，主要用于JDBC，Mybatis框架事务管理。 --&gt;</span><br><span class="line">&lt;bean id=<span class="string">"transactionManager"</span> class=<span class="string">"org.springframework.jdbc.datasource.DataSourceTransactionManager"</span>&gt;</span><br><span class="line">  &lt;property name=<span class="string">"dataSource"</span> ref=<span class="string">"dataSource"</span> /&gt;</span><br><span class="line">&lt;/bean&gt;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>业务中使用代码(以测试类展示)</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">import java.util.Map;</span><br><span class="line">import javax.annotation.Resource;</span><br><span class="line">import javax.sql.DataSource;</span><br><span class="line">import org.apache.log4j.Logger;</span><br><span class="line">import org.junit.Test;</span><br><span class="line">import org.junit.runner.RunWith;</span><br><span class="line">import org.springframework.jdbc.core.JdbcTemplate;</span><br><span class="line">import org.springframework.test.context.ContextConfiguration;</span><br><span class="line">import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;</span><br><span class="line">import org.springframework.transaction.PlatformTransactionManager;</span><br><span class="line">import org.springframework.transaction.TransactionDefinition;</span><br><span class="line">import org.springframework.transaction.TransactionStatus;</span><br><span class="line">import org.springframework.transaction.support.DefaultTransactionDefinition;</span><br><span class="line"> </span><br><span class="line">@RunWith(SpringJUnit4ClassRunner.class)</span><br><span class="line">@ContextConfiguration(locations = &#123; <span class="string">"classpath:spring-public.xml"</span> &#125;)</span><br><span class="line">public class <span class="built_in">test</span> &#123;</span><br><span class="line">  @Resource</span><br><span class="line">  private PlatformTransactionManager txManager;</span><br><span class="line">  @Resource</span><br><span class="line">  private  DataSource dataSource;</span><br><span class="line">  private static JdbcTemplate jdbcTemplate;</span><br><span class="line">  Logger logger=Logger.getLogger(test.class);</span><br><span class="line">    private static final String INSERT_SQL = <span class="string">"insert into testtranstation(sd) values(?)"</span>;</span><br><span class="line">    private static final String COUNT_SQL = <span class="string">"select count(*) from testtranstation"</span>;</span><br><span class="line">  @Test</span><br><span class="line">  public void <span class="function"><span class="title">testdelivery</span></span>()&#123;</span><br><span class="line">    //定义事务隔离级别，传播行为，</span><br><span class="line">      DefaultTransactionDefinition def = new DefaultTransactionDefinition();  </span><br><span class="line">      def.setIsolationLevel(TransactionDefinition.ISOLATION_READ_COMMITTED);  </span><br><span class="line">      def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);  </span><br><span class="line">      //事务状态类，通过PlatformTransactionManager的getTransaction方法根据事务定义获取；获取事务状态后，Spring根据传播行为来决定如何开启事务</span><br><span class="line">      TransactionStatus status = txManager.getTransaction(def);  </span><br><span class="line">      jdbcTemplate = new JdbcTemplate(dataSource);</span><br><span class="line">      int i = jdbcTemplate.queryForInt(COUNT_SQL);  </span><br><span class="line">      System.out.println(<span class="string">"表中记录总数："</span>+i);</span><br><span class="line">      try &#123;  </span><br><span class="line">          jdbcTemplate.update(INSERT_SQL, <span class="string">"1"</span>);  </span><br><span class="line">          txManager.commit(status);  //提交status中绑定的事务</span><br><span class="line">      &#125; catch (RuntimeException e) &#123;  </span><br><span class="line">          txManager.rollback(status);  //回滚</span><br><span class="line">      &#125;  </span><br><span class="line">      i = jdbcTemplate.queryForInt(COUNT_SQL);  </span><br><span class="line">      System.out.println(<span class="string">"表中记录总数："</span>+i);</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>使用TransactionTemplate，该类继承了接口DefaultTransactionDefinition，用于简化事务管理，事务管理由模板类定义，主要是通过TransactionCallback回调接口或TransactionCallbackWithoutResult回调接口指定，通过调用模板类的参数类型为TransactionCallback或TransactionCallbackWithoutResult的execute方法来自动享受事务管理。</li>
+</ol>
+<p>TransactionTemplate模板类使用的回调接口：</p>
+<ul>
+<li>TransactionCallback：通过实现该接口的“T doInTransaction(TransactionStatus status) ”方法来定义需要事务管理的操作代码；</li>
+<li>TransactionCallbackWithoutResult：继承TransactionCallback接口，提供“void doInTransactionWithoutResult(TransactionStatus status)”便利接口用于方便那些不需要返回值的事务操作代码。</li>
+</ul>
+<blockquote>
+<p>还是以测试类方式展示如何实现</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">public void <span class="function"><span class="title">testTransactionTemplate</span></span>()&#123;</span><br><span class="line">  jdbcTemplate = new JdbcTemplate(dataSource);</span><br><span class="line">    int i = jdbcTemplate.queryForInt(COUNT_SQL);  </span><br><span class="line">    System.out.println(<span class="string">"表中记录总数："</span>+i);</span><br><span class="line">  //构造函数初始化TransactionTemplate</span><br><span class="line">  TransactionTemplate template = new TransactionTemplate(txManager);</span><br><span class="line">  template.setIsolationLevel(TransactionDefinition.ISOLATION_READ_COMMITTED);  </span><br><span class="line">  //重写execute方法实现事务管理</span><br><span class="line">  template.execute(new <span class="function"><span class="title">TransactionCallbackWithoutResult</span></span>() &#123;</span><br><span class="line">    @Override</span><br><span class="line">    protected void doInTransactionWithoutResult(TransactionStatus status) &#123;</span><br><span class="line">      jdbcTemplate.update(INSERT_SQL, <span class="string">"饿死"</span>);   //字段sd为int型，所以插入肯定失败报异常，自动回滚，代表TransactionTemplate自动管理事务</span><br><span class="line">    &#125;&#125;</span><br><span class="line">  );</span><br><span class="line">  i = jdbcTemplate.queryForInt(COUNT_SQL);  </span><br><span class="line">    System.out.println(<span class="string">"表中记录总数："</span>+i);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="声明式事务"><a href="#声明式事务" class="headerlink" title="声明式事务"></a>声明式事务</h3><p><strong>可知编程式事务每次实现都要单独实现，但业务量大功能复杂时，使用编程式事务无疑是痛苦的，而声明式事务不同，声明式事务属于无侵入式，不会影响业务逻辑的实现。</strong></p>
+<p>声明式事务实现方式主要有2种，一种为通过使用Spring的&lt;tx:advice&gt;定义事务通知与AOP相关配置实现，另为一种通过@Transactional实现事务管理实现，下面详细说明2种方法如何配置，以及相关注意点。</p>
+<ol>
+<li>方式一，配置文件如下<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- </span><br><span class="line">&lt;tx:advice&gt;定义事务通知，用于指定事务属性，其中“transaction-manager”属性指定事务管理器，并通过&lt;tx:attributes&gt;指定具体需要拦截的方法</span><br><span class="line">  &lt;tx:method&gt;拦截方法，其中参数有：</span><br><span class="line">  name:方法名称，将匹配的方法注入事务管理，可用通配符</span><br><span class="line">  propagation：事务传播行为，</span><br><span class="line">  isolation：事务隔离级别定义；默认为“DEFAULT”</span><br><span class="line">  timeout：事务超时时间设置，单位为秒，默认-1，表示事务超时将依赖于底层事务系统；</span><br><span class="line">  <span class="built_in">read</span>-only：事务只读设置，默认为<span class="literal">false</span>，表示不是只读；</span><br><span class="line">    rollback-for：需要触发回滚的异常定义，可定义多个，以“，”分割，默认任何RuntimeException都将导致事务回滚，而任何Checked Exception将不导致事务回滚；</span><br><span class="line">    no-rollback-for：不被触发进行回滚的 Exception(s)；可定义多个，以“，”分割；</span><br><span class="line"> --&gt;</span><br><span class="line">&lt;tx:advice id=<span class="string">"advice"</span> transaction-manager=<span class="string">"transactionManager"</span>&gt;</span><br><span class="line">  &lt;tx:attributes&gt;</span><br><span class="line">      &lt;!-- 拦截save开头的方法，事务传播行为为：REQUIRED：必须要有事务, 如果没有就在上下文创建一个 --&gt;</span><br><span class="line">    &lt;tx:method name=<span class="string">"save*"</span> propagation=<span class="string">"REQUIRED"</span> isolation=<span class="string">"READ_COMMITTED"</span> timeout=<span class="string">""</span> <span class="built_in">read</span>-only=<span class="string">"false"</span> no-rollback-for=<span class="string">""</span> rollback-for=<span class="string">""</span>/&gt;</span><br><span class="line">    &lt;!-- 支持,如果有就有,没有就没有 --&gt;</span><br><span class="line">    &lt;tx:method name=<span class="string">"*"</span> propagation=<span class="string">"SUPPORTS"</span>/&gt;</span><br><span class="line">  &lt;/tx:attributes&gt;</span><br><span class="line">&lt;/tx:advice&gt;</span><br><span class="line">&lt;!-- 定义切入点，expression为切人点表达式，如下是指定impl包下的所有方法，具体以自身实际要求自定义  --&gt;</span><br><span class="line">&lt;aop:config&gt;</span><br><span class="line">    &lt;aop:pointcut expression=<span class="string">"execution(* com.loonycoder.*.service.impl.*.*(..))"</span> id=<span class="string">"pointcut"</span>/&gt;</span><br><span class="line">    &lt;!--&lt;aop:advisor&gt;定义切入点，与通知，把tx与aop的配置关联,才是完整的声明事务配置 --&gt;</span><br><span class="line">    &lt;aop:advisor advice-ref=<span class="string">"advice"</span> pointcut-ref=<span class="string">"pointcut"</span>/&gt;</span><br><span class="line">&lt;/aop:config&gt;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>关于事务传播行为与隔离级别，可参考<a href=""></a>;</p>
+<p><strong>注意：</strong></p>
+<ul>
+<li>事务回滚异常只能为RuntimeException异常，而Checked Exception异常不回滚，捕获异常不抛出也不会回滚，但可以强制事务回滚：TransactionAspectSupport.currentTransactionStatus().isRollbackOnly();</li>
+<li>解决“自我调用”而导致的不能设置正确的事务属性问题，可参考<a href="http://www.iteye.com/topic/1122740" target="_blank" rel="noopener">http://www.iteye.com/topic/1122740</a></li>
+</ul>
+<ol start="2">
+<li>方式二通过@Transactional实现事务管理<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=<span class="string">"txManager"</span> class=<span class="string">"org.springframework.jdbc.datasource.DataSourceTransactionManager"</span>&gt;   </span><br><span class="line">     &lt;property name=<span class="string">"dataSource"</span> ref=<span class="string">"dataSource"</span>/&gt;</span><br><span class="line">&lt;/bean&gt;    </span><br><span class="line">&lt;tx:annotation-driven transaction-manager=<span class="string">"txManager"</span>/&gt; //开启事务注解</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>@Transactional(propagation=Propagation.REQUIRED,isolation=Isolation.READ_COMMITTED)，具体参数跟上面&lt;tx:method&gt;中一样<br>Spring提供的@Transaction注解事务管理，内部同样是利用环绕通知TransactionInterceptor实现事务的开启及关闭。<br>使用@Transactional注意点：</p>
+<ul>
+<li>如果在接口、实现类或方法上都指定了@Transactional 注解，则优先级顺序为方法&gt;实现类&gt;接口；</li>
+<li>建议只在实现类或实现类的方法上使用@Transactional，而不要在接口上使用，这是因为如果使用JDK代理机制（<font style="color: red">基于接口的代理</font>）是没问题；而使用使用CGLIB代理（继承）机制时就会遇到问题，因为其使用基于类的代理而不是接口，这是因为<font style="color: red">接口上的@Transactional注解是“不能继承的”</font>；</li>
+</ul>
+
+            <hr>
+          </div>
+          <br>
+          <div>
+            <p>
+            
+              <span>
+                <i class="iconfont icon-inbox"></i>
+                
+                  <a class="hover-with-bg" href="/categories/Spring">Spring</a>
+                  &nbsp;
+                
+              </span>&nbsp;&nbsp;
+            
+            
+              <span>
+                <i class="iconfont icon-tag"></i>
+                
+                  <a class="hover-with-bg" href="/tags/%E4%BA%8B%E5%8A%A1">事务</a>
+                
+                  <a class="hover-with-bg" href="/tags/Spring">Spring</a>
+                
+              </span>
+            
+            </p>
+            
+              <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" target="_blank" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="d-none d-lg-block col-lg-2 toc-container">
+      
+  <div id="toc">
+    <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+    <div id="tocbot"></div>
+  </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- custom -->
+
+
+<!-- Comments -->
+<div class="col-lg-7 mx-auto nopadding-md">
+  <div class="container comments mx-auto" id="comments">
+    
+      <br><br>
+      
+      
+
+    
+  </div>
+</div>
+
+    
+  </main>
+
+  
+    <a class="z-depth-1" id="scroll-top-button" href="#" role="button">
+      <i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <a href="https://github.com/Loonycoder" target="_blank" rel="nofollow noopener"><b>望月</b></a>
+    <i class="iconfont icon-love"></i>
+    <a href="https://github.com/Loonycoder" target="_blank" rel="nofollow noopener"> <b>LoonyCoder</b></a>
+    <br>
+
+    
+  
+    <!-- 不蒜子统计PV -->
+    
+    &nbsp;<span id="busuanzi_container_site_pv"></span>访问量: 
+          <span id="busuanzi_value_site_pv"></span> &nbsp;
+  
+  
+    <!-- 不蒜子统计UV -->
+    
+    &nbsp;<span id="busuanzi_container_site_uv"></span>访客数: 
+            <span id="busuanzi_value_site_uv"></span> &nbsp;
+  
+  <br>
+
+
+
+    
+
+
+    <!-- cnzz Analytics icon -->
+    
+
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script src="/lib/jquery/jquery.min.js" ></script>
+<script src="/lib/popper/popper.min.js" ></script>
+<script src="/lib/bootstrap/js/bootstrap.min.js" ></script>
+<script src="/lib/mdbootstrap/js/mdb.min.js" ></script>
+<script src="/js/main.js" ></script>
+
+
+  <script src="/js/lazyload.js" ></script>
+
+
+
+  <script src="/js/post.js" ></script>
+  
+    <script src="/lib/tocbot/tocbot.min.js" ></script>
+    <script>
+      $(document).ready(function () {
+        tocbot.init({
+          tocSelector: '#tocbot',
+          contentSelector: '.post-content',
+          headingSelector: 'h1,h2,h3,h4,h5,h6',
+          linkClass: 'tocbot-link',
+          activeLinkClass: 'tocbot-active-link',
+          listClass: 'tocbot-list',
+          isCollapsedClass: 'tocbot-is-collapsed',
+          collapsibleClass: 'tocbot-is-collapsible',
+          scrollSmooth: true,
+        });
+      });
+    </script>
+  
+
+
+
+  <script src="/lib/smoothscroll/SmoothScroll.min.js" ></script>
+
+
+
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+<!-- Plugins -->
+
+
+  
+
+  
+
+  
+
+  
+
+  <!-- cnzz Analytics -->
+  
+
+
+
+  <script src="/lib/prettify/prettify.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      $('pre').addClass('prettyprint  linenums');
+      prettyPrint();
+    })
+  </script>
+
+
+
+  <script src="/lib/typed/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "Spring事务管理实现方式之编程式事务与声明式事务详解&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script src="/lib/anchor/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+      icon: "❡"
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      getSearchFile(path);
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script src="/lib/fancybox/jquery.fancybox.min.js" ></script>
+  <script>
+    $("#post img:not(.no-zoom img, img[no-zoom])").each(
+      function () {
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "images");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+  
+  
+    <script>
+      !function (e, t, a) {
+        function r() {
+          for (var e = 0; e < s.length; e++) s[e].alpha <= 0 ? (t.body.removeChild(s[e].el), s.splice(e, 1)) : (s[e].y--, s[e].scale += .004, s[e].alpha -= .013, s[e].el.style.cssText = "left:" + s[e].x + "px;top:" + s[e].y + "px;opacity:" + s[e].alpha + ";transform:scale(" + s[e].scale + "," + s[e].scale + ") rotate(45deg);background:" + s[e].color + ";z-index:99999");
+          requestAnimationFrame(r)
+        }
+
+        function n() {
+          var t = "function" == typeof e.onclick && e.onclick;
+          e.onclick = function (e) {
+            t && t(), o(e)
+          }
+        }
+
+        function o(e) {
+          var a = t.createElement("div");
+          a.className = "heart", s.push({
+            el: a,
+            x: e.clientX - 5,
+            y: e.clientY - 5,
+            scale: 1,
+            alpha: 1,
+            color: c()
+          }), t.body.appendChild(a)
+        }
+
+        function i(e) {
+          var a = t.createElement("style");
+          a.type = "text/css";
+          try {
+            a.appendChild(t.createTextNode(e))
+          } catch (t) {
+            a.styleSheet.cssText = e
+          }
+          t.getElementsByTagName("head")[0].appendChild(a)
+        }
+
+        function c() {
+          return "rgb(" + ~~(255 * Math.random()) + "," + ~~(255 * Math.random()) + "," + ~~(255 * Math.random()) + ")"
+        }
+
+        var s = [];
+        e.requestAnimationFrame = e.requestAnimationFrame || e.webkitRequestAnimationFrame || e.mozRequestAnimationFrame || e.oRequestAnimationFrame || e.msRequestAnimationFrame || function (e) {
+          setTimeout(e, 1e3 / 60)
+        }, i(".heart{width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: fixed;}.heart:after{top: -5px;}.heart:before{left: -5px;}"), n(), r()
+      }(window, document);
+    </script>
+  
+
+
+
+
+
+
+
+
+</body>
+</html>

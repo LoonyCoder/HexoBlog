@@ -185,6 +185,149 @@ Apache Dubbo的默认集群容错方案A、Failover ClusterB、Failfast ClusterC
     
     
     <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/2019/04/10/spring-transcation-2/">
+        <p class="h4 index-header">Spring事务管理实现方式之编程式事务与声明式事务详解</p>
+      </a>
+
+      <a href="/2019/04/10/spring-transcation-2/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">写在前面关于Spring事务的传播级别和隔离级别以及分布式事务的简单配置可以参考我上一篇文章Spring事务隔离级别、传播行为以及Spring+Mybatis+Atomikos实现分布式事务管理;
+
+编程式事务编码方式实现事务管理（代码演示为JDBC事务管理）
+Spring实现编程式事务，依赖于2大类，分别是上篇文章提到的PlatformTransactionManager，与模版类TransactionTemplate（推荐使用）。下面分别详细介绍Spring是如何通过该类实现事务管理。
+
+PlatformTransactionManager，上篇文章已经详情解说了该类所拥有的方法，具体请参</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2019-04-10&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Spring">Spring</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/%E4%BA%8B%E5%8A%A1">事务</a>&nbsp;
+          
+            <a href="/tags/Spring">Spring</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/2019/04/03/spring-transcation-1/">
+        <p class="h4 index-header">Spring事务隔离级别、传播行为以及Spring+Mybatis+Atomikos实现分布式事务管理</p>
+      </a>
+
+      <a href="/2019/04/03/spring-transcation-1/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">事务的定义事务是指多个操作单元组成的合集，多个单元操作是整体不可分割的，要么都操作不成功，要么都成功。其必须遵循四个原则（ACID）。
+
+原子性（Atomicity）：即事务是不可分割的最小工作单元，事务内的操作要么全做，要么全不做；一致性（Consistency）：在事务执行前数据库的数据处于正确的状态，而事务执行完成后数据库的数据还是应该处于正确的状态，即数据完整性约束没有被破坏；如银行转帐，A转帐给B，必须保证A的钱一定转给B，一定不会出现A的钱转了但B没收到，否则数据库的数据就处于不一致（不正确）的状态。隔离性（Isolation）：并发事务执行之间互不影响，在一个事务内部的操作对其他</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2019-04-03&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Spring">Spring</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/%E4%BA%8B%E5%8A%A1">事务</a>&nbsp;
+          
+            <a href="/tags/Spring">Spring</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/2019/03/25/lock/">
+        <p class="h4 index-header">乐观锁与悲观锁随笔</p>
+      </a>
+
+      <a href="/2019/03/25/lock/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">1.乐观锁介绍：
+认为数据在使用过程中，不会被其他程序修改、所以只有在数据提交时才检测数据是否已经被修改
+实现方法：
+
+1.使用版本号：给数据所在表加个字段，记录数据版本号。提交时检测版本号与未修改前的版本号一不一致。不一致说明数据已经被其他线程修改。 
+
+
+
+2.使用时间截：给数据所在表加个字段，记录时间。提交时检测时间与取出的时间截一不一致。不一致说明数据已经被其他线程修改。
+
+使用场景：
+如上下级审核文件。
+
+悲观锁介绍：
+悲观的认为数据提交时会发生并发冲突，屏蔽一切可能违反数据完整性的操作
+使用方法：
+在准备修改某数据时，给该数据加锁，加锁失败说明有人正在占用，成功则修改数据提交，事务</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2019-03-25&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93">数据库</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93">数据库</a>&nbsp;
+          
+            <a href="/tags/%E4%BA%8B%E5%8A%A1">事务</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
       <a href="/2019/03/16/springboot-mybatis/">
         <p class="h4 index-header">SpringBoot整合Mybatis实现CRUD</p>
       </a>
@@ -231,147 +374,11 @@ Apache Dubbo的默认集群容错方案A、Failover ClusterB、Failfast ClusterC
     </div>
   </div>
 
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-8 mx-auto index-info">
-      <a href="/2019/03/06/springboot-1/">
-        <p class="h4 index-header">初识Spring Boot——工程搭建</p>
-      </a>
-
-      <a href="/2019/03/06/springboot-1/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">写在前面源码地址：SpringBoot搭建欢迎star/fork，给作者一些鼓励！
-
-
-初识Spring Boot在之前我们一直使用Spring、SpringMVC、Mybatis进行开发，的确，Spring让我们认识到了项目开发原来可以这么方便。但是大量的配置文件却是令人头痛的，即使我们想写一个简单的请求映射并在浏览器上发送Get请求测试，那么需要：1.在web.xml中配置DispatcherServlet;2.在application.xml中配置注解扫描、注解驱动。可以看到：虽然Spring是轻量级的，但是Spring的配置却是重量级的。并且搭建每个Spring项目我们都需要考虑依赖版</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2019-03-06&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/Spring%20Boot">Spring Boot</a>&nbsp;
-          &nbsp;
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/Java%E6%A1%86%E6%9E%B6">Java框架</a>&nbsp;
-          
-            <a href="/tags/Spring%20Boot">Spring Boot</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-8 mx-auto index-info">
-      <a href="/2019/02/27/jvm-2/">
-        <p class="h4 index-header">深入浅出JVM虚拟机——JVM调优</p>
-      </a>
-
-      <a href="/2019/02/27/jvm-2/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">参考文章: JVM调优指南
-
-JVM参数的类型标准参数：在各jdk版本中较稳定
-    -help
-    -server -client
-    -version -showversion
-    -cp -classpath
-
-
-X参数非标准化参数-Xint：完全解释执行调整为完全解释执行编译模式:
-1234MacBook-Pro:dubbo-learn loonycoder$ java -Xint -versionjava version "1.8.0_161"Java(TM) SE Runtime Environment (build 1.8.0_161-b12)Java HotSpo</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2019-02-27&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/JVM%E8%99%9A%E6%8B%9F%E6%9C%BA">JVM虚拟机</a>&nbsp;
-          &nbsp;
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/Java">Java</a>&nbsp;
-          
-            <a href="/tags/JVM">JVM</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-8 mx-auto index-info">
-      <a href="/2019/02/18/jvm-1/">
-        <p class="h4 index-header">深入浅出JVM虚拟机——JVM原理</p>
-      </a>
-
-      <a href="/2019/02/18/jvm-1/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">参考文章: 全面阐述JVM原理
-
-JMV入门什么是JVMJVM是Java Virtual Machine（Java虚拟机）的缩写，JVM是一种用于计算设备的规范，它是一个虚构出来的计算机，是通过在实际的计算机上仿真模拟各种计算机功能来实现的。Java虚拟机包括一套字节码指令集、一组寄存器、一个栈、一个垃圾回收堆和一个存储方法域。 JVM屏蔽了与具体操作系统平台相关的信息，使Java程序只需生成在Java虚拟机上运行的目标代码（字节码），就可以在多种平台(不同的操作系统)上不加修改地运行。JVM在执行字节码时，实际上最终还是把字节码解释成具体平台上的机器指令执行。
-JDK/JRE/JVM是什么关</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2019-02-18&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/JVM%E8%99%9A%E6%8B%9F%E6%9C%BA">JVM虚拟机</a>&nbsp;
-          &nbsp;
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/Java">Java</a>&nbsp;
-          
-            <a href="/tags/JVM">JVM</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
 
 
   <nav aria-label="index posts navigation">
     <span class="pagination pg-blue justify-content-center mt-5" id="pagination">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/2/"><i class="fas fa-angle-double-right"></i></a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/2/"><i class="fas fa-angle-double-right"></i></a>
     </span>
   </nav>
   
