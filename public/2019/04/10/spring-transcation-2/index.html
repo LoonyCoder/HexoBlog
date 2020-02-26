@@ -138,7 +138,7 @@
                   
                   &nbsp;<i class="far fa-clock"></i>
                   <span class="post-count">
-                      9 分钟
+                      10 分钟
                   </span>&nbsp;
                 
 
@@ -171,7 +171,7 @@
       <div class="py-5 z-depth-3" id="board">
         <div class="post-content mx-auto" id="post">
           <div class="markdown-body">
-            <h3 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h3><p>关于Spring事务的传播级别和隔离级别以及分布式事务的简单配置可以参考我上一篇文章<a href="">Spring事务隔离级别、传播行为以及Spring+Mybatis+Atomikos实现分布式事务管理</a>;</p>
+            <h3 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h3><p>关于Spring事务的传播级别和隔离级别以及分布式事务的简单配置可以参考我上一篇文章<br><a href="https://loonycoder.github.io/2019/04/03/spring-transcation-1/" target="_blank" rel="noopener">Spring事务隔离级别、传播行为以及Spring+Mybatis+Atomikos实现分布式事务管理</a>;</p>
 <hr>
 <h3 id="编程式事务"><a href="#编程式事务" class="headerlink" title="编程式事务"></a>编程式事务</h3><p><strong>编码方式实现事务管理（代码演示为JDBC事务管理）</strong></p>
 <p>Spring实现编程式事务，依赖于2大类，分别是上篇文章提到的PlatformTransactionManager，与模版类TransactionTemplate（推荐使用）。下面分别详细介绍Spring是如何通过该类实现事务管理。</p>
@@ -208,7 +208,7 @@
 
 </li>
 </ol>
-<p>关于事务传播行为与隔离级别，可参考<a href=""></a>;</p>
+<p>关于事务传播行为与隔离级别，可参考<a href="https://loonycoder.github.io/2019/04/03/spring-transcation-1/" target="_blank" rel="noopener">Spring事务隔离级别、传播行为以及Spring+Mybatis+Atomikos实现分布式事务管理</a>;</p>
 <p><strong>注意：</strong></p>
 <ul>
 <li>事务回滚异常只能为RuntimeException异常，而Checked Exception异常不回滚，捕获异常不抛出也不会回滚，但可以强制事务回滚：TransactionAspectSupport.currentTransactionStatus().isRollbackOnly();</li>

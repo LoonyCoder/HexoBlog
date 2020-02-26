@@ -178,7 +178,7 @@
 <h4 id="事务的类型"><a href="#事务的类型" class="headerlink" title="事务的类型"></a>事务的类型</h4><ol>
 <li>数据库分为本地事务跟全局事务<br>本地事务：普通事务，独立一个数据库，能保证在该数据库上操作的ACID。<br>分布式事务：涉及两个或多个数据库源的事务，即跨越多台同类或异类数据库的事务（由每台数据库的本地事务组成的），分布式事务旨在保证这些本地事务的所有操作的ACID，使事务可以跨越多台数据库；</li>
 <li>Java事务类型分为JDBC事务跟JTA事务<br>JDBC事务：即为上面说的数据库事务中的本地事务，通过connection对象控制管理。<br>JTA事务：JTA指Java事务API(Java Transaction API)，是Java EE数据库事务规范， JTA只提供了事务管理接口，由应用程序服务器厂商（如WebSphere Application Server）提供实现，JTA事务比JDBC更强大，支持分布式事务。</li>
-<li>按是否通过编程分为声明式事务和编程式事务，参考<a href=""></a>;<br>声明式事务：通过XML配置或者注解实现。<br>编程式事务：通过编程代码在业务逻辑时需要时自行实现，粒度更小。</li>
+<li>按是否通过编程分为声明式事务和编程式事务，参考<a href="https://loonycoder.github.io/2019/04/10/spring-transcation-2/" target="_blank" rel="noopener">Spring事务管理实现方式之编程式事务与声明式事务详解</a>;<br>声明式事务：通过XML配置或者注解实现。<br>编程式事务：通过编程代码在业务逻辑时需要时自行实现，粒度更小。</li>
 </ol>
 <h4 id="Spring事务隔离级别"><a href="#Spring事务隔离级别" class="headerlink" title="Spring事务隔离级别"></a>Spring事务隔离级别</h4><p><strong>Spring有五大隔离级别，其在TransactionDefinition接口中定义。看源码可知，其默isolation_default（底层数据库默认级别），其他四个隔离级别跟数据库隔离级别一致。</strong></p>
 <blockquote>
@@ -192,7 +192,7 @@
 </blockquote>
 <p>幻读与不可重复读的区别：幻读的重点在于<font style="color: red">插入与删除</font>，即第二次查询会发现比第一次查询数据变少或者变多了，以至于给人一种幻象一样，而不可重复读重点在于<font style="color: red">修改</font>，即第二次查询会发现查询结果比第一次查询结果不一致，即第一次结果已经不可重现了。</p>
 <p>数据库隔离级别越高，执行代价越高，并发执行能力越差，因此在实际项目开发使用时要综合考虑，为了考虑<font style="color: red">并发性能</font>一般使用提交读隔离级别，它能避免丢失更新和脏读，尽管不可重复读和幻读不能避免，但可以在可能出现的场合使用<font style="color: red">悲观锁或乐观锁</font>来解决这些问题。</p>
-<p>悲观锁与乐观锁可参考：<a href="">乐观锁与悲观锁随笔</a></p>
+<p>悲观锁与乐观锁可参考：<a href="https://loonycoder.github.io/2019/03/25/lock/" target="_blank" rel="noopener">乐观锁与悲观锁随笔</a></p>
 <h4 id="事务的传播行为"><a href="#事务的传播行为" class="headerlink" title="事务的传播行为"></a>事务的传播行为</h4><p><strong>有七大传播行为，也是在TransactionDefinition接口中定义。</strong></p>
 <blockquote>
 <p><font style="color: red"><strong>PROPAGATION_REQUIRED</strong></font>：支持当前事务，如当前没有事务，则新建一个。<br><font style="color: red"><strong>PROPAGATION_SUPPORTS</strong></font>：支持当前事务，如当前没有事务，则已非事务性执行（源码中提示有个注意点，看不太明白，留待后面考究）。<br><font style="color: red"><strong>PROPAGATION_MANDATORY</strong></font>：支持当前事务，如当前没有事务，则抛出异常（强制一定要在一个已经存在的事务中执行，业务方法不可独自发起自己的事务）。<br><font style="color: red"><strong>PROPAGATION_REQUIRES_NEW</strong></font>：始终新建一个事务，如当前原来有事务，则把原事务挂起。<br><font style="color: red"><strong>PROPAGATION_NOT_SUPPORTED</strong></font>：不支持当前事务，始终已非事务性方式执行，如当前事务存在，挂起该事务。<br><font style="color: red"><strong>PROPAGATION_NEVER</strong></font>：不支持当前事务；如果当前事务存在，则引发异常。<br><font style="color: red"><strong>PROPAGATION_NESTED</strong></font>：如果当前事务存在，则在嵌套事务中执行，如果当前没有事务，则执行与 PROPAGATION_REQUIRED 类似的操作（注意：当应用到JDBC时，只适用JDBC 3.0以上驱动）。</p>

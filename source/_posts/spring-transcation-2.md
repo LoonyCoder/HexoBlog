@@ -12,7 +12,8 @@ tags:
 
 ### 写在前面
 
-关于Spring事务的传播级别和隔离级别以及分布式事务的简单配置可以参考我上一篇文章[Spring事务隔离级别、传播行为以及Spring+Mybatis+Atomikos实现分布式事务管理]();
+关于Spring事务的传播级别和隔离级别以及分布式事务的简单配置可以参考我上一篇文章
+[Spring事务隔离级别、传播行为以及Spring+Mybatis+Atomikos实现分布式事务管理](https://loonycoder.github.io/2019/04/03/spring-transcation-1/);
 
 ---
 
@@ -194,7 +195,7 @@ public void testTransactionTemplate(){
 </aop:config>
 ```
 
-关于事务传播行为与隔离级别，可参考[]();
+关于事务传播行为与隔离级别，可参考[Spring事务隔离级别、传播行为以及Spring+Mybatis+Atomikos实现分布式事务管理](https://loonycoder.github.io/2019/04/03/spring-transcation-1/);
 
 **注意：**
 - 事务回滚异常只能为RuntimeException异常，而Checked Exception异常不回滚，捕获异常不抛出也不会回滚，但可以强制事务回滚：TransactionAspectSupport.currentTransactionStatus().isRollbackOnly();

@@ -27,7 +27,7 @@ tags:
 2. Java事务类型分为JDBC事务跟JTA事务
 JDBC事务：即为上面说的数据库事务中的本地事务，通过connection对象控制管理。
 JTA事务：JTA指Java事务API(Java Transaction API)，是Java EE数据库事务规范， JTA只提供了事务管理接口，由应用程序服务器厂商（如WebSphere Application Server）提供实现，JTA事务比JDBC更强大，支持分布式事务。
-3. 按是否通过编程分为声明式事务和编程式事务，参考[]();
+3. 按是否通过编程分为声明式事务和编程式事务，参考[Spring事务管理实现方式之编程式事务与声明式事务详解](https://loonycoder.github.io/2019/04/10/spring-transcation-2/);
 声明式事务：通过XML配置或者注解实现。
 编程式事务：通过编程代码在业务逻辑时需要时自行实现，粒度更小。
 
@@ -49,7 +49,7 @@ JTA事务：JTA指Java事务API(Java Transaction API)，是Java EE数据库事�
 
 数据库隔离级别越高，执行代价越高，并发执行能力越差，因此在实际项目开发使用时要综合考虑，为了考虑<font style="color: red">并发性能</font>一般使用提交读隔离级别，它能避免丢失更新和脏读，尽管不可重复读和幻读不能避免，但可以在可能出现的场合使用<font style="color: red">悲观锁或乐观锁</font>来解决这些问题。
 
-悲观锁与乐观锁可参考：[乐观锁与悲观锁随笔]()
+悲观锁与乐观锁可参考：[乐观锁与悲观锁随笔](https://loonycoder.github.io/2019/03/25/lock/)
 
 #### 事务的传播行为
 
