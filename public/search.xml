@@ -215,7 +215,7 @@
   <entry>
     <title>乐观锁与悲观锁随笔</title>
     <url>/2019/03/25/lock/</url>
-    <content><![CDATA[<h4 id="1-乐观锁"><a href="#1-乐观锁" class="headerlink" title="1.乐观锁"></a>1.乐观锁</h4><p><strong>介绍：</strong></p>
+    <content><![CDATA[<h4 id="乐观锁"><a href="#乐观锁" class="headerlink" title="乐观锁"></a>乐观锁</h4><p><strong>介绍：</strong></p>
 <p>认为数据在使用过程中，不会被其他程序修改、所以只有在数据提交时才检测数据是否已经被修改</p>
 <p><strong>实现方法：</strong></p>
 <blockquote>
