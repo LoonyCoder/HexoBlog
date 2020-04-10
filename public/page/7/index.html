@@ -144,6 +144,49 @@
     
     
     <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/2018/10/15/Mybatis-3/">
+        <p class="h4 index-header">Mybatis的多表查询</p>
+      </a>
+
+      <a href="/2018/10/15/Mybatis-3/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">场景(一对多)用户和账户一个用户可以有多个账户一个账户只能属于一个用户（多个账户也可以属于同一个用户）
+需要实现：查询账户时，可以查询到归属的用户信息。
+准备工作建表建立用户表和账户表：让用户表和账户表之间具备一对多的关系（需要在账户表中添加外键）建表语句
+123456789101112131415161718192021222324252627282930313233DROP TABLE IF EXISTS `user`;CREATE TABLE `user` (  `id` int(11) NOT NULL auto_increment,  `username` varchar(32) N</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2018-10-15&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Mybatis">Mybatis</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/Java">Java</a>&nbsp;
+          
+            <a href="/tags/Java%E6%A1%86%E6%9E%B6%20-%20%E6%95%B0%E6%8D%AE%E5%BA%93">Java框架 - 数据库</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
       <a href="/2018/10/06/Mybatis-2/">
         <p class="h4 index-header">Mybatis的增删改查操作</p>
       </a>
@@ -322,54 +365,11 @@ Shiro提供一个对象org.apache.shiro.session.mgt.eis.SessionDAO，通过此�
     </div>
   </div>
 
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-8 mx-auto index-info">
-      <a href="/2018/09/07/Vue3/">
-        <p class="h4 index-header">Vue组件</p>
-      </a>
-
-      <a href="/2018/09/07/Vue3/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">Vue创建组件什么是组件什么是组件？组件的出现，就是为了拆分Vue实例的代码量的，能够让我们以不同的组件，来划分不同的功能模块，将来我们需要什么样地方功能，就可以去调用对应的组件即可。组件化和模块化的区别：
-
-模块化：是从代码逻辑的角度进行划分的，方便代码分层开发，保证每个功能模块的只能单一；
-组件化：是从UI界面的角度进行划分的；前端的组件化，方便了UI组件的重用；
-
-定义Vue组件方式一1、使用Vue.extend来创建全局的Vue组件2、通过template属性来指定组件要展示的HTML结构3、通过Vue.component()定义全局组件4、在HTML指定位置通过Tag标签的形式应用你</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2018-09-07&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/Web%E5%89%8D%E7%AB%AF">Web前端</a>&nbsp;
-          &nbsp;
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6">前端框架</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
 
 
   <nav aria-label="index posts navigation">
     <span class="pagination pg-blue justify-content-center mt-5" id="pagination">
-      <a class="extend prev" rel="prev" href="/page/6/"><i class="fas fa-angle-double-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/8/"><i class="fas fa-angle-double-right"></i></a>
+      <a class="extend prev" rel="prev" href="/page/6/"><i class="fas fa-angle-double-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/8/"><i class="fas fa-angle-double-right"></i></a>
     </span>
   </nav>
   
