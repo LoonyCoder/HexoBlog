@@ -144,6 +144,151 @@
     
     
     <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/2019/04/28/thread2/">
+        <p class="h4 index-header">Java多线程状态切换及基本操作</p>
+      </a>
+
+      <a href="/2019/04/28/thread2/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">写在前面上篇文章我们讲了Java多线程的基础知识，本文将拓展讲解一下Java多线程状态及状态之间的切换问题，以及常用的基本操作。
+
+线程调度什么是线程调度线程调度就是系统为线程分配执行时间的过程。
+线程调度的方式根据线程调度的控制权是由系统控制或者线程本身来控制划分为：协同式的线程调度和抢占式的线程调度。
+
+协同式线程调度：线程之间的系统执行时间，由线程本身进行进行控制。这种线程调度方式就像接力赛，一个执行完毕后交由下一个接力。如当前线程执行完毕后，通知系统调度到其他线程执行。
+
+
+协同的好处：线程的切换是可预知的。线程之间不存在同步的问题。
+协同的坏处：协同调度的致命缺点是当某个线程执行有问</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2019-04-28&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Java">Java</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/%E7%BA%BF%E7%A8%8B">线程</a>&nbsp;
+          
+            <a href="/tags/%E5%B9%B6%E5%8F%91">并发</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/2019/04/19/thread1/">
+        <p class="h4 index-header">Java多线程基础</p>
+      </a>
+
+      <a href="/2019/04/19/thread1/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">写在前面在我们工作和学习的过程中，Java线程我们或多或少的都会用到，但是在使用的过程上并不是很顺利，会遇到各种各样的坑，这里我通过讲解Thread类中的核心方法，以求重点掌握以下关键技术点：
+
+线程的启动
+如何使线程暂停
+如何使线程停止
+线程的优先级
+线程安全相关的问题
+
+
+什么是进程和线程？
+进程 - 进程是具有一定独立功能的程序（例如QQ.exe），关于某个数据集合上的一次运行活动，进程是系统进行资源分配和调度的一个独立单位。
+线程 - 线程是进程的一个实体，是CPU调度和分派的基本单位，它是比进程更小的能独立运行的基本单位；线程自己基本上不拥有系统资源，只拥有一点在运行中必不可少的资源</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2019-04-19&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Java">Java</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/%E7%BA%BF%E7%A8%8B">线程</a>&nbsp;
+          
+            <a href="/tags/%E5%B9%B6%E5%8F%91">并发</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/2019/04/10/spring-transcation-2/">
+        <p class="h4 index-header">Spring事务管理实现方式之编程式事务与声明式事务详解</p>
+      </a>
+
+      <a href="/2019/04/10/spring-transcation-2/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">写在前面关于Spring事务的传播级别和隔离级别以及分布式事务的简单配置可以参考我上一篇文章Spring事务隔离级别、传播行为以及Spring+Mybatis+Atomikos实现分布式事务管理;
+
+编程式事务编码方式实现事务管理（代码演示为JDBC事务管理）
+Spring实现编程式事务，依赖于2大类，分别是上篇文章提到的PlatformTransactionManager，与模版类TransactionTemplate（推荐使用）。下面分别详细介绍Spring是如何通过该类实现事务管理。
+
+PlatformTransactionManager，上篇文章已经详情解说了该类所拥有的方法，具体请参</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2019-04-10&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Spring">Spring</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/%E4%BA%8B%E5%8A%A1">事务</a>&nbsp;
+          
+            <a href="/tags/Spring">Spring</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
       <a href="/2019/04/03/spring-transcation-1/">
         <p class="h4 index-header">Spring事务隔离级别、传播行为以及Spring+Mybatis+Atomikos实现分布式事务管理</p>
       </a>
@@ -232,149 +377,6 @@
             <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93">数据库</a>&nbsp;
           
             <a href="/tags/%E4%BA%8B%E5%8A%A1">事务</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-8 mx-auto index-info">
-      <a href="/2019/03/16/springboot-mybatis/">
-        <p class="h4 index-header">SpringBoot整合Mybatis实现CRUD</p>
-      </a>
-
-      <a href="/2019/03/16/springboot-mybatis/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">写在前面源码地址：SpringBoot整合Mybatis欢迎star/fork，给作者一些鼓励！
-继上篇文章：初识Spring Boot——工程搭建。这次我们整合SpringBoot-Mybatis实现简单的CRUD业务。项目源码请看我的Github仓库：教你优雅的入门Spring Boot框架如果觉得不错就点击右上角star鼓励一下笔者吧(#^.^#)
-
-
-
-需求：
-
-详解SpringBoot工程的构建、与SSM项目在工程搭建上的不同。
-实现SpringBoot-Mybatis整合征服数据库。
-解决页面跳转，详解与SSM阶段的不同。
-实现分页查询，使用PaheHelper插件和Element</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2019-03-16&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/Spring%20Boot">Spring Boot</a>&nbsp;
-          &nbsp;
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/Java%E6%A1%86%E6%9E%B6">Java框架</a>&nbsp;
-          
-            <a href="/tags/Spring%20Boot">Spring Boot</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-8 mx-auto index-info">
-      <a href="/2019/03/06/springboot-1/">
-        <p class="h4 index-header">初识Spring Boot——工程搭建</p>
-      </a>
-
-      <a href="/2019/03/06/springboot-1/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">写在前面源码地址：SpringBoot搭建欢迎star/fork，给作者一些鼓励！
-
-
-初识Spring Boot在之前我们一直使用Spring、SpringMVC、Mybatis进行开发，的确，Spring让我们认识到了项目开发原来可以这么方便。但是大量的配置文件却是令人头痛的，即使我们想写一个简单的请求映射并在浏览器上发送Get请求测试，那么需要：1.在web.xml中配置DispatcherServlet;2.在application.xml中配置注解扫描、注解驱动。可以看到：虽然Spring是轻量级的，但是Spring的配置却是重量级的。并且搭建每个Spring项目我们都需要考虑依赖版</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2019-03-06&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/Spring%20Boot">Spring Boot</a>&nbsp;
-          &nbsp;
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/Java%E6%A1%86%E6%9E%B6">Java框架</a>&nbsp;
-          
-            <a href="/tags/Spring%20Boot">Spring Boot</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-8 mx-auto index-info">
-      <a href="/2019/02/27/jvm-2/">
-        <p class="h4 index-header">深入浅出JVM虚拟机——JVM调优</p>
-      </a>
-
-      <a href="/2019/02/27/jvm-2/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">参考文章: JVM调优指南
-
-JVM参数的类型标准参数：在各jdk版本中较稳定
-    -help
-    -server -client
-    -version -showversion
-    -cp -classpath
-
-
-X参数非标准化参数-Xint：完全解释执行调整为完全解释执行编译模式:
-1234MacBook-Pro:dubbo-learn loonycoder$ java -Xint -versionjava version "1.8.0_161"Java(TM) SE Runtime Environment (build 1.8.0_161-b12)Java HotSpo</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2019-02-27&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/JVM%E8%99%9A%E6%8B%9F%E6%9C%BA">JVM虚拟机</a>&nbsp;
-          &nbsp;
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/Java">Java</a>&nbsp;
-          
-            <a href="/tags/JVM">JVM</a>&nbsp;
           
         
       </div>

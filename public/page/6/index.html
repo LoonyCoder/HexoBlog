@@ -144,6 +144,146 @@
     
     
     <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/2018/12/14/linux-1/">
+        <p class="h4 index-header">Linux常用命令</p>
+      </a>
+
+      <a href="/2018/12/14/linux-1/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">
+
+基本命令关机和重启123$ shutdown -h now        立刻关机$ shutdown -h 5        5分钟后关机$ poweroff            立刻关机
+帮助命令1234567--help命令$ shutdown --help：$ ifconfig  --help：查看网卡信息 --man命令（命令说明书） $ man shutdown--注意：man shutdown打开命令说明书之后，使用按键q退出
+
+
+目录操作命令目录切换 cd123456--命令：cd 目录$ cd /        切换到根目录$ cd /usr        切换到根目录</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2018-12-14&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Linux">Linux</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/Linux%20-%20%E6%9C%8D%E5%8A%A1%E5%99%A8">Linux - 服务器</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/2018/12/06/redis-2/">
+        <p class="h4 index-header">Redis高可用解决方案总结</p>
+      </a>
+
+      <a href="/2018/12/06/redis-2/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">本文主要针对 Redis 常见的几种使用方式及其优缺点展开分析。
+常见使用方式Redis 的几种常见使用方式包括：
+
+Redis 单副本；
+
+Redis 多副本（主从）；
+
+Redis Sentinel（哨兵）；
+
+Redis Cluster；
+
+Redis 自研。
+
+
+
+各种使用方式的优缺点Redis 单副本Redis 单副本，采用单个 Redis 节点部署架构，没有备用节点实时同步数据，不提供数据持久化和备份策略，适用于数据可靠性要求不高的纯缓存业务场景。优点：
+架构简单，部署方便；
+高性价比：缓存使用时无需备用节点（单实例可用性可以用 supervisor 或 crontab 保证），当</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2018-12-06&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93">数据库</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93%20-%20Redis">数据库 - Redis</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/2018/11/28/redis-1/">
+        <p class="h4 index-header">Redis入门</p>
+      </a>
+
+      <a href="/2018/11/28/redis-1/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">
+Redis 概述在我们日常的Java Web开发中，无不都是使用数据库来进行数据的存储，由于一般的系统任务中通常不会存在高并发的情况，所以这样看起来并没有什么问题，可是一旦涉及大数据量的需求，比如一些商品抢购的情景，或者是主页访问量瞬间较大的时候，单一使用数据库来保存数据的系统会因为面向磁盘，磁盘读/写速度比较慢的问题而存在严重的性能弊端，一瞬间成千上万的请求到来，需要系统在极短的时间内完成成千上万次的读/写操作，这个时候往往不是数据库能够承受的，极其容易造成数据库系统瘫痪，最终导致服务宕机的严重生产问题。
+
+NoSQL 技术为了克服上述的问题，Java Web项目通常会引入NoSQL技术，</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2018-11-28&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93">数据库</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93%20-%20Redis">数据库 - Redis</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
       <a href="/2018/11/21/nginx/">
         <p class="h4 index-header">高性能的HTTP服务器——Nginx</p>
       </a>
@@ -224,135 +364,6 @@ SecureCR</div>
           <i class="iconfont icon-tag"></i>
           
             <a href="/tags/DevOps%20-%20%E6%9C%8D%E5%8A%A1%E5%99%A8">DevOps - 服务器</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-8 mx-auto index-info">
-      <a href="/2018/11/07/Spring-3/">
-        <p class="h4 index-header">Spring框架——深入理解AOP实现原理</p>
-      </a>
-
-      <a href="/2018/11/07/Spring-3/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">
-阅读这篇文章前，最好有代理模式的基础，以及了解关于Spring扩展点例如BeanPostProcessor和如何使用自定义标签集成Spring，这些文章在我的博客里都能找到。当然，也最好有使用AOP的经验，这篇文章不会讲解如何使用AOP。
-
-
-AOP简介说到AOP，其实这是一个面向方面的编程思想 ，它解决了OOP的一些弊端，例如我们需要为多个不具有继承关系的类引入一个公共行为， 比如说日志、权限验证、事务管理等等，我们需要将这些代码重复的添加到一系列的类中，将产生大量的重复代码，如果需要修改，将在每个类中去进行修改，不便于维护，代码的侵入性极高。所以就有了AOP这样面向方面编程的编程思想，其</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2018-11-07&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/Java%E6%A1%86%E6%9E%B6">Java框架</a>&nbsp;
-          &nbsp;
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/%E6%A1%86%E6%9E%B6%20-%20Spring">框架 - Spring</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-8 mx-auto index-info">
-      <a href="/2018/10/30/Spring-2/">
-        <p class="h4 index-header">Spring框架——深入剖析核心IoC源码</p>
-      </a>
-
-      <a href="/2018/10/30/Spring-2/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">
-原文转自：https://javadoop.com/post/spring-ioc
-因为有幸看到这篇让我读了约三个半小时的文章，简直价值千金，所以稍作修改，以此记录。为了保持文章的严谨性，如有错误，望及时指出，十分希望听到读者的声音。
-
-引言先看下最基本的启动 Spring 容器的例子：
-123public static void main(String[] args) &#123;    ApplicationContext context = new ClassPathXmlApplicationContext("classpath:Application.xml");&#125;
-以上</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2018-10-30&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/Java%E6%A1%86%E6%9E%B6">Java框架</a>&nbsp;
-          &nbsp;
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/%E6%A1%86%E6%9E%B6%20-%20Spring">框架 - Spring</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-8 mx-auto index-info">
-      <a href="/2018/10/22/Spring-1/">
-        <p class="h4 index-header">Spring框架——Spring框架概述及工作原理</p>
-      </a>
-
-      <a href="/2018/10/22/Spring-1/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">
-一、简介Spring 是个java企业级应用的开源开发框架。Spring主要用来开发Java应用，但是有些扩展是针对构建J2EE平台的web应用。Spring 框架目标是简化Java企业级应用开发，并通过Pojo为基础的编程模型促进良好的编程习惯。
-
-二、工作原理1、 IoC(Inversion of Control): 控制反转概念：控制权由对象本身转向容器；由容器根据配置文件去创建实例并创建各个实例之间的依赖关系 
-核心：bean工厂。在Spring中，bean工厂创建的各个实例称作bean。  
-作用：IoC 负责创建对象，管理对象（通过依赖注入（DI），装配对象，配置对象，并且管理这</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2018-10-22&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/Java%E6%A1%86%E6%9E%B6">Java框架</a>&nbsp;
-          &nbsp;
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/%E6%A1%86%E6%9E%B6%20-%20Spring">框架 - Spring</a>&nbsp;
           
         
       </div>
