@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="description" content="Life Is So Short , Just Coding.">
+  <meta name="author" content="LoonyCoder">
+  <meta name="keywords" content="隐约雷鸣，阴霾天空，但盼风雨来，能留你于此">
+  <title>优秀而又强大的表现层框架——SpringMVC（三） ~ 望月Plenilune</title>
+
+  <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css"  >
+<link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css"  >
+<link rel="stylesheet" href="/lib/mdbootstrap/css/mdb.min.css"  >
+<link rel="stylesheet" href="/lib/github-markdown/github-markdown.min.css"  >
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
+
+
+
+  <link rel="stylesheet" href="/lib/prettify/tomorrow-night-eighties.min.css"  >
+
+<link rel="stylesheet" href="/css/main.css"  >
+
+
+  <link rel="stylesheet" href="/lib/fancybox/jquery.fancybox.min.css"  >
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>望月Plenilune</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/archives/">归档</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/categories/">分类</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/tags/">标签</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/about/">关于</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="view intro-2" id="background" false
+         style="background: url('/images/post_banner.jpg')no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask rgba-black-light flex-center">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              <br>
+              
+                <p class="mt-3">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>&nbsp;
+                  星期一, 六月 10日 2019, 10:23 晚上
+                </p>
+              
+
+              <p>
+                
+                  
+                  &nbsp;<i class="far fa-chart-bar"></i>
+                  <span class="post-count">
+                    2.2k 字
+                  </span>&nbsp;
+                
+
+                
+                  
+                  &nbsp;<i class="far fa-clock"></i>
+                  <span class="post-count">
+                      11 分钟
+                  </span>&nbsp;
+                
+
+                
+                  <!-- 不蒜子统计文章PV -->
+                  
+                  &nbsp;<i class="far fa-eye" aria-hidden="true"></i>&nbsp;
+                  <span id="busuanzi_container_page_pv">
+                    <span id="busuanzi_value_page_pv"></span> 次
+                  </span>&nbsp;
+                
+              </p>
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="py-5 z-depth-3" id="board">
+        <div class="post-content mx-auto" id="post">
+          <div class="markdown-body">
+            <h3 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h3><p>最近系统的学习了下这个优秀而又强大的表现层框架——SpringMVC，拜读了<strong>应癫</strong>老师的《SpringMVC源码剖析》，深表感谢！</p>
+<p><strong>源码地址：</strong><a href="https://github.com/LoonyCoder/springmvc" target="_blank" rel="noopener">手写SpringMVC框架</a><br><strong>欢迎star/fork，给作者一些鼓励！</strong></p>
+<h3 id="手写SpringMVC框架"><a href="#手写SpringMVC框架" class="headerlink" title="手写SpringMVC框架"></a>手写SpringMVC框架</h3><ul>
+<li>回顾SpringMVC执⾏的⼤致原理，后续根据这个模仿⼿写⾃⼰的mvc框架</li>
+</ul>
+<p><img src="/images/springmvc/springmvc7.png" srcset="/img/loading.gif" alt="springmvc"></p>
+<ul>
+<li>⼿写MVC框架之注解开发<ul>
+<li>loonycoderController<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">import java.lang.annotation.*;</span><br><span class="line">@Documented</span><br><span class="line">@Target(ElementType.TYPE)</span><br><span class="line">@Retention(RetentionPolicy.RUNTIME)</span><br><span class="line">public @interface loonycoderController &#123;</span><br><span class="line">	String value() default <span class="string">""</span>; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>loonycoderService<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">import java.lang.annotation.*;</span><br><span class="line">@Documented</span><br><span class="line">@Target(ElementType.TYPE)</span><br><span class="line">@Retention(RetentionPolicy.RUNTIME)</span><br><span class="line">public @interface loonycoderService &#123;</span><br><span class="line">	String value() default <span class="string">""</span>; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>loonycoderAutowired<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">import java.lang.annotation.*;</span><br><span class="line">@Documented</span><br><span class="line">@Target(ElementType.FIELD)</span><br><span class="line">@Retention(RetentionPolicy.RUNTIME)</span><br><span class="line">public @interface loonycoderAutowired &#123;</span><br><span class="line">	String value() default <span class="string">""</span>; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>loonycoderRequestMapping<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">import java.lang.annotation.*;</span><br><span class="line">@Documented</span><br><span class="line">@Target(&#123;ElementType.TYPE,ElementType.METHOD&#125;)</span><br><span class="line">@Retention(RetentionPolicy.RUNTIME)</span><br><span class="line">public @interface loonycoderRequestMapping &#123;</span><br><span class="line">	String value() default <span class="string">""</span>; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>lcDispatcherServlet<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br></pre></td><td class="code"><pre><span class="line">import com.loonycoder.demo.service.IDemoService;</span><br><span class="line">import com.loonycoder.mvcframework.annotations.loonycoderAutowired;</span><br><span class="line">import com.loonycoder.mvcframework.annotations.loonycoderController;</span><br><span class="line">import com.loonycoder.mvcframework.annotations.loonycoderRequestMapping;</span><br><span class="line">import com.loonycoder.mvcframework.annotations.loonycoderService;</span><br><span class="line">import com.loonycoder.mvcframework.pojo.Handler;</span><br><span class="line">import org.apache.commons.lang3.StringUtils;</span><br><span class="line">import javax.servlet.ServletConfig;</span><br><span class="line">import javax.servlet.ServletException;</span><br><span class="line">import javax.servlet.http.HttpServlet;</span><br><span class="line">import javax.servlet.http.HttpServletRequest;</span><br><span class="line">import javax.servlet.http.HttpServletResponse;</span><br><span class="line">import java.io.File;</span><br><span class="line">import java.io.IOException;</span><br><span class="line">import java.io.InputStream;</span><br><span class="line">import java.lang.reflect.Field;</span><br><span class="line">import java.lang.reflect.InvocationTargetException;</span><br><span class="line">import java.lang.reflect.Method;</span><br><span class="line">import java.lang.reflect.Parameter;</span><br><span class="line">import java.util.*;</span><br><span class="line">import java.util.regex.Matcher;</span><br><span class="line">import java.util.regex.Pattern;</span><br><span class="line">public class lcDispatcherServlet extends HttpServlet &#123;</span><br><span class="line">	private Properties properties = new Properties();</span><br><span class="line">	private List&lt;String&gt; classNames = new ArrayList&lt;&gt;(); // 缓存扫描到的类的</span><br><span class="line">	全限定类名</span><br><span class="line">	// ioc容器</span><br><span class="line">	private Map&lt;String,Object&gt; ioc = new HashMap&lt;String,Object&gt;();</span><br><span class="line">	// handlerMapping</span><br><span class="line">	//private Map&lt;String,Method&gt; handlerMapping = now HashMap&lt;&gt;(); // 存储</span><br><span class="line">	url和Method之间的映射关系</span><br><span class="line">	private List&lt;Handler&gt; handlerMapping = new ArrayList&lt;&gt;();</span><br><span class="line">	@Override</span><br><span class="line">	public void init(ServletConfig config) throws ServletException &#123;</span><br><span class="line">		// 1 加载配置⽂件 springmvc.properties</span><br><span class="line">		String contextConfigLocation =</span><br><span class="line">		config.getInitParameter(<span class="string">"contextConfigLocation"</span>);</span><br><span class="line">		doLoadConfig(contextConfigLocation);</span><br><span class="line">		// 2 扫描相关的类，扫描注解</span><br><span class="line">		doScan(properties.getProperty(<span class="string">"scanPackage"</span>));</span><br><span class="line">		// 3 初始化bean对象（实现ioc容器，基于注解）</span><br><span class="line">		doInstance();</span><br><span class="line">		// 4 实现依赖注⼊</span><br><span class="line">		doAutoWired();</span><br><span class="line">		// 5 构造⼀个HandlerMapping处理器映射器，将配置好的url和Method建⽴映射关系</span><br><span class="line">		initHandlerMapping();</span><br><span class="line">		System.out.println(<span class="string">"loonycoder mvc 初始化完成...."</span>);</span><br><span class="line">		// 等待请求进⼊，处理请求</span><br><span class="line">	&#125;</span><br><span class="line">	/*</span><br><span class="line">	构造⼀个HandlerMapping处理器映射器</span><br><span class="line">	最关键的环节</span><br><span class="line">	⽬的：将url和method建⽴关联</span><br><span class="line">	*/</span><br><span class="line">	private void <span class="function"><span class="title">initHandlerMapping</span></span>() &#123;</span><br><span class="line">		<span class="keyword">if</span>(ioc.isEmpty()) &#123;</span><br><span class="line">			<span class="built_in">return</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">for</span>(Map.Entry&lt;String,Object&gt; entry: ioc.entrySet()) &#123;</span><br><span class="line">			// 获取ioc中当前遍历的对象的class类型</span><br><span class="line">			Class&lt;?&gt; aClass = entry.getValue().getClass();</span><br><span class="line">			<span class="keyword">if</span>(!aClass.isAnnotationPresent(loonycoderController.class))&#123;</span><br><span class="line">				<span class="built_in">continue</span>;</span><br><span class="line">			&#125;</span><br><span class="line">			String baseUrl = <span class="string">""</span>;</span><br><span class="line">			<span class="keyword">if</span>(aClass.isAnnotationPresent(loonycoderRequestMapping.class)) &#123;</span><br><span class="line">				loonycoderRequestMapping annotation =</span><br><span class="line">				aClass.getAnnotation(loonycoderRequestMapping.class);</span><br><span class="line">				baseUrl = annotation.value(); // 等同于/demo</span><br><span class="line">		 	&#125;</span><br><span class="line">			// 获取⽅法</span><br><span class="line">			Method[] methods = aClass.getMethods();</span><br><span class="line">			<span class="keyword">for</span> (int i = 0; i &lt; methods.length; i++) &#123;</span><br><span class="line">				Method method = methods[i];</span><br><span class="line">				// ⽅法没有标识loonycoderRequestMapping，就不处理</span><br><span class="line">				<span class="keyword">if</span>(!method.isAnnotationPresent(loonycoderRequestMapping.class))&#123;</span><br><span class="line">					<span class="built_in">continue</span>;</span><br><span class="line">				&#125;</span><br><span class="line">				// 如果标识，就处理</span><br><span class="line">				loonycoderRequestMapping annotation = method.getAnnotation(loonycoderRequestMapping.class);</span><br><span class="line">				String methodUrl = annotation.value(); // /query</span><br><span class="line">				String url = baseUrl + methodUrl; // 计算出来的url</span><br><span class="line">				/demo/query</span><br><span class="line">				// 把method所有信息及url封装为⼀个Handler</span><br><span class="line">				Handler handler = new Handler(entry.getValue(),method,</span><br><span class="line">				Pattern.compile(url));</span><br><span class="line">				// 计算⽅法的参数位置信息 // query(HttpServletRequest request, HttpServletResponse response,String name)</span><br><span class="line">				Parameter[] parameters = method.getParameters();</span><br><span class="line">				<span class="keyword">for</span> (int j = 0; j &lt; parameters.length; j++) &#123;</span><br><span class="line">					Parameter parameter = parameters[j];</span><br><span class="line">					<span class="keyword">if</span>(parameter.getType() == HttpServletRequest.class || parameter.getType() == HttpServletResponse.class) &#123;</span><br><span class="line">				// 如果是request和response对象，那么参数名称写</span><br><span class="line">						HttpServletRequest和HttpServletResponse</span><br><span class="line">						handler.getParamIndexMapping().put(parameter.getType().getSimpleName(),j) ;</span><br><span class="line">				 	&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">						handler.getParamIndexMapping().put(parameter.getName(),j); // &lt;name,2&gt;</span><br><span class="line">				 	&#125;</span><br><span class="line">				 &#125;</span><br><span class="line">				// 建⽴url和method之间的映射关系（map缓存起来）</span><br><span class="line">				handlerMapping.add(handler);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	// 实现依赖注⼊</span><br><span class="line">	private void <span class="function"><span class="title">doAutoWired</span></span>() &#123;</span><br><span class="line">		<span class="keyword">if</span>(ioc.isEmpty()) &#123;</span><br><span class="line">			<span class="built_in">return</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		// 有对象，再进⾏依赖注⼊处理</span><br><span class="line">		// 遍历ioc中所有对象，查看对象中的字段，是否有@loonycoderAutowired注解，如果有需要维护依赖注⼊关系</span><br><span class="line">		<span class="keyword">for</span>(Map.Entry&lt;String,Object&gt; entry: ioc.entrySet()) &#123;</span><br><span class="line">			// 获取bean对象中的字段信息</span><br><span class="line">			Field[] declaredFields =</span><br><span class="line">			entry.getValue().getClass().getDeclaredFields();</span><br><span class="line">			// 遍历判断处理</span><br><span class="line">			<span class="keyword">for</span> (int i = 0; i &lt; declaredFields.length; i++) &#123;</span><br><span class="line">				Field declaredField = declaredFields[i]; //</span><br><span class="line">				@loonycoderAutowired private IDemoService demoService;</span><br><span class="line">				<span class="keyword">if</span>(!declaredField.isAnnotationPresent(loonycoderAutowired.class)) &#123;</span><br><span class="line">					<span class="built_in">continue</span>;</span><br><span class="line">					&#125;</span><br><span class="line">				// 有该注解</span><br><span class="line">				loonycoderAutowired annotation = declaredField.getAnnotation(loonycoderAutowired.class);</span><br><span class="line">				String beanName = annotation.value(); // 需要注⼊的bean的id</span><br><span class="line">				<span class="keyword">if</span>(<span class="string">""</span>.equals(beanName.trim())) &#123;</span><br><span class="line">					// 没有配置具体的bean id，那就需要根据当前字段类型注⼊（接⼝注⼊） </span><br><span class="line">					IDemoService beanName = declaredField.getType().getName();</span><br><span class="line">				&#125;</span><br><span class="line">				// 开启赋值</span><br><span class="line">				declaredField.setAccessible(<span class="literal">true</span>);</span><br><span class="line">				try &#123;</span><br><span class="line">					declaredField.set(entry.getValue(),ioc.get(beanName));</span><br><span class="line">				&#125; catch (IllegalAccessException e) &#123;</span><br><span class="line">					e.printStackTrace();</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		// ioc容器</span><br><span class="line">		// 基于classNames缓存的类的全限定类名，以及反射技术，完成对象创建和管理</span><br><span class="line">		private void <span class="function"><span class="title">doInstance</span></span>() &#123;</span><br><span class="line">			<span class="keyword">if</span>(classNames.size() == 0) </span><br><span class="line">				<span class="built_in">return</span>;</span><br><span class="line">			try&#123;</span><br><span class="line">				<span class="keyword">for</span> (int i = 0; i &lt; classNames.size(); i++) &#123;</span><br><span class="line">					String className = classNames.get(i); //com.loonycoder.demo.controller.DemoController</span><br><span class="line">					// 反射</span><br><span class="line">					Class&lt;?&gt; aClass = Class.forName(className);</span><br><span class="line">					// 区分controller，区分service</span><br><span class="line">					<span class="keyword">if</span>(aClass.isAnnotationPresent(loonycoderController.class)) &#123;</span><br><span class="line">						// controller的id此处不做过多处理，不取value了，就拿类的⾸字</span><br><span class="line">						⺟⼩写作为id，保存到ioc中</span><br><span class="line">						String simpleName = aClass.getSimpleName();//</span><br><span class="line">						DemoController</span><br><span class="line">						String lowerFirstSimpleName = lowerFirst(simpleName);</span><br><span class="line">						// demoController</span><br><span class="line">						Object o = aClass.newInstance();</span><br><span class="line">						ioc.put(lowerFirstSimpleName,o);</span><br><span class="line"> 					&#125;<span class="keyword">else</span> <span class="keyword">if</span>(aClass.isAnnotationPresent(loonycoderService.class)) &#123;</span><br><span class="line">						loonycoderService annotation =</span><br><span class="line">						aClass.getAnnotation(loonycoderService.class);</span><br><span class="line">						//获取注解value值</span><br><span class="line">						String beanName = annotation.value();</span><br><span class="line">						// 如果指定了id，就以指定的为准</span><br><span class="line">						<span class="keyword">if</span>(!<span class="string">""</span>.equals(beanName.trim())) &#123;</span><br><span class="line">							ioc.put(beanName,aClass.newInstance());</span><br><span class="line"> 						&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">							// 如果没有指定，就以类名⾸字⺟⼩写</span><br><span class="line">							beanName = lowerFirst(aClass.getSimpleName());</span><br><span class="line">							ioc.put(beanName,aClass.newInstance());</span><br><span class="line"> 						&#125;</span><br><span class="line">						// service层往往是有接⼝的，⾯向接⼝开发，此时再以接⼝名为id，放⼊⼀份对象到ioc中，便于后期根据接⼝类型注⼊</span><br><span class="line">						Class&lt;?&gt;[] interfaces = aClass.getInterfaces();</span><br><span class="line">						<span class="keyword">for</span> (int j = 0; j &lt; interfaces.length; j++) &#123;</span><br><span class="line">							Class&lt;?&gt; anInterface = interfaces[j];</span><br><span class="line">							// 以接⼝的全限定类名作为id放⼊</span><br><span class="line">							ioc.put(anInterface.getName(),aClass.newInstance());</span><br><span class="line">						 &#125;</span><br><span class="line"> 					&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">						<span class="built_in">continue</span>;</span><br><span class="line"> 					&#125;</span><br><span class="line"></span><br><span class="line"> 			&#125;catch (Exception e) &#123;</span><br><span class="line">				e.printStackTrace();</span><br><span class="line"> 			&#125;</span><br><span class="line"> 		&#125;</span><br><span class="line">	// ⾸字⺟⼩写⽅法</span><br><span class="line">	public String lowerFirst(String str) &#123;</span><br><span class="line">		char[] chars = str.toCharArray();</span><br><span class="line">		<span class="keyword">if</span>(<span class="string">'A'</span> &lt;= chars[0] &amp;&amp; chars[0] &lt;= <span class="string">'Z'</span>) &#123;</span><br><span class="line">			chars[0] += 32;</span><br><span class="line">	 	&#125;</span><br><span class="line">		<span class="built_in">return</span> String.valueOf(chars);</span><br><span class="line"> 	&#125;</span><br><span class="line">	// 扫描类</span><br><span class="line">	// scanPackage: com.loonycoder.demo package----&gt; 磁盘上的⽂件夹（File）com/loonycoder/demo</span><br><span class="line">	private void doScan(String scanPackage) &#123;</span><br><span class="line">		String scanPackagePath = Thread.currentThread().getContextClassLoader().getResource(<span class="string">""</span>).getPath() + scanPackage.replaceAll(<span class="string">"\\."</span>, <span class="string">"/"</span>);</span><br><span class="line">		File pack = new File(scanPackagePath);</span><br><span class="line">		File[] files = pack.listFiles();</span><br><span class="line">		<span class="keyword">for</span>(File file: files) &#123;</span><br><span class="line">			<span class="keyword">if</span>(file.isDirectory()) &#123; // ⼦package</span><br><span class="line">			// 递归</span><br><span class="line">			doScan(scanPackage + <span class="string">"."</span> + file.getName()); //com.loonycoder.demo.controller</span><br><span class="line">				&#125;<span class="keyword">else</span> <span class="keyword">if</span>(file.getName().endsWith(<span class="string">".class"</span>)) &#123;</span><br><span class="line">				String className = scanPackage + <span class="string">"."</span> +</span><br><span class="line">				file.getName().replaceAll(<span class="string">".class"</span>, <span class="string">""</span>);</span><br><span class="line">				classNames.add(className);</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	// 加载配置⽂件</span><br><span class="line">	private void doLoadConfig(String contextConfigLocation) &#123;</span><br><span class="line">		InputStream resourceAsStream =</span><br><span class="line">		this.getClass().getClassLoader().getResourceAsStream(contextConfigLocation);</span><br><span class="line">		try &#123;</span><br><span class="line">			properties.load(resourceAsStream);</span><br><span class="line">		&#125; catch (IOException e) &#123;</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	@Override</span><br><span class="line">	protected void doGet(HttpServletRequest req, HttpServletResponse resp)</span><br><span class="line">	throws ServletException, IOException &#123;</span><br><span class="line">		doPost(req,resp);</span><br><span class="line">	&#125;</span><br><span class="line">	@Override</span><br><span class="line">	protected void doPost(HttpServletRequest req, HttpServletResponse</span><br><span class="line">	resp) throws ServletException, IOException &#123;</span><br><span class="line">	// 处理请求：根据url，找到对应的Method⽅法，进⾏调⽤</span><br><span class="line">	// 获取uri</span><br><span class="line">	// String requestURI = req.getRequestURI();</span><br><span class="line">	// Method method = handlerMapping.get(requestURI);// 获取到⼀个反射的</span><br><span class="line">	⽅法</span><br><span class="line">	// 反射调⽤，需要传⼊对象，需要传⼊参数，此处⽆法完成调⽤，没有把对象缓存起来，</span><br><span class="line">	也没有参数！！！！改造initHandlerMapping();</span><br><span class="line">	// method.invoke() //</span><br><span class="line">	// 根据uri获取到能够处理当前请求的hanlder（从handlermapping中（list））</span><br><span class="line">		Handler handler = getHandler(req);</span><br><span class="line">		<span class="keyword">if</span>(handler == null) &#123;</span><br><span class="line">			resp.getWriter().write(<span class="string">"404 not found"</span>);</span><br><span class="line">			<span class="built_in">return</span>;</span><br><span class="line">	 	&#125;</span><br><span class="line">		// 参数绑定</span><br><span class="line">		// 获取所有参数类型数组，这个数组的⻓度就是我们最后要传⼊的args数组的⻓度</span><br><span class="line">		Class&lt;?&gt;[] parameterTypes = handler.getMethod().getParameterTypes();</span><br><span class="line">		// 根据上述数组⻓度创建⼀个新的数组（参数数组，是要传⼊反射调⽤的）</span><br><span class="line">		Object[] paraValues = new Object[parameterTypes.length];</span><br><span class="line">		// 以下就是为了向参数数组中塞值，⽽且还得保证参数的顺序和⽅法中形参顺序⼀致</span><br><span class="line">		Map&lt;String, String[]&gt; parameterMap = req.getParameterMap();</span><br><span class="line">		// 遍历request中所有参数 （填充除了request，response之外的参数）</span><br><span class="line">		<span class="keyword">for</span>(Map.Entry&lt;String,String[]&gt; param: parameterMap.entrySet()) &#123;</span><br><span class="line">			// name=1&amp;name=2 name [1,2]</span><br><span class="line">			String value = StringUtils.join(param.getValue(), <span class="string">","</span>); // 如 同 1,2</span><br><span class="line">			// 如果参数和⽅法中的参数匹配上了，填充数据</span><br><span class="line">			<span class="keyword">if</span>(!handler.getParamIndexMapping().containsKey(param.getKey()))&#123;</span><br><span class="line">				<span class="built_in">continue</span>;</span><br><span class="line">			&#125;</span><br><span class="line">			// ⽅法形参确实有该参数，找到它的索引位置，对应的把参数值放⼊paraValues</span><br><span class="line">			Integer index =</span><br><span class="line">			handler.getParamIndexMapping().get(param.getKey());//name在第 2 个位置</span><br><span class="line">			paraValues[index] = value; // 把前台传递过来的参数值填充到对应的位置去</span><br><span class="line">			&#125;</span><br><span class="line">		int requestIndex = handler.getParamIndexMapping().get(HttpServletRequest.class.getSimpleName()); // 0</span><br><span class="line">		paraValues[requestIndex] = req;</span><br><span class="line">		int responseIndex =</span><br><span class="line">		handler.getParamIndexMapping().get(HttpServletResponse.class.getSimpleName()); // 1</span><br><span class="line">		paraValues[responseIndex] = resp;</span><br><span class="line">		// 最终调⽤handler的method属性</span><br><span class="line">		try &#123;</span><br><span class="line">			handler.getMethod().invoke(handler.getController(),paraValues);</span><br><span class="line">			&#125; catch (IllegalAccessException e) &#123;</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">			&#125; catch (InvocationTargetException e) &#123;</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	private Handler getHandler(HttpServletRequest req) &#123;</span><br><span class="line">		<span class="keyword">if</span>(handlerMapping.isEmpty())&#123;<span class="built_in">return</span> null;&#125;</span><br><span class="line">		String url = req.getRequestURI();</span><br><span class="line">		<span class="keyword">for</span>(Handler handler: handlerMapping) &#123;</span><br><span class="line">			Matcher matcher = handler.getPattern().matcher(url);</span><br><span class="line">			<span class="keyword">if</span>(!matcher.matches())&#123;<span class="built_in">continue</span>;&#125;</span><br><span class="line">			<span class="built_in">return</span> handler;</span><br><span class="line">		 &#125;</span><br><span class="line">		<span class="built_in">return</span> null;</span><br><span class="line">		&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>Pojo类Handler<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">import javax.sound.midi.MetaEventListener;</span><br><span class="line">import java.lang.reflect.Method;</span><br><span class="line">import java.util.HashMap;</span><br><span class="line">import java.util.Map;</span><br><span class="line">import java.util.regex.Pattern;</span><br><span class="line">/**</span><br><span class="line">* 封装handler⽅法相关的信息</span><br><span class="line">*/</span><br><span class="line">public class Handler &#123;</span><br><span class="line">	private Object controller; // method.invoke(obj)</span><br><span class="line">	private Method method;</span><br><span class="line">	private Pattern pattern; // spring中url是⽀持正则的</span><br><span class="line">	private Map&lt;String,Integer&gt; paramIndexMapping; // 参数顺序,是为了进⾏参数</span><br><span class="line">	绑定，key是参数名，value代表是第⼏个参数 &lt;name,2&gt;</span><br><span class="line">	public Handler(Object controller, Method method, Pattern pattern) &#123;</span><br><span class="line">		this.controller = controller;</span><br><span class="line">		this.method = method;</span><br><span class="line">		this.pattern = pattern;</span><br><span class="line">		this.paramIndexMapping = new HashMap&lt;&gt;();</span><br><span class="line">	 &#125;</span><br><span class="line">	public Object <span class="function"><span class="title">getController</span></span>() &#123;</span><br><span class="line">		<span class="built_in">return</span> controller;</span><br><span class="line">	&#125;</span><br><span class="line">	public void setController(Object controller) &#123;</span><br><span class="line">		this.controller = controller;</span><br><span class="line">	&#125;</span><br><span class="line">	public Method <span class="function"><span class="title">getMethod</span></span>() &#123;</span><br><span class="line">		<span class="built_in">return</span> method;</span><br><span class="line">	&#125;</span><br><span class="line">	public void setMethod(Method method) &#123;</span><br><span class="line">		this.method = method;</span><br><span class="line">	&#125;</span><br><span class="line">	public Pattern <span class="function"><span class="title">getPattern</span></span>() &#123;</span><br><span class="line">		<span class="built_in">return</span> pattern;</span><br><span class="line">	&#125;</span><br><span class="line">	public void setPattern(Pattern pattern) &#123;</span><br><span class="line">		this.pattern = pattern;</span><br><span class="line">	&#125;</span><br><span class="line">	public Map&lt;String, Integer&gt; <span class="function"><span class="title">getParamIndexMapping</span></span>() &#123;</span><br><span class="line">		<span class="built_in">return</span> paramIndexMapping;</span><br><span class="line">	&#125;</span><br><span class="line">	public void setParamIndexMapping(Map&lt;String, Integer&gt; paramIndexMapping) &#123;</span><br><span class="line">		this.paramIndexMapping = paramIndexMapping;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>web.xml配置<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE web-app PUBLIC</span><br><span class="line"><span class="string">"-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"</span></span><br><span class="line"><span class="string">"http://java.sun.com/dtd/web-app_2_3.dtd"</span> &gt;</span><br><span class="line">&lt;web-app&gt; </span><br><span class="line">	&lt;display-name&gt;Archetype Created Web Application&lt;/display-name&gt; </span><br><span class="line">	&lt;servlet&gt; </span><br><span class="line">		&lt;servlet-name&gt;loonycodermvc&lt;/servlet-name&gt; </span><br><span class="line">		&lt;servletclass&gt;com.loonycoder.mvcframework.servlet.lcDispatcherServlet&lt;/servletclass&gt;</span><br><span class="line">		&lt;init-param&gt; </span><br><span class="line">			&lt;param-name&gt;contextConfigLocation&lt;/param-name&gt; </span><br><span class="line">			&lt;param-value&gt;springmvc.properties&lt;/param-value&gt;</span><br><span class="line">		&lt;/init-param&gt;</span><br><span class="line">	&lt;/servlet&gt; </span><br><span class="line">	&lt;servlet-mapping&gt; </span><br><span class="line">		&lt;servlet-name&gt;loonycodermvc&lt;/servlet-name&gt; </span><br><span class="line">		&lt;url-pattern&gt;/*&lt;/url-pattern&gt;</span><br><span class="line">	&lt;/servlet-mapping&gt;</span><br><span class="line">&lt;/web-app&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+
+</li>
+</ul>
+</li>
+</ul>
+
+            <hr>
+          </div>
+          <br>
+          <div>
+            <p>
+            
+              <span>
+                <i class="iconfont icon-inbox"></i>
+                
+                  <a class="hover-with-bg" href="/categories/Java%E6%A1%86%E6%9E%B6">Java框架</a>
+                  &nbsp;
+                
+              </span>&nbsp;&nbsp;
+            
+            
+              <span>
+                <i class="iconfont icon-tag"></i>
+                
+                  <a class="hover-with-bg" href="/tags/web">web</a>
+                
+                  <a class="hover-with-bg" href="/tags/%E8%A1%A8%E7%8E%B0%E5%B1%82%E6%A1%86%E6%9E%B6">表现层框架</a>
+                
+              </span>
+            
+            </p>
+            
+              <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" target="_blank" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="d-none d-lg-block col-lg-2 toc-container">
+      
+  <div id="toc">
+    <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+    <div id="tocbot"></div>
+  </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- custom -->
+
+
+<!-- Comments -->
+<div class="col-lg-7 mx-auto nopadding-md">
+  <div class="container comments mx-auto" id="comments">
+    
+      <br><br>
+      
+      
+
+    
+  </div>
+</div>
+
+    
+  </main>
+
+  
+    <a class="z-depth-1" id="scroll-top-button" href="#" role="button">
+      <i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <a href="https://github.com/Loonycoder" target="_blank" rel="nofollow noopener"><b>望月</b></a>
+    <i class="iconfont icon-love"></i>
+    <a href="https://github.com/Loonycoder" target="_blank" rel="nofollow noopener"> <b>LoonyCoder</b></a>
+    <br>
+
+    
+  
+    <!-- 不蒜子统计PV -->
+    
+    &nbsp;<span id="busuanzi_container_site_pv"></span>访问量: 
+          <span id="busuanzi_value_site_pv"></span> &nbsp;
+  
+  
+    <!-- 不蒜子统计UV -->
+    
+    &nbsp;<span id="busuanzi_container_site_uv"></span>访客数: 
+            <span id="busuanzi_value_site_uv"></span> &nbsp;
+  
+  <br>
+
+
+
+    
+  <!-- 备案信息 -->
+  <a href="http://beian.miit.gov.cn/" target="_blank"
+     rel="nofollow noopener">京ICP证20008174号</a>
+  
+    <a
+      href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=20008174"
+      rel="nofollow noopener"
+      class="police-beian"
+      target="_blank"
+    >
+      <span class="police-beian-sep">&nbsp;|&nbsp;</span>
+      
+        <img src="/img/police_beian.png" />
+      
+      <span>京公网安备20008174号</span>
+    </a>
+  
+
+
+
+    <!-- cnzz Analytics icon -->
+    
+
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script src="/lib/jquery/jquery.min.js" ></script>
+<script src="/lib/popper/popper.min.js" ></script>
+<script src="/lib/bootstrap/js/bootstrap.min.js" ></script>
+<script src="/lib/mdbootstrap/js/mdb.min.js" ></script>
+<script src="/js/main.js" ></script>
+
+
+  <script src="/js/lazyload.js" ></script>
+
+
+
+  <script src="/js/post.js" ></script>
+  
+    <script src="/lib/tocbot/tocbot.min.js" ></script>
+    <script>
+      $(document).ready(function () {
+        tocbot.init({
+          tocSelector: '#tocbot',
+          contentSelector: '.post-content',
+          headingSelector: 'h1,h2,h3,h4,h5,h6',
+          linkClass: 'tocbot-link',
+          activeLinkClass: 'tocbot-active-link',
+          listClass: 'tocbot-list',
+          isCollapsedClass: 'tocbot-is-collapsed',
+          collapsibleClass: 'tocbot-is-collapsible',
+          scrollSmooth: true,
+        });
+      });
+    </script>
+  
+
+
+
+  <script src="/lib/smoothscroll/SmoothScroll.min.js" ></script>
+
+
+
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+<!-- Plugins -->
+
+
+  
+
+  
+
+  
+
+  
+
+  <!-- cnzz Analytics -->
+  
+
+
+
+  <script src="/lib/prettify/prettify.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      $('pre').addClass('prettyprint  linenums');
+      prettyPrint();
+    })
+  </script>
+
+
+
+  <script src="/lib/typed/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "优秀而又强大的表现层框架——SpringMVC（三）&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script src="/lib/anchor/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+      icon: "❡"
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      getSearchFile(path);
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script src="/lib/fancybox/jquery.fancybox.min.js" ></script>
+  <script>
+    $("#post img:not(.no-zoom img, img[no-zoom])").each(
+      function () {
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "images");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+  
+  
+    <script>
+      !function (e, t, a) {
+        function r() {
+          for (var e = 0; e < s.length; e++) s[e].alpha <= 0 ? (t.body.removeChild(s[e].el), s.splice(e, 1)) : (s[e].y--, s[e].scale += .004, s[e].alpha -= .013, s[e].el.style.cssText = "left:" + s[e].x + "px;top:" + s[e].y + "px;opacity:" + s[e].alpha + ";transform:scale(" + s[e].scale + "," + s[e].scale + ") rotate(45deg);background:" + s[e].color + ";z-index:99999");
+          requestAnimationFrame(r)
+        }
+
+        function n() {
+          var t = "function" == typeof e.onclick && e.onclick;
+          e.onclick = function (e) {
+            t && t(), o(e)
+          }
+        }
+
+        function o(e) {
+          var a = t.createElement("div");
+          a.className = "heart", s.push({
+            el: a,
+            x: e.clientX - 5,
+            y: e.clientY - 5,
+            scale: 1,
+            alpha: 1,
+            color: c()
+          }), t.body.appendChild(a)
+        }
+
+        function i(e) {
+          var a = t.createElement("style");
+          a.type = "text/css";
+          try {
+            a.appendChild(t.createTextNode(e))
+          } catch (t) {
+            a.styleSheet.cssText = e
+          }
+          t.getElementsByTagName("head")[0].appendChild(a)
+        }
+
+        function c() {
+          return "rgb(" + ~~(255 * Math.random()) + "," + ~~(255 * Math.random()) + "," + ~~(255 * Math.random()) + ")"
+        }
+
+        var s = [];
+        e.requestAnimationFrame = e.requestAnimationFrame || e.webkitRequestAnimationFrame || e.mozRequestAnimationFrame || e.oRequestAnimationFrame || e.msRequestAnimationFrame || function (e) {
+          setTimeout(e, 1e3 / 60)
+        }, i(".heart{width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: fixed;}.heart:after{top: -5px;}.heart:before{left: -5px;}"), n(), r()
+      }(window, document);
+    </script>
+  
+
+
+
+
+
+
+
+
+</body>
+</html>

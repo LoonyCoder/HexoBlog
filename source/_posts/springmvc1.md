@@ -354,7 +354,7 @@ public class DateConverter implements Converter<String, Date> {
 <bean id="conversionServiceBean" class="org.springframework.format.support.FormattingConversionServiceFactoryBean"> 
 	<property name="converters">
 		<set>
-			<bean class="com.lagou.edu.converter.DateConverter"></bean>
+			<bean class="com.loonycoder.converter.DateConverter"></bean>
 		</set>
 	</property>
 </bean>
