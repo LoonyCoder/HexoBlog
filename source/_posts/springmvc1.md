@@ -14,7 +14,7 @@ tags:
 
 最近系统的学习了下这个优秀而又强大的表现层框架——SpringMVC，拜读了**应癫**老师的《SpringMVC源码剖析》，深表感谢！
 
-**源码地址：**[手写SpringMVC框架](https://github.com/LoonyCoder/springmvc)
+**源码地址：**[手写SpringMVC框架](https://github.com/LoonyCoder/lagou-learn/tree/master/Model%203)
 **欢迎star/fork，给作者一些鼓励！**
 
 ### SpringMVC简介

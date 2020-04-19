@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="description" content="Life Is So Short , Just Coding.">
+  <meta name="author" content="LoonyCoder">
+  <meta name="keywords" content="隐约雷鸣，阴霾天空，但盼风雨来，能留你于此">
+  <title>轻量级控制反转和面向切面的容器框架——Spring（五） ~ 望月Plenilune</title>
+
+  <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css"  >
+<link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css"  >
+<link rel="stylesheet" href="/lib/mdbootstrap/css/mdb.min.css"  >
+<link rel="stylesheet" href="/lib/github-markdown/github-markdown.min.css"  >
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
+
+
+
+  <link rel="stylesheet" href="/lib/prettify/tomorrow-night-eighties.min.css"  >
+
+<link rel="stylesheet" href="/css/main.css"  >
+
+
+  <link rel="stylesheet" href="/lib/fancybox/jquery.fancybox.min.css"  >
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>望月Plenilune</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/archives/">归档</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/categories/">分类</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/tags/">标签</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/about/">关于</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="view intro-2" id="background" false
+         style="background: url('/images/post_banner.jpg')no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask rgba-black-light flex-center">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              <br>
+              
+                <p class="mt-3">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>&nbsp;
+                  星期四, 八月 22日 2019, 4:39 下午
+                </p>
+              
+
+              <p>
+                
+                  
+                  &nbsp;<i class="far fa-chart-bar"></i>
+                  <span class="post-count">
+                    5.1k 字
+                  </span>&nbsp;
+                
+
+                
+                  
+                  &nbsp;<i class="far fa-clock"></i>
+                  <span class="post-count">
+                      19 分钟
+                  </span>&nbsp;
+                
+
+                
+                  <!-- 不蒜子统计文章PV -->
+                  
+                  &nbsp;<i class="far fa-eye" aria-hidden="true"></i>&nbsp;
+                  <span id="busuanzi_container_page_pv">
+                    <span id="busuanzi_value_page_pv"></span> 次
+                  </span>&nbsp;
+                
+              </p>
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="py-5 z-depth-3" id="board">
+        <div class="post-content mx-auto" id="post">
+          <div class="markdown-body">
+            <p><img src="/images/spring_logo.jpg" srcset="/img/loading.gif" alt="spring"></p>
+<h3 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h3><p>之前整理过一些关于Spring框架零散的知识点，一直没时间整理，恰好最近又拜读了<strong>应癫</strong>老师的课程，所以赶紧梳理一下关于Spring的相关知识。</p>
+<hr>
+<h3 id="Spring-AOP应用"><a href="#Spring-AOP应用" class="headerlink" title="Spring AOP应用"></a>Spring AOP应用</h3><p>AOP本质：在不改变原有业务逻辑的情况下增强横切逻辑，横切逻辑代码往往是权限校验代码、⽇志代码、事务控制代码、性能监控代码。</p>
+<h4 id="AOP相关术语"><a href="#AOP相关术语" class="headerlink" title="AOP相关术语"></a>AOP相关术语</h4><h5 id="业务主线"><a href="#业务主线" class="headerlink" title="业务主线"></a>业务主线</h5><p>在讲解AOP术语之前，我们先来看⼀下下⾯这两张图，它们就是第三部分案例需求的扩展（针对这些扩展的需求，我们只进⾏分析，在此基础上去进⼀步回顾AOP，不进⾏实现）</p>
+<p><img src="/images/spring/s58.png" srcset="/img/loading.gif" alt="spring"></p>
+<p>上图描述的就是未采⽤AOP思想设计的程序，当我们红⾊框中圈定的⽅法时，会带来⼤量的重复劳动。程序中充斥着⼤量的重复代码，使我们程序的独⽴性很差。⽽下图中是采⽤了AOP思想设计的程序，它把红框部分的代码抽取出来的同时，运⽤动态代理技术，在运⾏期对需要使⽤的业务逻辑⽅法进⾏增强。</p>
+<p><img src="/images/spring/s58.png" srcset="/img/loading.gif" alt="spring"></p>
+<h5 id="AOP术语"><a href="#AOP术语" class="headerlink" title="AOP术语"></a>AOP术语</h5><table>
+<thead>
+<tr>
+<th align="left">名词</th>
+<th align="left">解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>Joinpoint(连接点)</strong></td>
+<td align="left">它指的是那些可以⽤于把增强代码加⼊到业务主线中的点，那么由上图中我们可以看出，这些点指的就是⽅法。在⽅法执⾏的前后通过动态代理技术加⼊增强的代码。在Spring框架AOP思想的技术实现中，也只⽀持⽅法类型的连接点。</td>
+</tr>
+<tr>
+<td align="left"><strong>Pointcut(切⼊点)</strong></td>
+<td align="left">它指的是那些已经把增强代码加⼊到业务主线进来之后的连接点。由上图中，我们看出表现层 transfer ⽅法就只是连接点，因为判断访问权限的功能并没有对其增强。</td>
+</tr>
+<tr>
+<td align="left"><strong>Advice(通知/增强)</strong></td>
+<td align="left">它指的是切⾯类中⽤于提供增强功能的⽅法。并且不同的⽅法增强的时机是不⼀样的。⽐如，开启事务肯定要在业务⽅法执⾏之前执⾏；提交事务要在业务⽅法正常执⾏之后执⾏，⽽回滚事务要在业务⽅法执⾏产⽣异常之后执⾏等等。那么这些就是通知的类型。其分类有：前置通知 后置通知 异常通知 最终通知 环绕通知。</td>
+</tr>
+<tr>
+<td align="left"><strong>Target(⽬标对象)</strong></td>
+<td align="left">它指的是代理的⽬标对象。即被代理对象。</td>
+</tr>
+<tr>
+<td align="left"><strong>Proxy(代理)</strong></td>
+<td align="left">它指的是⼀个类被AOP织⼊增强后，产⽣的代理类。即代理对象。</td>
+</tr>
+<tr>
+<td align="left"><strong>Weaving(织⼊)</strong></td>
+<td align="left">它指的是把增强应⽤到⽬标对象来创建新的代理对象的过程。spring采⽤动态代理织⼊，⽽AspectJ采⽤编译期织⼊和类装载期织⼊。</td>
+</tr>
+<tr>
+<td align="left"><strong>Aspect(切⾯)</strong></td>
+<td align="left">它指定是增强的代码所关注的⽅⾯，把这些相关的增强代码定义到⼀个类中，这个类就是切⾯类。例如，事务切⾯，它⾥⾯定义的⽅法就是和事务相关的，像开启事务，提交事务，回滚事务等等，不会定义其他与事务⽆关的⽅法。我们前⾯的案例中 TrasnactionManager 就是⼀个切⾯。</td>
+</tr>
+</tbody></table>
+<p><strong>连接点</strong>：⽅法开始时、结束时、正常运⾏完毕时、⽅法异常时等这些特殊的时机点，我们称之为连接点，项⽬中每个⽅法都有连接点，连接点是⼀种候选点</p>
+<p><strong>切⼊点</strong>：指定AOP思想想要影响的具体⽅法是哪些，描述感兴趣的⽅法</p>
+<p><strong>Advice增强</strong>：<br>第⼀个层次：指的是横切逻辑<br>第⼆个层次：⽅位点（在某⼀些连接点上加⼊横切逻辑，那么这些连接点就叫做⽅位点，描述的是具体的特殊时机）</p>
+<p><strong>Aspect切⾯</strong>：切⾯概念是对上述概念的⼀个综合<br>Aspect切⾯ = 切⼊点 + 增强<br>          = 切⼊点（锁定⽅法）+ ⽅位点（锁定⽅法中的特殊时机）+ 横切逻辑</p>
+<p><strong>众多的概念，⽬的就是为了锁定要在哪个地⽅插⼊什么横切逻辑代码</strong></p>
+<h4 id="Spring中AOP的代理选择"><a href="#Spring中AOP的代理选择" class="headerlink" title="Spring中AOP的代理选择"></a>Spring中AOP的代理选择</h4><p>Spring 实现AOP思想使⽤的是动态代理技术。<br>默认情况下，Spring会根据被代理对象是否实现接⼝来选择使⽤jdk还是cglib。当被代理对象没有实现任何接⼝时，Spring会选择cglib。当被代理对象实现了接⼝，Spring会选择JDK官⽅的代理技术，不过我们可以通过配置的⽅式，让Spring强制使⽤cglib。</p>
+<h4 id="Spring中AOP的配置方式"><a href="#Spring中AOP的配置方式" class="headerlink" title="Spring中AOP的配置方式"></a>Spring中AOP的配置方式</h4><p>在Spring的AOP配置中，也和IoC配置⼀样，⽀持3类配置⽅式。<br>第⼀类：使⽤XML配置<br>第⼆类：使⽤XML+注解组合配置<br>第三类：使⽤纯注解配置</p>
+<h4 id="Spring中AOP实现"><a href="#Spring中AOP实现" class="headerlink" title="Spring中AOP实现"></a>Spring中AOP实现</h4><p>需求：横切逻辑代码是打印⽇志，希望把打印⽇志的逻辑织⼊到⽬标⽅法的特定位置(service层transfer⽅法)</p>
+<h5 id="XML模式"><a href="#XML模式" class="headerlink" title="XML模式"></a>XML模式</h5><p>Spring是模块化开发的框架，使⽤aop就引⼊aop的jar</p>
+<ul>
+<li>坐标</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt; </span><br><span class="line">	&lt;groupId&gt;org.springframework&lt;/groupId&gt;</span><br><span class="line">	&lt;artifactId&gt;spring-aop&lt;/artifactId&gt; </span><br><span class="line">	&lt;version&gt;5.1.12.RELEASE&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt; </span><br><span class="line">	&lt;dependency&gt; </span><br><span class="line">	&lt;groupId&gt;org.aspectj&lt;/groupId&gt; </span><br><span class="line">	&lt;artifactId&gt;aspectjweaver&lt;/artifactId&gt; </span><br><span class="line">	&lt;version&gt;1.9.4&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>AOP 核⼼配置</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--</span><br><span class="line">	Spring基于XML的AOP配置前期准备：</span><br><span class="line">	在spring的配置⽂件中加⼊aop的约束</span><br><span class="line">	xmlns:aop=<span class="string">"http://www.springframework.org/schema/aop"</span></span><br><span class="line">	http://www.springframework.org/schema/aop </span><br><span class="line">	https://www.springframework.org/schema/aop/spring-aop.xsd</span><br><span class="line">	Spring基于XML的AOP配置步骤：</span><br><span class="line">	第⼀步：把通知Bean交给Spring管理</span><br><span class="line">	第⼆步：使⽤aop:config开始aop的配置</span><br><span class="line">	第三步：使⽤aop:aspect配置切⾯</span><br><span class="line">	第四步：使⽤对应的标签配置通知的类型</span><br><span class="line">	⼊⻔案例采⽤前置通知，标签为aop:before</span><br><span class="line">--&gt;</span><br><span class="line">&lt;!--把通知bean交给spring来管理--&gt;</span><br><span class="line">&lt;bean id=<span class="string">"logUtil"</span> class=<span class="string">"com.loonycoder.utils.LogUtil"</span>&gt;&lt;/bean&gt;</span><br><span class="line">&lt;!--开始aop的配置--&gt;</span><br><span class="line">&lt;aop:config&gt;</span><br><span class="line">&lt;!--配置切⾯--&gt;</span><br><span class="line">&lt;aop:aspect id=<span class="string">"logAdvice"</span> ref=<span class="string">"logUtil"</span>&gt;</span><br><span class="line">&lt;!--配置前置通知--&gt;</span><br><span class="line">&lt;aop:before method=<span class="string">"printLog"</span> pointcut=<span class="string">"execution(public * com.loonycoder.service.impl.TransferServiceImpl.updateAccountByCardNo(com.loonycoder.pojo.Account))"</span>&gt;&lt;/aop:before&gt;</span><br><span class="line">&lt;/aop:aspect&gt;</span><br><span class="line">&lt;/aop:config&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>细节</p>
+<ul>
+<li>关于切⼊点表达式<br>上述配置实现了对 TransferServiceImpl 的 updateAccountByCardNo ⽅法进⾏增强，在其执⾏之前，输出了记录⽇志的语句。这⾥⾯，我们接触了⼀个⽐较陌⽣的名称：切⼊点表达式，它是做什么的呢？我们往下看。<ul>
+<li>概念及作⽤<br>切⼊点表达式，也称之为AspectJ切⼊点表达式，指的是遵循特定语法结构的字符串，其作⽤是⽤于对符合语法格式的连接点进⾏增强。它是AspectJ表达式的⼀部分。</li>
+<li>关于AspectJ<br>AspectJ是⼀个基于Java语⾔的AOP框架，Spring框架从2.0版本之后集成了AspectJ框架中切⼊点表达式的部分，开始⽀持AspectJ切⼊点表达式。</li>
+<li>切⼊点表达式使⽤示例<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">全限定⽅法名 访问修饰符 返回值 包名.包名.包名.类名.⽅法名(参数列表)</span><br><span class="line">全匹配⽅式：</span><br><span class="line">public void com.loonycoder.service.impl.TransferServiceImpl.updateAccountByCardNo(com.loonycoder.pojo.Account)</span><br><span class="line">访问修饰符可以省略</span><br><span class="line">void com.loonycoder.service.impl.TransferServiceImpl.updateAccountByCardNo(com.loonycoder.pojo.Account)</span><br><span class="line">返回值可以使⽤*，表示任意返回值</span><br><span class="line">* com.loonycoder.service.impl.TransferServiceImpl.updateAccountByCardNo(com.loonycoder.pojo.Account)</span><br><span class="line">包名可以使⽤.表示任意包，但是有⼏级包，必须写⼏个</span><br><span class="line">* ....TransferServiceImpl.updateAccountByCardNo(com.loonycoder.pojo.Account)</span><br><span class="line">包名可以使⽤..表示当前包及其⼦包</span><br><span class="line">* ..TransferServiceImpl.updateAccountByCardNo(com.loonycoder.pojo.Account)</span><br><span class="line">类名和⽅法名，都可以使⽤.表示任意类，任意⽅法</span><br><span class="line">* ...(com.loonycoder.pojo.Account)</span><br><span class="line">参数列表，可以使⽤具体类型</span><br><span class="line">基本类型直接写类型名称 ： int</span><br><span class="line">引⽤类型必须写全限定类名：java.lang.String</span><br><span class="line">参数列表可以使⽤*，表示任意参数类型，但是必须有参数</span><br><span class="line">* *..*.*(*)</span><br><span class="line">参数列表可以使⽤..，表示有⽆参数均可。有参数可以是任意类型</span><br><span class="line">* *..*.*(..)</span><br><span class="line">全通配⽅式：</span><br><span class="line">* *..*.*(..)</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li>改变代理⽅式的配置<br>在前⾯我们已经说了，Spring在选择创建代理对象时，会根据被代理对象的实际情况来选择的。被代理对象实现了接⼝，则采⽤基于接⼝的动态代理。当被代理对象没有实现任何接⼝的时候，Spring会⾃动切换到基于⼦类的动态代理⽅式。但是我们都知道，⽆论被代理对象是否实现接⼝，只要不是final修饰的类都可以采⽤cglib提供的⽅式创建代理对象。所以Spring也考虑到了这个情况，提供了配置的⽅式实现强制使⽤基于⼦类的动态代理（即cglib的⽅式），配置的⽅式有两种<ul>
+<li>使⽤aop:config标签配置<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;aop:config proxy-target-class=<span class="string">"true"</span>&gt;</span><br></pre></td></tr></table></figure></li>
+<li>使⽤aop:aspectj-autoproxy标签配置<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--此标签是基于XML和注解组合配置AOP时的必备标签，表示Spring开启注解配置AOP的⽀持--&gt;</span><br><span class="line">&lt;aop:aspectj-autoproxy proxy-target-class=<span class="string">"true"</span>&gt;&lt;/aop:aspectj-autoproxy&gt;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li>五种通知类型<ul>
+<li>前置通知<br>配置⽅式：aop:before标签<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--作⽤：</span><br><span class="line">⽤于配置前置通知。</span><br><span class="line">出现位置：</span><br><span class="line">它只能出现在aop:aspect标签内部</span><br><span class="line">属性：</span><br><span class="line">method：⽤于指定前置通知的⽅法名称</span><br><span class="line">pointcut：⽤于指定切⼊点表达式</span><br><span class="line">pointcut-ref：⽤于指定切⼊点表达式的引⽤</span><br><span class="line">--&gt;</span><br><span class="line">&lt;aop:before method=<span class="string">"printLog"</span> pointcut-ref=<span class="string">"pointcut1"</span>&gt;</span><br><span class="line">&lt;/aop:before&gt;</span><br></pre></td></tr></table></figure></li>
+</ul>
+  <strong>执⾏时机</strong>：前置通知永远都会在切⼊点⽅法（业务核⼼⽅法）执⾏之前执⾏。<br>  <strong>细节</strong>：前置通知可以获取切⼊点⽅法的参数，并对其进⾏增强。</li>
+</ul>
+</li>
+<li><p>正常执⾏时通知</p>
+</li>
+</ul>
+<p><strong>配置⽅式</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--</span><br><span class="line">	作⽤：</span><br><span class="line">	⽤于配置正常执⾏时通知</span><br><span class="line">	出现位置：</span><br><span class="line">	它只能出现在aop:aspect标签内部</span><br><span class="line">	属性：</span><br><span class="line">	method:⽤于指定后置通知的⽅法名称</span><br><span class="line">	pointcut:⽤于指定切⼊点表达式</span><br><span class="line">	pointcut-ref:⽤于指定切⼊点表达式的引⽤</span><br><span class="line">--&gt;</span><br><span class="line">&lt;aop:after-returning method=<span class="string">"afterReturningPrintLog"</span> pointcut-ref=<span class="string">"pt1"</span>&gt;&lt;/aop:after-returning&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>异常通知</li>
+</ul>
+<p><strong>配置⽅式</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--</span><br><span class="line">	作⽤：</span><br><span class="line">	⽤于配置异常通知。</span><br><span class="line">	出现位置：</span><br><span class="line">	它只能出现在aop:aspect标签内部</span><br><span class="line">	属性：</span><br><span class="line">	method:⽤于指定异常通知的⽅法名称</span><br><span class="line">	pointcut:⽤于指定切⼊点表达式</span><br><span class="line">	pointcut-ref:⽤于指定切⼊点表达式的引⽤</span><br><span class="line">--&gt;</span><br><span class="line">&lt;aop:after-throwing method=<span class="string">"afterThrowingPrintLog"</span> pointcut-ref=<span class="string">"pt1"</span>&gt;&lt;/aop:after-throwing&gt;</span><br></pre></td></tr></table></figure>
+<p><strong>执⾏时机</strong>：最终通知的执⾏时机是在切⼊点⽅法（业务核⼼⽅法）执⾏完成之后，切⼊点⽅法返回之前执⾏。换句话说，⽆论切⼊点⽅法执⾏是否产⽣异常，它都会在返回之前执⾏。<br><strong>细节</strong>：最终通知执⾏时，可以获取到通知⽅法的参数。同时它可以做⼀些清理操作。</p>
+<ul>
+<li>环绕通知</li>
+</ul>
+<p><strong>配置⽅式</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--</span><br><span class="line">	作⽤：</span><br><span class="line">	⽤于配置环绕通知。</span><br><span class="line">	出现位置：</span><br><span class="line">	它只能出现在aop:aspect标签的内部</span><br><span class="line">	属性：</span><br><span class="line">	method:⽤于指定环绕通知的⽅法名称</span><br><span class="line">	pointcut:⽤于指定切⼊点表达式</span><br><span class="line">	pointcut-ref:⽤于指定切⼊点表达式的引⽤</span><br><span class="line">--&gt;</span><br><span class="line">&lt;aop:around method=<span class="string">"aroundPrintLog"</span> pointcut-ref=<span class="string">"pt1"</span>&gt;&lt;/aop:around&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>特别说明</strong><br>环绕通知，它是有别于前⾯四种通知类型外的特殊通知。前⾯四种通知（前置，后置，异常和最终）它们都是指定何时增强的通知类型。⽽环绕通知，它是Spring框架为我们提供的⼀种可以通过编码的⽅式，控制增强代码何时执⾏的通知类型。它⾥⾯借助的ProceedingJoinPoint接⼝及其实现类，实现⼿动触发切⼊点⽅法的调⽤。</p>
+</blockquote>
+<h5 id="XML-注解模式"><a href="#XML-注解模式" class="headerlink" title="XML+注解模式"></a>XML+注解模式</h5><ul>
+<li>XML 中开启 Spring 对注解 AOP 的⽀持</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--开启spring对注解aop的⽀持--&gt;</span><br><span class="line">&lt;aop:aspectj-autoproxy/&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>示例</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line">@Component</span><br><span class="line">@Aspect</span><br><span class="line">	public class LogUtil &#123;</span><br><span class="line">	/**</span><br><span class="line">	* 我们在xml中已经使⽤了通⽤切⼊点表达式，供多个切⾯使⽤，那么在注解中如何使⽤呢？</span><br><span class="line">	* 第⼀步：编写⼀个⽅法</span><br><span class="line">	* 第⼆步：在⽅法使⽤@Pointcut注解</span><br><span class="line">	* 第三步：给注解的value属性提供切⼊点表达式</span><br><span class="line">	* 细节：</span><br><span class="line">	* 1.在引⽤切⼊点表达式时，必须是⽅法名+()，例如<span class="string">"pointcut()"</span>。 * 2.在当前切⾯中使⽤，可以直接写⽅法名。在其他切⾯中使⽤必须是全限定⽅法名。</span><br><span class="line">	*/</span><br><span class="line">	@Pointcut(<span class="string">"execution(* com.loonycoder.service.impl.*.*(..))"</span>)</span><br><span class="line">	public void <span class="function"><span class="title">pointcut</span></span>()&#123;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">	@Before(<span class="string">"pointcut()"</span>)</span><br><span class="line">	public void beforePrintLog(JoinPoint jp)&#123;</span><br><span class="line">		Object[] args = jp.getArgs();</span><br><span class="line">		System.out.println(<span class="string">"前置通知：beforePrintLog，参数是："</span>+</span><br><span class="line">		Arrays.toString(args));</span><br><span class="line">	&#125;</span><br><span class="line">	@AfterReturning(value = <span class="string">"pointcut()"</span>,returning = <span class="string">"rtValue"</span>)</span><br><span class="line">	public void afterReturningPrintLog(Object rtValue)&#123;</span><br><span class="line">		System.out.println(<span class="string">"后置通知：afterReturningPrintLog，返回值</span></span><br><span class="line"><span class="string">		是："</span>+rtValue);</span><br><span class="line">	&#125;</span><br><span class="line">	@AfterThrowing(value = <span class="string">"pointcut()"</span>,throwing = <span class="string">"e"</span>)</span><br><span class="line">	public void afterThrowingPrintLog(Throwable e)&#123;</span><br><span class="line">		System.out.println(<span class="string">"异常通知：afterThrowingPrintLog，异常是："</span>+e);</span><br><span class="line">	&#125;</span><br><span class="line">	@After(<span class="string">"pointcut()"</span>)</span><br><span class="line">	public void <span class="function"><span class="title">afterPrintLog</span></span>()&#123;</span><br><span class="line">		System.out.println(<span class="string">"最终通知：afterPrintLog"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	/**</span><br><span class="line">	* 环绕通知</span><br><span class="line">	* @param pjp</span><br><span class="line">	* @<span class="built_in">return</span></span><br><span class="line">	*/</span><br><span class="line">	@Around(<span class="string">"pointcut()"</span>)</span><br><span class="line">	public Object aroundPrintLog(ProceedingJoinPoint pjp)&#123;</span><br><span class="line">		//定义返回值</span><br><span class="line">		Object rtValue = null;</span><br><span class="line">		try&#123;</span><br><span class="line">			//前置通知</span><br><span class="line">			System.out.println(<span class="string">"前置通知"</span>);</span><br><span class="line">			//1.获取参数</span><br><span class="line">			Object[] args = pjp.getArgs();</span><br><span class="line">			//2.执⾏切⼊点⽅法</span><br><span class="line">			rtValue = pjp.proceed(args);</span><br><span class="line">			//后置通知</span><br><span class="line">			System.out.println(<span class="string">"后置通知"</span>);</span><br><span class="line">		&#125;catch (Throwable t)&#123;</span><br><span class="line">			//异常通知</span><br><span class="line">			System.out.println(<span class="string">"异常通知"</span>);</span><br><span class="line">			t.printStackTrace();</span><br><span class="line">		 &#125;finally &#123;</span><br><span class="line">			//最终通知</span><br><span class="line">			System.out.println(<span class="string">"最终通知"</span>);</span><br><span class="line">		 &#125;</span><br><span class="line">		<span class="built_in">return</span> rtValue;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="注解模式"><a href="#注解模式" class="headerlink" title="注解模式"></a>注解模式</h5><p>在使⽤注解驱动开发aop时，我们要明确的就是，是注解替换掉配置⽂件中的下⾯这⾏配置：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--开启spring对注解aop的⽀持--&gt;</span><br><span class="line">&lt;aop:aspectj-autoproxy/&gt;</span><br></pre></td></tr></table></figure>
+
+<p>在配置类中使⽤如下注解进⾏替换上述配置</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@Configuration</span><br><span class="line">@ComponentScan(<span class="string">"com.loonycoder"</span>)</span><br><span class="line">@EnableAspectJAutoProxy //开启spring对注解AOP的⽀持</span><br><span class="line">public class SpringConfiguration &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="Spring声明式事务的支持"><a href="#Spring声明式事务的支持" class="headerlink" title="Spring声明式事务的支持"></a>Spring声明式事务的支持</h4><p><strong>编程式事务</strong>：在业务代码中添加事务控制代码，这样的事务控制机制就叫做编程式事务<br><strong>声明式事务</strong>：通过xml或者注解配置的⽅式达到事务控制的⽬的，叫做声明式事务</p>
+<h5 id="事务回顾"><a href="#事务回顾" class="headerlink" title="事务回顾"></a>事务回顾</h5><h6 id="事务的概念"><a href="#事务的概念" class="headerlink" title="事务的概念"></a>事务的概念</h6><p>事务指逻辑上的⼀组操作，组成这组操作的各个单元，要么全部成功，要么全部不成功。从⽽确保了数据的准确与安全。<br>例如：A——B转帐，对应于如下两条sql语句:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">/*转出账户减钱*/</span><br><span class="line">update account <span class="built_in">set</span> money=money-100 <span class="built_in">where</span> name=<span class="string">'a'</span>;</span><br><span class="line">/**转⼊账户加钱*/</span><br><span class="line">update account <span class="built_in">set</span> money=money+100 <span class="built_in">where</span> name=<span class="string">'b'</span>;</span><br></pre></td></tr></table></figure>
+<p>这两条语句的执⾏，要么全部成功，要么全部不成功。</p>
+<h6 id="事务的四大特性"><a href="#事务的四大特性" class="headerlink" title="事务的四大特性"></a>事务的四大特性</h6><p><strong>原⼦性（Atomicity）</strong><br>原⼦性是指事务是⼀个不可分割的⼯作单位，事务中的操作要么都发⽣，要么都不发⽣。<br>从操作的⻆度来描述，事务中的各个操作要么都成功要么都失败。<br><strong>⼀致性（Consistency）</strong><br>事务必须使数据库从⼀个⼀致性状态变换到另外⼀个⼀致性状态。<br>例如转账前A有1000，B有1000。转账后A+B也得是2000。<br>⼀致性是从数据的⻆度来说的，（1000，1000）（900，1100），不应该出现（900，1000）<br><strong>隔离性（Isolation）</strong><br>事务的隔离性是多个⽤户并发访问数据库时，数据库为每⼀个⽤户开启的事务，每个事务不能被其他事务的操作数据所⼲扰，多个并发事务之间要相互隔离。<br>⽐如：事务1给员⼯涨⼯资2000，但是事务1尚未被提交，员⼯发起事务2查询⼯资，发现⼯资涨了2000块钱，读到了事务1尚未提交的数据（脏读）<br><strong>持久性（Durability）</strong><br>持久性是指⼀个事务⼀旦被提交，它对数据库中数据的改变就是永久性的，接下来即使数据库发⽣故障也不应该对其有任何影响。</p>
+<h6 id="事务的隔离级别"><a href="#事务的隔离级别" class="headerlink" title="事务的隔离级别"></a>事务的隔离级别</h6><p>不考虑隔离级别，会出现以下情况：（以下情况全是错误的），也即为隔离级别在解决事务并发问题<br><strong>脏读</strong>：⼀个线程中的事务读到了另外⼀个线程中<strong>未提交</strong>的数据。<br><strong>不可重复读</strong>：⼀个线程中的事务读到了另外⼀个线程中已经提交的<strong>update</strong>的数据（前后内容不⼀样）<br>场景：<br>员⼯A发起事务1，查询⼯资，⼯资为1w，此时事务1尚未关闭<br>财务⼈员发起了事务2，给员⼯A张了2000块钱，<strong>并且提交了事务</strong><br>员⼯A通过事务1再次发起查询请求，发现⼯资为1.2w，原来读出来1w读不到了，叫做不可重复读<br><strong>虚读（幻读）</strong>：⼀个线程中的事务读到了另外⼀个线程中已经提交的insert或者delete的数据（前后条数不⼀样）<br>场景：<br>事务1查询所有⼯资为1w的员⼯的总数，查询出来了10个⼈，此时事务尚未关闭<br>事务2财务⼈员发起，新来员⼯，⼯资1w，向表中插⼊了2条数据，<strong>并且提交了事务</strong><br>事务1再次查询⼯资为1w的员⼯个数，发现有12个⼈，⻅了⻤了</p>
+<p>数据库共定义了四种隔离级别：<br><strong>Serializable（串⾏化）</strong>：可避免脏读、不可重复读、虚读情况的发⽣。（串⾏化） <font style="color: red">最⾼</font><br><strong>Repeatable read（可重复读）</strong>：可避免脏读、不可重复读情况的发⽣。(幻读有可能发⽣) <font style="color: red">第⼆</font>该机制下会对要update的⾏进⾏加锁<br><strong>Read committed（读已提交）</strong>：可避免脏读情况发⽣。不可重复读和幻读⼀定会发⽣。 <font style="color: red">第三</font><br><strong>Read uncommitted（读未提交）</strong>：最低级别，以上情况均⽆法保证。(读未提交)  <font style="color: red">最低</font></p>
+<p><strong>注意：级别依次升⾼，效率依次降低</strong></p>
+<p>MySQL的默认隔离级别是：REPEATABLE READ<br>查询当前使⽤的隔离级别： <code>select @@tx_isolation</code>;<br>设置MySQL事务的隔离级别： <code>set session transaction isolation level xxx</code>; （设置的是当前mysql连接会话的，并不是永久改变的）</p>
+<h6 id="事务的传播行为"><a href="#事务的传播行为" class="headerlink" title="事务的传播行为"></a>事务的传播行为</h6><p>事务往往在service层进⾏控制，如果出现service层⽅法A调⽤了另外⼀个service层⽅法B，A和B⽅法本身都已经被添加了事务控制，那么A调⽤B的时候，就需要进⾏事务的⼀些协商，这就叫做事务的传播⾏为。<br>A调⽤B，我们站在B的⻆度来观察来定义事务的传播⾏为</p>
+<table>
+<thead>
+<tr>
+<th align="left">PROPAGATION_REQUIRED</th>
+<th align="left">如果当前没有事务，就新建⼀个事务，如果已经存在⼀个事务中，加⼊到这个事务中。这是最常⻅的选择。</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>PROPAGATION_SUPPORTS</strong></td>
+<td align="left"><strong>⽀持当前事务，如果当前没有事务，就以⾮事务⽅式执⾏。</strong></td>
+</tr>
+<tr>
+<td align="left"><strong>PROPAGATION_MANDATORY</strong></td>
+<td align="left"><strong>使⽤当前的事务，如果当前没有事务，就抛出异常。</strong></td>
+</tr>
+<tr>
+<td align="left"><strong>PROPAGATION_REQUIRES_NEW</strong></td>
+<td align="left"><strong>新建事务，如果当前存在事务，把当前事务挂起。</strong></td>
+</tr>
+<tr>
+<td align="left"><strong>PROPAGATION_NOT_SUPPORTED</strong></td>
+<td align="left"><strong>以⾮事务⽅式执⾏操作，如果当前存在事务，就把当前事务挂起。</strong></td>
+</tr>
+<tr>
+<td align="left"><strong>PROPAGATION_NEVER</strong></td>
+<td align="left"><strong>以⾮事务⽅式执⾏，如果当前存在事务，则抛出异常。</strong></td>
+</tr>
+<tr>
+<td align="left"><strong>PROPAGATION_NESTED</strong></td>
+<td align="left"><strong>如果当前存在事务，则在嵌套事务内执⾏。如果当前没有事务，则执⾏与PROPAGATION_REQUIRED类似的操作。</strong></td>
+</tr>
+</tbody></table>
+<h5 id="Spring中事务的API"><a href="#Spring中事务的API" class="headerlink" title="Spring中事务的API"></a>Spring中事务的API</h5><p>mybatis: sqlSession.commit();<br>hibernate: session.commit();</p>
+<p><strong>PlatformTransactionManager</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">public interface PlatformTransactionManager &#123;</span><br><span class="line">	/**</span><br><span class="line">	* 获取事务状态信息</span><br><span class="line">	*/</span><br><span class="line">	TransactionStatus getTransaction(@Nullable TransactionDefinition definition)</span><br><span class="line">	throws TransactionException;</span><br><span class="line">	/**</span><br><span class="line">	* 提交事务</span><br><span class="line">	*/</span><br><span class="line">	void commit(TransactionStatus status) throws TransactionException;</span><br><span class="line">	/**</span><br><span class="line">	* 回滚事务</span><br><span class="line">	*/</span><br><span class="line">	void rollback(TransactionStatus status) throws TransactionException; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>作⽤</strong><br>此接⼝是Spring的事务管理器核⼼接⼝。Spring本身并不⽀持事务实现，只是负责提供标准，应⽤底层⽀持什么样的事务，需要提供具体实现类。此处也是策略模式的具体应⽤。在Spring框架中，也为我们内置了⼀些具体策略，例如：DataSourceTransactionManager、HibernateTransactionManager 等等。（ 和 HibernateTransactionManager 事务管理器在 spring-orm-5.1.12.RELEASE.jar 中）Spring JdbcTemplate（数据库操作⼯具）、Mybatis（mybatis-spring.jar）—&gt;DataSourceTransactionManager、Hibernate框架 —&gt; HibernateTransactionManager DataSourceTransactionManager 归根结底是横切逻辑代码，声明式事务要做的就是使⽤Aop（动态代理）来将事务控制逻辑织⼊到业务代码。</p>
+<h5 id="Spring声明式事务配置"><a href="#Spring声明式事务配置" class="headerlink" title="Spring声明式事务配置"></a>Spring声明式事务配置</h5><ul>
+<li><p>纯xml模式</p>
+<ul>
+<li>导⼊jar<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt; </span><br><span class="line">	&lt;groupId&gt;org.springframework&lt;/groupId&gt; </span><br><span class="line">	&lt;artifactId&gt;spring-context&lt;/artifactId&gt; </span><br><span class="line">	&lt;version&gt;5.1.12.RELEASE&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt; </span><br><span class="line">&lt;dependency&gt; </span><br><span class="line">	&lt;groupId&gt;org.aspectj&lt;/groupId&gt; </span><br><span class="line">	&lt;artifactId&gt;aspectjweaver&lt;/artifactId&gt; </span><br><span class="line">	&lt;version&gt;1.9.4&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt; </span><br><span class="line">&lt;dependency&gt; </span><br><span class="line">	&lt;groupId&gt;org.springframework&lt;/groupId&gt; </span><br><span class="line">	&lt;artifactId&gt;spring-jdbc&lt;/artifactId&gt; </span><br><span class="line">	&lt;version&gt;5.1.12.RELEASE&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt; </span><br><span class="line">&lt;dependency&gt; </span><br><span class="line">	&lt;groupId&gt;org.springframework&lt;/groupId&gt; </span><br><span class="line">	&lt;artifactId&gt;spring-tx&lt;/artifactId&gt; </span><br><span class="line">	&lt;version&gt;5.1.12.RELEASE&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure></li>
+<li>xml 配置<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;tx:advice id=<span class="string">"txAdvice"</span> transaction-manager=<span class="string">"transactionManager"</span>&gt;</span><br><span class="line">&lt;!--定制事务细节，传播⾏为、隔离级别等--&gt;</span><br><span class="line">&lt;tx:attributes&gt;</span><br><span class="line">&lt;!--⼀般性配置--&gt;</span><br><span class="line">&lt;tx:method name=<span class="string">"*"</span> <span class="built_in">read</span>-only=<span class="string">"false"</span> propagation=<span class="string">"REQUIRED"</span> isolation=<span class="string">"DEFAULT"</span> timeout=<span class="string">"-1"</span>/&gt;</span><br><span class="line">&lt;!--针对查询的覆盖性配置--&gt;</span><br><span class="line">&lt;tx:method name=<span class="string">"query*"</span> <span class="built_in">read</span>-only=<span class="string">"true"</span> propagation=<span class="string">"SUPPORTS"</span>/&gt;</span><br><span class="line">&lt;/tx:attributes&gt;</span><br><span class="line">&lt;/tx:advice&gt; </span><br><span class="line">&lt;aop:config&gt;</span><br><span class="line">&lt;!--advice-ref指向增强=横切逻辑+⽅位--&gt;</span><br><span class="line">&lt;aop:advisor advice-ref=<span class="string">"txAdvice"</span> pointcut=<span class="string">"execution(* com.loonycoder.edu.service.impl.TransferServiceImpl.*(..))"</span>/&gt;</span><br><span class="line">&lt;/aop:config&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>基于XML+注解</p>
+<ul>
+<li>xml配置<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--配置事务管理器--&gt;</span><br><span class="line">&lt;bean id=<span class="string">"transactionManager"</span> class=<span class="string">"org.springframework.jdbc.datasource.DataSourceTransactionManager"</span>&gt; </span><br><span class="line">	&lt;property name=<span class="string">"dataSource"</span> ref=<span class="string">"dataSource"</span>&gt;&lt;/property&gt;</span><br><span class="line">&lt;/bean&gt;</span><br><span class="line">&lt;!--开启spring对注解事务的⽀持--&gt;</span><br><span class="line">&lt;tx:annotation-driven transaction-manager=<span class="string">"transactionManager"</span>/&gt;</span><br></pre></td></tr></table></figure></li>
+<li>在接⼝、类或者⽅法上添加@Transactional注解<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@Transactional(readOnly = <span class="literal">true</span>,propagation = Propagation.SUPPORTS)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>基于纯注解<br>Spring基于注解驱动开发的事务控制配置，只需要把 xml 配置部分改为注解实现。只是需要⼀个<br>注解替换掉xml配置⽂件中的 <code>&lt;tx:annotation-driven transaction-manager="transactionManager"/&gt;</code> 配置。<br>在 Spring 的配置类上添加 <code>@EnableTransactionManagement</code> 注解即可</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@EnableTransactionManagement//开启spring注解事务的⽀持</span><br><span class="line">public class SpringConfiguration &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+            <hr>
+          </div>
+          <br>
+          <div>
+            <p>
+            
+              <span>
+                <i class="iconfont icon-inbox"></i>
+                
+                  <a class="hover-with-bg" href="/categories/Java%E6%A1%86%E6%9E%B6">Java框架</a>
+                  &nbsp;
+                
+              </span>&nbsp;&nbsp;
+            
+            
+              <span>
+                <i class="iconfont icon-tag"></i>
+                
+                  <a class="hover-with-bg" href="/tags/Spring%E5%85%A8%E5%AE%B6%E6%A1%B6">Spring全家桶</a>
+                
+                  <a class="hover-with-bg" href="/tags/IoC">IoC</a>
+                
+                  <a class="hover-with-bg" href="/tags/AOP">AOP</a>
+                
+              </span>
+            
+            </p>
+            
+              <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" target="_blank" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="d-none d-lg-block col-lg-2 toc-container">
+      
+  <div id="toc">
+    <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+    <div id="tocbot"></div>
+  </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- custom -->
+
+
+<!-- Comments -->
+<div class="col-lg-7 mx-auto nopadding-md">
+  <div class="container comments mx-auto" id="comments">
+    
+      <br><br>
+      
+      
+
+    
+  </div>
+</div>
+
+    
+  </main>
+
+  
+    <a class="z-depth-1" id="scroll-top-button" href="#" role="button">
+      <i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <a href="https://github.com/Loonycoder" target="_blank" rel="nofollow noopener"><b>望月</b></a>
+    <i class="iconfont icon-love"></i>
+    <a href="https://github.com/Loonycoder" target="_blank" rel="nofollow noopener"> <b>LoonyCoder</b></a>
+    <br>
+
+    
+  
+    <!-- 不蒜子统计PV -->
+    
+    &nbsp;<span id="busuanzi_container_site_pv"></span>访问量: 
+          <span id="busuanzi_value_site_pv"></span> &nbsp;
+  
+  
+    <!-- 不蒜子统计UV -->
+    
+    &nbsp;<span id="busuanzi_container_site_uv"></span>访客数: 
+            <span id="busuanzi_value_site_uv"></span> &nbsp;
+  
+  <br>
+
+
+
+    
+  <!-- 备案信息 -->
+  <a href="http://beian.miit.gov.cn/" target="_blank"
+     rel="nofollow noopener">京ICP证20008174号</a>
+  
+    <a
+      href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=20008174"
+      rel="nofollow noopener"
+      class="police-beian"
+      target="_blank"
+    >
+      <span class="police-beian-sep">&nbsp;|&nbsp;</span>
+      
+        <img src="/img/police_beian.png" />
+      
+      <span>京公网安备20008174号</span>
+    </a>
+  
+
+
+
+    <!-- cnzz Analytics icon -->
+    
+
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script src="/lib/jquery/jquery.min.js" ></script>
+<script src="/lib/popper/popper.min.js" ></script>
+<script src="/lib/bootstrap/js/bootstrap.min.js" ></script>
+<script src="/lib/mdbootstrap/js/mdb.min.js" ></script>
+<script src="/js/main.js" ></script>
+
+
+  <script src="/js/lazyload.js" ></script>
+
+
+
+  <script src="/js/post.js" ></script>
+  
+    <script src="/lib/tocbot/tocbot.min.js" ></script>
+    <script>
+      $(document).ready(function () {
+        tocbot.init({
+          tocSelector: '#tocbot',
+          contentSelector: '.post-content',
+          headingSelector: 'h1,h2,h3,h4,h5,h6',
+          linkClass: 'tocbot-link',
+          activeLinkClass: 'tocbot-active-link',
+          listClass: 'tocbot-list',
+          isCollapsedClass: 'tocbot-is-collapsed',
+          collapsibleClass: 'tocbot-is-collapsible',
+          scrollSmooth: true,
+        });
+      });
+    </script>
+  
+
+
+
+  <script src="/lib/smoothscroll/SmoothScroll.min.js" ></script>
+
+
+
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+<!-- Plugins -->
+
+
+  
+
+  
+
+  
+
+  
+
+  <!-- cnzz Analytics -->
+  
+
+
+
+  <script src="/lib/prettify/prettify.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      $('pre').addClass('prettyprint  linenums');
+      prettyPrint();
+    })
+  </script>
+
+
+
+  <script src="/lib/typed/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "轻量级控制反转和面向切面的容器框架——Spring（五）&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script src="/lib/anchor/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+      icon: "❡"
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      getSearchFile(path);
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script src="/lib/fancybox/jquery.fancybox.min.js" ></script>
+  <script>
+    $("#post img:not(.no-zoom img, img[no-zoom])").each(
+      function () {
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "images");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+  
+  
+    <script>
+      !function (e, t, a) {
+        function r() {
+          for (var e = 0; e < s.length; e++) s[e].alpha <= 0 ? (t.body.removeChild(s[e].el), s.splice(e, 1)) : (s[e].y--, s[e].scale += .004, s[e].alpha -= .013, s[e].el.style.cssText = "left:" + s[e].x + "px;top:" + s[e].y + "px;opacity:" + s[e].alpha + ";transform:scale(" + s[e].scale + "," + s[e].scale + ") rotate(45deg);background:" + s[e].color + ";z-index:99999");
+          requestAnimationFrame(r)
+        }
+
+        function n() {
+          var t = "function" == typeof e.onclick && e.onclick;
+          e.onclick = function (e) {
+            t && t(), o(e)
+          }
+        }
+
+        function o(e) {
+          var a = t.createElement("div");
+          a.className = "heart", s.push({
+            el: a,
+            x: e.clientX - 5,
+            y: e.clientY - 5,
+            scale: 1,
+            alpha: 1,
+            color: c()
+          }), t.body.appendChild(a)
+        }
+
+        function i(e) {
+          var a = t.createElement("style");
+          a.type = "text/css";
+          try {
+            a.appendChild(t.createTextNode(e))
+          } catch (t) {
+            a.styleSheet.cssText = e
+          }
+          t.getElementsByTagName("head")[0].appendChild(a)
+        }
+
+        function c() {
+          return "rgb(" + ~~(255 * Math.random()) + "," + ~~(255 * Math.random()) + "," + ~~(255 * Math.random()) + ")"
+        }
+
+        var s = [];
+        e.requestAnimationFrame = e.requestAnimationFrame || e.webkitRequestAnimationFrame || e.mozRequestAnimationFrame || e.oRequestAnimationFrame || e.msRequestAnimationFrame || function (e) {
+          setTimeout(e, 1e3 / 60)
+        }, i(".heart{width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: fixed;}.heart:after{top: -5px;}.heart:before{left: -5px;}"), n(), r()
+      }(window, document);
+    </script>
+  
+
+
+
+
+
+
+
+
+</body>
+</html>
