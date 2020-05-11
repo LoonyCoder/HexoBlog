@@ -69,6 +69,66 @@
       </tags>
   </entry>
   <entry>
+    <title>Tomcat体系架构分析</title>
+    <url>/2019/12/24/tomcat/</url>
+    <content><![CDATA[<p><img src="/images/tomcat/tomcat_logo.jpg" srcset="/img/loading.gif" alt="spring"></p>
+<h3 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h3><p><strong>源码地址：</strong><a href="https://github.com/LoonyCoder/learn-repository" target="_blank" rel="noopener">手写mini版tomcat</a><br><strong>欢迎star/fork，给作者一些鼓励！</strong></p>
+<h3 id="架构分析"><a href="#架构分析" class="headerlink" title="架构分析"></a>架构分析</h3><p>虽然网上对于tomcat架构描述已经十分详细了，但在这里还是要先讲讲<strong>架构</strong></p>
+<h4 id="总体设计"><a href="#总体设计" class="headerlink" title="总体设计"></a>总体设计</h4><p><img src="/images/tomcat/tomcat01.png" srcset="/img/loading.gif" alt="Tomcat顶层架构"></p>
+<p><strong>先来看Connector和Container - 两个Tomcat的心脏：</strong></p>
+<ul>
+<li><code>Connector</code>用于处理连接相关的事情，并提供Socket与Request和Response相关的转化;</li>
+<li><code>Container</code>用于封装和管理Servlet，以及具体处理Request请求；</li>
+</ul>
+<p><strong>Service - 面向外界的连接体</strong></p>
+<ul>
+<li>主要结合<code>Connector</code>和<code>Container</code>，实现封装，向外提供功能</li>
+<li>一个Service只能有一个<code>Container</code>，但可以有多个<code>Connector</code></li>
+</ul>
+<p><strong>Server</strong></p>
+<ul>
+<li>掌控<code>Service</code>的生杀大权，管理整个Tomcat生命周期</li>
+</ul>
+<h4 id="请求流程"><a href="#请求流程" class="headerlink" title="请求流程"></a>请求流程</h4><p>请求进入Tomcat，经由Service交付到<code>Connector</code>，<code>Connector</code>将接收的请求封装为Request和Response，然后讲封装后的数据传递到<code>Container</code>处理，处理完成后返回<code>Connector</code>，通过Socket将结果返还给客户端。</p>
+<p><img src="/images/tomcat/tomcat02.png" srcset="/img/loading.gif" alt="Tomcat连接示意图"></p>
+<p><strong>Connector</strong></p>
+<p><code>Connector</code>最底层使用的是（TCP/IP）Socket来进行连接的，Request和Response是按照HTTP协议来封装的。<br><img src="/images/tomcat/tomcat03.png" srcset="/img/loading.gif" alt="Connector结构图"></p>
+<ol>
+<li>通过不同类型的<code>ProtocolHandler</code>，<code>Connector</code>可以处理类型的连接请求，比如Socket、nio等连接</li>
+<li>每个<code>ProtocolHandler</code>都包含了三个组件：<code>Endpoint</code>、<code>Processor</code>、<code>Adapter</code></li>
+<li><code>Endpoint</code>实现TCP/IP协议，<code>Processor</code>实现HTTP协议的并将<code>Endpoint</code>接收到的Socket封装成Request，<code>Adapter</code>将Request适配大宋<code>Container</code>进行具体的处理</li>
+<li><code>在Endpoint</code>中，其抽象实现<code>AbstractEndpoint</code>里包含<code>Acceptor</code>（监听请求）和<code>AsyncTimeout</code>（检查异步Request的超时）两个内部类和<code>Handler</code>（处理接收到的Socket，并调用<code>Processor</code>进行处理）接口。</li>
+</ol>
+<p><strong>Container</strong></p>
+<p>管理Servlet，处理Request请求</p>
+<p><img src="/images/tomcat/tomcat04.png" srcset="/img/loading.gif" alt="Container结构图"></p>
+<ol>
+<li>Engine 可以管理多个主机，一个Service最多只能有一个Engine；</li>
+<li>Host 是虚拟主机，通过配置Host就可以添加多台主机；</li>
+<li>Context 就意味着一个WEB应用程序；</li>
+<li>Wrapper 是Tomcat对Servlet的一层封装；</li>
+</ol>
+<p><strong>Container处理请求的方式 - 管道流与阀门</strong></p>
+<ul>
+<li>像普通的责任链设计模式一样，上一个处理者将处理过的请求移交到下一个继续处理。</li>
+<li><code>Pipeline-Valve</code>与责任链模式存在一些差异：<ul>
+<li>每一个Pipeline都有一个特定的Valve，这个Valve处于责任链的末端</li>
+<li>上面讲的四个容器都对应有自己特定的Valve：<code>StandardEngineValve、StandardHostValve、StandardContextValve、StandardWrapperValve</code>。</li>
+<li>在这个特定的Valve中会调用下层级的管道，比如：<code>EnginePipeline1 -> EnginePipeline2 -> StandardEngineValve(调用下级Pipeline) -> HostValve1 -> ... -> StandardHostValve -> ... -> StandardWrapperValve</code></li>
+<li>当执行到最后一个Pipeline的特定Valve时，比如这里的<code>StandardWrapperValve</code>，会在<code>StandardWrapperValve</code>中创建FilterChain，其包含了配置的与请求相匹配的Filter和Servlet，并调用其<code>doFilter()</code>方法来处理请求，其<code>doFilter()</code>方法会依次调用所有的Filter的<code>doFilter()</code>方法和Servlet的<code>service()</code>方法，从而完成请求的处理，然后将结果返回给Connector，返还给客户端。</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>Servlet容器</category>
+      </categories>
+      <tags>
+        <tag>Servlet</tag>
+        <tag>Http服务器</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>轻量级控制反转和面向切面的容器框架——Spring（六）</title>
     <url>/2019/09/01/spring6/</url>
     <content><![CDATA[<p><img src="/images/spring_logo.jpg" srcset="/img/loading.gif" alt="spring"></p>
@@ -2614,7 +2674,7 @@
 <p><img src="/images/hashmap/hashmap1.jpg" srcset="/img/loading.gif" alt="hashmap"></p>
 <p>为什么采用这种结构来存储元素呢？</p>
 <p><strong>数组的特点：查询效率高，插入，删除效率低。</strong></p>
-<p><strong>链表的特点：查询效率低，插入删除效率高。</strong></p>
+<p><strong>链表的特点：查询效率低，插入，删除效率高。</strong></p>
 <p>在HashMap底层使用数组加（链表或红黑树）的结构完美的解决了数组和链表的问题，使得查询和插入，删除的效率都很高。</p>
 <p><strong>三：HashMap存储元素的过程：</strong></p>
 <p>有这样一段代码：</p>

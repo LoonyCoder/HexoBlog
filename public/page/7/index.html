@@ -144,6 +144,61 @@
     
     
     <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/2018/12/06/redis-2/">
+        <p class="h4 index-header">Redis高可用解决方案总结</p>
+      </a>
+
+      <a href="/2018/12/06/redis-2/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">本文主要针对 Redis 常见的几种使用方式及其优缺点展开分析。
+常见使用方式Redis 的几种常见使用方式包括：
+
+Redis 单副本；
+
+Redis 多副本（主从）；
+
+Redis Sentinel（哨兵）；
+
+Redis Cluster；
+
+Redis 自研。
+
+
+
+各种使用方式的优缺点Redis 单副本Redis 单副本，采用单个 Redis 节点部署架构，没有备用节点实时同步数据，不提供数据持久化和备份策略，适用于数据可靠性要求不高的纯缓存业务场景。优点：
+架构简单，部署方便；
+高性价比：缓存使用时无需备用节点（单实例可用性可以用 supervisor 或 crontab 保证），当</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2018-12-06&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93">数据库</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93%20-%20Redis">数据库 - Redis</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
       <a href="/2018/11/28/redis-1/">
         <p class="h4 index-header">Redis入门</p>
       </a>
@@ -296,50 +351,6 @@ AOP简介说到AOP，其实这是一个面向方面的编程思想 ，它解决�
       <div class="index-btm">
         
           <i class="iconfont icon-riqi2"></i>&nbsp;2018-11-07&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/Java%E6%A1%86%E6%9E%B6">Java框架</a>&nbsp;
-          &nbsp;
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/%E6%A1%86%E6%9E%B6%20-%20Spring">框架 - Spring</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-8 mx-auto index-info">
-      <a href="/2018/10/30/Spring-2/">
-        <p class="h4 index-header">Spring框架——深入剖析核心IoC源码</p>
-      </a>
-
-      <a href="/2018/10/30/Spring-2/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">
-原文转自：https://javadoop.com/post/spring-ioc
-因为有幸看到这篇让我读了约三个半小时的文章，简直价值千金，所以稍作修改，以此记录。为了保持文章的严谨性，如有错误，望及时指出，十分希望听到读者的声音。
-
-引言先看下最基本的启动 Spring 容器的例子：
-123public static void main(String[] args) &#123;    ApplicationContext context = new ClassPathXmlApplicationContext("classpath:Application.xml");&#125;
-以上</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2018-10-30&nbsp;&nbsp;
         
         
           <i class="iconfont icon-inbox"></i>

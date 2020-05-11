@@ -185,6 +185,58 @@ Apache Dubbo的默认集群容错方案A、Failover ClusterB、Failfast ClusterC
     
     
     <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/2019/12/24/tomcat/">
+        <p class="h4 index-header">Tomcat体系架构分析</p>
+      </a>
+
+      <a href="/2019/12/24/tomcat/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">
+写在前面源码地址：手写mini版tomcat欢迎star/fork，给作者一些鼓励！
+架构分析虽然网上对于tomcat架构描述已经十分详细了，但在这里还是要先讲讲架构
+总体设计
+先来看Connector和Container - 两个Tomcat的心脏：
+
+Connector用于处理连接相关的事情，并提供Socket与Request和Response相关的转化;
+Container用于封装和管理Servlet，以及具体处理Request请求；
+
+Service - 面向外界的连接体
+
+主要结合Connector和Container，实现封装，向外提供功能
+一个Service只能有一个Conta</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2019-12-24&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Servlet%E5%AE%B9%E5%99%A8">Servlet容器</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/Servlet">Servlet</a>&nbsp;
+          
+            <a href="/tags/Http%E6%9C%8D%E5%8A%A1%E5%99%A8">Http服务器</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
       <a href="/2019/09/01/spring6/">
         <p class="h4 index-header">轻量级控制反转和面向切面的容器框架——Spring（六）</p>
       </a>
@@ -317,52 +369,6 @@ Spring源码构建
       <div class="index-btm">
         
           <i class="iconfont icon-riqi2"></i>&nbsp;2019-08-12&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/Java%E6%A1%86%E6%9E%B6">Java框架</a>&nbsp;
-          &nbsp;
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/Spring%E5%85%A8%E5%AE%B6%E6%A1%B6">Spring全家桶</a>&nbsp;
-          
-            <a href="/tags/IoC">IoC</a>&nbsp;
-          
-            <a href="/tags/AOP">AOP</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-8 mx-auto index-info">
-      <a href="/2019/07/29/spring3/">
-        <p class="h4 index-header">轻量级控制反转和面向切面的容器框架——Spring（三）</p>
-      </a>
-
-      <a href="/2019/07/29/spring3/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">
-写在前面之前整理过一些关于Spring框架零散的知识点，一直没时间整理，恰好最近又拜读了应癫老师的课程，所以赶紧梳理一下关于Spring的相关知识。
-
-Spring IoC应用Spring IoC 基础
-BeanFactory与ApplicationContext区别BeanFactory是Spring框架中IoC容器的顶层接⼝,它只是⽤来定义⼀些基础功能,定义⼀些基础规范,⽽ApplicationContext是它的⼀个⼦接⼝，所以ApplicationContext是具备BeanFactory提供的全部功能的。通常，我们称BeanFactory为SpringIOC的基础容器，Applic</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2019-07-29&nbsp;&nbsp;
         
         
           <i class="iconfont icon-inbox"></i>

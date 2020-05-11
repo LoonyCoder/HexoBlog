@@ -144,6 +144,46 @@
     
     
     <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/2019/01/18/kafka-3/">
+        <p class="h4 index-header">分布式消息中间件Kafka——Kafka的高可用</p>
+      </a>
+
+      <a href="/2019/01/18/kafka-3/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">
+高可用的由来为何需要Replication在Kafka在0.8以前的版本中，是没有Replication的，一旦某一个Broker宕机，则其上所有的Partition数据都不可被消费，这与Kafka数据持久性及Delivery Guarantee的设计目标相悖。同时Producer都不能再将数据存于这些Partition中。
+　　如果Producer使用同步模式则Producer会在尝试重新发送message.send.max.retries（默认值为3）次后抛出Exception，用户可以选择停止发送后续数据也可选择继续选择发送。而前者会造成数据的阻塞，后者会造成本应发往该Broker的数</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2019-01-18&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6">中间件</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/Kafka%20-%20%E6%B6%88%E6%81%AF%E4%B8%AD%E9%97%B4%E4%BB%B6">Kafka - 消息中间件</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
       <a href="/2019/01/06/kafka-2/">
         <p class="h4 index-header">分布式消息中间件Kafka——Kafka的架构</p>
       </a>
@@ -311,61 +351,6 @@ Kafka: Apache下的一个子项目，具有高吞吐的特点。
           <i class="iconfont icon-tag"></i>
           
             <a href="/tags/Linux%20-%20%E6%9C%8D%E5%8A%A1%E5%99%A8">Linux - 服务器</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-8 mx-auto index-info">
-      <a href="/2018/12/06/redis-2/">
-        <p class="h4 index-header">Redis高可用解决方案总结</p>
-      </a>
-
-      <a href="/2018/12/06/redis-2/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">本文主要针对 Redis 常见的几种使用方式及其优缺点展开分析。
-常见使用方式Redis 的几种常见使用方式包括：
-
-Redis 单副本；
-
-Redis 多副本（主从）；
-
-Redis Sentinel（哨兵）；
-
-Redis Cluster；
-
-Redis 自研。
-
-
-
-各种使用方式的优缺点Redis 单副本Redis 单副本，采用单个 Redis 节点部署架构，没有备用节点实时同步数据，不提供数据持久化和备份策略，适用于数据可靠性要求不高的纯缓存业务场景。优点：
-架构简单，部署方便；
-高性价比：缓存使用时无需备用节点（单实例可用性可以用 supervisor 或 crontab 保证），当</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2018-12-06&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93">数据库</a>&nbsp;
-          &nbsp;
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93%20-%20Redis">数据库 - Redis</a>&nbsp;
           
         
       </div>
