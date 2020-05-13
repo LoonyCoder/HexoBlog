@@ -6,12 +6,15 @@
     "build": "hexo generate",
     "clean": "hexo clean",
     "deploy": "hexo deploy",
-    "server": "hexo server"
+    "server": "hexo server",
+    "dep": "node ./deploy.js",
+    "predep": "npm run build"
   },
   "hexo": {
     "version": "4.2.0"
   },
   "dependencies": {
+    "folder-sftp-upload": "^1.0.5",
     "hexo": "^4.0.0",
     "hexo-deployer-git": "^2.1.0",
     "hexo-generator-archive": "^1.0.0",
