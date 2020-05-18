@@ -144,40 +144,77 @@
     
     
     <div class="col-12 col-md-8 mx-auto index-info">
-      <a href="/2018/12/14/linux-1/">
-        <p class="h4 index-header">Linux常用命令</p>
+      <a href="/2019/01/28/ssm/">
+        <p class="h4 index-header">Spring、SpringMVC、Mybatis整合+实现简单CRUD</p>
       </a>
 
-      <a href="/2018/12/14/linux-1/">
+      <a href="/2019/01/28/ssm/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">写在前面仓库地址：SSM整合欢迎star/fork，给作者一些鼓励！
+
+在目前的企业级Java应用中，Spring框架是必须的。Struts2框架与Spring的整合问题日益凸显，而Spring MVC作为新一代的MVC框架，因其可以与Spring框架无缝整合的特性收到了越来越多的欢迎。Hibernate框架在面对需要存储过程或者复杂SQL时显得力不从心，不能提供高效的数据库控制。而Mybatis框架作为持久层的框架，虽然需要自己编写SQL语句，但是其对高并发高响应的支持，以及对动态SQL和动态绑定的支持使其脱颖而出。
+因此SSM框架（Spring + Spring MVC +Mybatis）</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2019-01-28&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/SSM%E6%A1%86%E6%9E%B6">SSM框架</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/Java%20-%20SSM%E6%A1%86%E6%9E%B6">Java - SSM框架</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/2019/01/18/kafka-3/">
+        <p class="h4 index-header">分布式消息中间件Kafka——Kafka的高可用</p>
+      </a>
+
+      <a href="/2019/01/18/kafka-3/">
         
         
           
         
         <div class="index-excerpt" >
           <div class="index-text mb-1">
-
-基本命令关机和重启123$ shutdown -h now        立刻关机$ shutdown -h 5        5分钟后关机$ poweroff            立刻关机
-帮助命令1234567--help命令$ shutdown --help：$ ifconfig  --help：查看网卡信息 --man命令（命令说明书） $ man shutdown--注意：man shutdown打开命令说明书之后，使用按键q退出
-
-
-目录操作命令目录切换 cd123456--命令：cd 目录$ cd /        切换到根目录$ cd /usr        切换到根目录</div>
+高可用的由来为何需要Replication在Kafka在0.8以前的版本中，是没有Replication的，一旦某一个Broker宕机，则其上所有的Partition数据都不可被消费，这与Kafka数据持久性及Delivery Guarantee的设计目标相悖。同时Producer都不能再将数据存于这些Partition中。
+　　如果Producer使用同步模式则Producer会在尝试重新发送message.send.max.retries（默认值为3）次后抛出Exception，用户可以选择停止发送后续数据也可选择继续选择发送。而前者会造成数据的阻塞，后者会造成本应发往该Broker的数</div>
         </div>
       </a>
 
       <div class="index-btm">
         
-          <i class="iconfont icon-riqi2"></i>&nbsp;2018-12-14&nbsp;&nbsp;
+          <i class="iconfont icon-riqi2"></i>&nbsp;2019-01-18&nbsp;&nbsp;
         
         
           <i class="iconfont icon-inbox"></i>
           
-            <a href="/categories/Linux">Linux</a>&nbsp;
+            <a href="/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6">中间件</a>&nbsp;
           &nbsp;
         
         
           <i class="iconfont icon-tag"></i>
           
-            <a href="/tags/Linux%20-%20%E6%9C%8D%E5%8A%A1%E5%99%A8">Linux - 服务器</a>&nbsp;
+            <a href="/tags/Kafka%20-%20%E6%B6%88%E6%81%AF%E4%B8%AD%E9%97%B4%E4%BB%B6">Kafka - 消息中间件</a>&nbsp;
           
         
       </div>
@@ -188,92 +225,37 @@
     
     
     <div class="col-12 col-md-8 mx-auto index-info">
-      <a href="/2018/12/06/redis-2/">
-        <p class="h4 index-header">Redis高可用解决方案总结</p>
+      <a href="/2019/01/06/kafka-2/">
+        <p class="h4 index-header">分布式消息中间件Kafka——Kafka的架构</p>
       </a>
 
-      <a href="/2018/12/06/redis-2/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">本文主要针对 Redis 常见的几种使用方式及其优缺点展开分析。
-常见使用方式Redis 的几种常见使用方式包括：
-
-Redis 单副本；
-
-Redis 多副本（主从）；
-
-Redis Sentinel（哨兵）；
-
-Redis Cluster；
-
-Redis 自研。
-
-
-
-各种使用方式的优缺点Redis 单副本Redis 单副本，采用单个 Redis 节点部署架构，没有备用节点实时同步数据，不提供数据持久化和备份策略，适用于数据可靠性要求不高的纯缓存业务场景。优点：
-架构简单，部署方便；
-高性价比：缓存使用时无需备用节点（单实例可用性可以用 supervisor 或 crontab 保证），当</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2018-12-06&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93">数据库</a>&nbsp;
-          &nbsp;
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93%20-%20Redis">数据库 - Redis</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-8 mx-auto index-info">
-      <a href="/2018/11/28/redis-1/">
-        <p class="h4 index-header">Redis入门</p>
-      </a>
-
-      <a href="/2018/11/28/redis-1/">
+      <a href="/2019/01/06/kafka-2/">
         
         
           
         
         <div class="index-excerpt" >
           <div class="index-text mb-1">
-Redis 概述在我们日常的Java Web开发中，无不都是使用数据库来进行数据的存储，由于一般的系统任务中通常不会存在高并发的情况，所以这样看起来并没有什么问题，可是一旦涉及大数据量的需求，比如一些商品抢购的情景，或者是主页访问量瞬间较大的时候，单一使用数据库来保存数据的系统会因为面向磁盘，磁盘读/写速度比较慢的问题而存在严重的性能弊端，一瞬间成千上万的请求到来，需要系统在极短的时间内完成成千上万次的读/写操作，这个时候往往不是数据库能够承受的，极其容易造成数据库系统瘫痪，最终导致服务宕机的严重生产问题。
-
-NoSQL 技术为了克服上述的问题，Java Web项目通常会引入NoSQL技术，</div>
+Kafka的架构
+如上图所示，一个典型的Kafka集群中包含若干Producer（可以是web前端产生的Page View，或者是服务器日志，系统CPU、Memory等），若干broker（Kafka支持水平扩展，一般broker数量越多，集群吞吐率越高），若干Consumer Group，以及一个Zookeeper集群。Kafka通过Zookeeper管理集群配置，选举leader，以及在Consumer Group发生变化时进行rebalance。Producer使用push模式将消息发布到broker，Consumer使用pull模式从broker订阅并消费消息。
+Topics和Par</div>
         </div>
       </a>
 
       <div class="index-btm">
         
-          <i class="iconfont icon-riqi2"></i>&nbsp;2018-11-28&nbsp;&nbsp;
+          <i class="iconfont icon-riqi2"></i>&nbsp;2019-01-06&nbsp;&nbsp;
         
         
           <i class="iconfont icon-inbox"></i>
           
-            <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93">数据库</a>&nbsp;
+            <a href="/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6">中间件</a>&nbsp;
           &nbsp;
         
         
           <i class="iconfont icon-tag"></i>
           
-            <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93%20-%20Redis">数据库 - Redis</a>&nbsp;
+            <a href="/tags/Kafka%20-%20%E6%B6%88%E6%81%AF%E4%B8%AD%E9%97%B4%E4%BB%B6">Kafka - 消息中间件</a>&nbsp;
           
         
       </div>
@@ -284,43 +266,41 @@ NoSQL 技术为了克服上述的问题，Java Web项目通常会引入NoSQL技�
     
     
     <div class="col-12 col-md-8 mx-auto index-info">
-      <a href="/2018/11/21/nginx/">
-        <p class="h4 index-header">高性能的HTTP服务器——Nginx</p>
+      <a href="/2018/12/29/kafka-1/">
+        <p class="h4 index-header">分布式消息中间件Kafka——Kafka的简介</p>
       </a>
 
-      <a href="/2018/11/21/nginx/">
+      <a href="/2018/12/29/kafka-1/">
         
         
           
         
         <div class="index-excerpt" >
-          <div class="index-text mb-1">Nginx是一款高性能HTTP服务器、反向代理服务器及电子邮件（IMAP、POP3）代理服务器，官方测试nginx能够支持5万并发连接。Nginx应用场景：1、http服务器。Nginx是一个http服务器，可以独立提供http服务。可以做网页静态服务器。2、虚拟主机。可以实现在一台服务器虚拟出多个网站。3、反向代理，负载均衡。当网站的并发量过大需要配置服务器集群时可以使用Nginx做反向代理。并且多台服务器可以平均分摊负载。
-写在前面本文章默认使用的软件：
-CentOS 7
-Nginx-1.12.2
-JDK 8.0
-Tomcat 8
+          <div class="index-text mb-1">
+简介概述Kafka是最初由Linkedin公司开发，是一个分布式、分区的、多副本的、多订阅者，基于zookeeper协调的分布式日志系统（也可以当做MQ系统），常见可以用于web/nginx日志、访问日志，消息服务等等，Linkedin于2010年贡献给了Apache基金会并成为顶级开源项目。
+主要应用场景是：日志收集系统和消息系统。
+Kafka主要设计目标如下：
 
-开发工具：
-VMware fusion
-SecureCR</div>
+以时间复杂度为O(1)的方式提供消息持久化能力，即使对TB级以上数据也能保证常数时间的访问性能。
+高吞吐率。即使在非常廉价的商用机器上也能做到单机支持每秒100K条消息的传输。
+支持Kafka Server间的消息分区，及分布式</div>
         </div>
       </a>
 
       <div class="index-btm">
         
-          <i class="iconfont icon-riqi2"></i>&nbsp;2018-11-21&nbsp;&nbsp;
+          <i class="iconfont icon-riqi2"></i>&nbsp;2018-12-29&nbsp;&nbsp;
         
         
           <i class="iconfont icon-inbox"></i>
           
-            <a href="/categories/Nginx">Nginx</a>&nbsp;
+            <a href="/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6">中间件</a>&nbsp;
           &nbsp;
         
         
           <i class="iconfont icon-tag"></i>
           
-            <a href="/tags/HTTP%E6%9C%8D%E5%8A%A1%E5%99%A8">HTTP服务器</a>&nbsp;
+            <a href="/tags/Kafka%20-%20%E6%B6%88%E6%81%AF%E4%B8%AD%E9%97%B4%E4%BB%B6">Kafka - 消息中间件</a>&nbsp;
           
         
       </div>
@@ -331,39 +311,43 @@ SecureCR</div>
     
     
     <div class="col-12 col-md-8 mx-auto index-info">
-      <a href="/2018/11/14/docker/">
-        <p class="h4 index-header">容器化部署神器——Docker</p>
+      <a href="/2018/12/22/ActiveMQ/">
+        <p class="h4 index-header">消息中间件ActiveMQ入门学习</p>
       </a>
 
-      <a href="/2018/11/14/docker/">
+      <a href="/2018/12/22/ActiveMQ/">
         
         
           
         
         <div class="index-excerpt" >
-          <div class="index-text mb-1">Docker是一种容器技术，它的存在就是为了解决容器技术本身的复杂性。Docker容器拥有很高的性能，同时同一台宿主机中可以运行更多的容器，是用户尽可能的充分利用系统资源。
-概念
-1.什么是虚拟化？在计算机中，虚拟化（Virtualization）是一种资源管理技术，是将计算机的各种实体资源，如服务器、网络、内存及储存等，予以抽象、转换后呈现出来，打破实体结构间的不可切割的障碍，是用户可以比原来的组态更好的方式来应用这些资源。这些资源的新虚拟部分是不受现有资源的架设方式、地域或物理组态所限制。
+          <div class="index-text mb-1">什么是消息中间件什么是消息中间件？消息中间件利用高效可靠的消息传递机制进行与平台无关的数据交流，并基于数据通信来进行分布式系统的集成。对于消息中间件，常见的角色有：Producer(生产者)、Consumer(消费者)。常见的消息中间件产品有：
+
+ActiveMQ: Apache的一款完全支持JMS1.1和J2EE1.4规范的JMS Provider实现。
+RabbitMQ: AMQP协议的领导实现，支持多种场景。
+ZeroMQ: 号称史上最快的消息队列系统。
+Kafka: Apache下的一个子项目，具有高吞吐的特点。
 
 
-全虚拟化架构虚拟机的监视器（hypervisor）是类似于用户的应用程序运行在主机的OS之上，如</div>
+安装本例中将ArtiveMQ部署在虚拟机Centos服务器上。
+搭建</div>
         </div>
       </a>
 
       <div class="index-btm">
         
-          <i class="iconfont icon-riqi2"></i>&nbsp;2018-11-14&nbsp;&nbsp;
+          <i class="iconfont icon-riqi2"></i>&nbsp;2018-12-22&nbsp;&nbsp;
         
         
           <i class="iconfont icon-inbox"></i>
           
-            <a href="/categories/Docker">Docker</a>&nbsp;
+            <a href="/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6">中间件</a>&nbsp;
           &nbsp;
         
         
           <i class="iconfont icon-tag"></i>
           
-            <a href="/tags/DevOps%20-%20%E6%9C%8D%E5%8A%A1%E5%99%A8">DevOps - 服务器</a>&nbsp;
+            <a href="/tags/ActiveMQ%20-%20%E6%B6%88%E6%81%AF%E4%B8%AD%E9%97%B4%E4%BB%B6">ActiveMQ - 消息中间件</a>&nbsp;
           
         
       </div>
@@ -374,7 +358,7 @@ SecureCR</div>
 
   <nav aria-label="index posts navigation">
     <span class="pagination pg-blue justify-content-center mt-5" id="pagination">
-      <a class="extend prev" rel="prev" href="/page/6/"><i class="fas fa-angle-double-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/8/"><i class="fas fa-angle-double-right"></i></a>
+      <a class="extend prev" rel="prev" href="/page/6/"><i class="fas fa-angle-double-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/8/"><i class="fas fa-angle-double-right"></i></a>
     </span>
   </nav>
   

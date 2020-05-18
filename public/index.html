@@ -185,42 +185,42 @@ Apache Dubbo的默认集群容错方案A、Failover ClusterB、Failfast ClusterC
     
     
     <div class="col-12 col-md-8 mx-auto index-info">
-      <a href="/2019/09/20/tcpip/">
-        <p class="h4 index-header">最全面的TCP/IP协议讲解</p>
+      <a href="/2019/11/12/dcs5/">
+        <p class="h4 index-header">分布式集群架构场景化解决方案——Session共享问题</p>
       </a>
 
-      <a href="/2019/09/20/tcpip/">
+      <a href="/2019/11/12/dcs5/">
         
         
           
         
         <div class="index-excerpt" >
-          <div class="index-text mb-1">写在前面大学时期学的最差的专业课就是网络通信，而且目前对于三次握手、四次挥手的面试命中率极高，基本上是必考题，所以补补课。有幸在csdn上拜读到涤生_Woo老师的文章，全程跪着看完。文章转自：太厉害了，终于有人能把TCP/IP 协议讲的明明白白了
-一图看完本文
-计算机网络体系结构分层计算机网络体系结构分层
+          <div class="index-text mb-1">Session共享问题Session共享及Session保持或者叫做Session⼀致性。
 
+Session问题原因分析出现这个问题的原因，从根本上来说是因为Http协议是⽆状态的协议。客户端和服务端在某次会话中产⽣的数据不会被保留下来，所以第⼆次请求服务端⽆法认识到你曾经来过， Http为什么要设计为⽆状态协议？早期都是静态⻚⾯⽆所谓有⽆状态，后来有动态的内容更丰富，就需要有状态，出现了两种⽤于保持Http状态的技术，那就是Cookie和Session。⽽出现上述不停让登录的问题，分析如下图：
+场景：nginx默认轮询策略
 
-不难看出，TCP/IP 与 OSI 在分层模块上稍有区别。OSI 参考模型注重“通信协议必要的功能是什么”，而 TCP/IP 则更强调“在计算机上实现协议应该开发哪种程序”。
-TCP/IP 基础TCP/IP 的具体含义从字面意义上讲，有人可能会认为 TCP/IP 是指 TCP 和 IP </div>
+解决Session⼀致性的⽅案
+Nginx的 IP_Hash 策略</div>
         </div>
       </a>
 
       <div class="index-btm">
         
-          <i class="iconfont icon-riqi2"></i>&nbsp;2019-09-20&nbsp;&nbsp;
+          <i class="iconfont icon-riqi2"></i>&nbsp;2019-11-12&nbsp;&nbsp;
         
         
           <i class="iconfont icon-inbox"></i>
           
-            <a href="/categories/%E7%BD%91%E7%BB%9C%E9%80%9A%E4%BF%A1">网络通信</a>&nbsp;
+            <a href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F%E6%9E%B6%E6%9E%84">分布式架构</a>&nbsp;
           &nbsp;
         
         
           <i class="iconfont icon-tag"></i>
           
-            <a href="/tags/%E7%BD%91%E7%BB%9C%E9%80%9A%E4%BF%A1">网络通信</a>&nbsp;
+            <a href="/tags/Hash%E7%AE%97%E6%B3%95">Hash算法</a>&nbsp;
           
-            <a href="/tags/Http%E5%8D%8F%E8%AE%AE">Http协议</a>&nbsp;
+            <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F">分布式</a>&nbsp;
           
         
       </div>
@@ -231,48 +231,53 @@ TCP/IP 基础TCP/IP 的具体含义从字面意义上讲，有人可能会认为
     
     
     <div class="col-12 col-md-8 mx-auto index-info">
-      <a href="/2019/09/11/tomcat/">
-        <p class="h4 index-header">Tomcat体系架构分析</p>
+      <a href="/2019/11/07/dcs4/">
+        <p class="h4 index-header">分布式集群架构场景化解决方案——分布式调度问题</p>
       </a>
 
-      <a href="/2019/09/11/tomcat/">
+      <a href="/2019/11/07/dcs4/">
         
         
           
         
         <div class="index-excerpt" >
-          <div class="index-text mb-1">
-写在前面源码地址：手写mini版tomcat欢迎star/fork，给作者一些鼓励！
-架构分析虽然网上对于tomcat架构描述已经十分详细了，但在这里还是要先讲讲架构
-总体设计
-先来看Connector和Container - 两个Tomcat的心脏：
+          <div class="index-text mb-1">前言调度 —&gt; 定时任务，分布式调度 —&gt; 在分布式集群环境下定时任务这件事。Elastic-job（当当⽹开源的分布式调度框架）
+定时任务的场景定时任务形式：每隔⼀定时间/特定某⼀时刻执⾏。
+例如：
 
-Connector用于处理连接相关的事情，并提供Socket与Request和Response相关的转化;
-Container用于封装和管理Servlet，以及具体处理Request请求；
+订单审核、出库
+订单超时⾃动取消、⽀付退款
+礼券同步、⽣成、发放作业
+物流信息推送、抓取作业、退换货处理作业
+数据积压监控、⽇志监控、服务可⽤性探测作业
+定时备份数据
+⾦融系统每天的定时结算
+数据归档、清理作业
+报表、离线数据分析作业
 
-Service - 面向外界的连接体
+什么是分布式调度什么是分布式任务调度？有两层含义
 
-主要结合Connector和Container，实现封装，向外提供功能
-一个Service只能有一个Conta</div>
+运⾏在分布式集群环境下的调度任务（同⼀个定时任务程序部署多份，只应该有⼀个定时任务在执⾏）
+分</div>
         </div>
       </a>
 
       <div class="index-btm">
         
-          <i class="iconfont icon-riqi2"></i>&nbsp;2019-09-11&nbsp;&nbsp;
+          <i class="iconfont icon-riqi2"></i>&nbsp;2019-11-07&nbsp;&nbsp;
         
         
           <i class="iconfont icon-inbox"></i>
           
-            <a href="/categories/Servlet%E5%AE%B9%E5%99%A8">Servlet容器</a>&nbsp;
+            <a href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F%E6%9E%B6%E6%9E%84">分布式架构</a>&nbsp;
           &nbsp;
         
         
           <i class="iconfont icon-tag"></i>
           
-            <a href="/tags/Servlet">Servlet</a>&nbsp;
+            <a href="/tags/Hash%E7%AE%97%E6%B3%95">Hash算法</a>&nbsp;
           
-            <a href="/tags/Http%E6%9C%8D%E5%8A%A1%E5%99%A8">Http服务器</a>&nbsp;
+            <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F">分布式</a>&nbsp;
           
         
       </div>
@@ -283,45 +288,43 @@ Service - 面向外界的连接体
     
     
     <div class="col-12 col-md-8 mx-auto index-info">
-      <a href="/2019/09/01/spring6/">
-        <p class="h4 index-header">轻量级控制反转和面向切面的容器框架——Spring（六）</p>
+      <a href="/2019/10/22/dcs3/">
+        <p class="h4 index-header">分布式集群架构场景化解决方案——分布式ID解决方案</p>
       </a>
 
-      <a href="/2019/09/01/spring6/">
+      <a href="/2019/10/22/dcs3/">
         
         
           
         
         <div class="index-excerpt" >
-          <div class="index-text mb-1">
-写在前面之前整理过一些关于Spring框架零散的知识点，一直没时间整理，恰好最近又拜读了应癫老师的课程，所以赶紧梳理一下关于Spring的相关知识。
+          <div class="index-text mb-1">分布式ID解决方案为什么需要分布式ID (分布式集群环境下的全局唯⼀ID)
 
-Spring AOP源码深度剖析代理对象创建AOP基础用例准备Bean定义
-123456@Componentpublic class LagouBean &#123;	public void tech()&#123;		System.out.println("java learning......");	&#125;&#125;
 
-Aspect定义
-1234567891011@Component@Aspectpublic class Lago</div>
+UUID （可以用）UUID 是指Universally Unique Identifier，翻译为中⽂是通⽤唯⼀识别码产⽣重复 UUID 并造成错误的情况⾮常低，是故⼤可不必考虑此问题。Java中得到⼀个UUID，可以使⽤java.util包提供的⽅法。
+
+
+
+独⽴数据库的⾃增ID⽐如A表分表为A1表和A2表，那么肯定不能让A1表和A2表的ID⾃增，那么ID怎么获取呢？我们可以单独的创建⼀个Mysql数据库，在这个数据库中创建⼀张表，这张表的ID设置为⾃增，其他地⽅需要全局唯⼀ID的时候，就模拟向这个Mysql数</div>
         </div>
       </a>
 
       <div class="index-btm">
         
-          <i class="iconfont icon-riqi2"></i>&nbsp;2019-09-01&nbsp;&nbsp;
+          <i class="iconfont icon-riqi2"></i>&nbsp;2019-10-22&nbsp;&nbsp;
         
         
           <i class="iconfont icon-inbox"></i>
           
-            <a href="/categories/Java%E6%A1%86%E6%9E%B6">Java框架</a>&nbsp;
+            <a href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F%E6%9E%B6%E6%9E%84">分布式架构</a>&nbsp;
           &nbsp;
         
         
           <i class="iconfont icon-tag"></i>
           
-            <a href="/tags/Spring%E5%85%A8%E5%AE%B6%E6%A1%B6">Spring全家桶</a>&nbsp;
+            <a href="/tags/Hash%E7%AE%97%E6%B3%95">Hash算法</a>&nbsp;
           
-            <a href="/tags/IoC">IoC</a>&nbsp;
-          
-            <a href="/tags/AOP">AOP</a>&nbsp;
+            <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F">分布式</a>&nbsp;
           
         
       </div>
@@ -332,44 +335,41 @@ Aspect定义
     
     
     <div class="col-12 col-md-8 mx-auto index-info">
-      <a href="/2019/08/22/spring5/">
-        <p class="h4 index-header">轻量级控制反转和面向切面的容器框架——Spring（五）</p>
+      <a href="/2019/10/10/dcs2/">
+        <p class="h4 index-header">分布式集群架构场景化解决方案——集群时钟同步问题</p>
       </a>
 
-      <a href="/2019/08/22/spring5/">
+      <a href="/2019/10/10/dcs2/">
         
         
           
         
         <div class="index-excerpt" >
-          <div class="index-text mb-1">
-写在前面之前整理过一些关于Spring框架零散的知识点，一直没时间整理，恰好最近又拜读了应癫老师的课程，所以赶紧梳理一下关于Spring的相关知识。
+          <div class="index-text mb-1">时钟不同步导致的问题时钟此处指服务器时间，如果集群中各个服务器时钟不⼀致势必导致⼀系列问题，试想 “集群是各个服务器⼀起团队化作战，⼤家⼯作都不在⼀个点上，岂不乱了套！”
+举⼀个例⼦，电商⽹站业务中，新增⼀条订单，那么势必会在订单表中增加了⼀条记录，该条记录中应该会有“下单时间”这样的字段，往往我们会在程序中获取当前系统时间插⼊到数据库或者直接从数据库服务器获取时间。那我们的订单⼦系统是集群化部署，或者我们的数据库也是分库分表的集群化部署，然⽽他们的系统时钟缺不⼀致，⽐如有⼀台服务器的时间是昨天，那么这个时候下单时间就成了昨天，那我们的数据将会混乱！如下：
 
-Spring AOP应用AOP本质：在不改变原有业务逻辑的情况下增强横切逻辑，横切逻辑代码往往是权限校验代码、⽇志代码、事务控制代码、性能监控代码。
-AOP相关术语业务主线在讲解AOP术语之前，我们先来看⼀下下⾯这两张图，它们就是第三部分案例需求的扩展（针对这些扩展的需求，我们只进⾏分析，在此基础上去进⼀步回顾AOP，不进⾏实现）
 
-上图描述的就是未采⽤AOP思想设计的程序，当我们红⾊框中圈定的⽅法时，会带来⼤量的重复劳动。程序中充斥着⼤量的</div>
+集群时钟同步配置
+集群时钟同步思</div>
         </div>
       </a>
 
       <div class="index-btm">
         
-          <i class="iconfont icon-riqi2"></i>&nbsp;2019-08-22&nbsp;&nbsp;
+          <i class="iconfont icon-riqi2"></i>&nbsp;2019-10-10&nbsp;&nbsp;
         
         
           <i class="iconfont icon-inbox"></i>
           
-            <a href="/categories/Java%E6%A1%86%E6%9E%B6">Java框架</a>&nbsp;
+            <a href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F%E6%9E%B6%E6%9E%84">分布式架构</a>&nbsp;
           &nbsp;
         
         
           <i class="iconfont icon-tag"></i>
           
-            <a href="/tags/Spring%E5%85%A8%E5%AE%B6%E6%A1%B6">Spring全家桶</a>&nbsp;
+            <a href="/tags/Hash%E7%AE%97%E6%B3%95">Hash算法</a>&nbsp;
           
-            <a href="/tags/IoC">IoC</a>&nbsp;
-          
-            <a href="/tags/AOP">AOP</a>&nbsp;
+            <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F">分布式</a>&nbsp;
           
         
       </div>
@@ -380,7 +380,7 @@ AOP相关术语业务主线在讲解AOP术语之前，我们先来看⼀下下�
 
   <nav aria-label="index posts navigation">
     <span class="pagination pg-blue justify-content-center mt-5" id="pagination">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/2/"><i class="fas fa-angle-double-right"></i></a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/2/"><i class="fas fa-angle-double-right"></i></a>
     </span>
   </nav>
   
